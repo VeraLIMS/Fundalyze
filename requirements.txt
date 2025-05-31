@@ -1,0 +1,6 @@
+financetoolkit
+streamlit
+openpyxl
+pandas
+PyYAML
+financedatabase
