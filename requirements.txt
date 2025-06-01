@@ -1,9 +1,10 @@
 setuptools
 wheel
 financetoolkit
+tabulate
 streamlit
 openpyxl
-pandas
+pandas>=2.2.2,<2.3
 PyYAML
 financedatabase
 alpha_vantage

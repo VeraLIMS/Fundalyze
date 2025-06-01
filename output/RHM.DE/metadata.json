@@ -1,0 +1,51 @@
+{
+  "ticker": "RHM.DE",
+  "generated_on": "2025-06-01T09:57:11Z",
+  "files": {
+    "profile.csv": {
+      "source": "yfinance / FMP (profile fallback)",
+      "source_url": "https://finance.yahoo.com/quote/RHM.DE/profile",
+      "fetched_at": "2025-06-01T09:57:27Z"
+    },
+    "1mo_prices.csv": {
+      "source": "ERROR: 'Close'",
+      "source_url": "https://finance.yahoo.com/quote/RHM.DE/history?p=RHM.DE",
+      "fetched_at": "2025-06-01T09:57:22Z"
+    },
+    "income_annual.csv": {
+      "source": "OpenBB (equity.fundamental.income, annual)",
+      "source_url": "https://finance.yahoo.com/quote/RHM.DE/financials",
+      "fetched_at": "2025-06-01T09:57:22Z"
+    },
+    "income_quarter.csv": {
+      "source": "OpenBB (equity.fundamental.income, quarter)",
+      "source_url": "https://finance.yahoo.com/quote/RHM.DE/financials",
+      "fetched_at": "2025-06-01T09:57:23Z"
+    },
+    "balance_annual.csv": {
+      "source": "OpenBB (equity.fundamental.balance, annual)",
+      "source_url": "https://finance.yahoo.com/quote/RHM.DE/balance-sheet",
+      "fetched_at": "2025-06-01T09:57:24Z"
+    },
+    "balance_quarter.csv": {
+      "source": "OpenBB (equity.fundamental.balance, quarter)",
+      "source_url": "https://finance.yahoo.com/quote/RHM.DE/balance-sheet",
+      "fetched_at": "2025-06-01T09:57:25Z"
+    },
+    "cash_annual.csv": {
+      "source": "OpenBB (equity.fundamental.cash, annual)",
+      "source_url": "https://finance.yahoo.com/quote/RHM.DE/cash-flow",
+      "fetched_at": "2025-06-01T09:57:27Z"
+    },
+    "cash_quarter.csv": {
+      "source": "OpenBB (equity.fundamental.cash, quarter)",
+      "source_url": "https://finance.yahoo.com/quote/RHM.DE/cash-flow",
+      "fetched_at": "2025-06-01T09:57:27Z"
+    },
+    "report.md": {
+      "source": "Aggregated Markdown report (multiple sources)",
+      "source_url": "",
+      "created_at": "2025-06-01T09:57:27Z"
+    }
+  }
+}
