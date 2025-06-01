@@ -1,2 +1,2 @@
-#activate script: venv\Scripts\activate
-
+#activate script: . .\venv\Scripts\Activate.ps1
+#install pip: pip install -r requirements.txt

@@ -1,6 +1,13 @@
+setuptools
+wheel
 financetoolkit
 streamlit
 openpyxl
 pandas
 PyYAML
 financedatabase
+alpha_vantage
+openbb
+openbb[all]
+matplotlib
+yfinance
