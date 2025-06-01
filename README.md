@@ -2,38 +2,92 @@
 
 Fundalyze is a lightweight Python application for fetching, analyzing, and visualizing investment portfolio data. It automates:
 
-Data Acquisition: pulls historical and real-time prices, company profiles, and financial statements (income, balance sheet, cash flow) via OpenBB, yfinance, and FMP.
-
-Metadata Management: verifies each ticker’s report completeness, re-fetches missing files, and records source URLs/timestamps.
-
-Dashboard Generation: aggregates every ticker’s raw CSVs into a single, multi-sheet Excel workbook—each sheet transposed and converted into a named Table—so you can quickly inspect metrics over time and write structured formulas.
+- **Data Acquisition**: pulls historical and real-time prices, company profiles, and financial statements (income, balance sheet, cash flow) via OpenBB, yfinance, and FMP.
+- **Metadata Management**: verifies each ticker’s report completeness, re-fetches missing files, and records source URLs/timestamps.
+- **Dashboard Generation**: aggregates every ticker’s raw CSVs into a single, multi-sheet Excel workbook—each sheet transposed and converted into a named Table—so you can quickly inspect metrics over time and write structured formulas.
 
 With modular scripts for report generation, fallback data enrichment, and portfolio/group analysis, Fundalyze scales from a few tickers to many and lays the groundwork for future database or web-based extensions.
 
-This repository includes a **bootstrap script** (`bootstrap_env.ps1` for Windows) that:
-
-1. **Creates** a Python virtual environment in `./.venv/` (if it doesn’t already exist).  
-2. **Activates** that venv in the current shell session.  
-3. **Installs** all packages listed in `requirements.txt` into the newly created venv.
-
 ---
 
-## Usage (Windows PowerShell)
+## Getting Started
 
-1. Open PowerShell in the project root.  
-2. Run:
-   ```powershell
-   .\bootstrap_env.ps1
+1. **Clone the repository**  
+   ```bash
+   git clone https://github.com/VeraLIMS/Fundalyze.git
+   cd Fundalyze
+Bootstrap your environment
+This repository includes a bootstrap script that will:
 
+Create a Python virtual environment in ./.venv/ (if it doesn’t already exist).
+
+Activate that venv in your current shell session.
+
+Install all packages listed in requirements.txt into the newly created venv.
+
+Windows PowerShell
+powershell
+Copy
+Edit
+.\bootstrap_env.ps1
 If ./.venv/ is missing, it will be created.
 
-The script will then activate the venv for you.
+The script will activate the venv for you.
 
 Finally, it installs everything from requirements.txt.
 
 Once complete, you remain inside the activated venv. Simply run:
 
+powershell
+Copy
+Edit
 python src/main.py
-
 to launch the application.
+
+macOS/Linux (Bash/Zsh)
+bash
+Copy
+Edit
+./bootstrap_env.sh
+If ./.venv/ is missing, it will be created.
+
+The script will activate the venv in the current shell.
+
+Finally, it installs everything from requirements.txt.
+
+Once complete, you remain inside the activated venv. Simply run:
+
+bash
+Copy
+Edit
+python src/main.py
+to launch the application.
+
+Usage
+After bootstrapping (and activating the venv), launch the main menu:
+
+bash
+Copy
+Edit
+python src/main.py
+You will see options to:
+
+Manage Portfolio
+
+Manage Groups
+
+
+Generate Reports (with metadata check, fallback, & Excel dashboard)
+
+Exit
+
+Choose Generate Reports to:
+
+Enter ticker symbols (comma-separated).
+
+Automatically fetch profiles, price history, and financial statements.
+
+Run a metadata check to re-fetch any missing data.
+
+Generate a multi-sheet Excel dashboard (with transposed tables) for quick analysis.
 
