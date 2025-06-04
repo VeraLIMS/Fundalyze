@@ -111,3 +111,14 @@ Place API keys (Directus, OpenBB, OpenAI) in `config/.env` and preferences in `c
 ### End-to-End Tests
 
 Automated end-to-end tests simulate common user workflows. See [docs/end_to_end_tests.md](docs/end_to_end_tests.md) for details.
+
+### Performance Tests
+
+The repository includes a small profiling utility to check the speed of key
+data processing functions. Run it with:
+
+```bash
+python scripts/performance_profile.py
+```
+
+Results are summarized in [docs/performance_benchmarks.md](docs/performance_benchmarks.md).

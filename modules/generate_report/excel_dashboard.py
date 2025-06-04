@@ -46,13 +46,8 @@ def _transpose_financials(ticker_dfs: dict[str, pd.DataFrame]) -> pd.DataFrame:
         transposed = temp.T
 
         # Convert period column names (index of temp) to strings
-        new_cols = []
-        for col in transposed.columns:
-            if not isinstance(col, str):
-                new_cols.append(str(col))
-            else:
-                new_cols.append(col)
-        transposed.columns = new_cols
+        # Using vectorized conversion avoids the Python-level loop
+        transposed.columns = [str(col) for col in transposed.columns]
 
         # Insert 'Ticker' in column A
         transposed.insert(0, "Ticker", ticker)
