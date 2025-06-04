@@ -20,8 +20,15 @@ import sys
 import pandas as pd
 import yfinance as yf
 from term_mapper import resolve_term
+from directus_client import (
+    fetch_items,
+    insert_items,
+    list_fields,
+)
 
 PORTFOLIO_FILE = "portfolio.xlsx"
+C_DIRECTUS_COLLECTION = os.getenv("DIRECTUS_PORTFOLIO_COLLECTION", "portfolio")
+USE_DIRECTUS = bool(os.getenv("DIRECTUS_URL"))
 COLUMNS = [
     "Ticker",
     "Name",
@@ -36,28 +43,57 @@ COLUMNS = [
 
 def load_portfolio(filepath: str) -> pd.DataFrame:
     """
-    Load the portfolio from an Excel file. If the file does not exist,
-    return an empty DataFrame with the correct columns.
+    Load the portfolio either from Directus (if configured) or from a local
+    Excel file. If loading fails, an empty DataFrame with the expected columns
+    is returned.
     """
+    if USE_DIRECTUS:
+        try:
+            records = fetch_items(C_DIRECTUS_COLLECTION)
+            if not records:
+                return pd.DataFrame(columns=COLUMNS)
+            df = pd.DataFrame(records)
+            for col in COLUMNS:
+                if col not in df.columns:
+                    df[col] = pd.NA
+            return df[COLUMNS]
+        except Exception as exc:
+            print(f"Error loading portfolio from Directus: {exc}")
+            print("Falling back to local Excel file.")
+
     if os.path.isfile(filepath):
         try:
             df = pd.read_excel(filepath, engine="openpyxl")
-            # Ensure columns match expected schema
             for col in COLUMNS:
                 if col not in df.columns:
                     df[col] = pd.NA
             return df[COLUMNS]
         except Exception as e:
             print(f"Error reading {filepath}: {e}")
-            print("Starting with an empty portfolio.")
-    # File doesn't exist or read-error: start fresh
     return pd.DataFrame(columns=COLUMNS)
 
 
 def save_portfolio(df: pd.DataFrame, filepath: str):
     """
-    Save the portfolio DataFrame to an Excel file.
+    Save the portfolio either to Directus (if configured) or to a local Excel
+    file as fallback.
     """
+    if USE_DIRECTUS:
+        try:
+            allowed = set(list_fields(C_DIRECTUS_COLLECTION))
+            records = []
+            for row in df.to_dict(orient="records"):
+                filtered = {k: v for k, v in row.items() if k in allowed}
+                records.append(filtered)
+            insert_items(C_DIRECTUS_COLLECTION, records)
+            print(
+                f"→ Saved portfolio to Directus collection '{C_DIRECTUS_COLLECTION}'.\n"
+            )
+            return
+        except Exception as exc:
+            print(f"Error saving portfolio to Directus: {exc}")
+            print("Falling back to local Excel file.")
+
     try:
         df.to_excel(filepath, index=False, engine="openpyxl")
         print(f"→ Saved portfolio to '{filepath}'.\n")

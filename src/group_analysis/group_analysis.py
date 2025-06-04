@@ -26,9 +26,12 @@ import sys
 import pandas as pd
 import yfinance as yf
 from term_mapper import resolve_term
+from directus_client import fetch_items, insert_items, list_fields
 
 PORTFOLIO_FILE = "portfolio.xlsx"
 GROUPS_FILE = "groups.xlsx"
+GROUPS_COLLECTION = os.getenv("DIRECTUS_GROUPS_COLLECTION", "groups")
+USE_DIRECTUS = bool(os.getenv("DIRECTUS_URL"))
 
 # Columns used for each group entry (plus a "Group" column)
 COLUMNS = [
@@ -59,12 +62,26 @@ def load_portfolio(filepath: str) -> pd.DataFrame:
 
 def load_groups(filepath: str) -> pd.DataFrame:
     """
-    Load existing groups from Excel. If missing or unreadable, return empty with COLUMNS.
+    Load existing groups either from Directus or from Excel. If neither source
+    is available, return an empty DataFrame with the expected columns.
     """
+    if USE_DIRECTUS:
+        try:
+            records = fetch_items(GROUPS_COLLECTION)
+            if not records:
+                return pd.DataFrame(columns=COLUMNS)
+            df = pd.DataFrame(records)
+            for col in COLUMNS:
+                if col not in df.columns:
+                    df[col] = pd.NA
+            return df[COLUMNS]
+        except Exception as exc:
+            print(f"Error loading groups from Directus: {exc}")
+            print("Falling back to local Excel file.")
+
     if os.path.isfile(filepath):
         try:
             df = pd.read_excel(filepath, engine="openpyxl")
-            # Ensure all columns exist (any missing ones are filled in)
             for col in COLUMNS:
                 if col not in df.columns:
                     df[col] = pd.NA
@@ -76,8 +93,23 @@ def load_groups(filepath: str) -> pd.DataFrame:
 
 def save_groups(df: pd.DataFrame, filepath: str):
     """
-    Persist groups DataFrame to Excel.
+    Persist groups DataFrame either to Directus or to Excel as fallback.
     """
+    if USE_DIRECTUS:
+        try:
+            allowed = set(list_fields(GROUPS_COLLECTION))
+            records = []
+            for row in df.to_dict(orient="records"):
+                records.append({k: v for k, v in row.items() if k in allowed})
+            insert_items(GROUPS_COLLECTION, records)
+            print(
+                f"→ Saved groups to Directus collection '{GROUPS_COLLECTION}'.\n"
+            )
+            return
+        except Exception as exc:
+            print(f"Error saving groups to Directus: {exc}")
+            print("Falling back to local Excel file.")
+
     try:
         df.to_excel(filepath, index=False, engine="openpyxl")
         print(f"→ Saved groups to '{filepath}'.\n")
