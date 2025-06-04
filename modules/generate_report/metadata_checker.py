@@ -103,7 +103,13 @@ def fetch_1mo_prices_yf(symbol: str) -> pd.DataFrame:
     # Drop unwanted columns
     hist = hist.drop(columns=[c for c in ("Dividends", "Stock Splits") if c in hist.columns])
     hist.reset_index(inplace=True)  # Make 'Date' a column again
-    return hist.loc[:, ["Date", "Open", "High", "Low", "Close", "Adj Close", "Volume"]]
+
+    # Ensure expected columns are present; some sources may miss 'Adj Close'
+    if "Adj Close" not in hist.columns and "Close" in hist.columns:
+        hist["Adj Close"] = hist["Close"]
+
+    desired_cols = ["Date", "Open", "High", "Low", "Close", "Adj Close", "Volume"]
+    return hist.loc[:, [c for c in desired_cols if c in hist.columns]]
 
 
 def fetch_fin_stmt_from_yf(symbol: str, stmt_key: str) -> pd.DataFrame:

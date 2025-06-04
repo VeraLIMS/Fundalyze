@@ -174,7 +174,7 @@ def create_dashboard(output_root: str = "output", *, tickers: Optional[Iterable[
         ia_path = td / "income_annual.csv"
         if ia_path.exists():
             try:
-                df = pd.read_csv(ia_path, index_col=0, parse_dates=True)
+                df = pd.read_csv(ia_path, index_col=0)
                 df = df.reset_index().rename(columns={"index": "Period"})
                 income_ann[ticker] = _strip_timezones(df)
             except Exception:
@@ -184,7 +184,7 @@ def create_dashboard(output_root: str = "output", *, tickers: Optional[Iterable[
         iq_path = td / "income_quarter.csv"
         if iq_path.exists():
             try:
-                df = pd.read_csv(iq_path, index_col=0, parse_dates=True)
+                df = pd.read_csv(iq_path, index_col=0)
                 df = df.reset_index().rename(columns={"index": "Period"})
                 income_qtr[ticker] = _strip_timezones(df)
             except Exception:
@@ -194,7 +194,7 @@ def create_dashboard(output_root: str = "output", *, tickers: Optional[Iterable[
         ba_path = td / "balance_annual.csv"
         if ba_path.exists():
             try:
-                df = pd.read_csv(ba_path, index_col=0, parse_dates=True)
+                df = pd.read_csv(ba_path, index_col=0)
                 df = df.reset_index().rename(columns={"index": "Period"})
                 balance_ann[ticker] = _strip_timezones(df)
             except Exception:
@@ -204,7 +204,7 @@ def create_dashboard(output_root: str = "output", *, tickers: Optional[Iterable[
         bq_path = td / "balance_quarter.csv"
         if bq_path.exists():
             try:
-                df = pd.read_csv(bq_path, index_col=0, parse_dates=True)
+                df = pd.read_csv(bq_path, index_col=0)
                 df = df.reset_index().rename(columns={"index": "Period"})
                 balance_qtr[ticker] = _strip_timezones(df)
             except Exception:
@@ -214,7 +214,7 @@ def create_dashboard(output_root: str = "output", *, tickers: Optional[Iterable[
         ca_path = td / "cash_annual.csv"
         if ca_path.exists():
             try:
-                df = pd.read_csv(ca_path, index_col=0, parse_dates=True)
+                df = pd.read_csv(ca_path, index_col=0)
                 df = df.reset_index().rename(columns={"index": "Period"})
                 cash_ann[ticker] = _strip_timezones(df)
             except Exception:
@@ -224,7 +224,7 @@ def create_dashboard(output_root: str = "output", *, tickers: Optional[Iterable[
         cq_path = td / "cash_quarter.csv"
         if cq_path.exists():
             try:
-                df = pd.read_csv(cq_path, index_col=0, parse_dates=True)
+                df = pd.read_csv(cq_path, index_col=0)
                 df = df.reset_index().rename(columns={"index": "Period"})
                 cash_qtr[ticker] = _strip_timezones(df)
             except Exception:
