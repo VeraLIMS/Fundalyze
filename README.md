@@ -91,6 +91,14 @@ Run a metadata check to re-fetch any missing data.
 
 Generate a multi-sheet Excel dashboard (with transposed tables) for quick analysis.
 
+### Comparing OpenBB and yfinance data
+
+The command `python -m data_compare <TICKER>` fetches company profile
+information from both OpenBB and yfinance. If both sources return data,
+the differences of key fields are printed and you can choose which
+dataset to keep. This helps verify data completeness and gives direct
+links back to the original sources.
+
 ### Using Directus as a Data Store
 
 If you have a Directus instance available you can store the portfolio and group
