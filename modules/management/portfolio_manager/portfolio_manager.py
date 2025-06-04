@@ -19,10 +19,7 @@ import os
 import sys
 from typing import Optional
 
-from modules.config_utils import load_settings  # noqa: E402
 from modules.analytics import portfolio_summary, sector_counts
-
-SETTINGS = load_settings()
 
 import pandas as pd
 import requests
