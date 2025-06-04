@@ -1,6 +1,10 @@
 import os
 import requests
 
+from config_utils import load_settings  # noqa: E402
+
+load_settings()  # ensure .env is read when this module is imported
+
 DIRECTUS_URL = os.getenv("DIRECTUS_URL")
 DIRECTUS_TOKEN = os.getenv("DIRECTUS_TOKEN")
 

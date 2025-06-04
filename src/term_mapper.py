@@ -2,6 +2,10 @@ import json
 import os
 from typing import Dict, List, Optional
 
+from config_utils import load_settings  # noqa: E402
+
+load_settings()
+
 try:
     import openai
 except Exception:
