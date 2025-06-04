@@ -1,5 +1,6 @@
 # src/generate_report/excel_dashboard.py
 
+
 import os
 import sys
 import subprocess
@@ -7,6 +8,16 @@ from pathlib import Path
 from datetime import datetime
 
 import pandas as pd
+
+
+def _col_letter(idx: int) -> str:
+    """Return Excel column letters (A, B, ..., AA, AB, ...) for zero-based index."""
+    result = ""
+    while idx >= 0:
+        idx, rem = divmod(idx, 26)
+        result = chr(ord("A") + rem) + result
+        idx -= 1
+    return result
 
 
 def _transpose_financials(ticker_dfs: dict[str, pd.DataFrame]) -> pd.DataFrame:
@@ -235,7 +246,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             last_row = nrows      # header is row 0, data runs 1..nrows
             last_col = ncols - 1
             # e.g. "A1:E101" if 100 data rows and 5 columns total
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -255,7 +266,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_prices.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -275,7 +286,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_inc_ann.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -295,7 +306,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_inc_qtr.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -315,7 +326,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_bal_ann.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -335,7 +346,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_bal_qtr.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -355,7 +366,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_cash_ann.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -375,7 +386,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_cash_qtr.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
