@@ -5,10 +5,10 @@ import sys
 # Ensure environment variables from config/.env are loaded before other modules
 from modules.config_utils import load_settings  # noqa: E402
 
-from modules.portfolio_manager.portfolio_manager import main as run_portfolio_manager
-from modules.group_analysis.group_analysis import main as run_group_analysis
+from modules.management.portfolio_manager.portfolio_manager import main as run_portfolio_manager
+from modules.management.group_analysis.group_analysis import main as run_group_analysis
 from modules.generate_report import run_generate_report
-from modules.note_manager import run_note_manager
+from modules.management.note_manager import run_note_manager
 
 SETTINGS = load_settings()
 

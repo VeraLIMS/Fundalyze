@@ -99,7 +99,7 @@ Generate a multi-sheet Excel dashboard (with transposed tables) for quick analys
 
 ### Comparing OpenBB and yfinance data
 
-The command `python -m data_compare <TICKER>` fetches company profile
+The command `python -m data.compare <TICKER>` fetches company profile
 information from both OpenBB and yfinance. If both sources return data,
 the differences of key fields are printed and you can choose which
 dataset to keep. This helps verify data completeness and gives direct

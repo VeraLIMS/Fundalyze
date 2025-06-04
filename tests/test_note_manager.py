@@ -3,7 +3,7 @@ import tempfile
 
 import importlib
 
-from note_manager import note_manager
+from management.note_manager import note_manager
 
 
 def test_slugify():
