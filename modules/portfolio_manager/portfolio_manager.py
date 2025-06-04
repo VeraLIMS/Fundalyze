@@ -20,6 +20,7 @@ import sys
 from typing import Optional
 
 from modules.config_utils import load_settings  # noqa: E402
+from modules.analysis import portfolio_summary
 
 SETTINGS = load_settings()
 
@@ -269,6 +270,10 @@ def view_portfolio(portfolio: pd.DataFrame):
 
     print("\nCurrent Portfolio:")
     print(portfolio.to_string(index=False))
+    summary = portfolio_summary(portfolio)
+    if not summary.empty:
+        print("\nSummary (mean/min/max):")
+        print(summary.to_string())
     print("")
 
 
