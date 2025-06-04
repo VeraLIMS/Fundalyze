@@ -91,6 +91,13 @@ export DIRECTUS_GROUPS_COLLECTION="groups"
 ```
 When these variables are present the tools will use Directus and automatically fall back to Excel if it is not reachable.
 
+You can manage collections interactively using the **Directus Wizard**:
+
+```bash
+python scripts/main.py directus
+```
+This helper lists collections, shows fields and allows you to create new fields or insert items from the command line.
+
 ### Note Manager
 
 A simple Markdown note system lives in `notes/`. Launch it with either the

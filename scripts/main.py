@@ -26,6 +26,9 @@ from modules.management.note_manager import run_note_manager
 from modules.management.settings_manager.settings_manager import (
     run_settings_manager,
 )
+from modules.management.directus_tools.directus_wizard import (
+    run_directus_wizard,
+)
 
 SETTINGS = load_settings()
 
@@ -48,7 +51,10 @@ def interactive_menu():
       1) Manage Portfolio       → portfolio_manager/portfolio_manager.py
       2) Manage Groups          → group_analysis/group_analysis.py
       3) Generate Reports       → generate_report/run_generate_report()
-      4) Exit
+      4) Manage Notes           → note_manager/run_note_manager()
+      5) Manage Settings        → settings_manager/settings_manager.py
+      6) Directus Wizard        → directus_tools/directus_wizard.py
+      7) Exit
     """
     ACTIONS = [
         ("Manage Portfolio",               run_portfolio_manager),
@@ -56,6 +62,7 @@ def interactive_menu():
         ("Generate Reports (with metadata, fallback & Excel)", run_generate_report),
         ("Manage Notes",                  run_note_manager),
         ("Manage Settings",               run_settings_manager),
+        ("Directus Wizard",               run_directus_wizard),
         ("Exit",                           exit_program),
     ]
 
@@ -88,6 +95,7 @@ def parse_args() -> argparse.Namespace:
     sub.add_parser("metadata", help="Run metadata checker")
     sub.add_parser("fallback", help="Run fallback data fetch")
     sub.add_parser("dashboard", help="Create Excel dashboard")
+    sub.add_parser("directus", help="Launch Directus wizard")
     sub.add_parser("menu", help="Interactive menu (default)")
     return parser.parse_args()
 
@@ -111,6 +119,8 @@ def main() -> None:
         run_fallback_data()
     elif cmd == "dashboard":
         create_and_open_dashboard()
+    elif cmd == "directus":
+        run_directus_wizard()
     else:
         interactive_menu()
 
