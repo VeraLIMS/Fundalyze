@@ -2,6 +2,7 @@
 
 import sys
 import os
+import argparse
 
 # Add the repository root to sys.path so 'modules' can be imported when this
 # script is executed directly via `python scripts/main.py`.
@@ -32,7 +33,7 @@ def invalid_choice():
     print("Invalid choice. Please select a valid option.\n")
 
 
-def main():
+def interactive_menu():
     """
     Main menu loop. Each submenu is grouped into its own package:
 
@@ -64,6 +65,33 @@ def main():
                 invalid_choice()
         else:
             invalid_choice()
+
+
+def parse_args() -> argparse.Namespace:
+    """Return parsed CLI arguments."""
+    parser = argparse.ArgumentParser(description="Fundalyze command line interface")
+    sub = parser.add_subparsers(dest="command")
+    sub.add_parser("portfolio", help="Launch portfolio manager")
+    sub.add_parser("groups", help="Launch group manager")
+    sub.add_parser("report", help="Generate reports")
+    sub.add_parser("notes", help="Launch note manager")
+    sub.add_parser("menu", help="Interactive menu (default)")
+    return parser.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    cmd = args.command or "menu"
+    if cmd == "portfolio":
+        run_portfolio_manager()
+    elif cmd == "groups":
+        run_group_analysis()
+    elif cmd == "report":
+        run_generate_report()
+    elif cmd == "notes":
+        run_note_manager()
+    else:
+        interactive_menu()
 
 
 if __name__ == "__main__":

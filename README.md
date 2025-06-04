@@ -35,7 +35,7 @@ With modular scripts for report generation, fallback data enrichment and portfol
 
 ## Usage
 
-After bootstrapping run `python scripts/main.py` to open the menu. From here you can:
+After bootstrapping run `python scripts/main.py` to open the interactive menu. From here you can:
 
 - Manage Portfolio
 - Manage Groups
@@ -43,6 +43,22 @@ After bootstrapping run `python scripts/main.py` to open the menu. From here you
 - Exit
 
 Choose **Generate Reports** to enter ticker symbols, fetch data and build the dashboard.
+
+You can also launch individual tools directly:
+
+```bash
+# open the portfolio manager
+python scripts/main.py portfolio
+
+# manage groups
+python scripts/main.py groups
+
+# generate reports without entering the menu
+python scripts/main.py report
+
+# manage Markdown notes
+python scripts/main.py notes
+```
 
 ## Project Layout
 
@@ -68,9 +84,14 @@ When these variables are present the tools will use Directus and automatically f
 
 ### Note Manager
 
-A simple Markdown note system lives in `notes/`. Launch it with:
+A simple Markdown note system lives in `notes/`. Launch it with either the
+dedicated script or the new CLI subcommand:
 ```bash
+# old behaviour
 python scripts/note_cli.py
+
+# via the main CLI
+python scripts/main.py notes
 ```
 Notes support Obsidian-style `[[wikilinks]]` for linking between files.
 
