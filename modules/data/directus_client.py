@@ -10,6 +10,14 @@ DIRECTUS_URL = os.getenv("DIRECTUS_URL")
 DIRECTUS_TOKEN = os.getenv("DIRECTUS_TOKEN")
 
 
+def reload_env() -> None:
+    """Reload Directus environment variables from ``config/.env``."""
+    load_settings()  # ensures .env is loaded
+    global DIRECTUS_URL, DIRECTUS_TOKEN
+    DIRECTUS_URL = os.getenv("DIRECTUS_URL")
+    DIRECTUS_TOKEN = os.getenv("DIRECTUS_TOKEN")
+
+
 def _headers():
     if DIRECTUS_TOKEN:
         return {"Authorization": f"Bearer {DIRECTUS_TOKEN}"}

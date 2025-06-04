@@ -2,12 +2,24 @@ import json
 
 from modules.data import directus_client as dc
 
+try:
+    from modules.management.settings_manager.wizards.directus_setup import (
+        run_wizard as _directus_setup,
+    )
+except Exception:  # pragma: no cover - wizard optional
+    _directus_setup = None
+
 
 def run_directus_wizard() -> None:
     """Interactive wizard for common Directus API operations."""
     if not dc.DIRECTUS_URL:
-        print("DIRECTUS_URL not configured in config/.env\n")
-        return
+        print("DIRECTUS_URL not configured in config/.env")
+        if _directus_setup:
+            _directus_setup()
+            dc.reload_env()
+        if not dc.DIRECTUS_URL:
+            print()
+            return
 
     while True:
         print("\n=== Directus API Wizard ===")
