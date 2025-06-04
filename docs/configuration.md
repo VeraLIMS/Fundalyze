@@ -1,0 +1,41 @@
+# Configuration & Secrets
+
+Fundalyze reads configuration from the `config/` directory at startup. Two optional files are supported:
+
+1. **`.env`** – environment variables such as API tokens.
+2. **`settings.json`** – user preferences in JSON format.
+
+Both files are ignored by Git so you can safely store credentials locally.
+
+## Creating `config/.env`
+Example contents:
+```env
+# API keys
+OPENBB_TOKEN=your-openbb-key
+DIRECTUS_URL=https://your-directus.example.com
+DIRECTUS_TOKEN=secret-token
+
+# Optional collection names
+DIRECTUS_PORTFOLIO_COLLECTION=portfolio
+DIRECTUS_GROUPS_COLLECTION=groups
+```
+`modules.config_utils` automatically loads this file using [python-dotenv](https://github.com/theskumar/python-dotenv) whenever `load_settings()` is called.
+
+## Creating `config/settings.json`
+This file stores additional preferences that are not secrets. A minimal example:
+```json
+{
+  "currency": "USD",
+  "timezone": "UTC"
+}
+```
+`load_settings()` returns the parsed dictionary so other modules can access these values.
+
+## Initial Setup
+1. Clone the repository and run one of the `bootstrap_env` scripts to create a virtual environment and install dependencies.
+2. Populate `config/.env` and optionally `config/settings.json` as shown above.
+3. Launch the CLI with:
+   ```bash
+   python scripts/main.py
+   ```
+The application will pick up your configuration automatically on startup.

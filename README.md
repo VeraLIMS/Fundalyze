@@ -122,3 +122,8 @@ python scripts/performance_profile.py
 ```
 
 Results are summarized in [docs/performance_benchmarks.md](docs/performance_benchmarks.md).
+
+## Further Documentation
+
+- [Codebase Overview](docs/overview.md) – quick tour of modules and entry points.
+- [Configuration Guide](docs/configuration.md) – setting up `.env` and `settings.json`.
