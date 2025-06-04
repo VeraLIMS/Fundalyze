@@ -9,3 +9,8 @@ __pycache__/
 
 # Virtual environments
 .venv/
+
+# Output files
+output/
+groups.xlsx
+portfolio.xlsx
