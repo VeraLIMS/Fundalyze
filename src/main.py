@@ -2,9 +2,14 @@
 
 import sys
 
+# Ensure environment variables from config/.env are loaded before other modules
+from config_utils import load_settings  # noqa: E402
+
 from portfolio_manager.portfolio_manager import main as run_portfolio_manager
 from group_analysis.group_analysis import main as run_group_analysis
 from generate_report import run_generate_report
+
+SETTINGS = load_settings()
 
 
 def exit_program():

@@ -25,6 +25,10 @@ import os
 import sys
 from typing import Optional
 
+from config_utils import load_settings  # noqa: E402
+
+SETTINGS = load_settings()
+
 import pandas as pd
 import yfinance as yf
 import requests

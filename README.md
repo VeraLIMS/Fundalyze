@@ -117,3 +117,10 @@ When these variables are present `portfolio_manager` and `group_analysis` will
 read from and write to the specified Directus collections. If Directus is not
 reachable the tools automatically fall back to the Excel files.
 
+### Configuration & Secrets
+
+Place any API keys (e.g. Directus, OpenBB, OpenAI) in `config/.env` and user
+preferences in `config/settings.json`. These files are ignored by Git and will
+not be committed. The application automatically loads variables from `.env` on
+startup using `python-dotenv`.
+
