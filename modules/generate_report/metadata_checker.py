@@ -269,6 +269,30 @@ def enrich_ticker_folder(ticker_dir: Path):
         print(f"\n  • No updates made for {ticker_dir.name} (no ERROR entries found).")
 
 
+def run_for_tickers(tickers, output_root="output"):
+    """Run metadata enrichment only for the specified ticker list."""
+    project_root = Path(__file__).parent.parent.parent
+    out_root = project_root / output_root
+
+    if not out_root.exists() or not out_root.is_dir():
+        print(f"[ERROR] '{out_root}' does not exist or is not a directory.")
+        return
+
+    tickers = [t.upper() for t in tickers]
+    print(
+        f"\n[Metadata Enricher] Scanning {len(tickers)} ticker folder(s) under '{out_root}':\n"
+    )
+    for tk in tickers:
+        dir_path = out_root / tk
+        if dir_path.is_dir():
+            print(f"→ Processing folder: {tk}")
+            enrich_ticker_folder(dir_path)
+        else:
+            print(f"[WARN] Folder for '{tk}' not found under {out_root}.")
+
+    print("\n[Metadata Enricher] Done.\n")
+
+
 def main():
     project_root = Path(__file__).parent.parent.parent
     output_root = project_root / "output"
