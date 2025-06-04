@@ -1,5 +1,10 @@
 import pandas as pd
-from generate_report.excel_dashboard import _col_to_letter, _safe_concat_normal, _transpose_financials
+from generate_report.excel_dashboard import (
+    _col_to_letter,
+    _safe_concat_normal,
+    _transpose_financials,
+    _strip_timezones,
+)
 
 
 def test_col_to_letter_basic():
@@ -54,3 +59,11 @@ def test_transpose_financials():
     assert second_block.iloc[1, 1] == "EPS"
     assert second_block.iloc[1, 2] == 3
     assert pd.isna(second_block.iloc[1, 3])
+
+
+def test_strip_timezones_removes_tz():
+    idx = pd.DatetimeIndex(["2024-01-01"], tz="UTC")
+    df = pd.DataFrame({"val": [1], "ts": pd.Series([pd.Timestamp("2024-01-02", tz="UTC")])}, index=idx)
+    result = _strip_timezones(df.copy())
+    assert result.index.tz is None
+    assert result["ts"].dtype == "datetime64[ns]"
