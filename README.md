@@ -1,129 +1,80 @@
 # Fundalyze
 
-Fundalyze is a lightweight Python application for fetching, analyzing and visualizing investment portfolio data. It automates:
+Fundalyze is a Python toolkit for tracking investment portfolios. It automates fetching market data, checking for missing files and compiling an Excel dashboard with a single command. The project is designed around small reusable modules so it works just as well for a couple of tickers as it does for dozens.
 
-- **Data Acquisition** – fetches data via OpenBB and yfinance, automatically falling back to FMP when needed.
-- **Metadata Management** – verifies each ticker's completeness, re-fetches missing files and records source URLs.
-- **Dashboard Generation** – aggregates raw CSVs into a multi-sheet Excel workbook so metrics can be inspected over time.
+## Features
 
-With modular scripts for report generation, fallback data enrichment and portfolio/group analysis, Fundalyze scales from a few tickers to many.
+- **Data acquisition** using OpenBB and yfinance with automatic fallbacks
+- **Metadata checks** that verify downloaded files and re-fetch incomplete data
+- **Excel dashboard** generation to visualize metrics over time
+- **Interactive CLI** for managing your portfolio, groups, notes and settings
 
----
+## Installation
 
-## Getting Started
+Clone the repository and run one of the bootstrap scripts to create a virtual environment and install the required packages:
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/VeraLIMS/Fundalyze.git
-   cd Fundalyze
-   ```
-2. **Bootstrap your environment** – the included scripts create a virtual environment and install requirements.
+```bash
+# Windows
+./bootstrap_env.ps1
 
-   **Windows (PowerShell)**
-   ```powershell
-   .\bootstrap_env.ps1
-   ```
-   **macOS/Linux (Bash)**
-   ```bash
-   ./bootstrap_env.sh
-   ```
+# macOS/Linux
+./bootstrap_env.sh
+```
 
-   The scripts create `.venv`, activate it and install packages from `requirements.txt`. When finished you remain inside the activated environment. Launch the application with:
-   ```bash
-   python scripts/main.py
-   ```
+The scripts create `.venv`, activate it and install everything from `requirements.txt`. Afterwards you remain in the activated environment.
+
+## Configuration
+
+API tokens and user preferences live in `config/`:
+
+- `config/.env` holds secrets such as API keys
+- `config/settings.json` stores extra options like currency and timezone
+
+Both files are optional and ignored by Git. They are loaded automatically when the application starts.
 
 ## Usage
 
-After bootstrapping run `python scripts/main.py` to open the interactive menu. The CLI now uses **tabulate** for nicely formatted tables. From here you can:
-
-- Manage Portfolio
-- Manage Groups
-- Generate Reports (performs metadata checks and creates an Excel dashboard)
-- Exit
-
-Choose **Generate Reports** to enter ticker symbols, fetch data and build the dashboard.
-
-You can also launch individual tools directly:
+Start the interactive menu with:
 
 ```bash
-# open the portfolio manager
-python scripts/main.py portfolio
-
-# manage groups
-python scripts/main.py groups
-
-# generate reports without entering the menu
-python scripts/main.py report
-
-# manage Markdown notes
-python scripts/main.py notes
-
-# run metadata checker only
-python scripts/main.py metadata
-
-# fetch missing data using fallback logic
-python scripts/main.py fallback
-
-# create an Excel dashboard from existing CSVs
-python scripts/main.py dashboard
+python scripts/main.py
 ```
 
-## Project Layout
+From here you can manage portfolios and groups, generate reports, launch the note manager or edit your settings. Each tool is also available as a direct subcommand. Examples:
 
-- `config/` – configuration files including `finance_api.yaml`, `term_mapping.json`, `.env` and `settings.json`.
-- `modules/` – reusable Python modules with helpers such as `sector_counts()`.
-- `scripts/` – entry-point scripts like `main.py`.
+```bash
+python scripts/main.py portfolio   # open portfolio manager
+python scripts/main.py groups      # manage groups
+python scripts/main.py report      # generate reports and Excel dashboard
+python scripts/main.py notes       # open the note manager
+```
 
-### Comparing OpenBB and yfinance data
+### Directus integration
 
-Run `python -m data.compare <TICKER>` to fetch company profiles from both sources. Differences are shown so you can choose which dataset to keep.
+If you wish to store portfolio and group data in Directus rather than local Excel files, set the following environment variables:
 
-### Using Directus as a Data Store
-
-Set the following environment variables to read/write portfolio and group data to Directus instead of the local Excel files:
 ```bash
 export DIRECTUS_URL="https://your-directus.example.com"
 export DIRECTUS_TOKEN="<API token>"
-# Optional collection names
-export DIRECTUS_PORTFOLIO_COLLECTION="portfolio"
-export DIRECTUS_GROUPS_COLLECTION="groups"
+export DIRECTUS_PORTFOLIO_COLLECTION="portfolio"   # optional
+export DIRECTUS_GROUPS_COLLECTION="groups"         # optional
 ```
-When these variables are present the tools will use Directus and automatically fall back to Excel if it is not reachable.
 
-### Note Manager
+The tools will automatically fall back to the Excel files if Directus cannot be reached.
 
-A simple Markdown note system lives in `notes/`. Launch it with either the
-dedicated script or the new CLI subcommand:
-```bash
-# old behaviour
-python scripts/note_cli.py
+## Running tests
 
-# via the main CLI
-python scripts/main.py notes
-```
-Notes support Obsidian-style `[[wikilinks]]` for linking between files.
-
-### Configuration & Secrets
-
-Place API keys (Directus, OpenBB, OpenAI) in `config/.env` and preferences in `config/settings.json`. These files are ignored by Git and are loaded automatically using `python-dotenv`.
-
-### End-to-End Tests
-
-Automated end-to-end tests simulate common user workflows. See [docs/end_to_end_tests.md](docs/end_to_end_tests.md) for details.
-
-### Performance Tests
-
-The repository includes a small profiling utility to check the speed of key
-data processing functions. Run it with:
+Fundalyze ships with a comprehensive test suite. Run it with:
 
 ```bash
-python scripts/performance_profile.py
+pytest -q
 ```
 
-Results are summarized in [docs/performance_benchmarks.md](docs/performance_benchmarks.md).
+The end-to-end scenarios exercised by these tests are documented in [docs/end_to_end_tests.md](docs/end_to_end_tests.md).
 
-## Further Documentation
+## Additional documentation
 
-- [Codebase Overview](docs/overview.md) – quick tour of modules and entry points.
-- [Configuration Guide](docs/configuration.md) – setting up `.env` and `settings.json`.
+- [Codebase Overview](docs/overview.md)
+- [Configuration Guide](docs/configuration.md)
+- [Performance Benchmarks](docs/performance_benchmarks.md)
+
