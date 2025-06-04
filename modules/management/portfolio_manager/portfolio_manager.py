@@ -235,7 +235,10 @@ def add_tickers(portfolio: pd.DataFrame) -> pd.DataFrame:
 
         # Append to portfolio DataFrame using pd.concat
         new_row = pd.DataFrame([data], columns=COLUMNS)
-        portfolio = pd.concat([portfolio, new_row], ignore_index=True)
+        if portfolio.empty:
+            portfolio = new_row
+        else:
+            portfolio = pd.concat([portfolio, new_row], ignore_index=True)
         print(f"  ✓ Added '{tk}' to portfolio.\n")
 
     return portfolio
