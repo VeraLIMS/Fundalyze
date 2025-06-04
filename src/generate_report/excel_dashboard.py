@@ -9,6 +9,16 @@ from datetime import datetime
 import pandas as pd
 
 
+def _col_to_letter(idx: int) -> str:
+    """Return Excel-style column letters (0-based)."""
+    letters = ""
+    while idx >= 0:
+        idx, rem = divmod(idx, 26)
+        letters = chr(65 + rem) + letters
+        idx -= 1
+    return letters
+
+
 def _transpose_financials(ticker_dfs: dict[str, pd.DataFrame]) -> pd.DataFrame:
     """
     Given ticker_dfs mapping ticker → DataFrame (with a 'Period' column plus metrics),
@@ -223,7 +233,6 @@ def create_dashboard(output_root: str = "output") -> Path:
 
     # Write to Excel, adding each sheet as a named Table
     with pd.ExcelWriter(dash_path, engine="xlsxwriter") as writer:
-        workbook = writer.book
 
         # ── Sheet: Profile ───────────────────────────────────────────
         if not df_profiles.empty:
@@ -235,7 +244,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             last_row = nrows      # header is row 0, data runs 1..nrows
             last_col = ncols - 1
             # e.g. "A1:E101" if 100 data rows and 5 columns total
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -255,7 +264,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_prices.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -275,7 +284,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_inc_ann.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -295,7 +304,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_inc_qtr.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -315,7 +324,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_bal_ann.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -335,7 +344,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_bal_qtr.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -355,7 +364,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_cash_ann.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
@@ -375,7 +384,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             nrows, ncols = df_cash_qtr.shape
             last_row = nrows
             last_col = ncols - 1
-            table_range = f"A1:{chr(ord('A') + last_col)}{last_row + 1}"
+            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
             worksheet.add_table(
                 table_range,
                 {
