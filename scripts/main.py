@@ -1,6 +1,14 @@
 # src/main.py
 
 import sys
+import os
+
+# Add the repository root to sys.path so 'modules' can be imported when this
+# script is executed directly via `python scripts/main.py`.
+SCRIPT_DIR = os.path.dirname(__file__)
+REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, os.pardir))
+if REPO_ROOT not in sys.path:
+    sys.path.insert(0, REPO_ROOT)
 
 # Ensure environment variables from config/.env are loaded before other modules
 from modules.config_utils import load_settings  # noqa: E402
