@@ -1,0 +1,7 @@
+{
+  "Technology": ["Tech", "Information Technology", "IT"],
+  "Financials": ["Finance", "Financial Services"],
+  "Healthcare": ["Health Care", "Medical"],
+  "Consumer Discretionary": ["Consumer Cyclical"],
+  "Consumer Staples": ["Consumer Defensive"]
+}
