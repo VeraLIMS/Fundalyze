@@ -18,13 +18,14 @@ DIRECTUS_TOKEN=secret-token
 # Optional collection names
 DIRECTUS_PORTFOLIO_COLLECTION=portfolio
 DIRECTUS_GROUPS_COLLECTION=groups
+OUTPUT_DIR=output
 ```
 To obtain an OpenBB API token visit the
 [OpenBB documentation](https://docs.openbb.co/platform/getting_started/api_requests)
 and sign up for an account. Once acquired, run the **OpenBB API Token** wizard
 inside the Settings Manager to store the token. The Settings Manager also
 provides wizards for configuring your **Directus connection** and **Notes
-directory** so you rarely need to edit this file manually.
+directory**. Another wizard sets the **Output Directory** used for reports.
 `modules.config_utils` automatically loads this file using [python-dotenv](https://github.com/theskumar/python-dotenv) whenever `load_settings()` is called.
 
 ## Creating `config/settings.json`

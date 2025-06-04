@@ -92,8 +92,10 @@ def _safe_concat_normal(ticker_dfs: dict[str, pd.DataFrame]) -> pd.DataFrame:
 
 from typing import Iterable, Optional
 
+from modules.config_utils import get_output_dir
 
-def create_dashboard(output_root: str = "output", *, tickers: Optional[Iterable[str]] = None) -> Path:
+
+def create_dashboard(output_root: str | None = None, *, tickers: Optional[Iterable[str]] = None) -> Path:
     """
     1) Find subfolders under output_root (one per ticker).
     2) Read these CSVs if present:
@@ -126,6 +128,9 @@ def create_dashboard(output_root: str = "output", *, tickers: Optional[Iterable[
     Returns:
         Path to the newly created .xlsx file.
     """
+    if output_root is None:
+        output_root = str(get_output_dir())
+
     root = Path(output_root)
     if not root.exists() or not root.is_dir():
         raise FileNotFoundError(f"Output folder '{output_root}' not found.")
@@ -429,7 +434,7 @@ def show_dashboard_in_excel(dashboard_path: Path):
         subprocess.call(["xdg-open", str(dashboard_path)])
 
 
-def create_and_open_dashboard(output_root: str = "output", *, tickers: Optional[Iterable[str]] = None):
+def create_and_open_dashboard(output_root: str | None = None, *, tickers: Optional[Iterable[str]] = None):
     """
     Create an Excel dashboard (with named Tables) and open it automatically.
     """

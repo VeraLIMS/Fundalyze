@@ -111,6 +111,7 @@ python scripts/main.py notes
 ```
 Notes support Obsidian-style `[[wikilinks]]` for linking between files.
 Use the **Notes Directory** wizard in the Settings Manager if you want to store notes elsewhere.
+The report **Output Directory** can likewise be set via the corresponding wizard or `OUTPUT_DIR` environment variable.
 
 ### Configuration & Secrets
 

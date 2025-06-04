@@ -79,7 +79,7 @@ def run_generate_report():
     # ─────────────────────────────────────────────────────────────────
     # Now create and open the Excel dashboard. Any exception will be printed.
     try:
-        create_and_open_dashboard(output_root="output", tickers=tickers)
+        create_and_open_dashboard(tickers=tickers)
     except Exception as e:
         print(f"[ERROR] Could not create/open Excel dashboard: {e}")
 

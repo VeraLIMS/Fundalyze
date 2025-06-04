@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Any, Dict
 
@@ -54,3 +55,8 @@ def save_env(env: Dict[str, str]) -> None:
     with open(ENV_PATH, "w", encoding="utf-8") as f:
         for key, val in env.items():
             f.write(f"{key}={val}\n")
+
+
+def get_output_dir() -> Path:
+    """Return output directory path from ``OUTPUT_DIR`` env variable."""
+    return Path(os.getenv("OUTPUT_DIR", "output"))

@@ -15,11 +15,13 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from modules.config_utils import get_output_dir
+
 # Delay heavy OpenBB import until needed
 obb = None
 
 
-def fetch_and_compile(symbol: str, base_output: str = "output"):
+def fetch_and_compile(symbol: str, base_output: str | None = None):
     """
     1) Create output/<symbol>/
     2) Fetch company profile, save as profile.csv, record source & source_url
@@ -32,6 +34,9 @@ def fetch_and_compile(symbol: str, base_output: str = "output"):
     if obb is None:
         from openbb import obb as _obb
         obb = _obb
+
+    if base_output is None:
+        base_output = str(get_output_dir())
 
     symbol = symbol.upper()
     ticker_dir = os.path.join(base_output, symbol)

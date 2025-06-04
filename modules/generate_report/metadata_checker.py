@@ -12,6 +12,8 @@ metadata.json with new source, source_url, and fetched_at timestamp.
 import json
 from pathlib import Path
 
+from modules.config_utils import get_output_dir
+
 import pandas as pd
 import yfinance as yf
 import requests
@@ -272,10 +274,12 @@ def enrich_ticker_folder(ticker_dir: Path):
         print(f"\n  • No updates made for {ticker_dir.name} (no ERROR entries found).")
 
 
-def run_for_tickers(tickers, output_root="output"):
+def run_for_tickers(tickers, output_root: str | None = None):
     """Run metadata enrichment only for the specified ticker list."""
     project_root = Path(__file__).resolve().parents[2]
-    out_root = project_root / output_root
+    if output_root is None:
+        output_root = str(get_output_dir())
+    out_root = project_root / output_root if not Path(output_root).is_absolute() else Path(output_root)
 
     if not out_root.exists() or not out_root.is_dir():
         print(f"[ERROR] '{out_root}' does not exist or is not a directory.")
@@ -296,9 +300,11 @@ def run_for_tickers(tickers, output_root="output"):
     print("\n[Metadata Enricher] Done.\n")
 
 
-def main():
+def main(output_root: str | None = None):
     project_root = Path(__file__).resolve().parents[2]
-    output_root = project_root / "output"
+    if output_root is None:
+        output_root = str(get_output_dir())
+    output_root = project_root / output_root if not Path(output_root).is_absolute() else Path(output_root)
 
     if not output_root.exists() or not output_root.is_dir():
         print(f"[ERROR] '{output_root}' does not exist or is not a directory.")
