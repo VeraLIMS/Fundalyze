@@ -98,7 +98,7 @@ def test_portfolio_manager_cli_end_to_end(tmp_path, monkeypatch):
         "2",       # choose Add ticker
         "AAA",     # ticker list
         "y",       # accept info
-        "4",       # exit
+        "5",       # exit
     ])
     monkeypatch.setattr("builtins.input", lambda *_args: next(inputs))
 
