@@ -19,6 +19,10 @@ Tools for maintaining local data files:
 - `group_analysis` – manage related tickers in `groups.xlsx`.
 - `note_manager` – simple Markdown note system supporting `[[wikilinks]]`.
 
+Importing `modules.management` exposes convenience functions such as
+`run_portfolio_manager()` and `run_group_analysis()` for launching each tool
+directly.
+
 ### `modules.data`
 Lower-level helpers used across the app:
 - `fetching.py` – small wrappers around yfinance and HTTP calls.
