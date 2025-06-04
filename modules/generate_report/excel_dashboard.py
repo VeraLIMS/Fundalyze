@@ -90,7 +90,10 @@ def _safe_concat_normal(ticker_dfs: dict[str, pd.DataFrame]) -> pd.DataFrame:
     return pd.concat(frames, axis=0, ignore_index=True, sort=True)
 
 
-def create_dashboard(output_root: str = "output") -> Path:
+from typing import Iterable, Optional
+
+
+def create_dashboard(output_root: str = "output", *, tickers: Optional[Iterable[str]] = None) -> Path:
     """
     1) Find subfolders under output_root (one per ticker).
     2) Read these CSVs if present:
@@ -127,7 +130,15 @@ def create_dashboard(output_root: str = "output") -> Path:
     if not root.exists() or not root.is_dir():
         raise FileNotFoundError(f"Output folder '{output_root}' not found.")
 
-    ticker_dirs = sorted([p for p in root.iterdir() if p.is_dir()])
+    if tickers is None:
+        ticker_dirs = sorted([p for p in root.iterdir() if p.is_dir()])
+    else:
+        ticker_dirs = []
+        for tk in tickers:
+            td = root / tk
+            if td.is_dir():
+                ticker_dirs.append(td)
+
 
     profiles = {}
     prices = {}
@@ -418,11 +429,11 @@ def show_dashboard_in_excel(dashboard_path: Path):
         subprocess.call(["xdg-open", str(dashboard_path)])
 
 
-def create_and_open_dashboard(output_root: str = "output"):
+def create_and_open_dashboard(output_root: str = "output", *, tickers: Optional[Iterable[str]] = None):
     """
     Create an Excel dashboard (with named Tables) and open it automatically.
     """
-    dash_path = create_dashboard(output_root=output_root)
+    dash_path = create_dashboard(output_root=output_root, tickers=tickers)
     print(f"\n✅ Excel dashboard created at:\n   {dash_path}\n")
     print("Opening it now…\n")
     show_dashboard_in_excel(dash_path)

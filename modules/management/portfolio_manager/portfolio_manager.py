@@ -258,6 +258,25 @@ def remove_ticker(portfolio: pd.DataFrame) -> pd.DataFrame:
     return portfolio
 
 
+def update_tickers(portfolio: pd.DataFrame) -> pd.DataFrame:
+    """Refresh data for each ticker via yfinance."""
+    if portfolio.empty:
+        print("Portfolio is empty.\n")
+        return portfolio
+
+    for idx, row in portfolio.iterrows():
+        tk = row["Ticker"]
+        try:
+            data = fetch_from_yfinance(tk)
+            for col in COLUMNS[1:]:
+                portfolio.at[idx, col] = data.get(col, portfolio.at[idx, col])
+            print(f"  ✓ Updated {tk}")
+        except Exception as e:
+            print(f"  × Could not update {tk}: {e}")
+
+    return portfolio
+
+
 def view_portfolio(portfolio: pd.DataFrame):
     """
     Display the current portfolio in a tabular format.
@@ -287,9 +306,10 @@ def main():
         print("Choose an action:")
         print("  1) View portfolio")
         print("  2) Add ticker(s)")
-        print("  3) Remove ticker")
-        print("  4) Exit")
-        choice = input("Enter 1/2/3/4: ").strip()
+        print("  3) Update ticker data")
+        print("  4) Remove ticker")
+        print("  5) Exit")
+        choice = input("Enter 1/2/3/4/5: ").strip()
 
         if choice == "1":
             view_portfolio(portfolio)
@@ -299,15 +319,19 @@ def main():
             save_portfolio(portfolio, PORTFOLIO_FILE)
 
         elif choice == "3":
-            portfolio = remove_ticker(portfolio)
+            portfolio = update_tickers(portfolio)
             save_portfolio(portfolio, PORTFOLIO_FILE)
 
         elif choice == "4":
+            portfolio = remove_ticker(portfolio)
+            save_portfolio(portfolio, PORTFOLIO_FILE)
+
+        elif choice == "5":
             print("Exiting Portfolio Manager.")
             break
 
         else:
-            print("Invalid choice. Please select 1, 2, 3, or 4.\n")
+            print("Invalid choice. Please select 1-5.\n")
 
 
 if __name__ == "__main__":
