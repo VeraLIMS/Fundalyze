@@ -6,7 +6,29 @@ import json
 from pathlib import Path
 from typing import Dict
 
+import importlib
+
 from modules.config_utils import CONFIG_DIR, ENV_PATH, SETTINGS_PATH, load_env, load_settings, save_env, save_settings
+
+
+def _discover_wizards():
+    """Return list of (label, callable) tuples for available wizard modules."""
+    wizards = []
+    wiz_dir = Path(__file__).resolve().parent / "wizards"
+    if wiz_dir.exists():
+        for py in sorted(wiz_dir.glob("*.py")):
+            if py.name.startswith("_") or py.name == "__init__.py":
+                continue
+            module_name = f"{__package__}.wizards.{py.stem}"
+            try:
+                mod = importlib.import_module(module_name)
+            except Exception:
+                continue
+            label = getattr(mod, "LABEL", py.stem)
+            func = getattr(mod, "run_wizard", None)
+            if callable(func):
+                wizards.append((label, func))
+    return wizards
 
 
 def _prompt_kv() -> tuple[str, str]:
@@ -15,72 +37,85 @@ def _prompt_kv() -> tuple[str, str]:
     return key, value
 
 
+def _show_dict(data: Dict[str, str]) -> None:
+    if not data:
+        print("(empty)")
+    else:
+        for k, v in data.items():
+            print(f"{k} = {v}")
+
+
+def _set_setting() -> None:
+    key, val = _prompt_kv()
+    data = load_settings()
+    data[key] = val
+    save_settings(data)
+    print("Saved setting.\n")
+
+
+def _del_setting() -> None:
+    key = input("Key to delete: ").strip()
+    data = load_settings()
+    if key in data:
+        data.pop(key)
+        save_settings(data)
+        print("Deleted.\n")
+    else:
+        print("Key not found.\n")
+
+
+def _set_env_var() -> None:
+    key, val = _prompt_kv()
+    env = load_env()
+    env[key] = val
+    save_env(env)
+    print("Saved variable.\n")
+
+
+def _del_env_var() -> None:
+    key = input("Variable to delete: ").strip()
+    env = load_env()
+    if key in env:
+        env.pop(key)
+        save_env(env)
+        print("Deleted.\n")
+    else:
+        print("Key not found.\n")
+
+
 def run_settings_manager() -> None:
-    """Simple CLI to view and edit configuration files."""
+    """Interactive menu to edit configuration and run setup wizards."""
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+    wizards = _discover_wizards()
 
     while True:
         print("\n=== Settings Manager ===")
-        print("1) View settings.json")
-        print("2) Set setting")
-        print("3) Delete setting")
-        print("4) View .env")
-        print("5) Set .env variable")
-        print("6) Delete .env variable")
-        print("7) Exit")
+
+        options: list[tuple[str, callable | None]] = [
+            ("View settings.json", lambda: _show_dict(load_settings())),
+            ("Set setting", _set_setting),
+            ("Delete setting", _del_setting),
+            ("View .env", lambda: _show_dict(load_env())),
+            ("Set .env variable", _set_env_var),
+            ("Delete .env variable", _del_env_var),
+        ]
+
+        # Append dynamic wizards
+        for label, func in wizards:
+            options.append((f"Run wizard: {label}", func))
+
+        options.append(("Exit", None))
+
+        for idx, (lbl, _) in enumerate(options, start=1):
+            print(f"{idx}) {lbl}")
+
         choice = input("Enter choice: ").strip()
-
-        if choice == "1":
-            data = load_settings()
-            if not data:
-                print("(empty)")
-            else:
-                for k, v in data.items():
-                    print(f"{k} = {v}")
-
-        elif choice == "2":
-            key, val = _prompt_kv()
-            data = load_settings()
-            data[key] = val
-            save_settings(data)
-            print("Saved setting.\n")
-
-        elif choice == "3":
-            key = input("Key to delete: ").strip()
-            data = load_settings()
-            if key in data:
-                data.pop(key)
-                save_settings(data)
-                print("Deleted.\n")
-            else:
-                print("Key not found.\n")
-
-        elif choice == "4":
-            env = load_env()
-            if not env:
-                print("(empty)")
-            else:
-                for k, v in env.items():
-                    print(f"{k}={v}")
-
-        elif choice == "5":
-            key, val = _prompt_kv()
-            env = load_env()
-            env[key] = val
-            save_env(env)
-            print("Saved variable.\n")
-
-        elif choice == "6":
-            key = input("Variable to delete: ").strip()
-            env = load_env()
-            if key in env:
-                env.pop(key)
-                save_env(env)
-                print("Deleted.\n")
-            else:
-                print("Key not found.\n")
-
-        elif choice == "7":
-            break
-        else:
+        if not choice.isdigit() or not (1 <= int(choice) <= len(options)):
             print("Invalid choice.\n")
+            continue
+
+        idx = int(choice) - 1
+        _, action = options[idx]
+        if action is None:
+            break
+        action()

@@ -271,7 +271,7 @@ def enrich_ticker_folder(ticker_dir: Path):
 
 def run_for_tickers(tickers, output_root="output"):
     """Run metadata enrichment only for the specified ticker list."""
-    project_root = Path(__file__).parent.parent.parent
+    project_root = Path(__file__).resolve().parents[2]
     out_root = project_root / output_root
 
     if not out_root.exists() or not out_root.is_dir():
@@ -294,7 +294,7 @@ def run_for_tickers(tickers, output_root="output"):
 
 
 def main():
-    project_root = Path(__file__).parent.parent.parent
+    project_root = Path(__file__).resolve().parents[2]
     output_root = project_root / "output"
 
     if not output_root.exists() or not output_root.is_dir():
