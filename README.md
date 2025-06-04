@@ -2,7 +2,7 @@
 
 Fundalyze is a lightweight Python application for fetching, analyzing and visualizing investment portfolio data. It automates:
 
-- **Data Acquisition** – fetches prices, company profiles and financial statements via OpenBB, yfinance and FMP.
+- **Data Acquisition** – fetches data via OpenBB and yfinance, automatically falling back to FMP when needed.
 - **Metadata Management** – verifies each ticker's completeness, re-fetches missing files and records source URLs.
 - **Dashboard Generation** – aggregates raw CSVs into a multi-sheet Excel workbook so metrics can be inspected over time.
 
