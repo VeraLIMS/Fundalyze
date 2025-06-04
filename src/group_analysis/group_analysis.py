@@ -23,8 +23,11 @@ Description:
 
 import os
 import sys
+from typing import Optional
+
 import pandas as pd
 import yfinance as yf
+import requests
 from term_mapper import resolve_term
 
 PORTFOLIO_FILE = "portfolio.xlsx"
@@ -83,6 +86,22 @@ def save_groups(df: pd.DataFrame, filepath: str):
         print(f"→ Saved groups to '{filepath}'.\n")
     except Exception as e:
         print(f"Error saving groups: {e}")
+
+    # Sync with Directus if configured
+    api_url = os.getenv("DIRECTUS_URL")
+    token = os.getenv("DIRECTUS_TOKEN")
+    if api_url and token:
+        try:
+            url = f"{api_url.rstrip('/')}/items/groups"
+            headers = {"Authorization": f"Bearer {token}"}
+            records = df.to_dict(orient="records")
+            resp = requests.post(url, json=records, headers=headers, params={"upsert": "Ticker"})
+            if resp.status_code >= 300:
+                print(f"Warning syncing groups to Directus: {resp.status_code} {resp.text}")
+            else:
+                print("→ Synced groups to Directus.\n")
+        except Exception as e:
+            print(f"Error syncing groups to Directus: {e}")
 
 
 def fetch_from_yfinance(ticker: str) -> dict:

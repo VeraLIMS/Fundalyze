@@ -17,8 +17,11 @@ Description:
 
 import os
 import sys
+from typing import Optional
+
 import pandas as pd
 import yfinance as yf
+import requests
 from term_mapper import resolve_term
 
 PORTFOLIO_FILE = "portfolio.xlsx"
@@ -63,6 +66,22 @@ def save_portfolio(df: pd.DataFrame, filepath: str):
         print(f"→ Saved portfolio to '{filepath}'.\n")
     except Exception as e:
         print(f"Error saving portfolio: {e}")
+
+    # Also sync with Directus if environment variables are configured
+    api_url = os.getenv("DIRECTUS_URL")
+    token = os.getenv("DIRECTUS_TOKEN")
+    if api_url and token:
+        try:
+            url = f"{api_url.rstrip('/')}/items/portfolio"
+            headers = {"Authorization": f"Bearer {token}"}
+            records = df.to_dict(orient="records")
+            resp = requests.post(url, json=records, headers=headers, params={"upsert": "Ticker"})
+            if resp.status_code >= 300:
+                print(f"Warning syncing portfolio to Directus: {resp.status_code} {resp.text}")
+            else:
+                print("→ Synced portfolio to Directus.\n")
+        except Exception as e:
+            print(f"Error syncing portfolio to Directus: {e}")
 
 
 def prompt_manual_entry(ticker: str) -> dict:
