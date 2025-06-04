@@ -1,5 +1,7 @@
 import pandas as pd
 from analytics import portfolio_summary, sector_counts
+import pytest
+from analytics import correlation_matrix
 
 
 def test_portfolio_summary_numeric_columns():
@@ -32,3 +34,18 @@ def test_sector_counts_basic():
 def test_sector_counts_no_sector_column():
     df = pd.DataFrame({"Ticker": ["A", "B"]})
     assert sector_counts(df).empty
+
+def test_correlation_matrix_basic():
+    df = pd.DataFrame({
+        "A": [1, 2, 3],
+        "B": [2, 4, 6],
+        "Label": ["x", "y", "z"],
+    })
+    corr = correlation_matrix(df)
+    assert list(corr.index) == ["A", "B"]
+    assert corr.loc["A", "B"] == pytest.approx(1.0)
+
+
+def test_correlation_matrix_insufficient_data():
+    df = pd.DataFrame({"A": [1, 2, 3]})
+    assert correlation_matrix(df).empty
