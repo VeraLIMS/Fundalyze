@@ -1,4 +1,9 @@
-# src/main.py
+#!/usr/bin/env python3
+"""Command line entry point for the Fundalyze utilities.
+
+This script exposes a simple CLI as well as an interactive menu which routes
+to the various management tools bundled with Fundalyze.
+"""
 
 import sys
 import os
@@ -44,6 +49,41 @@ def invalid_choice():
     print("Invalid choice. Please select a valid option.\n")
 
 
+ACTION_ITEMS: list[tuple[str, callable]] = [
+    ("Manage Portfolio", run_portfolio_manager),
+    ("Manage Groups", run_group_analysis),
+    ("Generate Reports (with metadata, fallback & Excel)", run_generate_report),
+    ("Manage Notes", run_note_manager),
+    ("Manage Settings", run_settings_manager),
+    ("Directus Wizard", run_directus_wizard),
+    ("Exit", exit_program),
+]
+
+COMMAND_MAP: dict[str, callable] = {
+    "portfolio": run_portfolio_manager,
+    "groups": run_group_analysis,
+    "report": run_generate_report,
+    "notes": run_note_manager,
+    "settings": run_settings_manager,
+    "metadata": run_metadata_checker,
+    "fallback": run_fallback_data,
+    "dashboard": create_and_open_dashboard,
+    "directus": run_directus_wizard,
+}
+
+COMMAND_HELP = {
+    "portfolio": "Launch portfolio manager",
+    "groups": "Launch group manager",
+    "report": "Generate reports",
+    "notes": "Launch note manager",
+    "settings": "Edit configuration",
+    "metadata": "Run metadata checker",
+    "fallback": "Run fallback data fetch",
+    "dashboard": "Create Excel dashboard",
+    "directus": "Launch Directus wizard",
+}
+
+
 def interactive_menu():
     """
     Main menu loop. Each submenu is grouped into its own package:
@@ -56,26 +96,18 @@ def interactive_menu():
       6) Directus Wizard        → directus_tools/directus_wizard.py
       7) Exit
     """
-    ACTIONS = [
-        ("Manage Portfolio",               run_portfolio_manager),
-        ("Manage Groups",                  run_group_analysis),
-        ("Generate Reports (with metadata, fallback & Excel)", run_generate_report),
-        ("Manage Notes",                  run_note_manager),
-        ("Manage Settings",               run_settings_manager),
-        ("Directus Wizard",               run_directus_wizard),
-        ("Exit",                           exit_program),
-    ]
+    actions = ACTION_ITEMS
 
     while True:
         print("\n=== Main Menu ===")
-        for idx, (label, _) in enumerate(ACTIONS, start=1):
+        for idx, (label, _) in enumerate(actions, start=1):
             print(f"  {idx}) {label}")
-        choice = input(f"Enter 1-{len(ACTIONS)}: ").strip()
+        choice = input(f"Enter 1-{len(actions)}: ").strip()
 
         if choice.isdigit():
             idx = int(choice) - 1
-            if 0 <= idx < len(ACTIONS):
-                _, action = ACTIONS[idx]
+            if 0 <= idx < len(actions):
+                _, action = actions[idx]
                 action()
             else:
                 invalid_choice()
@@ -87,15 +119,8 @@ def parse_args() -> argparse.Namespace:
     """Return parsed CLI arguments."""
     parser = argparse.ArgumentParser(description="Fundalyze command line interface")
     sub = parser.add_subparsers(dest="command")
-    sub.add_parser("portfolio", help="Launch portfolio manager")
-    sub.add_parser("groups", help="Launch group manager")
-    sub.add_parser("report", help="Generate reports")
-    sub.add_parser("notes", help="Launch note manager")
-    sub.add_parser("settings", help="Edit configuration")
-    sub.add_parser("metadata", help="Run metadata checker")
-    sub.add_parser("fallback", help="Run fallback data fetch")
-    sub.add_parser("dashboard", help="Create Excel dashboard")
-    sub.add_parser("directus", help="Launch Directus wizard")
+    for cmd in COMMAND_MAP:
+        sub.add_parser(cmd, help=COMMAND_HELP.get(cmd, cmd))
     sub.add_parser("menu", help="Interactive menu (default)")
     return parser.parse_args()
 
@@ -103,24 +128,13 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     cmd = args.command or "menu"
-    if cmd == "portfolio":
-        run_portfolio_manager()
-    elif cmd == "groups":
-        run_group_analysis()
-    elif cmd == "report":
-        run_generate_report()
-    elif cmd == "notes":
-        run_note_manager()
-    elif cmd == "settings":
-        run_settings_manager()
-    elif cmd == "metadata":
-        run_metadata_checker()
-    elif cmd == "fallback":
-        run_fallback_data()
-    elif cmd == "dashboard":
-        create_and_open_dashboard()
-    elif cmd == "directus":
-        run_directus_wizard()
+    if cmd == "menu":
+        interactive_menu()
+        return
+
+    action = COMMAND_MAP.get(cmd)
+    if action:
+        action()
     else:
         interactive_menu()
 
