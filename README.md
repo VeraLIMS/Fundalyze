@@ -135,6 +135,7 @@ Results are summarized in [docs/performance_benchmarks.md](docs/performance_benc
 
 - [Codebase Overview](docs/overview.md) – quick tour of modules and entry points.
 - [Configuration Guide](docs/configuration.md) – setting up `.env` and `settings.json`.
+- [Report Generation Guide](docs/report_generation.md) – how reporting files are created.
 
 ## License
 
