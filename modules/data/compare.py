@@ -1,4 +1,5 @@
 import logging
+import sys
 from typing import Dict, Tuple
 
 import pandas as pd
@@ -86,4 +87,22 @@ def interactive_profile(symbol: str) -> pd.DataFrame:
     if choice == 'y':
         return yf_df
     return obb_df
+
+
+def _main(argv: list[str]) -> int:
+    """Entry point for ``python -m data.compare``."""
+    if len(argv) != 2:
+        print("Usage: python -m data.compare <TICKER>")
+        return 1
+    symbol = argv[1].upper()
+    df = interactive_profile(symbol)
+    if df.empty:
+        print("No data available.")
+        return 1
+    print(df.to_string(index=False))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(_main(sys.argv))
 
