@@ -1,4 +1,5 @@
 import os
+import logging
 import requests
 from typing import Any, Dict
 
@@ -9,6 +10,8 @@ load_settings()  # ensure .env is read when this module is imported
 DIRECTUS_URL = os.getenv("DIRECTUS_URL")
 DIRECTUS_TOKEN = os.getenv("DIRECTUS_TOKEN")
 
+logger = logging.getLogger(__name__)
+
 
 def _headers():
     if DIRECTUS_TOKEN:
@@ -17,12 +20,24 @@ def _headers():
 
 
 def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any]:
-    """Helper to send an authenticated request to the Directus API."""
+    """Send an authenticated request to the Directus API with error handling."""
     if not DIRECTUS_URL:
         raise RuntimeError("DIRECTUS_URL not configured")
+
     url = f"{DIRECTUS_URL.rstrip('/')}/{path.lstrip('/')}"
-    resp = requests.request(method, url, headers=_headers(), **kwargs)
-    resp.raise_for_status()
+    payload = kwargs.get("json") or kwargs.get("data") or kwargs.get("params")
+    if payload:
+        logger.debug("Directus request %s %s payload=%s", method, url, payload)
+    else:
+        logger.debug("Directus request %s %s", method, url)
+    try:
+        resp = requests.request(method, url, headers=_headers(), timeout=30, **kwargs)
+        resp.raise_for_status()
+    except requests.RequestException as exc:
+        status = getattr(exc.response, "status_code", "?")
+        body = getattr(exc.response, "text", "")
+        logger.error("Directus error %s %s: %s", status, url, body)
+        raise RuntimeError(f"Directus request failed: {method} {url} -> {status} {body}") from exc
     return resp.json()
 
 def list_collections() -> list[str]:
