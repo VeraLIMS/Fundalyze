@@ -10,7 +10,6 @@ metadata.json with new source, source_url, and fetched_at timestamp.
 """
 
 import json
-import os
 import time
 from pathlib import Path
 
