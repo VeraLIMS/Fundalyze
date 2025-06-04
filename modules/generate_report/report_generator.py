@@ -14,7 +14,9 @@ import time
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
-from openbb import obb
+
+# Delay heavy OpenBB import until needed
+obb = None
 
 
 def fetch_and_compile(symbol: str, base_output: str = "output"):
@@ -26,6 +28,11 @@ def fetch_and_compile(symbol: str, base_output: str = "output"):
     5) Write report.md with clickable [label](url) for each source
     6) Write metadata.json containing {"source", "source_url", "fetched_at"} for each file
     """
+    global obb
+    if obb is None:
+        from openbb import obb as _obb
+        obb = _obb
+
     symbol = symbol.upper()
     ticker_dir = os.path.join(base_output, symbol)
     os.makedirs(ticker_dir, exist_ok=True)
