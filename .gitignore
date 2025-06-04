@@ -4,6 +4,7 @@ config/settings.json
 
 # Byte-compiled / cache files
 __pycache__/
+**/__pycache__/
 *.py[cod]
 
 # Virtual environments
