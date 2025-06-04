@@ -58,6 +58,15 @@ python scripts/main.py report
 
 # manage Markdown notes
 python scripts/main.py notes
+
+# run metadata checker only
+python scripts/main.py metadata
+
+# fetch missing data using fallback logic
+python scripts/main.py fallback
+
+# create an Excel dashboard from existing CSVs
+python scripts/main.py dashboard
 ```
 
 ## Project Layout

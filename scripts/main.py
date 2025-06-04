@@ -16,7 +16,12 @@ from modules.config_utils import load_settings  # noqa: E402
 
 from modules.management.portfolio_manager.portfolio_manager import main as run_portfolio_manager
 from modules.management.group_analysis.group_analysis import main as run_group_analysis
-from modules.generate_report import run_generate_report
+from modules.generate_report import (
+    run_generate_report,
+    run_metadata_checker,
+    run_fallback_data,
+    create_and_open_dashboard,
+)
 from modules.management.note_manager import run_note_manager
 
 SETTINGS = load_settings()
@@ -75,6 +80,9 @@ def parse_args() -> argparse.Namespace:
     sub.add_parser("groups", help="Launch group manager")
     sub.add_parser("report", help="Generate reports")
     sub.add_parser("notes", help="Launch note manager")
+    sub.add_parser("metadata", help="Run metadata checker")
+    sub.add_parser("fallback", help="Run fallback data fetch")
+    sub.add_parser("dashboard", help="Create Excel dashboard")
     sub.add_parser("menu", help="Interactive menu (default)")
     return parser.parse_args()
 
@@ -90,6 +98,12 @@ def main() -> None:
         run_generate_report()
     elif cmd == "notes":
         run_note_manager()
+    elif cmd == "metadata":
+        run_metadata_checker()
+    elif cmd == "fallback":
+        run_fallback_data()
+    elif cmd == "dashboard":
+        create_and_open_dashboard()
     else:
         interactive_menu()
 
