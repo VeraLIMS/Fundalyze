@@ -1,5 +1,6 @@
 import json
 import os
+from pathlib import Path
 from typing import Dict, List, Optional
 
 from modules.config_utils import load_settings  # noqa: E402
@@ -12,20 +13,20 @@ except Exception:
     openai = None
 
 
-# Configuration file is stored under the repository's `config/` directory
-MAPPING_FILE = os.path.join(os.path.dirname(__file__), '..', 'config', 'term_mapping.json')
-MAPPING_FILE = os.path.abspath(MAPPING_FILE)
+# Configuration file lives in the project's top-level `config/` directory
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+MAPPING_FILE = PROJECT_ROOT / 'config' / 'term_mapping.json'
 
 
 def load_mapping() -> Dict[str, List[str]]:
-    if not os.path.isfile(MAPPING_FILE):
+    if not MAPPING_FILE.is_file():
         return {}
     with open(MAPPING_FILE, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
 def save_mapping(mapping: Dict[str, List[str]]):
-    os.makedirs(os.path.dirname(MAPPING_FILE), exist_ok=True)
+    MAPPING_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(MAPPING_FILE, 'w', encoding='utf-8') as f:
         json.dump(mapping, f, indent=2)
 
