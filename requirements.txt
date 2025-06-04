@@ -13,3 +13,4 @@ openbb[all]
 matplotlib
 yfinance
 openai
+requests

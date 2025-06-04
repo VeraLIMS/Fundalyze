@@ -91,3 +91,21 @@ Run a metadata check to re-fetch any missing data.
 
 Generate a multi-sheet Excel dashboard (with transposed tables) for quick analysis.
 
+### Using Directus as a Data Store
+
+If you have a Directus instance available you can store the portfolio and group
+information there instead of using the local Excel files. Set the environment
+variables below before running the application:
+
+```bash
+export DIRECTUS_URL="https://your-directus.example.com"  # base URL of your Directus API
+export DIRECTUS_TOKEN="<API token>"                       # token with read/write permissions
+# Optional: override the collection names
+export DIRECTUS_PORTFOLIO_COLLECTION="portfolio"
+export DIRECTUS_GROUPS_COLLECTION="groups"
+```
+
+When these variables are present `portfolio_manager` and `group_analysis` will
+read from and write to the specified Directus collections. If Directus is not
+reachable the tools automatically fall back to the Excel files.
+
