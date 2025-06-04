@@ -1,7 +1,7 @@
 # src/generate_report/__init__.py
 
 from .report_generator import fetch_and_compile
-from .metadata_checker import main as run_metadata_checker
+from .metadata_checker import main as run_metadata_checker, run_for_tickers
 from .fallback_data import run_fallback_data
 from .excel_dashboard import create_and_open_dashboard
 
@@ -28,10 +28,10 @@ def run_generate_report():
             print(f"  ⚠ Error while generating report for {tk}: {e}")
 
     print("\n--- Running metadata checker on output/ ---")
-    run_metadata_checker()
+    run_for_tickers(tickers)
 
     print("\n--- Attempting to re-fetch missing data (fallback) ---")
-    run_fallback_data()
+    run_fallback_data(tickers)
 
     # ─────────────────────────────────────────────────────────────────
     # Now create and open the Excel dashboard. Any exception will be printed.

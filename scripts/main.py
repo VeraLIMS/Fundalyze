@@ -23,6 +23,9 @@ from modules.generate_report import (
     create_and_open_dashboard,
 )
 from modules.management.note_manager import run_note_manager
+from modules.management.settings_manager.settings_manager import (
+    run_settings_manager,
+)
 
 SETTINGS = load_settings()
 
@@ -52,6 +55,7 @@ def interactive_menu():
         ("Manage Groups",                  run_group_analysis),
         ("Generate Reports (with metadata, fallback & Excel)", run_generate_report),
         ("Manage Notes",                  run_note_manager),
+        ("Manage Settings",               run_settings_manager),
         ("Exit",                           exit_program),
     ]
 
@@ -80,6 +84,7 @@ def parse_args() -> argparse.Namespace:
     sub.add_parser("groups", help="Launch group manager")
     sub.add_parser("report", help="Generate reports")
     sub.add_parser("notes", help="Launch note manager")
+    sub.add_parser("settings", help="Edit configuration")
     sub.add_parser("metadata", help="Run metadata checker")
     sub.add_parser("fallback", help="Run fallback data fetch")
     sub.add_parser("dashboard", help="Create Excel dashboard")
@@ -98,6 +103,8 @@ def main() -> None:
         run_generate_report()
     elif cmd == "notes":
         run_note_manager()
+    elif cmd == "settings":
+        run_settings_manager()
     elif cmd == "metadata":
         run_metadata_checker()
     elif cmd == "fallback":

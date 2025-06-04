@@ -406,10 +406,8 @@ def enrich_ticker_folder(ticker_dir: Path):
 # ─── Step 4: Directory scan entry point ───────────────────────────────────────────────────────────
 #
 
-def run_fallback_data():
-    """
-    Scan every subfolder under 'output/'. For each ticker directory, call enrich_ticker_folder.
-    """
+def run_fallback_data(tickers=None):
+    """Run fallback enrichment for all or selected tickers."""
     project_root = Path(__file__).parent.parent
     output_root = project_root / "output"
 
@@ -417,14 +415,21 @@ def run_fallback_data():
         print(f"[ERROR] '{output_root}' does not exist or is not a directory.")
         return
 
-    subdirs = sorted([d for d in output_root.iterdir() if d.is_dir()])
+    if tickers is None:
+        subdirs = sorted([d for d in output_root.iterdir() if d.is_dir()])
+    else:
+        subdirs = [(output_root / t.upper()) for t in tickers]
+
     if not subdirs:
         print(f"[INFO] No subdirectories under '{output_root}'. Nothing to do.")
         return
 
     print(f"\n[Fallback Data] Scanning {len(subdirs)} ticker folder(s) under '{output_root}':\n")
     for ticker_dir in subdirs:
-        print(f"→ Processing folder: {ticker_dir.name}")
-        enrich_ticker_folder(ticker_dir)
+        if ticker_dir.is_dir():
+            print(f"→ Processing folder: {ticker_dir.name}")
+            enrich_ticker_folder(ticker_dir)
+        else:
+            print(f"[WARN] Folder '{ticker_dir}' not found.")
 
     print("\n[Fallback Data] Done.\n")
