@@ -16,7 +16,7 @@ def fetch_and_display(symbol: str):
     print(f"\n=== YF Fallback: Processing {symbol} ===")
 
     # Make sure the CSVs go into output/<symbol>/ instead of src/output/
-    project_root = Path(__file__).parent.parent
+    project_root = Path(__file__).resolve().parents[2]
     output_dir = project_root / "output" / symbol
     os.makedirs(output_dir, exist_ok=True)
 

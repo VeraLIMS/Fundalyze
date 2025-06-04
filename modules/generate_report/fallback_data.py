@@ -41,7 +41,7 @@ def yf_full_fetch(symbol: str):
     print(f"\n=== YF Fallback: Processing {symbol} ===")
 
     # Ensure output/<symbol>/ exists
-    project_root = Path(__file__).parent.parent
+    project_root = Path(__file__).resolve().parents[2]
     output_dir = project_root / "output" / symbol
     os.makedirs(output_dir, exist_ok=True)
 
@@ -408,7 +408,7 @@ def enrich_ticker_folder(ticker_dir: Path):
 
 def run_fallback_data(tickers=None):
     """Run fallback enrichment for all or selected tickers."""
-    project_root = Path(__file__).parent.parent
+    project_root = Path(__file__).resolve().parents[2]
     output_root = project_root / "output"
 
     if not output_root.exists() or not output_root.is_dir():
