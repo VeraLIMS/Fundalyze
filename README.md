@@ -1,146 +1,79 @@
 # Fundalyze
 
-Fundalyze is a lightweight Python application for fetching, analyzing, and visualizing investment portfolio data. It automates:
+Fundalyze is a lightweight Python application for fetching, analyzing and visualizing investment portfolio data. It automates:
 
-- **Data Acquisition**: pulls historical and real-time prices, company profiles, and financial statements (income, balance sheet, cash flow) via OpenBB, yfinance, and FMP.
-- **Metadata Management**: verifies each ticker’s report completeness, re-fetches missing files, and records source URLs/timestamps.
-- **Dashboard Generation**: aggregates every ticker’s raw CSVs into a single, multi-sheet Excel workbook—each sheet transposed and converted into a named Table—so you can quickly inspect metrics over time and write structured formulas.
+- **Data Acquisition** – fetches prices, company profiles and financial statements via OpenBB, yfinance and FMP.
+- **Metadata Management** – verifies each ticker's completeness, re-fetches missing files and records source URLs.
+- **Dashboard Generation** – aggregates raw CSVs into a multi-sheet Excel workbook so metrics can be inspected over time.
 
-With modular scripts for report generation, fallback data enrichment, and portfolio/group analysis, Fundalyze scales from a few tickers to many and lays the groundwork for future database or web-based extensions.
+With modular scripts for report generation, fallback data enrichment and portfolio/group analysis, Fundalyze scales from a few tickers to many.
 
 ---
 
 ## Getting Started
 
-1. **Clone the repository**  
+1. **Clone the repository**
    ```bash
    git clone https://github.com/VeraLIMS/Fundalyze.git
    cd Fundalyze
-Bootstrap your environment
-This repository includes a bootstrap script that will:
+   ```
+2. **Bootstrap your environment** – the included scripts create a virtual environment and install requirements.
 
-Create a Python virtual environment in ./.venv/ (if it doesn’t already exist).
+   **Windows (PowerShell)**
+   ```powershell
+   .\bootstrap_env.ps1
+   ```
+   **macOS/Linux (Bash)**
+   ```bash
+   ./bootstrap_env.sh
+   ```
 
-Activate that venv in your current shell session.
+   The scripts create `.venv`, activate it and install packages from `requirements.txt`. When finished you remain inside the activated environment. Launch the application with:
+   ```bash
+   python scripts/main.py
+   ```
 
-Install all packages listed in requirements.txt into the newly created venv.
+## Usage
 
-Windows PowerShell
-powershell
-Copy
-Edit
-.\bootstrap_env.ps1
-If ./.venv/ is missing, it will be created.
+After bootstrapping run `python scripts/main.py` to open the menu. From here you can:
 
-The script will activate the venv for you.
+- Manage Portfolio
+- Manage Groups
+- Generate Reports (performs metadata checks and creates an Excel dashboard)
+- Exit
 
-Finally, it installs everything from requirements.txt.
-
-Once complete, you remain inside the activated venv. Simply run:
-
-powershell
-Copy
-Edit
-python scripts/main.py
-to launch the application.
-
-macOS/Linux (Bash/Zsh)
-bash
-Copy
-Edit
-./bootstrap_env.sh
-If ./.venv/ is missing, it will be created.
-
-The script will activate the venv in the current shell.
-
-Finally, it installs everything from requirements.txt.
-
-Once complete, you remain inside the activated venv. Simply run:
-
-bash
-Copy
-Edit
-python scripts/main.py
-to launch the application.
-
-Usage
-After bootstrapping (and activating the venv), launch the main menu:
-
-bash
-Copy
-Edit
-python scripts/main.py
-You will see options to:
-
-Manage Portfolio
-
-Manage Groups
-
-
-Generate Reports (with metadata check, fallback, & Excel dashboard)
-
-Exit
-
-Choose Generate Reports to:
-
-Enter ticker symbols (comma-separated).
-
-Automatically fetch profiles, price history, and financial statements.
-
-Run a metadata check to re-fetch any missing data.
-
-Generate a multi-sheet Excel dashboard (with transposed tables) for quick analysis.
+Choose **Generate Reports** to enter ticker symbols, fetch data and build the dashboard.
 
 ## Project Layout
 
-- `config/` – configuration files such as `finance_api.yaml`, `term_mapping.json`, `.env`, and `settings.json`.
-- `modules/` – reusable Python modules implementing the application's features. Includes
-  small analytics helpers such as `sector_counts()` for summarizing your portfolio by
-  sector.
+- `config/` – configuration files including `finance_api.yaml`, `term_mapping.json`, `.env` and `settings.json`.
+- `modules/` – reusable Python modules with helpers such as `sector_counts()`.
 - `scripts/` – entry-point scripts like `main.py`.
 
 ### Comparing OpenBB and yfinance data
 
-The command `python -m data.compare <TICKER>` fetches company profile
-information from both OpenBB and yfinance. If both sources return data,
-the differences of key fields are printed and you can choose which
-dataset to keep. This helps verify data completeness and gives direct
-links back to the original sources.
+Run `python -m data.compare <TICKER>` to fetch company profiles from both sources. Differences are shown so you can choose which dataset to keep.
 
 ### Using Directus as a Data Store
 
-If you have a Directus instance available you can store the portfolio and group
-information there instead of using the local Excel files. Set the environment
-variables below before running the application:
-
+Set the following environment variables to read/write portfolio and group data to Directus instead of the local Excel files:
 ```bash
-export DIRECTUS_URL="https://your-directus.example.com"  # base URL of your Directus API
-export DIRECTUS_TOKEN="<API token>"                       # token with read/write permissions
-# Optional: override the collection names
+export DIRECTUS_URL="https://your-directus.example.com"
+export DIRECTUS_TOKEN="<API token>"
+# Optional collection names
 export DIRECTUS_PORTFOLIO_COLLECTION="portfolio"
 export DIRECTUS_GROUPS_COLLECTION="groups"
 ```
-
-When these variables are present `portfolio_manager` and `group_analysis` will
-read from and write to the specified Directus collections. If Directus is not
-reachable the tools automatically fall back to the Excel files.
+When these variables are present the tools will use Directus and automatically fall back to Excel if it is not reachable.
 
 ### Note Manager
 
-Fundalyze includes a basic Markdown note system. Launch it from the main menu
-or directly with:
-
+A simple Markdown note system lives in `notes/`. Launch it with:
 ```bash
 python scripts/note_cli.py
 ```
-
-Notes are stored in the `notes/` directory and support Obsidian style
-`[[wikilinks]]` for linking between files.
+Notes support Obsidian-style `[[wikilinks]]` for linking between files.
 
 ### Configuration & Secrets
 
-Place any API keys (e.g. Directus, OpenBB, OpenAI) in `config/.env` and user
-preferences in `config/settings.json`. These files are ignored by Git and will
-not be committed. The application automatically loads variables from `.env` on
-startup using `python-dotenv`.
-
+Place API keys (Directus, OpenBB, OpenAI) in `config/.env` and preferences in `config/settings.json`. These files are ignored by Git and are loaded automatically using `python-dotenv`.
