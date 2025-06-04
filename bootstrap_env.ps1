@@ -86,4 +86,4 @@ python -m pip install --upgrade pip
 python -m pip install -r $ReqFile
 
 Write-Host "`nAll dependencies installed into $VenvDir." -ForegroundColor Green
-Write-Host "You are now in the activated virtual environment. Run 'python src/main.py' as usual.`n" -ForegroundColor Green
+Write-Host "You are now in the activated virtual environment. Run 'python scripts/main.py' as usual.`n" -ForegroundColor Green
