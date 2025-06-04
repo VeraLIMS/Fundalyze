@@ -1,5 +1,5 @@
 import pandas as pd
-from data_compare import is_complete
+from data.compare import is_complete
 
 
 ESSENTIAL_COLS = ["longName", "sector", "industry", "marketCap", "website"]

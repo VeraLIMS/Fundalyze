@@ -1,4 +1,4 @@
-from data_compare import diff_dict
+from data.compare import diff_dict
 
 
 def test_diff_dict():

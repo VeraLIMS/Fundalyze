@@ -1,5 +1,5 @@
 import pandas as pd
-from analysis import portfolio_summary
+from analytics import portfolio_summary
 
 
 def test_portfolio_summary_numeric_columns():

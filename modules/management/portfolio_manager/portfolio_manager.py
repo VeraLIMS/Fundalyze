@@ -20,14 +20,14 @@ import sys
 from typing import Optional
 
 from modules.config_utils import load_settings  # noqa: E402
-from modules.analysis import portfolio_summary
+from modules.analytics import portfolio_summary
 
 SETTINGS = load_settings()
 
 import pandas as pd
 import requests
-from term_mapper import resolve_term
-from directus_client import (
+from modules.data.term_mapper import resolve_term
+from modules.data.directus_client import (
     fetch_items,
     insert_items,
     list_fields,
@@ -152,8 +152,8 @@ def prompt_manual_entry(ticker: str) -> dict:
 
 
 def fetch_from_yfinance(ticker: str) -> dict:
-    """Wrapper around :func:`modules.data_fetching.fetch_basic_stock_data`."""
-    from modules.data_fetching import fetch_basic_stock_data
+    """Wrapper around :func:`modules.data.fetching.fetch_basic_stock_data`."""
+    from modules.data.fetching import fetch_basic_stock_data
 
     return fetch_basic_stock_data(ticker)
 
