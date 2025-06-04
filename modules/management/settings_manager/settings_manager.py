@@ -45,6 +45,13 @@ def _show_dict(data: Dict[str, str]) -> None:
             print(f"{k} = {v}")
 
 
+def _show_api_keys() -> None:
+    """Display known API keys/tokens from the environment."""
+    env = load_env()
+    keys = {k: v for k, v in env.items() if any(tok in k.upper() for tok in ["KEY", "TOKEN"])}
+    _show_dict(keys)
+
+
 def _set_setting() -> None:
     key, val = _prompt_kv()
     data = load_settings()
@@ -96,6 +103,7 @@ def run_settings_manager() -> None:
             ("Set setting", _set_setting),
             ("Delete setting", _del_setting),
             ("View .env", lambda: _show_dict(load_env())),
+            ("View API keys", _show_api_keys),
             ("Set .env variable", _set_env_var),
             ("Delete .env variable", _del_env_var),
         ]
