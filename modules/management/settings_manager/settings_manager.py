@@ -97,6 +97,9 @@ def run_settings_manager() -> None:
 
     while True:
         print("\n=== Settings Manager ===")
+        print(f"Config directory : {CONFIG_DIR}")
+        print(f"settings.json    : {SETTINGS_PATH}")
+        print(f".env             : {ENV_PATH}\n")
 
         options: list[tuple[str, callable | None]] = [
             ("View settings.json", lambda: _show_dict(load_settings())),
