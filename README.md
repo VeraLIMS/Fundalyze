@@ -107,3 +107,7 @@ Notes support Obsidian-style `[[wikilinks]]` for linking between files.
 ### Configuration & Secrets
 
 Place API keys (Directus, OpenBB, OpenAI) in `config/.env` and preferences in `config/settings.json`. These files are ignored by Git and are loaded automatically using `python-dotenv`.
+
+### End-to-End Tests
+
+Automated end-to-end tests simulate common user workflows. See [docs/end_to_end_tests.md](docs/end_to_end_tests.md) for details.
