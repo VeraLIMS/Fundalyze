@@ -1,7 +1,7 @@
 import os
 import requests
 
-from config_utils import load_settings  # noqa: E402
+from modules.config_utils import load_settings  # noqa: E402
 
 load_settings()  # ensure .env is read when this module is imported
 

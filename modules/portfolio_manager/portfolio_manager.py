@@ -19,12 +19,11 @@ import os
 import sys
 from typing import Optional
 
-from config_utils import load_settings  # noqa: E402
+from modules.config_utils import load_settings  # noqa: E402
 
 SETTINGS = load_settings()
 
 import pandas as pd
-import yfinance as yf
 import requests
 from term_mapper import resolve_term
 from directus_client import (
@@ -152,28 +151,10 @@ def prompt_manual_entry(ticker: str) -> dict:
 
 
 def fetch_from_yfinance(ticker: str) -> dict:
-    """
-    Attempt to fetch fundamental data from yfinance for a given ticker.
-    Returns a dict with keys matching COLUMNS, or raises an Exception if ticker not found.
-    """
-    ticker_obj = yf.Ticker(ticker)
-    info = ticker_obj.info  # This may raise or return an empty dict
+    """Wrapper around :func:`modules.data_fetching.fetch_basic_stock_data`."""
+    from modules.data_fetching import fetch_basic_stock_data
 
-    if not info or "longName" not in info or info["longName"] is None:
-        raise ValueError("No valid company info returned by yfinance.")
-
-    # Extract relevant fields (using .get with fallback to pd.NA)
-    data = {
-        "Ticker": ticker.upper(),
-        "Name": info.get("longName", ""),
-        "Sector": resolve_term(info.get("sector", "")),
-        "Industry": resolve_term(info.get("industry", "")),
-        "Current Price": info.get("currentPrice", pd.NA),
-        "Market Cap": info.get("marketCap", pd.NA),
-        "PE Ratio": info.get("trailingPE", pd.NA),
-        "Dividend Yield": info.get("dividendYield", pd.NA),
-    }
-    return data
+    return fetch_basic_stock_data(ticker)
 
 
 def confirm_or_adjust_ticker(original: str) -> str:

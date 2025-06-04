@@ -41,7 +41,7 @@ Once complete, you remain inside the activated venv. Simply run:
 powershell
 Copy
 Edit
-python src/main.py
+python scripts/main.py
 to launch the application.
 
 macOS/Linux (Bash/Zsh)
@@ -60,7 +60,7 @@ Once complete, you remain inside the activated venv. Simply run:
 bash
 Copy
 Edit
-python src/main.py
+python scripts/main.py
 to launch the application.
 
 Usage
@@ -69,7 +69,7 @@ After bootstrapping (and activating the venv), launch the main menu:
 bash
 Copy
 Edit
-python src/main.py
+python scripts/main.py
 You will see options to:
 
 Manage Portfolio
@@ -90,6 +90,12 @@ Automatically fetch profiles, price history, and financial statements.
 Run a metadata check to re-fetch any missing data.
 
 Generate a multi-sheet Excel dashboard (with transposed tables) for quick analysis.
+
+## Project Layout
+
+- `config/` – configuration files such as `finance_api.yaml`, `term_mapping.json`, `.env`, and `settings.json`.
+- `modules/` – reusable Python modules implementing the application's features.
+- `scripts/` – entry-point scripts like `main.py`.
 
 ### Comparing OpenBB and yfinance data
 

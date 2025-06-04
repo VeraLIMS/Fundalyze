@@ -2,7 +2,7 @@ import json
 import os
 from typing import Dict, List, Optional
 
-from config_utils import load_settings  # noqa: E402
+from modules.config_utils import load_settings  # noqa: E402
 
 load_settings()
 
@@ -12,7 +12,8 @@ except Exception:
     openai = None
 
 
-MAPPING_FILE = os.path.join(os.path.dirname(__file__), '..', 'Config', 'term_mapping.json')
+# Configuration file is stored under the repository's `config/` directory
+MAPPING_FILE = os.path.join(os.path.dirname(__file__), '..', 'config', 'term_mapping.json')
 MAPPING_FILE = os.path.abspath(MAPPING_FILE)
 
 

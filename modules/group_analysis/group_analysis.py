@@ -25,12 +25,11 @@ import os
 import sys
 from typing import Optional
 
-from config_utils import load_settings  # noqa: E402
+from modules.config_utils import load_settings  # noqa: E402
 
 SETTINGS = load_settings()
 
 import pandas as pd
-import yfinance as yf
 import requests
 from term_mapper import resolve_term
 from directus_client import fetch_items, insert_items, list_fields
@@ -141,25 +140,10 @@ def save_groups(df: pd.DataFrame, filepath: str):
 
 
 def fetch_from_yfinance(ticker: str) -> dict:
-    """
-    Fetch fundamental data via yfinance. If invalid, raises ValueError.
-    """
-    ticker_obj = yf.Ticker(ticker)
-    info = ticker_obj.info
+    """Wrapper around :func:`modules.data_fetching.fetch_basic_stock_data`."""
+    from modules.data_fetching import fetch_basic_stock_data
 
-    if not info or "longName" not in info or info["longName"] is None:
-        raise ValueError("No valid data returned by yfinance.")
-
-    return {
-        "Ticker": ticker.upper(),
-        "Name": info.get("longName", ""),
-        "Sector": resolve_term(info.get("sector", "")),
-        "Industry": resolve_term(info.get("industry", "")),
-        "Current Price": info.get("currentPrice", pd.NA),
-        "Market Cap": info.get("marketCap", pd.NA),
-        "PE Ratio": info.get("trailingPE", pd.NA),
-        "Dividend Yield": info.get("dividendYield", pd.NA),
-    }
+    return fetch_basic_stock_data(ticker)
 
 
 def prompt_manual_entry(ticker: str) -> dict:

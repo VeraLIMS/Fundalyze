@@ -1,6 +1,6 @@
-# Ignore configuration files and secrets
-config/*
-!config/.gitkeep
+# Ignore secret config files but keep example configs
+config/.env
+config/settings.json
 
 # Byte-compiled / cache files
 __pycache__/
