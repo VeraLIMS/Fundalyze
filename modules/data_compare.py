@@ -2,7 +2,6 @@ import logging
 from typing import Dict, Tuple
 
 import pandas as pd
-from openbb import obb
 import yfinance as yf
 
 logger = logging.getLogger(__name__)
@@ -13,6 +12,7 @@ ESSENTIAL_COLS = ["longName", "sector", "industry", "marketCap", "website"]
 def fetch_profile_openbb(symbol: str) -> pd.DataFrame:
     """Fetch company profile via OpenBB. Returns empty DataFrame on error."""
     try:
+        from openbb import obb  # imported lazily to avoid heavy startup if unused
         obj = obb.equity.profile(symbol=symbol)
         df = obj.to_df()
         return df
