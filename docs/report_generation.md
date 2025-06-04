@@ -25,7 +25,7 @@ Each ticker directory contains:
 - `report.md` – markdown summary listing the data sources.
 - `metadata.json` – metadata describing the source and fetch time for every file.
 
-An Excel workbook named `dashboard_<TIMESTAMP>.xlsx` is created from these CSVs and placed in the `output` folder.
+An Excel workbook named `dashboard_<TIMESTAMP>.xlsx` is created from these CSVs and placed in the output folder. The folder defaults to `output` but can be customized via the `OUTPUT_DIR` environment variable or the **Output Directory** wizard.
 
 ## Command Example
 

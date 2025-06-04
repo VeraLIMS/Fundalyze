@@ -16,6 +16,8 @@ import os
 import time
 from pathlib import Path
 
+from modules.config_utils import get_output_dir
+
 import pandas as pd
 import requests
 import yfinance as yf
@@ -411,10 +413,12 @@ def enrich_ticker_folder(ticker_dir: Path):
 # ─── Step 4: Directory scan entry point ───────────────────────────────────────────────────────────
 #
 
-def run_fallback_data(tickers=None):
+def run_fallback_data(tickers=None, output_root: str | None = None):
     """Run fallback enrichment for all or selected tickers."""
     project_root = Path(__file__).resolve().parents[2]
-    output_root = project_root / "output"
+    if output_root is None:
+        output_root = str(get_output_dir())
+    output_root = project_root / output_root if not Path(output_root).is_absolute() else Path(output_root)
 
     if not output_root.exists() or not output_root.is_dir():
         print(f"[ERROR] '{output_root}' does not exist or is not a directory.")
