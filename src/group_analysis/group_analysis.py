@@ -25,6 +25,7 @@ import os
 import sys
 import pandas as pd
 import yfinance as yf
+from term_mapper import resolve_term
 
 PORTFOLIO_FILE = "portfolio.xlsx"
 GROUPS_FILE = "groups.xlsx"
@@ -97,8 +98,8 @@ def fetch_from_yfinance(ticker: str) -> dict:
     return {
         "Ticker": ticker.upper(),
         "Name": info.get("longName", ""),
-        "Sector": info.get("sector", ""),
-        "Industry": info.get("industry", ""),
+        "Sector": resolve_term(info.get("sector", "")),
+        "Industry": resolve_term(info.get("industry", "")),
         "Current Price": info.get("currentPrice", pd.NA),
         "Market Cap": info.get("marketCap", pd.NA),
         "PE Ratio": info.get("trailingPE", pd.NA),
@@ -121,6 +122,11 @@ def prompt_manual_entry(ticker: str) -> dict:
                 data[field] = pd.NA
         else:
             data[field] = val if val else ""
+
+    if "Sector" in data:
+        data["Sector"] = resolve_term(data["Sector"])
+    if "Industry" in data:
+        data["Industry"] = resolve_term(data["Industry"])
     return data
 
 

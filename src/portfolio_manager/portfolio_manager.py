@@ -19,6 +19,7 @@ import os
 import sys
 import pandas as pd
 import yfinance as yf
+from term_mapper import resolve_term
 
 PORTFOLIO_FILE = "portfolio.xlsx"
 COLUMNS = [
@@ -82,6 +83,12 @@ def prompt_manual_entry(ticker: str) -> dict:
                 data[field] = pd.NA
         else:
             data[field] = val if val else ""
+
+    # Normalize sector/industry via term mapper
+    if "Sector" in data:
+        data["Sector"] = resolve_term(data["Sector"])
+    if "Industry" in data:
+        data["Industry"] = resolve_term(data["Industry"])
     return data
 
 
@@ -100,8 +107,8 @@ def fetch_from_yfinance(ticker: str) -> dict:
     data = {
         "Ticker": ticker.upper(),
         "Name": info.get("longName", ""),
-        "Sector": info.get("sector", ""),
-        "Industry": info.get("industry", ""),
+        "Sector": resolve_term(info.get("sector", "")),
+        "Industry": resolve_term(info.get("industry", "")),
         "Current Price": info.get("currentPrice", pd.NA),
         "Market Cap": info.get("marketCap", pd.NA),
         "PE Ratio": info.get("trailingPE", pd.NA),
