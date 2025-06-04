@@ -35,7 +35,7 @@ With modular scripts for report generation, fallback data enrichment and portfol
 
 ## Usage
 
-After bootstrapping run `python scripts/main.py` to open the interactive menu. From here you can:
+After bootstrapping run `python scripts/main.py` to open the interactive menu. The CLI now uses **tabulate** for nicely formatted tables. From here you can:
 
 - Manage Portfolio
 - Manage Groups

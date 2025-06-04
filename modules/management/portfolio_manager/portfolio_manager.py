@@ -20,6 +20,7 @@ import sys
 from typing import Optional
 
 from modules.analytics import portfolio_summary, sector_counts
+from modules.interface import print_table
 
 import pandas as pd
 import requests
@@ -266,16 +267,15 @@ def view_portfolio(portfolio: pd.DataFrame):
         return
 
     print("\nCurrent Portfolio:")
-    print(portfolio.to_string(index=False))
+    print_table(portfolio)
     summary = portfolio_summary(portfolio)
     if not summary.empty:
         print("\nSummary (mean/min/max):")
-        print(summary.to_string())
+        print_table(summary, showindex=True)
     counts = sector_counts(portfolio)
     if not counts.empty:
         print("\nSectors:")
-        for _, row in counts.iterrows():
-            print(f"  {row['Sector']}: {row['Count']}")
+        print_table(counts)
     print("")
 
 

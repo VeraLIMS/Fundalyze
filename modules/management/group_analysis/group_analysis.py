@@ -27,6 +27,7 @@ from typing import Optional
 
 from modules.config_utils import load_settings  # noqa: E402
 from modules.analytics import portfolio_summary
+from modules.interface import print_table
 
 SETTINGS = load_settings()
 
@@ -346,11 +347,11 @@ def view_groups(groups: pd.DataFrame):
     print("\n=== All Groups & Members ===\n")
     for grp in groups["Group"].dropna().unique():
         print(f"Group: {grp}")
-        sub = groups[groups["Group"] == grp]
-        print(sub[["Ticker", "Name", "Sector", "Industry", "Current Price"]].to_string(index=False))
+        sub = groups[groups["Group"] == grp][["Ticker", "Name", "Sector", "Industry", "Current Price"]]
+        print_table(sub)
         summary = portfolio_summary(sub)
         if not summary.empty:
-            print(summary.to_string())
+            print_table(summary, showindex=True)
         print("")
 
 
