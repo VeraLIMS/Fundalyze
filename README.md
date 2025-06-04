@@ -123,6 +123,18 @@ When these variables are present `portfolio_manager` and `group_analysis` will
 read from and write to the specified Directus collections. If Directus is not
 reachable the tools automatically fall back to the Excel files.
 
+### Note Manager
+
+Fundalyze includes a basic Markdown note system. Launch it from the main menu
+or directly with:
+
+```bash
+python scripts/note_cli.py
+```
+
+Notes are stored in the `notes/` directory and support Obsidian style
+`[[wikilinks]]` for linking between files.
+
 ### Configuration & Secrets
 
 Place any API keys (e.g. Directus, OpenBB, OpenAI) in `config/.env` and user

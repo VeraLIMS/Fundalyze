@@ -8,6 +8,7 @@ from modules.config_utils import load_settings  # noqa: E402
 from modules.portfolio_manager.portfolio_manager import main as run_portfolio_manager
 from modules.group_analysis.group_analysis import main as run_group_analysis
 from modules.generate_report import run_generate_report
+from modules.note_manager import run_note_manager
 
 SETTINGS = load_settings()
 
@@ -36,6 +37,7 @@ def main():
         ("Manage Portfolio",               run_portfolio_manager),
         ("Manage Groups",                  run_group_analysis),
         ("Generate Reports (with metadata, fallback & Excel)", run_generate_report),
+        ("Manage Notes",                  run_note_manager),
         ("Exit",                           exit_program),
     ]
 
