@@ -5,6 +5,12 @@
 
 set -e
 
+# Ensure python3 is available
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "× python3 not found. Please install Python 3 and re-run this script." >&2
+  exit 1
+fi
+
 VENV_DIR=".venv"
 REQ_FILE="requirements.txt"
 
@@ -16,7 +22,8 @@ if [ ! -d "$VENV_DIR" ]; then
     echo "× Failed to create $VENV_DIR. Exiting."
     exit 1
   fi
-  echo "√ Virtual environment created."
+  PYTHON_VERSION="$($VENV_DIR/bin/python --version 2>&1)"
+  echo "√ Virtual environment created using $PYTHON_VERSION."
 else
   echo "· Virtual environment $VENV_DIR already exists; skipping creation."
 fi
@@ -46,4 +53,6 @@ pip install -r "$REQ_FILE"
 
 echo ""
 echo "√ All dependencies installed into $(pwd)/$VENV_DIR."
-echo "You are now in the activated venv. Run 'python src/main.py' as usual."
+echo "You are now in the activated venv."
+echo "To activate later, run: source $VENV_DIR/bin/activate"
+echo "Then start the app with: python scripts/main.py"

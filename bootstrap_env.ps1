@@ -6,6 +6,11 @@ param(
     [string]$ReqFile = "requirements.txt"
 )
 
+if (-not (Get-Command py -ErrorAction SilentlyContinue)) {
+    Write-Host "The 'py' launcher was not found. Please install Python 3 and retry." -ForegroundColor Red
+    Exit 1
+}
+
 function Install-Python310 {
     # Check if Python 3.10.10 is already available via the Python launcher
     try {
@@ -86,4 +91,6 @@ python -m pip install --upgrade pip
 python -m pip install -r $ReqFile
 
 Write-Host "`nAll dependencies installed into $VenvDir." -ForegroundColor Green
-Write-Host "You are now in the activated virtual environment. Run 'python scripts/main.py' as usual.`n" -ForegroundColor Green
+Write-Host "You are now in the activated virtual environment." -ForegroundColor Green
+Write-Host "To activate later run: .\\$VenvDir\\Scripts\\Activate.ps1" -ForegroundColor Green
+Write-Host "Then start the app with: python scripts/main.py`n" -ForegroundColor Green

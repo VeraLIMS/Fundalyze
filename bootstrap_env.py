@@ -3,13 +3,17 @@
 import os
 import sys
 import subprocess
-import shutil
 from pathlib import Path
 import venv
 
 PROJECT_ROOT = Path(__file__).parent.resolve()
 VENV_DIR     = PROJECT_ROOT / ".venv"
 REQ_FILE     = PROJECT_ROOT / "requirements.txt"
+
+
+def print_banner() -> None:
+    """Display a short introduction banner."""
+    print("=== Fundalyze Environment Bootstrapper ===")
 
 
 def in_venv() -> bool:
@@ -52,6 +56,7 @@ def install_requirements(python_executable: Path):
 
 
 def main():
+    print_banner()
     # 1) Check that requirements.txt exists
     if not REQ_FILE.exists():
         print(f"[ERROR] Cannot find {REQ_FILE}. Please create one listing your dependencies.")
