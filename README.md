@@ -72,7 +72,7 @@ python scripts/main.py dashboard
 ## Project Layout
 
 - `config/` – configuration files including `finance_api.yaml`, `term_mapping.json`, `.env` and `settings.json`.
-- `modules/` – reusable Python modules with helpers such as `sector_counts()`.
+- `modules/` – reusable Python modules with helpers such as `sector_counts()` and `correlation_matrix()`.
 - `scripts/` – entry-point scripts like `main.py`.
 
 ### Comparing OpenBB and yfinance data

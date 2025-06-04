@@ -21,3 +21,13 @@ def sector_counts(df: pd.DataFrame) -> pd.DataFrame:
         return pd.DataFrame()
     counts = df["Sector"].fillna("Unknown").value_counts().rename_axis("Sector")
     return counts.reset_index(name="Count")
+
+
+def correlation_matrix(df: pd.DataFrame) -> pd.DataFrame:
+    """Return Pearson correlation matrix for numeric columns."""
+    if df is None or df.empty:
+        return pd.DataFrame()
+    numeric_cols = [c for c in df.columns if pd.api.types.is_numeric_dtype(df[c])]
+    if len(numeric_cols) < 2:
+        return pd.DataFrame()
+    return df[numeric_cols].corr()
