@@ -13,19 +13,15 @@ Usage:
 
 import json
 import os
-import time
 from pathlib import Path
 
 import pandas as pd
 import requests
 import yfinance as yf
 
+from .utils import iso_timestamp_utc
+
 FMP_BASE = "https://financialmodelingprep.com/api/v3"
-
-
-def iso_timestamp_utc() -> str:
-    """Return current UTC time in ISO 8601 format."""
-    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
 
 #

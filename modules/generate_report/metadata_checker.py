@@ -10,19 +10,16 @@ metadata.json with new source, source_url, and fetched_at timestamp.
 """
 
 import json
-import time
 from pathlib import Path
 
 import pandas as pd
 import yfinance as yf
 import requests
 
+from .utils import iso_timestamp_utc
+
 # Base URL for Financial Modeling Prep (used only as fallback for statements)
 FMP_BASE = "https://financialmodelingprep.com/api/v3"
-
-
-def iso_timestamp_utc():
-    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
 
 def fetch_profile_from_yf(symbol: str) -> pd.DataFrame:
