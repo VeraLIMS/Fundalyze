@@ -89,7 +89,7 @@ export DIRECTUS_TOKEN="<API token>"
 export DIRECTUS_PORTFOLIO_COLLECTION="portfolio"
 export DIRECTUS_GROUPS_COLLECTION="groups"
 ```
-When these variables are present the tools will use Directus and automatically fall back to Excel if it is not reachable.
+When these variables are present the tools will use Directus and automatically fall back to Excel if it is not reachable. You can configure these values interactively from the **Directus Connection** wizard inside the Settings Manager (`python scripts/main.py settings`).
 
 ### Note Manager
 
@@ -103,6 +103,7 @@ python scripts/note_cli.py
 python scripts/main.py notes
 ```
 Notes support Obsidian-style `[[wikilinks]]` for linking between files.
+Use the **Notes Directory** wizard in the Settings Manager if you want to store notes elsewhere.
 
 ### Configuration & Secrets
 

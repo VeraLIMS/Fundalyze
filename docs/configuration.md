@@ -21,8 +21,10 @@ DIRECTUS_GROUPS_COLLECTION=groups
 ```
 To obtain an OpenBB API token visit the
 [OpenBB documentation](https://docs.openbb.co/platform/getting_started/api_requests)
-and sign up for an account. Once acquired, run the Settings Manager wizard to
-store the token.
+and sign up for an account. Once acquired, run the **OpenBB API Token** wizard
+inside the Settings Manager to store the token. The Settings Manager also
+provides wizards for configuring your **Directus connection** and **Notes
+directory** so you rarely need to edit this file manually.
 `modules.config_utils` automatically loads this file using [python-dotenv](https://github.com/theskumar/python-dotenv) whenever `load_settings()` is called.
 
 ## Creating `config/settings.json`
@@ -34,7 +36,7 @@ This file stores additional preferences that are not secrets. A minimal example:
 }
 ```
 The timezone can be changed later by running the **Timezone** wizard inside the
-Settings Manager.
+Settings Manager. Additional wizards help configure Directus connectivity and the notes directory.
 `load_settings()` returns the parsed dictionary so other modules can access these values.
 
 ## Initial Setup
