@@ -108,6 +108,9 @@ def yf_full_fetch(symbol: str):
         print(df_price.tail(5).to_string())
 
         # Save to CSV (include Date column)
+        if "Adj Close" not in df_price.columns and "Close" in df_price.columns:
+            df_price["Adj Close"] = df_price["Close"]
+
         df_price_reset = df_price.reset_index()
         price_csv_path = output_dir / "1mo_prices.csv"
         df_price_reset.to_csv(price_csv_path, index=False)
@@ -297,6 +300,8 @@ def enrich_ticker_folder(ticker_dir: Path):
                     for col in ("Dividends", "Stock Splits"):
                         if col in df_price.columns:
                             df_price = df_price.drop(columns=[col])
+                    if "Adj Close" not in df_price.columns and "Close" in df_price.columns:
+                        df_price["Adj Close"] = df_price["Close"]
                     df_price_reset = df_price.reset_index()
                     df_price_reset.to_csv(csv_path, index=False)
                     new_source = "yfinance.history"
