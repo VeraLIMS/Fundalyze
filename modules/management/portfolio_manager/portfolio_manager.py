@@ -20,7 +20,7 @@ import sys
 from typing import Optional
 
 from modules.config_utils import load_settings  # noqa: E402
-from modules.analytics import portfolio_summary
+from modules.analytics import portfolio_summary, sector_counts
 
 SETTINGS = load_settings()
 
@@ -274,6 +274,11 @@ def view_portfolio(portfolio: pd.DataFrame):
     if not summary.empty:
         print("\nSummary (mean/min/max):")
         print(summary.to_string())
+    counts = sector_counts(portfolio)
+    if not counts.empty:
+        print("\nSectors:")
+        for _, row in counts.iterrows():
+            print(f"  {row['Sector']}: {row['Count']}")
     print("")
 
 

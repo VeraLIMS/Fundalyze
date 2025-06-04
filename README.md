@@ -94,7 +94,9 @@ Generate a multi-sheet Excel dashboard (with transposed tables) for quick analys
 ## Project Layout
 
 - `config/` – configuration files such as `finance_api.yaml`, `term_mapping.json`, `.env`, and `settings.json`.
-- `modules/` – reusable Python modules implementing the application's features.
+- `modules/` – reusable Python modules implementing the application's features. Includes
+  small analytics helpers such as `sector_counts()` for summarizing your portfolio by
+  sector.
 - `scripts/` – entry-point scripts like `main.py`.
 
 ### Comparing OpenBB and yfinance data
