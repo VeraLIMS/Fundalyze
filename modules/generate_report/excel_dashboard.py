@@ -8,6 +8,16 @@ from datetime import datetime
 
 import pandas as pd
 
+def _strip_timezones(df: pd.DataFrame) -> pd.DataFrame:
+    """Remove timezone information from any datetime columns or index."""
+    if df is None:
+        return df
+    if isinstance(df.index, pd.DatetimeIndex) and df.index.tz is not None:
+        df.index = df.index.tz_localize(None)
+    for col in df.select_dtypes(include=["datetimetz"]).columns:
+        df[col] = df[col].dt.tz_localize(None)
+    return df
+
 
 def _col_to_letter(idx: int) -> str:
     """Return Excel-style column letters (0-based)."""
@@ -136,7 +146,7 @@ def create_dashboard(output_root: str = "output") -> Path:
         if profile_path.exists():
             try:
                 df = pd.read_csv(profile_path)
-                profiles[ticker] = df
+                profiles[ticker] = _strip_timezones(df)
             except Exception:
                 pass
 
@@ -145,7 +155,7 @@ def create_dashboard(output_root: str = "output") -> Path:
         if price_path.exists():
             try:
                 df = pd.read_csv(price_path, parse_dates=["Date"])
-                prices[ticker] = df
+                prices[ticker] = _strip_timezones(df)
             except Exception:
                 pass
 
@@ -155,7 +165,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             try:
                 df = pd.read_csv(ia_path, index_col=0, parse_dates=True)
                 df = df.reset_index().rename(columns={"index": "Period"})
-                income_ann[ticker] = df
+                income_ann[ticker] = _strip_timezones(df)
             except Exception:
                 pass
 
@@ -165,7 +175,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             try:
                 df = pd.read_csv(iq_path, index_col=0, parse_dates=True)
                 df = df.reset_index().rename(columns={"index": "Period"})
-                income_qtr[ticker] = df
+                income_qtr[ticker] = _strip_timezones(df)
             except Exception:
                 pass
 
@@ -175,7 +185,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             try:
                 df = pd.read_csv(ba_path, index_col=0, parse_dates=True)
                 df = df.reset_index().rename(columns={"index": "Period"})
-                balance_ann[ticker] = df
+                balance_ann[ticker] = _strip_timezones(df)
             except Exception:
                 pass
 
@@ -185,7 +195,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             try:
                 df = pd.read_csv(bq_path, index_col=0, parse_dates=True)
                 df = df.reset_index().rename(columns={"index": "Period"})
-                balance_qtr[ticker] = df
+                balance_qtr[ticker] = _strip_timezones(df)
             except Exception:
                 pass
 
@@ -195,7 +205,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             try:
                 df = pd.read_csv(ca_path, index_col=0, parse_dates=True)
                 df = df.reset_index().rename(columns={"index": "Period"})
-                cash_ann[ticker] = df
+                cash_ann[ticker] = _strip_timezones(df)
             except Exception:
                 pass
 
@@ -205,7 +215,7 @@ def create_dashboard(output_root: str = "output") -> Path:
             try:
                 df = pd.read_csv(cq_path, index_col=0, parse_dates=True)
                 df = df.reset_index().rename(columns={"index": "Period"})
-                cash_qtr[ticker] = df
+                cash_qtr[ticker] = _strip_timezones(df)
             except Exception:
                 pass
 

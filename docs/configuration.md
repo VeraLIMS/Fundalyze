@@ -19,6 +19,10 @@ DIRECTUS_TOKEN=secret-token
 DIRECTUS_PORTFOLIO_COLLECTION=portfolio
 DIRECTUS_GROUPS_COLLECTION=groups
 ```
+To obtain an OpenBB API token visit the
+[OpenBB documentation](https://docs.openbb.co/platform/getting_started/api_requests)
+and sign up for an account. Once acquired, run the Settings Manager wizard to
+store the token.
 `modules.config_utils` automatically loads this file using [python-dotenv](https://github.com/theskumar/python-dotenv) whenever `load_settings()` is called.
 
 ## Creating `config/settings.json`
@@ -29,6 +33,8 @@ This file stores additional preferences that are not secrets. A minimal example:
   "timezone": "UTC"
 }
 ```
+The timezone can be changed later by running the **Timezone** wizard inside the
+Settings Manager.
 `load_settings()` returns the parsed dictionary so other modules can access these values.
 
 ## Initial Setup
