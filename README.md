@@ -128,3 +128,7 @@ Results are summarized in [docs/performance_benchmarks.md](docs/performance_benc
 
 - [Codebase Overview](docs/overview.md) – quick tour of modules and entry points.
 - [Configuration Guide](docs/configuration.md) – setting up `.env` and `settings.json`.
+
+## License
+
+Fundalyze is licensed under the [Apache License 2.0](LICENSE).
