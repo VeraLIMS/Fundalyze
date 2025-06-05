@@ -35,3 +35,26 @@ for fname, storage in stmt_files:
 
 `fetch_basic_stock_data` now accepts a `provider` argument (`"yf"`, `"fmp"`, or `"auto"`) allowing callers to force a specific data source.
 
+
+### 2024-Refactor Updates
+
+- **modules/utils/excel_utils.py** – new utility with `col_to_letter` and `write_table` used for Excel dashboard creation.
+- **modules/generate_report/excel_dashboard.py** – uses `write_table` to reduce nearly 80 lines of repeated code and now prints a simple progress indicator when reading ticker data.
+- **modules/data/compare.py** – added missing `logging` import and file docstring.
+- **tests/test_excel_dashboard.py** – updated to import the column helper from `modules.utils.excel_utils`.
+
+```python
+# Old repeated table-writing logic
+worksheet.add_table(
+    table_range,
+    {
+        "name": "PriceHistory_Table",
+        "columns": [{"header": c} for c in df_prices.columns],
+        "autofilter": True,
+        "style": "Table Style Medium 3",
+    },
+)
+
+# New helper usage
+write_table(writer, df_prices, "PriceHistory", "PriceHistory_Table", style="Table Style Medium 3")
+```

@@ -13,20 +13,11 @@ from modules.utils.data_utils import (
     ensure_period_column,
     read_csv_if_exists,
 )
+from modules.utils.excel_utils import write_table
 
 def _strip_timezones(df: pd.DataFrame) -> pd.DataFrame:
     """Deprecated wrapper around :func:`modules.utils.data_utils.strip_timezones`."""
     return strip_timezones(df)
-
-
-def _col_to_letter(idx: int) -> str:
-    """Return Excel-style column letters (0-based)."""
-    letters = ""
-    while idx >= 0:
-        idx, rem = divmod(idx, 26)
-        letters = chr(65 + rem) + letters
-        idx -= 1
-    return letters
 
 
 def _transpose_financials(ticker_dfs: dict[str, pd.DataFrame]) -> pd.DataFrame:
@@ -153,7 +144,9 @@ def create_dashboard(output_root: str | None = None, *, tickers: Optional[Iterab
     cash_ann = {}
     cash_qtr = {}
 
-    for td in ticker_dirs:
+    total = len(ticker_dirs)
+    for idx, td in enumerate(ticker_dirs, start=1):
+        print(f"[{idx}/{total}] Loading {td.name}...")
         ticker = td.name
 
         df = read_csv_if_exists(td / "profile.csv")
@@ -201,163 +194,82 @@ def create_dashboard(output_root: str | None = None, *, tickers: Optional[Iterab
 
         # ── Sheet: Profile ───────────────────────────────────────────
         if not df_profiles.empty:
-            sheet_name = "Profile"
-            df_profiles.to_excel(writer, sheet_name=sheet_name, index=False)
-            worksheet = writer.sheets[sheet_name]
-
-            nrows, ncols = df_profiles.shape
-            last_row = nrows      # header is row 0, data runs 1..nrows
-            last_col = ncols - 1
-            # e.g. "A1:E101" if 100 data rows and 5 columns total
-            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
-            worksheet.add_table(
-                table_range,
-                {
-                    "name":       "Profile_Table",
-                    "columns":    [{"header": col} for col in df_profiles.columns],
-                    "autofilter": True,
-                    "style":      "Table Style Medium 2",
-                },
+            write_table(
+                writer,
+                df_profiles,
+                "Profile",
+                "Profile_Table",
+                style="Table Style Medium 2",
             )
 
         # ── Sheet: PriceHistory ───────────────────────────────────────
         if not df_prices.empty:
-            sheet_name = "PriceHistory"
-            df_prices.to_excel(writer, sheet_name=sheet_name, index=False)
-            worksheet = writer.sheets[sheet_name]
-
-            nrows, ncols = df_prices.shape
-            last_row = nrows
-            last_col = ncols - 1
-            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
-            worksheet.add_table(
-                table_range,
-                {
-                    "name":       "PriceHistory_Table",
-                    "columns":    [{"header": col} for col in df_prices.columns],
-                    "autofilter": True,
-                    "style":      "Table Style Medium 3",
-                },
+            write_table(
+                writer,
+                df_prices,
+                "PriceHistory",
+                "PriceHistory_Table",
+                style="Table Style Medium 3",
             )
 
         # ── Sheet: Income_Annual ───────────────────────────────────────
         if not df_inc_ann.empty:
-            sheet_name = "Income_Annual"
-            df_inc_ann.to_excel(writer, sheet_name=sheet_name, index=False)
-            worksheet = writer.sheets[sheet_name]
-
-            nrows, ncols = df_inc_ann.shape
-            last_row = nrows
-            last_col = ncols - 1
-            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
-            worksheet.add_table(
-                table_range,
-                {
-                    "name":       "Income_Annual_Table",
-                    "columns":    [{"header": col} for col in df_inc_ann.columns],
-                    "autofilter": True,
-                    "style":      "Table Style Medium 4",
-                },
+            write_table(
+                writer,
+                df_inc_ann,
+                "Income_Annual",
+                "Income_Annual_Table",
+                style="Table Style Medium 4",
             )
 
         # ── Sheet: Income_Quarter ─────────────────────────────────────
         if not df_inc_qtr.empty:
-            sheet_name = "Income_Quarter"
-            df_inc_qtr.to_excel(writer, sheet_name=sheet_name, index=False)
-            worksheet = writer.sheets[sheet_name]
-
-            nrows, ncols = df_inc_qtr.shape
-            last_row = nrows
-            last_col = ncols - 1
-            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
-            worksheet.add_table(
-                table_range,
-                {
-                    "name":       "Income_Quarter_Table",
-                    "columns":    [{"header": col} for col in df_inc_qtr.columns],
-                    "autofilter": True,
-                    "style":      "Table Style Medium 5",
-                },
+            write_table(
+                writer,
+                df_inc_qtr,
+                "Income_Quarter",
+                "Income_Quarter_Table",
+                style="Table Style Medium 5",
             )
 
         # ── Sheet: Balance_Annual ─────────────────────────────────────
         if not df_bal_ann.empty:
-            sheet_name = "Balance_Annual"
-            df_bal_ann.to_excel(writer, sheet_name=sheet_name, index=False)
-            worksheet = writer.sheets[sheet_name]
-
-            nrows, ncols = df_bal_ann.shape
-            last_row = nrows
-            last_col = ncols - 1
-            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
-            worksheet.add_table(
-                table_range,
-                {
-                    "name":       "Balance_Annual_Table",
-                    "columns":    [{"header": col} for col in df_bal_ann.columns],
-                    "autofilter": True,
-                    "style":      "Table Style Medium 6",
-                },
+            write_table(
+                writer,
+                df_bal_ann,
+                "Balance_Annual",
+                "Balance_Annual_Table",
+                style="Table Style Medium 6",
             )
 
         # ── Sheet: Balance_Quarter ────────────────────────────────────
         if not df_bal_qtr.empty:
-            sheet_name = "Balance_Quarter"
-            df_bal_qtr.to_excel(writer, sheet_name=sheet_name, index=False)
-            worksheet = writer.sheets[sheet_name]
-
-            nrows, ncols = df_bal_qtr.shape
-            last_row = nrows
-            last_col = ncols - 1
-            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
-            worksheet.add_table(
-                table_range,
-                {
-                    "name":       "Balance_Quarter_Table",
-                    "columns":    [{"header": col} for col in df_bal_qtr.columns],
-                    "autofilter": True,
-                    "style":      "Table Style Medium 7",
-                },
+            write_table(
+                writer,
+                df_bal_qtr,
+                "Balance_Quarter",
+                "Balance_Quarter_Table",
+                style="Table Style Medium 7",
             )
 
         # ── Sheet: Cash_Annual ────────────────────────────────────────
         if not df_cash_ann.empty:
-            sheet_name = "Cash_Annual"
-            df_cash_ann.to_excel(writer, sheet_name=sheet_name, index=False)
-            worksheet = writer.sheets[sheet_name]
-
-            nrows, ncols = df_cash_ann.shape
-            last_row = nrows
-            last_col = ncols - 1
-            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
-            worksheet.add_table(
-                table_range,
-                {
-                    "name":       "Cash_Annual_Table",
-                    "columns":    [{"header": col} for col in df_cash_ann.columns],
-                    "autofilter": True,
-                    "style":      "Table Style Medium 8",
-                },
+            write_table(
+                writer,
+                df_cash_ann,
+                "Cash_Annual",
+                "Cash_Annual_Table",
+                style="Table Style Medium 8",
             )
 
         # ── Sheet: Cash_Quarter ───────────────────────────────────────
         if not df_cash_qtr.empty:
-            sheet_name = "Cash_Quarter"
-            df_cash_qtr.to_excel(writer, sheet_name=sheet_name, index=False)
-            worksheet = writer.sheets[sheet_name]
-
-            nrows, ncols = df_cash_qtr.shape
-            last_row = nrows
-            last_col = ncols - 1
-            table_range = f"A1:{_col_to_letter(last_col)}{last_row + 1}"
-            worksheet.add_table(
-                table_range,
-                {
-                    "name":       "Cash_Quarter_Table",
-                    "columns":    [{"header": col} for col in df_cash_qtr.columns],
-                    "autofilter": True,
-                    "style":      "Table Style Medium 9",
-                },
+            write_table(
+                writer,
+                df_cash_qtr,
+                "Cash_Quarter",
+                "Cash_Quarter_Table",
+                style="Table Style Medium 9",
             )
 
     return dash_path

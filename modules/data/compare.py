@@ -1,3 +1,5 @@
+"""Utilities for comparing company profiles from OpenBB and yfinance."""
+
 import logging
 import sys
 from typing import Dict, Tuple

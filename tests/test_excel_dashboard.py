@@ -1,19 +1,19 @@
 import pandas as pd
 from generate_report.excel_dashboard import (
-    _col_to_letter,
     _safe_concat_normal,
     _transpose_financials,
     _strip_timezones,
 )
+from modules.utils.excel_utils import col_to_letter
 
 
 def test_col_to_letter_basic():
-    assert _col_to_letter(0) == "A"
-    assert _col_to_letter(1) == "B"
-    assert _col_to_letter(25) == "Z"
-    assert _col_to_letter(26) == "AA"
-    assert _col_to_letter(51) == "AZ"
-    assert _col_to_letter(52) == "BA"
+    assert col_to_letter(0) == "A"
+    assert col_to_letter(1) == "B"
+    assert col_to_letter(25) == "Z"
+    assert col_to_letter(26) == "AA"
+    assert col_to_letter(51) == "AZ"
+    assert col_to_letter(52) == "BA"
 
 
 def test_safe_concat_normal():
