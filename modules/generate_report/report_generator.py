@@ -74,6 +74,11 @@ def fetch_and_compile(
     obb_mod = _get_openbb()
 
     if local_output is None:
+ codex/document-logs-and-logging-policy
+        # If a ``base_output`` path was provided, assume the caller expects
+        # local files regardless of DIRECTUS_URL. Otherwise default to uploading
+        # when DIRECTUS_URL is configured.
+=======
  codex/create-documentation-for-generate_report-module
 =======
  nwk644-codex/document-utilities-in-analytics-module
@@ -81,6 +86,7 @@ def fetch_and_compile(
         # If a base_output path was provided, assume the caller expects local
         # files regardless of DIRECTUS_URL. Otherwise default to uploading when
         # DIRECTUS_URL is configured.
+ main
         local_output = bool(base_output or os.getenv("OUTPUT_DIR")) or not bool(
             os.getenv("DIRECTUS_URL")
         )
