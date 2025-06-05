@@ -373,7 +373,7 @@ def view_groups(groups: pd.DataFrame):
 
 
 def main():
-    print_header("Group Analysis Manager")
+    print_header("\U0001F4CA Group Analysis Manager")
     portfolio = load_portfolio(PORTFOLIO_FILE)
     groups = load_groups(GROUPS_FILE)
 
@@ -415,8 +415,12 @@ def main():
                 unique_groups = groups["Group"].dropna().unique().tolist()
                 for i, g in enumerate(unique_groups, start=1):
                     print(f"  {i}) {g}")
-                sel = input(f"Select a group [1-{len(unique_groups)}]: ").strip()
-                if sel.isdigit() and 1 <= int(sel) <= len(unique_groups):
+                sel = input(
+                    f"Select a group [1-{len(unique_groups)}] (or press Enter to cancel): "
+                ).strip()
+                if not sel:
+                    print("Canceled.\n")
+                elif sel.isdigit() and 1 <= int(sel) <= len(unique_groups):
                     grp_name = unique_groups[int(sel) - 1]
                     groups = add_tickers_to_group(groups, grp_name)
                     save_groups(groups, GROUPS_FILE)
