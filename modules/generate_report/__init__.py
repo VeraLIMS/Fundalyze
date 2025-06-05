@@ -96,7 +96,9 @@ def run_generate_report():
         return
     for tk in tickers:
         try:
-            fetch_and_compile(tk)
+            # Always write files locally so subsequent steps (metadata checker,
+            # fallback fetch and dashboard creation) have data to work with.
+            fetch_and_compile(tk, local_output=True)
         except Exception as e:
             print(f"  ⚠ Error while generating report for {tk}: {e}")
 
