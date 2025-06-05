@@ -13,8 +13,8 @@ def test_prepare_records(monkeypatch, tmp_path):
         "collections": {
             "companies": {
                 "fields": {
-                    "Ticker": {"type": "string", "mapped_to": "ticker_symbol"},
-                    "Name": {"type": "string", "mapped_to": "company_name"},
+                    "Ticker": {"type": "string", "mapped_to": "ticker"},
+                    "Name": {"type": "string", "mapped_to": "name"},
                 }
             }
         }
@@ -22,11 +22,11 @@ def test_prepare_records(monkeypatch, tmp_path):
     file = tmp_path / "directus_field_map.json"
     file.write_text(json.dumps(mapping))
     monkeypatch.setattr(dm, "MAP_FILE", file)
-    monkeypatch.setattr(dm, "list_fields", lambda c: ["ticker_symbol", "company_name"])
+    monkeypatch.setattr(dm, "list_fields", lambda c: ["ticker", "name"])
 
     records = [{"Ticker": "AAA", "Name": "Acme", "Extra": 1}]
     prepared = dm.prepare_records("companies", records)
-    assert prepared == [{"ticker_symbol": "AAA", "company_name": "Acme"}]
+    assert prepared == [{"ticker": "AAA", "name": "Acme"}]
 
 
 def test_interactive_prepare_records(monkeypatch, tmp_path):

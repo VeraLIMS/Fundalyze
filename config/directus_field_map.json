@@ -4,11 +4,11 @@
       "fields": {
         "Ticker": {
           "type": null,
-          "mapped_to": "ticker_symbol"
+          "mapped_to": "ticker"
         },
         "Name": {
           "type": null,
-          "mapped_to": "company_name"
+          "mapped_to": "name"
         },
         "Sector": {
           "type": null,
@@ -4016,11 +4016,11 @@
       "fields": {
         "Ticker": {
           "type": null,
-          "mapped_to": "ticker_symbol"
+          "mapped_to": "ticker"
         },
         "Name": {
           "type": null,
-          "mapped_to": "company_name"
+          "mapped_to": "name"
         },
         "Sector": {
           "type": null,
