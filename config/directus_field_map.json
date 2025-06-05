@@ -89,6 +89,46 @@
         "notes": {
           "type": null,
           "mapped_to": "notes"
+        },
+        "symbol": {
+          "type": null,
+          "mapped_to": "ticker_symbol"
+        },
+        "name": {
+          "type": null,
+          "mapped_to": "company_name"
+        },
+        "stock_exchange": {
+          "type": null,
+          "mapped_to": "exchange"
+        },
+        "long_description": {
+          "type": null,
+          "mapped_to": "description"
+        },
+        "hq_country": {
+          "type": null,
+          "mapped_to": "hq_country"
+        },
+        "employees": {
+          "type": null,
+          "mapped_to": "employee_count"
+        },
+        "industry_category": {
+          "type": null,
+          "mapped_to": "industry"
+        },
+        "market_cap": {
+          "type": null,
+          "mapped_to": "market_cap"
+        },
+        "earnings_date": {
+          "type": null,
+          "mapped_to": "earnings_date"
+        },
+        "beta": {
+          "type": null,
+          "mapped_to": "beta"
         }
       }
     },
