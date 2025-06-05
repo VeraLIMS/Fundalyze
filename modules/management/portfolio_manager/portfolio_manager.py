@@ -18,7 +18,7 @@ Description:
 import os
 
 from modules.analytics import portfolio_summary, sector_counts
-from modules.interface import print_table, print_invalid_choice
+from modules.interface import print_table, print_invalid_choice, print_header
 
 import pandas as pd
 import requests
@@ -246,9 +246,9 @@ def remove_ticker(portfolio: pd.DataFrame) -> pd.DataFrame:
     """
     Prompt the user for a ticker to remove from the portfolio.
     """
-    tk = input("Enter the ticker symbol to remove: ").strip().upper()
+    tk = input("Enter the ticker symbol to remove (or press Enter to cancel): ").strip().upper()
     if not tk:
-        print("No ticker entered. Returning to main menu.\n")
+        print("Canceled.\n")
         return portfolio
 
     if tk not in portfolio["Ticker"].values:
@@ -300,7 +300,7 @@ def view_portfolio(portfolio: pd.DataFrame):
 
 
 def main():
-    print("\n=== Portfolio Manager ===\n")
+    print_header("\U0001F4C8 Portfolio Manager")
     portfolio = load_portfolio(PORTFOLIO_FILE)
 
     while True:

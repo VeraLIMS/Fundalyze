@@ -1,6 +1,6 @@
 import json
 
-from modules.interface import print_invalid_choice
+from modules.interface import print_invalid_choice, print_header
 
 from modules.data import directus_client as dc
 
@@ -24,7 +24,7 @@ def run_directus_wizard() -> None:
             return
 
     while True:
-        print("\n🧩 Directus Tools")
+        print_header("\U0001F9E9 Directus Tools")
         print("1) List Collections")
         print("2) View Fields in Collection")
         print("3) Add Field to Collection")

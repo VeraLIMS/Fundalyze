@@ -293,7 +293,12 @@ def remove_ticker_from_group(groups: pd.DataFrame) -> pd.DataFrame:
     unique_groups = groups["Group"].dropna().unique().tolist()
     for i, g in enumerate(unique_groups, start=1):
         print(f"  {i}) {g}")
-    choice = input(f"Select a group to modify [1-{len(unique_groups)}]: ").strip()
+    choice = input(
+        f"Select a group to modify [1-{len(unique_groups)}] (or press Enter to cancel): "
+    ).strip()
+    if not choice:
+        print("Canceled.\n")
+        return groups
     if not (choice.isdigit() and 1 <= int(choice) <= len(unique_groups)):
         print_invalid_choice()
         return groups
@@ -303,7 +308,12 @@ def remove_ticker_from_group(groups: pd.DataFrame) -> pd.DataFrame:
     members = groups[groups["Group"] == grp]["Ticker"].tolist()
     for i, t in enumerate(members, start=1):
         print(f"  {i}) {t}")
-    idx = input(f"Select ticker to remove (1-{len(members)}): ").strip()
+    idx = input(
+        f"Select ticker to remove (1-{len(members)}) (or press Enter to cancel): "
+    ).strip()
+    if not idx:
+        print("Canceled.\n")
+        return groups
     if not (idx.isdigit() and 1 <= int(idx) <= len(members)):
         print_invalid_choice()
         return groups
@@ -327,7 +337,12 @@ def delete_group(groups: pd.DataFrame) -> pd.DataFrame:
     unique_groups = groups["Group"].dropna().unique().tolist()
     for i, g in enumerate(unique_groups, start=1):
         print(f"  {i}) {g}")
-    choice = input(f"Select a group to delete [1-{len(unique_groups)}]: ").strip()
+    choice = input(
+        f"Select a group to delete [1-{len(unique_groups)}] (or press Enter to cancel): "
+    ).strip()
+    if not choice:
+        print("Canceled.\n")
+        return groups
     if not (choice.isdigit() and 1 <= int(choice) <= len(unique_groups)):
         print_invalid_choice()
         return groups

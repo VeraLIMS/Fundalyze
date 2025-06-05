@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Dict
 
-from modules.interface import print_invalid_choice
+from modules.interface import print_invalid_choice, print_header
 
 import importlib
 
@@ -33,7 +33,9 @@ def _discover_wizards():
 
 
 def _prompt_kv() -> tuple[str, str]:
-    key = input("Key: ").strip()
+    key = input("Key (or press Enter to cancel): ").strip()
+    if not key:
+        return "", ""
     value = input("Value: ").strip()
     return key, value
 
@@ -55,6 +57,9 @@ def _show_api_keys() -> None:
 
 def _set_setting() -> None:
     key, val = _prompt_kv()
+    if not key:
+        print("Canceled.\n")
+        return
     data = load_settings()
     data[key] = val
     save_settings(data)
@@ -74,6 +79,9 @@ def _del_setting() -> None:
 
 def _set_env_var() -> None:
     key, val = _prompt_kv()
+    if not key:
+        print("Canceled.\n")
+        return
     env = load_env()
     env[key] = val
     save_env(env)
@@ -92,7 +100,7 @@ def _del_env_var() -> None:
 
 def _general_settings_menu() -> None:
     while True:
-        print("\n⚙️ General Settings")
+        print_header("\u2699\ufe0f General Settings")
         print("1) View settings.json")
         print("2) Set Setting")
         print("3) Delete Setting")
@@ -112,7 +120,7 @@ def _general_settings_menu() -> None:
 
 def _env_menu() -> None:
     while True:
-        print("\n⚙️ Environment (.env)")
+        print_header("\u2699\ufe0f Environment (.env)")
         print("1) View .env")
         print("2) Set .env Variable")
         print("3) Delete .env Variable")
@@ -145,7 +153,7 @@ def _wizards_menu() -> None:
     order = [label for label in default_order if label in wiz_map]
     order.extend([lbl for lbl in wiz_map if lbl not in order])
     while True:
-        print("\n⚙️ Setup Wizards")
+        print_header("\u2699\ufe0f Setup Wizards")
         for idx, lbl in enumerate(order, start=1):
             print(f"{idx}) Setup {lbl}")
         print(f"{len(order)+1}) Return to Settings Menu")
@@ -169,7 +177,7 @@ def run_settings_manager() -> None:
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
 
     while True:
-        print("\n⚙️ Settings")
+        print_header("\u2699\ufe0f Settings")
         options = [
             ("General Settings", _general_settings_menu),
             ("Environment (.env)", _env_menu),

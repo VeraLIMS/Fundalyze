@@ -55,3 +55,16 @@ These changes ensure consistent feedback across the CLI and provide clearer guid
 - Clarified group creation prompts in
   `modules/management/group_analysis/group_analysis.py` lines
   205–219 to mention pressing Enter to cancel selections.
+
+### New Enhancements
+
+- Standardized menu headings by calling `print_header` in
+  `portfolio_manager.py`, `settings_manager.py` and `directus_wizard.py`.
+- Added cancel options for removing tickers and deleting groups:
+  - `portfolio_manager.remove_ticker` lines 245–253 allow pressing Enter to cancel.
+  - `group_analysis.remove_ticker_from_group` lines 296–316 handle empty input.
+  - `group_analysis.delete_group` lines 340–347 handle empty input.
+- Viewing notes now accepts an empty title to cancel in
+  `note_manager.py` lines 78–81.
+- Settings modifications can be canceled by leaving the key blank in
+  `settings_manager.py` lines 58–66 and 80–88.

@@ -75,7 +75,10 @@ def run_note_manager() -> None:
                 for n in notes:
                     print(f"- {n}")
         elif choice == "2":
-            title = input("Note title: ").strip()
+            title = input("Note title (or press Enter to cancel): ").strip()
+            if not title:
+                print("Canceled.\n")
+                continue
             content = read_note(title)
             if content is None:
                 print("Note not found.")
