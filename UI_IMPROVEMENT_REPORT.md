@@ -27,3 +27,12 @@ The Fundalyze project uses a command line interface exposed via `scripts/main.py
 - `modules/generate_report/__init__.py`
 
 These changes ensure consistent feedback across the CLI and provide clearer guidance for new users.
+
+### Additional Updates
+
+- Refined `INVALID_CHOICE_MSG` in `modules/interface.py` to instruct users to
+  press `Ctrl+C` for exit.
+- Standardised all menu prompts to use the `Select an option [n]` pattern for
+  clarity.
+- Added subcommand descriptions in `scripts/main.py` so `--help` shows a brief
+  explanation for each command.

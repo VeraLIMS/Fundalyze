@@ -202,7 +202,11 @@ def parse_args() -> argparse.Namespace:
     )
     sub = parser.add_subparsers(dest="command")
     for cmd in COMMAND_MAP:
-        sub.add_parser(cmd, help=COMMAND_HELP.get(cmd, cmd))
+        sub.add_parser(
+            cmd,
+            help=COMMAND_HELP.get(cmd, cmd),
+            description=COMMAND_HELP.get(cmd, cmd),
+        )
     sub.add_parser("menu", help="Interactive menu (default)")
     parser.add_argument("--version", action="version", version="Fundalyze 1.0")
     return parser.parse_args()

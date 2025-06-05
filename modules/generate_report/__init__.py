@@ -23,7 +23,7 @@ def _select_tickers() -> list[str]:
     print("2) Use all tickers from portfolio")
     print("3) Choose a group")
     print("4) Return to Main Menu")
-    choice = input("Enter 1-4: ").strip()
+    choice = input("Select an option [1-4]: ").strip()
 
     if choice == "1":
         raw = input("Enter ticker symbol(s), comma-separated): ").strip()

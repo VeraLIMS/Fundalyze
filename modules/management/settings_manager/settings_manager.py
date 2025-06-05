@@ -97,7 +97,7 @@ def _general_settings_menu() -> None:
         print("2) Set Setting")
         print("3) Delete Setting")
         print("4) Return to Settings Menu")
-        choice = input("Enter 1-4: ").strip()
+        choice = input("Select an option [1-4]: ").strip()
         if choice == "1":
             _show_dict(load_settings())
         elif choice == "2":
@@ -117,7 +117,7 @@ def _env_menu() -> None:
         print("2) Set .env Variable")
         print("3) Delete .env Variable")
         print("4) Return to Settings Menu")
-        choice = input("Enter 1-4: ").strip()
+        choice = input("Select an option [1-4]: ").strip()
         if choice == "1":
             _show_dict(load_env())
         elif choice == "2":
@@ -149,7 +149,7 @@ def _wizards_menu() -> None:
         for idx, lbl in enumerate(order, start=1):
             print(f"{idx}) Setup {lbl}")
         print(f"{len(order)+1}) Return to Settings Menu")
-        choice = input(f"Enter 1-{len(order)+1}: ").strip()
+        choice = input(f"Select an option [1-{len(order)+1}]: ").strip()
         if not choice.isdigit() or not (1 <= int(choice) <= len(order)+1):
             print_invalid_choice()
             continue
@@ -179,7 +179,7 @@ def run_settings_manager() -> None:
         ]
         for idx, (lbl, _) in enumerate(options, start=1):
             print(f"{idx}) {lbl}")
-        choice = input("Enter 1-5: ").strip()
+        choice = input("Select an option [1-5]: ").strip()
         if not choice.isdigit() or not (1 <= int(choice) <= len(options)):
             print_invalid_choice()
             continue
