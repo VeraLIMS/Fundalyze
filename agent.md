@@ -67,13 +67,12 @@ tests/test_portfolio_manager.py::test_add_ticker_to_all_na_column
 
 
 ## Recent Findings
+
 ............................................FF.......................... [ 61%]
 ...............................F..............                           [100%]
 =================================== FAILURES ===================================
 ______________________ test_report_generation_end_to_end _______________________
 
-tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_report_generation_end_to_0')
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f74001cf490>
 
     def test_report_generation_end_to_end(tmp_path, monkeypatch):
         profile_df = pd.DataFrame({
@@ -129,7 +128,7 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f74001cf490>
 >       assert (ticker_dir / "profile.csv").is_file()
 E       AssertionError: assert False
 E        +  where False = is_file()
-E        +    where is_file = (PosixPath('/tmp/pytest-of-root/pytest-1/test_report_generation_end_to_0/AAA') / 'profile.csv').is_file
+
 
 tests/test_e2e.py:68: AssertionError
 ----------------------------- Captured stdout call -----------------------------
@@ -213,8 +212,7 @@ ERROR    modules.data.directus_client:directus_client.py:76 Invalid JSON respons
     <meta charset="
 ____________________ test_portfolio_manager_cli_end_to_end _____________________
 
-tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_portfolio_manager_cli_end0')
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f740019fa50>
+
 
     def test_portfolio_manager_cli_end_to_end(tmp_path, monkeypatch):
         data = {
@@ -252,9 +250,6 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 /root/.pyenv/versions/3.11.12/lib/python3.11/site-packages/pandas/io/excel/_base.py:1402: in inspect_excel_format
     with get_handle(
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-path_or_buf = '/tmp/pytest-of-root/pytest-1/test_portfolio_manager_cli_end0/portfolio.xlsx'
-mode = 'rb'
 
     @doc(compression_options=_shared_docs["compression_options"] % "path_or_buf")
     def get_handle(
@@ -476,7 +471,7 @@ mode = 'rb'
                 # Binary mode
 >               handle = open(handle, ioargs.mode)
                          ^^^^^^^^^^^^^^^^^^^^^^^^^
-E               FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-root/pytest-1/test_portfolio_manager_cli_end0/portfolio.xlsx'
+
 
 /root/.pyenv/versions/3.11.12/lib/python3.11/site-packages/pandas/io/common.py:882: FileNotFoundError
 ----------------------------- Captured stdout call -----------------------------
@@ -525,8 +520,7 @@ ERROR    modules.data.directus_client:directus_client.py:76 Invalid JSON respons
     <meta charset="
 _____________________________ test_env_output_dir ______________________________
 
-tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_env_output_dir0')
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f73ffe71250>
+
 
     def test_env_output_dir(tmp_path, monkeypatch):
         profile_df = pd.DataFrame({"symbol": ["AAA"]})
@@ -567,7 +561,7 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f73ffe71250>
 >       assert (tmp_path / "AAA" / "profile.csv").is_file()
 E       AssertionError: assert False
 E        +  where False = is_file()
-E        +    where is_file = ((PosixPath('/tmp/pytest-of-root/pytest-1/test_env_output_dir0') / 'AAA') / 'profile.csv').is_file
+
 
 tests/test_output_dir_env.py:50: AssertionError
 ----------------------------- Captured stdout call -----------------------------
@@ -660,16 +654,13 @@ tests/test_portfolio_manager.py::test_add_ticker_to_all_na_column
 FAILED tests/test_e2e.py::test_report_generation_end_to_end - AssertionError:...
 FAILED tests/test_e2e.py::test_portfolio_manager_cli_end_to_end - FileNotFoun...
 FAILED tests/test_output_dir_env.py::test_env_output_dir - AssertionError: as...
-3 failed, 115 passed, 2 warnings in 14.21s
 
-## Recent Findings
 ............................................FF.......................... [ 61%]
 ...............................F..............                           [100%]
 =================================== FAILURES ===================================
 ______________________ test_report_generation_end_to_end _______________________
 
-tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_report_generation_end_to_0')
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3a82bbea90>
+
 
     def test_report_generation_end_to_end(tmp_path, monkeypatch):
         profile_df = pd.DataFrame({
@@ -725,7 +716,7 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3a82bbea90>
 >       assert (ticker_dir / "profile.csv").is_file()
 E       AssertionError: assert False
 E        +  where False = is_file()
-E        +    where is_file = (PosixPath('/tmp/pytest-of-root/pytest-2/test_report_generation_end_to_0/AAA') / 'profile.csv').is_file
+
 
 tests/test_e2e.py:68: AssertionError
 ----------------------------- Captured stdout call -----------------------------
@@ -809,8 +800,7 @@ ERROR    modules.data.directus_client:directus_client.py:76 Invalid JSON respons
     <meta charset="
 ____________________ test_portfolio_manager_cli_end_to_end _____________________
 
-tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_portfolio_manager_cli_end0')
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3a84553e90>
+
 
     def test_portfolio_manager_cli_end_to_end(tmp_path, monkeypatch):
         data = {
@@ -849,8 +839,6 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     with get_handle(
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-path_or_buf = '/tmp/pytest-of-root/pytest-2/test_portfolio_manager_cli_end0/portfolio.xlsx'
-mode = 'rb'
 
     @doc(compression_options=_shared_docs["compression_options"] % "path_or_buf")
     def get_handle(
@@ -1072,7 +1060,7 @@ mode = 'rb'
                 # Binary mode
 >               handle = open(handle, ioargs.mode)
                          ^^^^^^^^^^^^^^^^^^^^^^^^^
-E               FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-root/pytest-2/test_portfolio_manager_cli_end0/portfolio.xlsx'
+
 
 /root/.pyenv/versions/3.11.12/lib/python3.11/site-packages/pandas/io/common.py:882: FileNotFoundError
 ----------------------------- Captured stdout call -----------------------------
@@ -1121,8 +1109,7 @@ ERROR    modules.data.directus_client:directus_client.py:76 Invalid JSON respons
     <meta charset="
 _____________________________ test_env_output_dir ______________________________
 
-tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_env_output_dir0')
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3a8292db50>
+
 
     def test_env_output_dir(tmp_path, monkeypatch):
         profile_df = pd.DataFrame({"symbol": ["AAA"]})
@@ -1163,7 +1150,7 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3a8292db50>
 >       assert (tmp_path / "AAA" / "profile.csv").is_file()
 E       AssertionError: assert False
 E        +  where False = is_file()
-E        +    where is_file = ((PosixPath('/tmp/pytest-of-root/pytest-2/test_env_output_dir0') / 'AAA') / 'profile.csv').is_file
+
 
 tests/test_output_dir_env.py:50: AssertionError
 ----------------------------- Captured stdout call -----------------------------
@@ -1256,4 +1243,4 @@ tests/test_portfolio_manager.py::test_add_ticker_to_all_na_column
 FAILED tests/test_e2e.py::test_report_generation_end_to_end - AssertionError:...
 FAILED tests/test_e2e.py::test_portfolio_manager_cli_end_to_end - FileNotFoun...
 FAILED tests/test_output_dir_env.py::test_env_output_dir - AssertionError: as...
-3 failed, 115 passed, 2 warnings in 13.73s
+
