@@ -124,3 +124,45 @@ def refresh_field_map() -> Dict[str, Any]:
 
     save_field_map(mapping)
     return mapping
+
+
+def ensure_field_mapping(collection: str, df: "pd.DataFrame") -> Dict[str, Any]:
+    """Interactive mapping helper for DataFrame columns.
+
+    For each column in ``df`` that is unmapped or mapped to a non-existent
+    Directus field, prompt the user for the target field name. The mapping file
+    is updated and returned.
+    """
+
+    import pandas as pd  # local import to avoid heavy dependency at startup
+
+    if not isinstance(df, pd.DataFrame):  # pragma: no cover - defensive
+        raise TypeError("df must be a pandas DataFrame")
+
+    mapping = load_field_map()
+    collections = mapping.setdefault("collections", {})
+    col_entry = collections.setdefault(collection, {"fields": {}})
+    fields_map = col_entry.setdefault("fields", {})
+
+    try:
+        allowed = list_fields(collection)
+    except Exception:  # pragma: no cover - network/Directus unavailable
+        allowed = []
+
+    changed = False
+    for column in df.columns:
+        entry = fields_map.get(column)
+        target = entry.get("mapped_to") if entry else None
+        if not target or (allowed and target not in allowed):
+            if allowed:
+                print(f"Available Directus fields for '{collection}': {', '.join(allowed)}")
+            prompt = f"Map column '{column}' to Directus field: "
+            new_target = input(prompt).strip()
+            if new_target:
+                fields_map[column] = {"type": entry.get("type") if entry else None, "mapped_to": new_target}
+                changed = True
+
+    if changed:
+        save_field_map(mapping)
+
+    return mapping
