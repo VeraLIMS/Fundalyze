@@ -1,3 +1,11 @@
+"""Minimal Directus REST client used throughout Fundalyze.
+
+The module lazily reads credentials from ``config/.env`` and exposes helper
+functions for common CRUD operations. When Directus is not configured the
+wrappers simply return ``None`` so the rest of the code can continue to operate
+in a local-only mode.
+"""
+
 import os
 import logging
 import math
@@ -39,7 +47,7 @@ def reload_env() -> None:
 
 
 def _headers():
-    """Return headers including auth and Cloudflare Access credentials."""
+    """Return authentication headers for Directus requests."""
     headers = {}
     if DIRECTUS_TOKEN:
         headers["Authorization"] = f"Bearer {DIRECTUS_TOKEN}"

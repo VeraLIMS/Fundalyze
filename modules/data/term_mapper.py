@@ -1,3 +1,12 @@
+"""Canonical term resolution helpers used for sectors and industries.
+
+The mapping stored in ``config/term_mapping.json`` links a canonical term
+(``Technology``) to a list of aliases (``IT``, ``Tech``).  ``resolve_term``
+normalizes an input string and attempts to find the best match. If no mapping is
+available it optionally consults OpenAI for suggestions and finally prompts the
+user. The resulting alias is persisted for future runs.
+"""
+
 import json
 import os
 from pathlib import Path
@@ -19,6 +28,7 @@ MAPPING_FILE = PROJECT_ROOT / 'config' / 'term_mapping.json'
 
 
 def load_mapping() -> Dict[str, List[str]]:
+    """Return term mapping dictionary from :data:`MAPPING_FILE`."""
     if not MAPPING_FILE.is_file():
         return {}
     with open(MAPPING_FILE, 'r', encoding='utf-8') as f:
@@ -26,16 +36,19 @@ def load_mapping() -> Dict[str, List[str]]:
 
 
 def save_mapping(mapping: Dict[str, List[str]]):
+    """Write ``mapping`` to :data:`MAPPING_FILE`."""
     MAPPING_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(MAPPING_FILE, 'w', encoding='utf-8') as f:
         json.dump(mapping, f, indent=2)
 
 
 def _normalize(text: str) -> str:
+    """Return lowercase, trimmed representation of ``text``."""
     return text.strip().lower()
 
 
 def add_alias(canonical: str, alias: str):
+    """Persist ``alias`` as an alternative spelling for ``canonical``."""
     mapping = load_mapping()
     canonical_norm = canonical.strip()
     alias_norm = alias.strip()
@@ -49,6 +62,7 @@ def add_alias(canonical: str, alias: str):
 
 
 def _suggest_with_openai(term: str, options: List[str]) -> Optional[str]:
+    """Return best matching option suggested by OpenAI or ``None``."""
     if openai is None or not os.getenv('OPENAI_API_KEY'):
         return None
     try:
@@ -72,7 +86,12 @@ def _suggest_with_openai(term: str, options: List[str]) -> Optional[str]:
 
 
 def resolve_term(term: str) -> str:
-    """Return canonical term for given term. If unknown, ask user."""
+    """Return canonical representation for ``term``.
+
+    The function checks existing aliases, optionally queries OpenAI for a best
+    guess and finally prompts the user to pick or create a mapping. Any new
+    mapping is saved via :func:`add_alias`.
+    """
     if not term:
         return term
     mapping = load_mapping()

@@ -24,10 +24,12 @@ Importing `modules.management` exposes convenience functions such as
 directly.
 
 ### `modules.data`
-Lower-level helpers used across the app:
-- `fetching.py` – small wrappers around yfinance and HTTP calls.
+Lower-level helpers used across the app (see [modules/data/README.md](../modules/data/README.md)):
+- `fetching.py` – wrappers around yfinance with FMP fallback.
 - `directus_client.py` – optional Directus integration for remote storage.
-- `term_mapper.py` – maps common financial terms to API field names and stores the mapping in `config/term_mapping.json`.
+- `directus_mapper.py` – keeps `directus_field_map.json` in sync and prepares records for upload.
+- `term_mapper.py` – maps common financial terms to canonical names.
+- `compare.py` – compares profile data from different providers.
 
 ### `modules.utils`
 Small helper utilities reused across the codebase:
