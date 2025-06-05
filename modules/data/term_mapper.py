@@ -1,4 +1,4 @@
-
+"""Utilities to normalize sector and industry terminology."""
 
 import json
 import os

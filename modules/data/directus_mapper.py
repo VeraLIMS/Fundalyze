@@ -1,4 +1,4 @@
-
+"""Helpers to map local data fields to Directus collection fields."""
 
 import json
 import logging
@@ -22,17 +22,22 @@ def load_field_map() -> Dict[str, Any]:
         with open(MAP_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
         if "collections" not in data:
-            converted = {"collections": {}}
-            for col, fields in data.items():
-                converted["collections"][col] = {
-                    "fields": {
-                        name: {"type": None, "mapped_to": dest}
-                        for name, dest in fields.items()
-                    }
-                }
-            return converted
+            return _convert_legacy_format(data)
         return data
     return {"collections": {}}
+
+
+def _convert_legacy_format(data: Dict[str, Any]) -> Dict[str, Any]:
+    """Return mapping converted from legacy ``collection -> field`` format."""
+    converted = {"collections": {}}
+    for col, fields in data.items():
+        converted["collections"][col] = {
+            "fields": {
+                name: {"type": None, "mapped_to": dest}
+                for name, dest in fields.items()
+            }
+        }
+    return converted
 
 
 def save_field_map(mapping: Dict[str, Any]) -> None:

@@ -24,6 +24,7 @@ BASIC_FIELDS = [
 
 
 FMP_PROFILE_URL = "https://financialmodelingprep.com/api/v3/profile/{symbol}"
+FMP_TIMEOUT = 10
 
 
 def _parse_yf_info(info: dict, ticker: str) -> dict:
@@ -41,9 +42,9 @@ def _parse_yf_info(info: dict, ticker: str) -> dict:
 
 
 def _fetch_from_fmp(ticker: str) -> dict:
-    """Return BASIC_FIELDS dict using FMP profile endpoint."""
+    """Return BASIC_FIELDS dict using the FMP profile endpoint."""
     url = add_fmp_api_key(FMP_PROFILE_URL.format(symbol=ticker))
-    resp = requests.get(url, timeout=10)
+    resp = requests.get(url, timeout=FMP_TIMEOUT)
     resp.raise_for_status()
     data = resp.json()
     if not data or not isinstance(data, list):

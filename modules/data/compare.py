@@ -57,6 +57,16 @@ def diff_dict(d1: Dict, d2: Dict) -> Dict[str, Tuple]:
     return out
 
 
+def _show_differences(symbol: str, diffs: Dict[str, Tuple]) -> None:
+    """Print human-readable differences between profile dictionaries."""
+    if diffs:
+        print(f"\nDifferences for {symbol}:")
+        for k, (v1, v2) in diffs.items():
+            print(f"  {k}: OpenBB='{v1}'  vs  yfinance='{v2}'")
+    else:
+        print(f"No differences detected for {symbol} on essential fields.")
+
+
 def interactive_profile(symbol: str) -> pd.DataFrame:
     """Fetch profile from OpenBB and yfinance, compare and prompt user to choose."""
     obb_df = fetch_profile_openbb(symbol)
@@ -78,13 +88,11 @@ def interactive_profile(symbol: str) -> pd.DataFrame:
     # Both have data, compare
     d1 = obb_df.iloc[0].to_dict()
     d2 = yf_df.iloc[0].to_dict()
-    diffs = diff_dict({k: d1.get(k) for k in ESSENTIAL_COLS}, {k: d2.get(k) for k in ESSENTIAL_COLS})
-    if diffs:
-        print(f"\nDifferences for {symbol}:")
-        for k, (v1, v2) in diffs.items():
-            print(f"  {k}: OpenBB='{v1}'  vs  yfinance='{v2}'")
-    else:
-        print(f"No differences detected for {symbol} on essential fields.")
+    diffs = diff_dict(
+        {k: d1.get(k) for k in ESSENTIAL_COLS},
+        {k: d2.get(k) for k in ESSENTIAL_COLS},
+    )
+    _show_differences(symbol, diffs)
 
     choice = input("Use OpenBB data (O) or yfinance data (Y)? [O/Y]: ").strip().lower()
     if choice == 'y':
