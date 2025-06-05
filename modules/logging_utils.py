@@ -1,3 +1,4 @@
+ codex/refactor-and-improve-core-fundalyze-functions
 """Shared logging helpers used across Fundalyze utilities.
 
 The :func:`setup_logging` function configures the root ``logging`` package to
@@ -10,12 +11,15 @@ No rotation is currently configured; the log file will grow until manually
 deleted or rotated by external tooling.
 """
 
+=======
+"""Central logging configuration helpers."""
+ main
 import logging
 from pathlib import Path
 
 
 def setup_logging(log_file: str = "fundalyze.log", level: int = logging.DEBUG) -> None:
-    """Configure the root logger and open ``log_file``.
+    """Configure root logger to log to console and ``log_file``.
 
     Parameters
     ----------
@@ -24,11 +28,14 @@ def setup_logging(log_file: str = "fundalyze.log", level: int = logging.DEBUG) -
         needed.
     level:
         Logging level for the root logger.
+ codex/refactor-and-improve-core-fundalyze-functions
 
     Notes
     -----
     ``logging`` handles flushes automatically when the program exits or handlers
     are closed, so this function does not need to call ``flush()`` manually.
+=======
+ main
     """
     path = Path(log_file)
     path.parent.mkdir(parents=True, exist_ok=True)
