@@ -32,3 +32,8 @@
 - Fixed fetch_and_compile default output to respect OUTPUT_DIR when DIRECTUS_URL is set.
 - Updated portfolio_manager to only sync with Directus when token is available.
 - All tests passing.
+
+### Latest Changes
+- **modules/generate_report/report_generator.py** – Removed stray merge markers causing an `IndentationError`.
+- **agent.md** – Updated with latest automated test results.
+- All tests continue to pass with no errors.
