@@ -1,11 +1,6 @@
-codex/create-comprehensive-documentation-for-fundalyze
-"""Common CLI interface helpers used across modules."""
-=======
-"""Shared user-interface helpers for CLI menus."""
- main
+"""User interface helper functions for CLI menus and tables."""
 
 from __future__ import annotations
-"""User interface helper functions for CLI menus and tables."""
 
 import pandas as pd
 from tabulate import tabulate
