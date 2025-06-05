@@ -47,7 +47,8 @@ OPENBB_TOKEN=your-openbb-token
 FMP_API_KEY=your-fmp-key
 OUTPUT_DIR=output
 ```
-See [docs/configuration.md](docs/configuration.md) for all options.
+The token is used by `modules.utils.get_openbb()` to authenticate with the OpenBB Hub
+whenever data is requested. See [docs/configuration.md](docs/configuration.md) for all options.
 
 ## Quickstart
 Run the interactive menu:
