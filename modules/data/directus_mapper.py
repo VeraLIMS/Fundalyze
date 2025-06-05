@@ -58,6 +58,48 @@ def prepare_records(collection: str, records: Iterable[Dict[str, Any]]) -> List[
     return prepared
 
 
+def interactive_prepare_records(
+    collection: str, records: Iterable[Dict[str, Any]]
+) -> List[Dict[str, Any]]:
+    """Like :func:`prepare_records` but prompt for unmapped fields.
+
+    Any newly mapped fields are saved back to ``directus_field_map.json``.
+    """
+    mapping = load_field_map()
+    col_entry = mapping.setdefault("collections", {}).setdefault(collection, {"fields": {}})
+    field_map = col_entry.setdefault("fields", {})
+
+    try:
+        allowed = set(list_fields(collection))
+    except Exception:
+        allowed = set()
+
+    updated = False
+    prepared: List[Dict[str, Any]] = []
+    for row in records:
+        mapped = {}
+        for key, value in row.items():
+            entry = field_map.get(key)
+            new_key = entry.get("mapped_to") if entry else None
+            if new_key is None:
+                prompt = (
+                    f"Map column '{key}' to a Directus field for collection '{collection}' "
+                    "(leave blank to skip): "
+                )
+                choice = input(prompt).strip()
+                if choice:
+                    field_map[key] = {"type": None, "mapped_to": choice}
+                    new_key = choice
+                    updated = True
+            if new_key and (not allowed or new_key in allowed):
+                mapped[new_key] = value
+        prepared.append(mapped)
+
+    if updated:
+        save_field_map(mapping)
+    return prepared
+
+
 def refresh_field_map() -> Dict[str, Any]:
     """Update mapping with fields from Directus collections."""
     mapping = load_field_map()

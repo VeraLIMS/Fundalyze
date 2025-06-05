@@ -21,6 +21,7 @@ from .directus_mapper import (
     load_field_map,
     save_field_map,
     prepare_records,
+    interactive_prepare_records,
     refresh_field_map,
 )
 
@@ -43,5 +44,6 @@ __all__ = [
     "load_field_map",
     "save_field_map",
     "prepare_records",
+    "interactive_prepare_records",
     "refresh_field_map",
 ]
