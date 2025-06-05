@@ -32,6 +32,9 @@ def _select_tickers() -> list[str]:
         raw = input(
             "Enter ticker symbol(s), comma-separated (or press Enter to cancel): "
         ).strip()
+        if not raw:
+            print("No tickers entered.\n")
+            return []
         return [t.strip().upper() for t in raw.split(",") if t.strip()]
 
     if choice == "2":
@@ -46,7 +49,12 @@ def _select_tickers() -> list[str]:
             return []
         for i, g in enumerate(names, start=1):
             print(f"  {i}) {g}")
-        sel = input(f"Select a group [1-{len(names)}]: ").strip()
+        sel = input(
+            f"Select a group [1-{len(names)}] (or press Enter to cancel): "
+        ).strip()
+        if not sel:
+            print("Canceled.\n")
+            return []
         if sel.isdigit() and 1 <= int(sel) <= len(names):
             grp = names[int(sel) - 1]
             df = groups[groups["Group"] == grp]

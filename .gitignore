@@ -1,6 +1,8 @@
 # Ignore secret config files but keep example configs
 config/.env
 config/settings.json
+fastcodes.txt
+
 
 # Byte-compiled / cache files
 __pycache__/
@@ -15,3 +17,5 @@ output/
 groups.xlsx
 portfolio.xlsx
 notes/
+1/test-again.md
+config/term_mapping.json

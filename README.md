@@ -49,7 +49,7 @@ its directory.
 ### 2. Configure environment variables
 Create `config/.env` and add your API tokens:
 ```env
-OPENBB_API_KEY=your-openbb-token
+OPENBB_TOKEN=your-openbb-token
 FMP_API_KEY=your-fmp-key
 OUTPUT_DIR=output
 ```
@@ -78,6 +78,40 @@ excel_dashboard.create_and_open_dashboard(tickers=["AAPL"])
 ```
 Open the workbook to explore profile information, price history and
 statements.
+
+## Directus Field Mapping
+
+The script `scripts/sync_directus_fields.py` automatically fetches all collections
+and fields from the connected Directus instance and merges them into
+`directus_field_map.json`.
+
+**Usage:**
+1. Ensure `DIRECTUS_API_URL` and `DIRECTUS_TOKEN` (or Directus credentials) are
+   configured in your environment.
+2. Run:
+```bash
+python scripts/sync_directus_fields.py
+```
+3. You will be prompted to:
+   - Map new fields to target names.
+   - Confirm type changes.
+   - Remove fields or collections deleted from Directus.
+
+**`directus_field_map.json` Structure:**
+```jsonc
+{
+  "collections": {
+    "portfolio": {
+      "fields": {
+        "id": { "type": "integer", "mapped_to": "portfolio_id" },
+        "ticker": { "type": "string", "mapped_to": "symbol" }
+      }
+    }
+  }
+}
+```
+After merging, any unmapped fields will have `"mapped_to": null` and you will be
+prompted to set them before the script exits.
 
 ## Folder Structure
 
