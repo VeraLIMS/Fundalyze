@@ -7,6 +7,9 @@ Fundalyze reads configuration from the `config/` directory at startup. Two optio
 
 Both files are ignored by Git so you can safely store credentials locally.
 
+Fundalyze first looks for `config/.env`. If that file is missing, a `.env` file
+in the project root will be loaded as a fallback for backward compatibility.
+
 ## Creating `config/.env`
 Example contents:
 ```env

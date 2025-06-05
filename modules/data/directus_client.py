@@ -83,10 +83,17 @@ def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any] | None:
     try:
         resp = requests.request(method, url, headers=headers, timeout=30, **kwargs)
         resp.raise_for_status()
+        # If Cloudflare Access blocks the request we get HTML instead of JSON.
+        if "text/html" in resp.headers.get("content-type", ""):
+            logger.error(
+                "Directus responded with HTML content. This usually indicates a login page or Cloudflare Access protection. URL: %s | Content: %.100s",
+                url,
+                resp.text,
+            )
+            return None
         try:
             return resp.json()
         except ValueError as exc:
-            # HTML login pages or other non-JSON content will trigger this
             logger.error(
                 "Invalid JSON response: %s | URL: %s | Content: %.100s",
                 exc,
