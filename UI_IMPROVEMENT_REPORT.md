@@ -84,3 +84,10 @@ These changes ensure consistent feedback across the CLI and provide clearer guid
   See lines 11–28 and 32–36 for the argument parser.
 - `scripts/note_cli.py` injects `sys.path` so running the script directly works
   and exposes a help flag. See lines 4–27.
+
+### Latest Fixes
+
+- Improved the group selection prompt in `_select_tickers` to allow pressing
+  Enter to cancel. See `modules/generate_report/__init__.py` lines 53–63.
+- Manual ticker entry now prints "No tickers entered" when blank to clarify the
+  cancellation path. See lines 31–38 of the same file.
