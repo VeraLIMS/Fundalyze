@@ -18,3 +18,17 @@ def test_prepare_records(monkeypatch, tmp_path):
     records = [{"Ticker": "AAA", "Name": "Acme", "Extra": 1}]
     prepared = dm.prepare_records("companies", records)
     assert prepared == [{"ticker_symbol": "AAA", "company_name": "Acme"}]
+
+
+def test_refresh_field_map(monkeypatch, tmp_path):
+    file = tmp_path / "directus_field_map.json"
+    monkeypatch.setattr(dm, "MAP_FILE", file)
+    monkeypatch.setattr(dm, "list_collections", lambda: ["foo"])
+    monkeypatch.setattr(dm, "list_fields", lambda c: ["a", "b"])
+
+    mapping = dm.refresh_field_map()
+    assert mapping == {"foo": {"a": "a", "b": "b"}}
+    # Add new field on second call
+    monkeypatch.setattr(dm, "list_fields", lambda c: ["a", "b", "c"])
+    mapping2 = dm.refresh_field_map()
+    assert mapping2 == {"foo": {"a": "a", "b": "b", "c": "c"}}

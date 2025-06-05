@@ -2,7 +2,7 @@ import json
 
 from modules.interface import print_invalid_choice, print_header
 
-from modules.data import directus_client as dc, prepare_records
+from modules.data import directus_client as dc, prepare_records, refresh_field_map
 
 try:
     from modules.management.settings_manager.wizards.directus_setup import (
@@ -23,6 +23,9 @@ def run_directus_wizard() -> None:
             print()
             return
 
+    # Keep mapping in sync but avoid slowing down menu interactions
+    refresh_field_map()
+
     while True:
         print_header("\U0001F9E9 Directus Tools")
         print("1) List Collections")
@@ -30,8 +33,9 @@ def run_directus_wizard() -> None:
         print("3) Add Field to Collection")
         print("4) Fetch Items from Collection")
         print("5) Insert Item into Collection")
-        print("6) Return to Main Menu")
-        choice = input("Select an option [1-6]: ").strip()
+        print("6) Refresh Field Map")
+        print("7) Return to Main Menu")
+        choice = input("Select an option [1-7]: ").strip()
 
         if choice == "1":
             cols = dc.list_collections()
@@ -70,6 +74,9 @@ def run_directus_wizard() -> None:
                     dc.insert_items(col, records)
                     print("Item inserted.\n")
         elif choice == "6":
+            refresh_field_map()
+            print("Field map updated.\n")
+        elif choice == "7":
             break
         else:
             print_invalid_choice()
