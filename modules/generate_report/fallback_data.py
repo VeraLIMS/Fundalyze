@@ -15,6 +15,7 @@ Usage example::
 import json
 import os
 from pathlib import Path
+from typing import Tuple
 
 from modules.config_utils import get_output_dir, add_fmp_api_key
 
@@ -243,6 +244,105 @@ def fetch_fmp_statement(symbol: str, stmt_endpoint: str, period: str) -> pd.Data
 
 
 #
+# ─── Helper functions for targeted re-fetches ──────────────────────────────────
+#
+
+def _update_metadata_entry(files_meta: dict, filename: str, source: str, source_url: str, fetched: str) -> None:
+    """Update metadata dictionary for ``filename``."""
+
+    files_meta[filename]["source"] = source
+    files_meta[filename]["source_url"] = source_url
+    files_meta[filename]["fetched_at"] = fetched
+
+
+def _parse_statement_filename(filename: str) -> tuple[str, str, str, str, str]:
+    """Return statement info from ``filename``."""
+
+    stmt, period = filename.replace(".csv", "").split("_")
+    stmt_map = {
+        "income": ("financials", "income-statement", "financials"),
+        "balance": ("balance_sheet", "balance-sheet-statement", "balance-sheet"),
+        "cash": ("cashflow", "cash-flow-statement", "cash-flow"),
+    }
+    if stmt not in stmt_map:
+        raise ValueError(f"Unknown financial statement type in '{filename}'")
+    yf_attr, fmp_endpoint, yahoo_path = stmt_map[stmt]
+    yahoo_url = f"https://finance.yahoo.com/quote/{{symbol}}/{yahoo_path}"
+    return stmt, period, yf_attr, fmp_endpoint, yahoo_url
+
+
+def _re_fetch_profile(symbol: str, csv_path: Path) -> tuple[str, str]:
+    """Fetch profile via FMP with yfinance fallback."""
+
+    try:
+        df = fetch_profile_from_fmp(symbol)
+        df.to_csv(csv_path, index=False)
+        print("    • Company profile re-fetched from FMP.")
+        return "FMP (profile)", f"{FMP_BASE}/profile/{symbol}"
+    except Exception:
+        print("    • FMP profile failed; trying yfinance directly…")
+        ticker = yf.Ticker(symbol)
+        try:
+            info = ticker.info or {}
+            if info.get("longName") is None:
+                raise ValueError("yfinance.info returned no profile.")
+            profile_df = pd.DataFrame([
+                {
+                    "symbol": symbol,
+                    "longName": info.get("longName", ""),
+                    "sector": info.get("sector", ""),
+                    "industry": info.get("industry", ""),
+                    "marketCap": info.get("marketCap", pd.NA),
+                    "website": info.get("website", ""),
+                }
+            ])
+            profile_df.to_csv(csv_path, index=False)
+            print("    • Company profile re-fetched from yfinance.")
+            return "yfinance.profile", f"https://finance.yahoo.com/quote/{symbol}/profile"
+        except Exception as exc:
+            raise RuntimeError(f"Neither FMP nor yfinance profile succeeded: {exc}") from exc
+
+
+def _re_fetch_prices(symbol: str, csv_path: Path) -> tuple[str, str]:
+    """Fetch one month of prices via yfinance."""
+
+    try:
+        hist = yf.Ticker(symbol).history(period="1mo")
+        if hist is None or hist.empty or "Close" not in hist.columns:
+            raise ValueError("No data in ticker.history()")
+        df_price = hist.drop(columns=[c for c in ("Dividends", "Stock Splits") if c in hist.columns])
+        if "Adj Close" not in df_price.columns and "Close" in df_price.columns:
+            df_price["Adj Close"] = df_price["Close"]
+        df_price.reset_index().to_csv(csv_path, index=False)
+        print("    • 1‐month price history re-fetched from yfinance.")
+        return "yfinance.history", f"https://finance.yahoo.com/quote/{symbol}/history?p={symbol}"
+    except Exception as exc:
+        raise RuntimeError(f"Failed to fetch 1mo_prices via yfinance: {exc}") from exc
+
+
+def _re_fetch_statement(symbol: str, filename: str, csv_path: Path) -> tuple[str, str]:
+    """Fetch financial statement using yfinance with FMP fallback."""
+
+    stmt, period, yf_attr, fmp_endpoint, yahoo_url = _parse_statement_filename(filename)
+    df_yf = getattr(yf.Ticker(symbol), yf_attr)
+    if not isinstance(df_yf, pd.DataFrame):
+        df_yf = pd.DataFrame()
+    if not df_yf.empty:
+        should_transpose = any(isinstance(col, pd.Timestamp) for col in df_yf.columns)
+        df_to_save = df_yf.T if should_transpose else df_yf
+        df_to_save.to_csv(csv_path, index=True)
+        print(f"    • {stmt.title()} ({period}) re-fetched from yfinance.")
+        return f"yfinance.{yf_attr}", yahoo_url.format(symbol=symbol)
+
+    df_fmp = fetch_fmp_statement(symbol, fmp_endpoint, period)
+    if df_fmp.empty:
+        raise ValueError(f"No FMP data for {filename}")
+    df_fmp.to_csv(csv_path, index=True)
+    print(f"    • {stmt.title()} ({period}) re-fetched from FMP.")
+    return f"FMP ({fmp_endpoint}, {period})", f"{FMP_BASE}/{fmp_endpoint}/{symbol}"
+
+
+#
 # ─── Step 3: Per-file “repair” logic ────────────────────────────────────────────────────────────────
 #
 
@@ -267,7 +367,6 @@ def enrich_ticker_folder(ticker_dir: Path):
     files_meta = metadata.get("files", {})
     updated = False
     any_errors = False
-
     for filename, fileinfo in files_meta.items():
         source = fileinfo.get("source", "")
         if not source.startswith("ERROR"):
@@ -275,114 +374,19 @@ def enrich_ticker_folder(ticker_dir: Path):
 
         print(f"\n  ↻ Re-fetching '{filename}' for {ticker_dir.name} (was ERROR)...")
         symbol = ticker_dir.name.upper()
-        new_source = None
-        new_source_url = ""
-        new_fetched = iso_timestamp_utc()
         csv_path = ticker_dir / filename
+        new_fetched = iso_timestamp_utc()
 
         try:
-            # ─── Profile
             if filename == "profile.csv":
-                try:
-                    df = fetch_profile_from_fmp(symbol)
-                    df.to_csv(csv_path, index=False)
-                    new_source = "FMP (profile)"
-                    new_source_url = f"{FMP_BASE}/profile/{symbol}"
-                    print("    • Company profile re-fetched from FMP.")
-                except Exception:
-                    # Try yfinance as fallback if FMP fails
-                    print("    • FMP profile failed; trying yfinance directly…")
-                    ticker = yf.Ticker(symbol)
-                    try:
-                        info = ticker.info or {}
-                        if info.get("longName") is not None:
-                            profile_df = pd.DataFrame([{
-                                "symbol": symbol,
-                                "longName": info.get("longName", ""),
-                                "sector": info.get("sector", ""),
-                                "industry": info.get("industry", ""),
-                                "marketCap": info.get("marketCap", pd.NA),
-                                "website": info.get("website", "")
-                            }])
-                            profile_df.to_csv(csv_path, index=False)
-                            new_source = "yfinance.profile"
-                            new_source_url = f"https://finance.yahoo.com/quote/{symbol}/profile"
-                            print("    • Company profile re-fetched from yfinance.")
-                        else:
-                            raise ValueError("yfinance.info returned no profile.")
-                    except Exception as e:
-                        raise RuntimeError(f"Neither FMP nor yfinance profile succeeded: {e}")
+                new_source, new_source_url = _re_fetch_profile(symbol, csv_path)
 
-            # ─── 1‐Month Price History
             elif filename == "1mo_prices.csv":
-                try:
-                    hist = yf.Ticker(symbol).history(period="1mo")
-                    if hist is None or hist.empty or "Close" not in hist.columns:
-                        raise ValueError("No data in ticker.history()")
-                    df_price = hist.copy()
-                    for col in ("Dividends", "Stock Splits"):
-                        if col in df_price.columns:
-                            df_price = df_price.drop(columns=[col])
-                    if "Adj Close" not in df_price.columns and "Close" in df_price.columns:
-                        df_price["Adj Close"] = df_price["Close"]
-                    df_price_reset = df_price.reset_index()
-                    df_price_reset.to_csv(csv_path, index=False)
-                    new_source = "yfinance.history"
-                    new_source_url = f"https://finance.yahoo.com/quote/{symbol}/history?p={symbol}"
-                    print("    • 1‐month price history re-fetched from yfinance.")
-                except Exception as e:
-                    raise RuntimeError(f"Failed to fetch 1mo_prices via yfinance: {e}")
+                new_source, new_source_url = _re_fetch_prices(symbol, csv_path)
 
-            # ─── Financial Statements (annual/quarterly)
             elif filename.endswith("_annual.csv") or filename.endswith("_quarter.csv"):
-                key = filename.replace(".csv", "")  # e.g. "income_annual"
-                parts = key.split("_")
-                stmt = parts[0]      # "income", "balance", or "cash"
-                period = parts[1]    # "annual" or "quarter"
+                new_source, new_source_url = _re_fetch_statement(symbol, filename, csv_path)
 
-                if stmt == "income":
-                    yf_attr = "financials" if period == "annual" else "quarterly_financials"
-                    fmp_endpoint = "income-statement"
-                elif stmt == "balance":
-                    yf_attr = "balance_sheet" if period == "annual" else "quarterly_balance_sheet"
-                    fmp_endpoint = "balance-sheet-statement"
-                elif stmt == "cash":
-                    yf_attr = "cashflow" if period == "annual" else "quarterly_cashflow"
-                    fmp_endpoint = "cash-flow-statement"
-                else:
-                    raise ValueError(f"Unknown statement type: {filename}")
-
-                # 1) Try yfinance
-                df_yf = getattr(yf.Ticker(symbol), yf_attr)
-                if not isinstance(df_yf, pd.DataFrame):
-                    df_yf = pd.DataFrame()
-                if isinstance(df_yf, pd.DataFrame) and not df_yf.empty:
-                    should_transpose = any(isinstance(c, pd.Timestamp) for c in df_yf.columns)
-                    df_to_save = df_yf.T if should_transpose else df_yf
-                    df_to_save.to_csv(csv_path, index=True)
-                    new_source = f"yfinance.{yf_attr}"
-                    if stmt == "income":
-                        new_source_url = f"https://finance.yahoo.com/quote/{symbol}/financials"
-                    elif stmt == "balance":
-                        new_source_url = f"https://finance.yahoo.com/quote/{symbol}/balance-sheet"
-                    else:
-                        new_source_url = f"https://finance.yahoo.com/quote/{symbol}/cash-flow"
-                    print(f"    • {stmt.title()} ({period}) re-fetched from yfinance.")
-
-                else:
-                    # 2) Fallback to FMP
-                    try:
-                        df_fmp = fetch_fmp_statement(symbol, fmp_endpoint, period)
-                        if df_fmp.empty:
-                            raise ValueError("FMP returned empty DataFrame")
-                        df_fmp.to_csv(csv_path, index=True)
-                        new_source = f"FMP ({fmp_endpoint}, {period})"
-                        new_source_url = f"{FMP_BASE}/{fmp_endpoint}/{symbol}"
-                        print(f"    • {stmt.title()} ({period}) re-fetched from FMP.")
-                    except Exception as e:
-                        raise RuntimeError(f"Failed to fetch {stmt} ({period}) from both yfinance and FMP: {e}")
-
-            # ─── report.md is not regenerated here ─────────────────────────
             elif filename == "report.md":
                 print("    • Skipping report.md (needs manual re-run of report_generator).")
                 continue
@@ -391,16 +395,11 @@ def enrich_ticker_folder(ticker_dir: Path):
                 print(f"    • Unrecognized file '{filename}', skipping.")
                 continue
 
-            # If we reach here, that specific file was successfully fetched:
-            files_meta[filename]["source"] = new_source
-            files_meta[filename]["source_url"] = new_source_url
-            files_meta[filename]["fetched_at"] = new_fetched
+            _update_metadata_entry(files_meta, filename, new_source, new_source_url, new_fetched)
             updated = True
-
         except Exception as e:
             print(f"    ⚠ Failed to re-fetch '{filename}': {e}")
             any_errors = True
-            # Continue trying other files, but mark that at least one failed.
             continue
 
     # ─── If any single-file fetch failed, run a full yfinance fallback ─────────────────────────────
