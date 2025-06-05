@@ -39,6 +39,7 @@ import os
 import argparse
 import textwrap
 import subprocess
+from typing import Callable
 
 # Add the repository root to sys.path so 'modules' can be imported when this
 # script is executed directly via `python scripts/main.py`.
@@ -48,13 +49,16 @@ if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
 from modules.logging_utils import setup_logging
+
 setup_logging("logs/fundalyze.log")
 
 # Ensure environment variables from config/.env are loaded before other modules
 from modules.config_utils import load_settings  # noqa: E402
 from modules.interface import print_invalid_choice, print_header, print_menu
 
-from modules.management.portfolio_manager.portfolio_manager import main as run_portfolio_manager
+from modules.management.portfolio_manager.portfolio_manager import (
+    main as run_portfolio_manager,
+)
 from modules.management.group_analysis.group_analysis import main as run_group_analysis
 from modules.generate_report import (
     run_generate_report,
@@ -173,7 +177,7 @@ def _choose_tickers() -> list[str]:
 def run_reports_menu() -> None:
     """Sub-menu for report related utilities."""
     while True:
-        print_header("\U0001F4D1 Reports")
+        print_header("\U0001f4d1 Reports")
         options = [
             "Full Workflow",
             "Metadata Checker Only",
@@ -219,7 +223,7 @@ def run_profile_cli() -> None:
 def run_utilities_menu() -> None:
     """Sub-menu exposing extra helper utilities."""
     while True:
-        print_header("\U0001F6E0 Utilities")
+        print_header("\U0001f6e0 Utilities")
         options = [
             "Run Test Suite",
             "Performance Profile",
@@ -238,7 +242,7 @@ def run_utilities_menu() -> None:
             invalid_choice()
 
 
-ACTION_ITEMS: list[tuple[str, callable]] = [
+ACTION_ITEMS: list[tuple[str, Callable[[], None]]] = [
     ("Portfolio & Groups", run_portfolio_groups),
     ("Reports", run_reports_menu),
     ("Notes", run_note_manager),
@@ -248,7 +252,7 @@ ACTION_ITEMS: list[tuple[str, callable]] = [
     ("Exit", exit_program),
 ]
 
-COMMAND_MAP: dict[str, callable] = {
+COMMAND_MAP: dict[str, Callable[[], None]] = {
     "portfolio": run_portfolio_manager,
     "groups": run_group_analysis,
     "report": run_generate_report,
