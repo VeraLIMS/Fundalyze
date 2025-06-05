@@ -1,6 +1,4 @@
 import pytest
-from pathlib import Path
-
 from modules.generate_report.excel_dashboard import create_dashboard, show_dashboard_in_excel
 
 

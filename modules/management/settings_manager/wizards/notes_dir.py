@@ -1,7 +1,5 @@
 """Wizard to set the notes directory location."""
 
-import os
-
 from modules.config_utils import load_env, save_env
 
 LABEL = "Notes Directory"

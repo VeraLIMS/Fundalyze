@@ -16,8 +16,6 @@ Description:
 """
 
 import os
-import sys
-from typing import Optional
 
 from modules.analytics import portfolio_summary, sector_counts
 from modules.interface import print_table

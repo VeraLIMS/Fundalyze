@@ -1,4 +1,3 @@
-from unittest.mock import MagicMock
 
 import modules.data.directus_client as dc
 

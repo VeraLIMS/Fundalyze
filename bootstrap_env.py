@@ -37,7 +37,7 @@ def create_venv():
     If .venv/ already exists, we leave it as-is.
     """
     if VENV_DIR.exists():
-        print(f"  [INFO] .venv/ already exists; skipping creation")
+        print("  [INFO] .venv/ already exists; skipping creation")
         return
 
     print("  → Creating virtual environment in .venv/ …")
@@ -64,7 +64,7 @@ def main():
 
     # 2) If not in any venv at all, create .venv/ and re‐invoke under that Python
     if not in_venv():
-        print(f"[INFO] Not running inside a virtual environment.")
+        print("[INFO] Not running inside a virtual environment.")
         create_venv()
 
         # Figure out path to the venv’s python

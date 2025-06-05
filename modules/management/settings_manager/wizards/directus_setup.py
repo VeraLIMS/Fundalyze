@@ -1,7 +1,5 @@
 """Wizard to configure Directus connection details."""
 
-import os
-
 from modules.config_utils import load_env, save_env
 
 LABEL = "Directus Connection"

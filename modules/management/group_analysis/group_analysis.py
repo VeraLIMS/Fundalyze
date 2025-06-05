@@ -22,8 +22,6 @@ Description:
 """
 
 import os
-import sys
-from typing import Optional
 
 from modules.config_utils import load_settings  # noqa: E402
 from modules.analytics import portfolio_summary
