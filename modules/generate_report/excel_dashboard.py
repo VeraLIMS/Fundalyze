@@ -16,6 +16,7 @@ from modules.utils.data_utils import (
     strip_timezones,
 )
 from modules.utils.excel_utils import write_table
+from modules.utils.progress_utils import progress_iter
 
 
 def _load_ticker_data(td: Path) -> dict[str, pd.DataFrame]:
@@ -174,19 +175,17 @@ def _safe_concat_normal(ticker_dfs: dict[str, pd.DataFrame]) -> pd.DataFrame:
     if not ticker_dfs:
         return pd.DataFrame()
 
-    frames = []
-    for tk, df in ticker_dfs.items():
-        df_copy = df.copy()
-        df_copy.insert(0, "Ticker", tk)
-        frames.append(df_copy)
-
+    frames = [df.assign(Ticker=tk).loc[:, ["Ticker", *df.columns]] for tk, df in ticker_dfs.items()]
     return pd.concat(frames, axis=0, ignore_index=True, sort=True)
 
 
 
 
 def create_dashboard(
-    output_root: str | None = None, *, tickers: Optional[Iterable[str]] = None
+    output_root: str | None = None,
+    *,
+    tickers: Optional[Iterable[str]] = None,
+    progress: bool = False,
 ) -> Path:
     """
     1) Find subfolders under output_root (one per ticker).
@@ -210,12 +209,22 @@ def create_dashboard(
          df_bal_ann  = _transpose_financials(balance_ann)
          df_bal_qtr  = _transpose_financials(balance_qtr)
          df_cash_ann = _transpose_financials(cash_ann)
-         df_cash_qtr = _transpose_financials(cash_qtr)
+       df_cash_qtr = _transpose_financials(cash_qtr)
 
     4) Write all eight DataFrames to:
-         output_root/dashboard_<TIMESTAMP>.xlsx
+        output_root/dashboard_<TIMESTAMP>.xlsx
        Converting each sheet into an Excel Table (so you can use structured references
        like `[Revenue]` or `[2022-12]` in formulas).
+
+    Parameters
+    ----------
+    output_root:
+        Base folder containing ticker subdirectories.
+    tickers:
+        Optional subset of tickers to include. Defaults to all found in
+        ``output_root``.
+    progress:
+        When ``True`` display a progress bar while loading CSV files.
 
     Returns:
         Path to the newly created .xlsx file.
@@ -233,9 +242,10 @@ def create_dashboard(
         ticker_dirs = [root / tk for tk in tickers if (root / tk).is_dir()]
 
     data_map: dict[str, dict[str, pd.DataFrame]] = {}
-    total = len(ticker_dirs)
-    for idx, td in enumerate(ticker_dirs, start=1):
-        print(f"[{idx}/{total}] Loading {td.name}...")
+    iterator = ticker_dirs
+    if progress:
+        iterator = progress_iter(ticker_dirs, description="Loading")
+    for td in iterator:
         data_map[td.name] = _load_ticker_data(td)
 
     (
@@ -284,12 +294,26 @@ def show_dashboard_in_excel(dashboard_path: Path):
 
 
 def create_and_open_dashboard(
-    output_root: str | None = None, *, tickers: Optional[Iterable[str]] = None
+    output_root: str | None = None,
+    *,
+    tickers: Optional[Iterable[str]] = None,
+    progress: bool = False,
 ):
     """
     Create an Excel dashboard (with named Tables) and open it automatically.
+
+    Parameters
+    ----------
+    output_root:
+        Base folder containing ticker subdirectories.
+    tickers:
+        Optional subset of tickers to include.
+    progress:
+        When ``True`` display a progress bar while loading CSV files.
     """
-    dash_path = create_dashboard(output_root=output_root, tickers=tickers)
+    dash_path = create_dashboard(
+        output_root=output_root, tickers=tickers, progress=progress
+    )
     print(f"\n✅ Excel dashboard created at:\n   {dash_path}\n")
     print("Opening it now…\n")
     show_dashboard_in_excel(dash_path)

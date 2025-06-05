@@ -7,6 +7,7 @@ import requests
 import yfinance as yf
 
 from modules.config_utils import add_fmp_api_key
+from modules.utils.progress_utils import progress_iter
 
 from .term_mapper import resolve_term
 
@@ -129,7 +130,7 @@ def fetch_basic_stock_data_batch(
     dedup:
         If ``True``, remove duplicate symbols before fetching.
     progress:
-        When ``True`` print a progress line for each ticker.
+        When ``True`` display a progress bar for sequential fetching.
     max_workers:
         If greater than 1, fetch tickers in parallel using ``ThreadPoolExecutor``.
 
@@ -148,7 +149,7 @@ def fetch_basic_stock_data_batch(
 
     def _worker(args):
         idx, tk = args
-        if progress:
+        if progress and max_workers in (None, 0, 1):
             print(f"[{idx}/{total}] Fetching {tk}...")
         return fetch_basic_stock_data(tk, fallback=fallback, provider=provider)
 
@@ -158,7 +159,10 @@ def fetch_basic_stock_data_batch(
         with ThreadPoolExecutor(max_workers=max_workers) as ex:
             rows = list(ex.map(_worker, enumerate(tickers, start=1)))
     else:
-        for idx, tk in enumerate(tickers, start=1):
+        iterator = enumerate(tickers, start=1)
+        if progress:
+            iterator = progress_iter(iterator, description="Tickers")
+        for idx, tk in iterator:
             rows.append(_worker((idx, tk)))
 
     return pd.DataFrame(rows, columns=BASIC_FIELDS)
