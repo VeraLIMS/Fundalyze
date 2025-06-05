@@ -178,6 +178,12 @@ def confirm_or_adjust_ticker(original: str) -> str:
             print("  Please answer 'Y' or 'N'.")
 
 
+def ticker_exists(df: pd.DataFrame, tk: str) -> bool:
+    """Return True if the ticker already exists in the portfolio."""
+    existing = df["Ticker"].dropna().astype(str).values
+    return tk in existing
+
+
 def add_tickers(portfolio: pd.DataFrame) -> pd.DataFrame:
     """
     Prompt the user to enter one or more tickers to add. For each ticker:
@@ -195,7 +201,7 @@ def add_tickers(portfolio: pd.DataFrame) -> pd.DataFrame:
     tickers = [t.strip().upper() for t in raw.split(",") if t.strip()]
     for tk in tickers:
         # If ticker already in portfolio, skip it
-        if tk in portfolio["Ticker"].values:
+        if ticker_exists(portfolio, tk):
             print(f"  → Ticker '{tk}' is already in your portfolio. Skipping.\n")
             continue
 
@@ -253,7 +259,7 @@ def remove_ticker(portfolio: pd.DataFrame) -> pd.DataFrame:
         print("Canceled.\n")
         return portfolio
 
-    if tk not in portfolio["Ticker"].values:
+    if not ticker_exists(portfolio, tk):
         print(f"  × Ticker '{tk}' not found in portfolio.\n")
     else:
         portfolio = portfolio[portfolio["Ticker"] != tk].reset_index(drop=True)

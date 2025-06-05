@@ -400,7 +400,8 @@ def main():
                 print("No group name entered; canceling.\n")
             else:
                 # If group already exists, notify; otherwise create empty placeholder row
-                if grp_name in groups["Group"].values:
+                existing = groups["Group"].dropna().astype(str).values
+                if grp_name in existing:
                     print(f"Group '{grp_name}' already exists. You can add members later.\n")
                 else:
                     # Create an empty placeholder row so group shows up
