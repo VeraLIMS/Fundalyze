@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import pandas as pd
 from pathlib import Path
-from typing import Optional, Any
+from typing import Iterable, Iterator, Optional, Any, TypeVar
+
+T = TypeVar("T")
 import json
 
 
@@ -46,3 +48,31 @@ def read_json_if_exists(path: Path) -> Optional[Any]:
         except Exception:
             return None
     return None
+
+
+def progress_iter(
+    iterable: Iterable[T], *, desc: str = "", total: int | None = None
+) -> Iterator[T]:
+    """Yield ``iterable`` items while displaying a simple progress indicator.
+
+    If :mod:`tqdm` is available it is used; otherwise lines are printed for each
+    iteration.  ``total`` is only required for the fallback mode.
+    """
+    try:  # pragma: no cover - optional dependency
+        from tqdm.auto import tqdm
+
+        yield from tqdm(iterable, desc=desc, total=total)
+        return
+    except Exception:  # pragma: no cover - tqdm missing or failed
+        pass
+
+    if total is None and hasattr(iterable, "__len__"):
+        total = len(iterable)
+
+    for idx, item in enumerate(iterable, start=1):
+        prefix = f"{desc} " if desc else ""
+        if total:
+            print(f"{prefix}[{idx}/{total}]")
+        else:
+            print(f"{prefix}{idx}")
+        yield item

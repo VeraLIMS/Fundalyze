@@ -10,8 +10,8 @@ PACKAGE CONTENTS
 
 
 FUNCTIONS
-    correlation_matrix(df: 'pd.DataFrame') -> 'pd.DataFrame'
-        Return Pearson correlation matrix for numeric columns.
+    correlation_matrix(df: 'pd.DataFrame', *, method: 'str' = 'pearson') -> 'pd.DataFrame'
+        Return correlation matrix for numeric columns using the given method.
     
     moving_average(series: 'pd.Series', window: 'int') -> 'pd.Series'
         Return rolling mean over ``window`` periods.

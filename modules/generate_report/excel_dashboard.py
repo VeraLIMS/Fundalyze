@@ -14,6 +14,7 @@ from modules.utils.data_utils import (
     ensure_period_column,
     read_csv_if_exists,
     strip_timezones,
+    progress_iter,
 )
 from modules.utils.excel_utils import write_table
 
@@ -186,7 +187,10 @@ def _safe_concat_normal(ticker_dfs: dict[str, pd.DataFrame]) -> pd.DataFrame:
 
 
 def create_dashboard(
-    output_root: str | None = None, *, tickers: Optional[Iterable[str]] = None
+    output_root: str | None = None,
+    *,
+    tickers: Optional[Iterable[str]] = None,
+    progress: bool = True,
 ) -> Path:
     """
     1) Find subfolders under output_root (one per ticker).
@@ -217,6 +221,15 @@ def create_dashboard(
        Converting each sheet into an Excel Table (so you can use structured references
        like `[Revenue]` or `[2022-12]` in formulas).
 
+    Parameters
+    ----------
+    output_root:
+        Base output directory containing per-ticker folders.
+    tickers:
+        Optional subset of tickers to include; defaults to all subdirectories.
+    progress:
+        When ``True`` display progress while loading ticker data.
+
     Returns:
         Path to the newly created .xlsx file.
     """
@@ -234,8 +247,12 @@ def create_dashboard(
 
     data_map: dict[str, dict[str, pd.DataFrame]] = {}
     total = len(ticker_dirs)
-    for idx, td in enumerate(ticker_dirs, start=1):
-        print(f"[{idx}/{total}] Loading {td.name}...")
+    iterator = ticker_dirs
+    if progress:
+        iterator = progress_iter(ticker_dirs, desc="Loading", total=total)
+    for idx, td in enumerate(iterator, start=1):
+        if not progress:
+            print(f"[{idx}/{total}] Loading {td.name}...")
         data_map[td.name] = _load_ticker_data(td)
 
     (
@@ -289,7 +306,7 @@ def create_and_open_dashboard(
     """
     Create an Excel dashboard (with named Tables) and open it automatically.
     """
-    dash_path = create_dashboard(output_root=output_root, tickers=tickers)
+    dash_path = create_dashboard(output_root=output_root, tickers=tickers, progress=True)
     print(f"\n✅ Excel dashboard created at:\n   {dash_path}\n")
     print("Opening it now…\n")
     show_dashboard_in_excel(dash_path)

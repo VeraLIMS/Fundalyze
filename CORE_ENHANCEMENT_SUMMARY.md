@@ -1,8 +1,14 @@
 # Core Enhancement Summary
 
 ## Updated Modules
-- **modules/data/fetching.py** – `fetch_basic_stock_data_batch` now supports a
-  `max_workers` parameter for optional parallel fetching.
+- **modules/data/fetching.py** – `fetch_basic_stock_data_batch` now shows a
+  progress bar when ``progress=True`` and gained thread-safe updates.
+- **modules/analytics/__init__.py** – `correlation_matrix` accepts a ``method``
+  parameter for different correlation types.
+- **modules/generate_report/excel_dashboard.py** – ``create_dashboard`` has a
+  ``progress`` flag and leverages ``progress_iter`` for nicer output.
+- **modules/utils/data_utils.py** – added ``progress_iter`` helper and optional
+  ``tqdm`` dependency.
 - **modules/utils/data_utils.py** – added `read_json_if_exists` helper for safe
   JSON ingestion.
 

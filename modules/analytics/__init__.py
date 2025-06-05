@@ -32,13 +32,21 @@ def sector_counts(df: pd.DataFrame) -> pd.DataFrame:
     return counts.reset_index(name="Count")
 
 
-def correlation_matrix(df: pd.DataFrame) -> pd.DataFrame:
-    """Return Pearson correlation matrix for numeric columns."""
+def correlation_matrix(df: pd.DataFrame, *, method: str = "pearson") -> pd.DataFrame:
+    """Return correlation matrix for numeric columns.
+
+    Parameters
+    ----------
+    df:
+        Input DataFrame with numeric data.
+    method:
+        Correlation method passed to :func:`pandas.DataFrame.corr`.
+    """
     if df is None or df.empty:
         return pd.DataFrame()
     numeric_cols = [c for c in df.columns if pd.api.types.is_numeric_dtype(df[c])]
     if len(numeric_cols) < 2:
         return pd.DataFrame()
-    return df[numeric_cols].corr()
+    return df[numeric_cols].corr(method=method)
 
 

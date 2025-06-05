@@ -7,6 +7,7 @@ import requests
 import yfinance as yf
 
 from modules.config_utils import add_fmp_api_key
+from modules.utils.data_utils import progress_iter
 
 from .term_mapper import resolve_term
 
@@ -143,14 +144,26 @@ def fetch_basic_stock_data_batch(
     if dedup:
         tickers = list(dict.fromkeys(tickers))
 
-    rows = []
+    rows: list[dict] = []
     total = len(tickers)
+
+    pbar = None
+    if progress:
+        try:  # pragma: no cover - optional tqdm
+            from tqdm.auto import tqdm
+
+            pbar = tqdm(total=total, desc="Fetching")
+        except Exception:  # pragma: no cover - tqdm not installed
+            pbar = None
 
     def _worker(args):
         idx, tk = args
-        if progress:
+        if not pbar and progress:
             print(f"[{idx}/{total}] Fetching {tk}...")
-        return fetch_basic_stock_data(tk, fallback=fallback, provider=provider)
+        result = fetch_basic_stock_data(tk, fallback=fallback, provider=provider)
+        if pbar:
+            pbar.update(1)
+        return result
 
     if max_workers and max_workers > 1:
         from concurrent.futures import ThreadPoolExecutor
@@ -160,5 +173,8 @@ def fetch_basic_stock_data_batch(
     else:
         for idx, tk in enumerate(tickers, start=1):
             rows.append(_worker((idx, tk)))
+
+    if pbar:
+        pbar.close()
 
     return pd.DataFrame(rows, columns=BASIC_FIELDS)
