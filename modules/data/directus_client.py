@@ -60,6 +60,15 @@ def list_fields(collection: str) -> list[str]:
     return [f.get("field") for f in data]
 
 
+def list_fields_with_types(collection: str) -> list[Dict[str, Any]]:
+    """Return field metadata including name and type for a collection."""
+    data = directus_request("GET", f"fields/{collection}").get("data", [])
+    fields = []
+    for f in data:
+        fields.append({"field": f.get("field"), "type": f.get("type")})
+    return fields
+
+
 def fetch_items(collection: str):
     """Fetch all items from a Directus collection."""
     data = directus_request("GET", f"items/{collection}").get("data", [])

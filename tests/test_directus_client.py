@@ -21,6 +21,17 @@ def test_list_fields(monkeypatch):
     assert fields == ["a", "b"]
 
 
+def test_list_fields_with_types(monkeypatch):
+    monkeypatch.setattr(dc, "DIRECTUS_URL", "http://api")
+    monkeypatch.setattr(
+        dc,
+        "directus_request",
+        lambda m, p, **kw: {"data": [{"field": "a", "type": "string"}]},
+    )
+    fields = dc.list_fields_with_types("col")
+    assert fields == [{"field": "a", "type": "string"}]
+
+
 def test_fetch_items(monkeypatch):
     monkeypatch.setattr(dc, "DIRECTUS_URL", "http://api")
     monkeypatch.setattr(dc, "directus_request", lambda m, p, **kw: {"data": [{"x": 1}]})

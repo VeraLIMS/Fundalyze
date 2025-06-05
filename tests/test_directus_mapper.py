@@ -9,7 +9,16 @@ def test_map_file_location():
 
 
 def test_prepare_records(monkeypatch, tmp_path):
-    mapping = {"companies": {"Ticker": "ticker_symbol", "Name": "company_name"}}
+    mapping = {
+        "collections": {
+            "companies": {
+                "fields": {
+                    "Ticker": {"type": "string", "mapped_to": "ticker_symbol"},
+                    "Name": {"type": "string", "mapped_to": "company_name"},
+                }
+            }
+        }
+    }
     file = tmp_path / "directus_field_map.json"
     file.write_text(json.dumps(mapping))
     monkeypatch.setattr(dm, "MAP_FILE", file)
@@ -24,11 +33,33 @@ def test_refresh_field_map(monkeypatch, tmp_path):
     file = tmp_path / "directus_field_map.json"
     monkeypatch.setattr(dm, "MAP_FILE", file)
     monkeypatch.setattr(dm, "list_collections", lambda: ["foo"])
-    monkeypatch.setattr(dm, "list_fields", lambda c: ["a", "b"])
+    monkeypatch.setattr(
+        dm, "list_fields_with_types", lambda c: [
+            {"field": "a", "type": "string"},
+            {"field": "b", "type": "integer"},
+        ]
+    )
 
     mapping = dm.refresh_field_map()
-    assert mapping == {"foo": {"a": "a", "b": "b"}}
+    assert mapping == {
+        "collections": {
+            "foo": {
+                "fields": {
+                    "a": {"type": "string", "mapped_to": "a"},
+                    "b": {"type": "integer", "mapped_to": "b"},
+                }
+            }
+        }
+    }
     # Add new field on second call
-    monkeypatch.setattr(dm, "list_fields", lambda c: ["a", "b", "c"])
+    monkeypatch.setattr(
+        dm,
+        "list_fields_with_types",
+        lambda c: [
+            {"field": "a", "type": "string"},
+            {"field": "b", "type": "integer"},
+            {"field": "c", "type": "text"},
+        ],
+    )
     mapping2 = dm.refresh_field_map()
-    assert mapping2 == {"foo": {"a": "a", "b": "b", "c": "c"}}
+    assert "c" in mapping2["collections"]["foo"]["fields"]

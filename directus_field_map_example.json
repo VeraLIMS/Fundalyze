@@ -1,0 +1,20 @@
+{
+  "collections": {
+    "portfolio": {
+      "fields": {
+        "id": {
+          "type": "integer",
+          "mapped_to": "portfolio_id"
+        },
+        "ticker": {
+          "type": "string",
+          "mapped_to": "symbol"
+        },
+        "note": {
+          "type": "text",
+          "mapped_to": null
+        }
+      }
+    }
+  }
+}
