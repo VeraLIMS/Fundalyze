@@ -22,11 +22,9 @@ def test_load_portfolio_directus(monkeypatch):
 
 def test_save_portfolio_directus(monkeypatch):
     monkeypatch.setattr(pm, "USE_DIRECTUS", True)
-    monkeypatch.setattr(pm, "list_fields", lambda c: ["Ticker", "Name"])
+    monkeypatch.setattr(pm, "prepare_records", lambda c, recs: [recs[0]])
     records_holder = {}
-    def fake_insert(collection, records):
-        records_holder['rec'] = records
-    monkeypatch.setattr(pm, "insert_items", fake_insert)
+    monkeypatch.setattr(pm, "insert_items", lambda c, recs: records_holder.setdefault('rec', recs))
     df = pd.DataFrame({"Ticker": ["A"], "Name": ["Acme"], "Extra": [1]})
     pm.save_portfolio(df, "dummy")
-    assert records_holder['rec'] == [{"Ticker": "A", "Name": "Acme"}]
+    assert records_holder['rec'] == [df.to_dict(orient="records")[0]]

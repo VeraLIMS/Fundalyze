@@ -13,12 +13,12 @@ def test_load_groups_directus(monkeypatch):
 
 def test_save_groups_directus(monkeypatch):
     monkeypatch.setattr(ga, "USE_DIRECTUS", True)
-    monkeypatch.setattr(ga, "list_fields", lambda c: ["Group", "Ticker", "Name"])
+    monkeypatch.setattr(ga, "prepare_records", lambda c, recs: [recs[0]])
     captured = {}
     monkeypatch.setattr(ga, "insert_items", lambda c, recs: captured.setdefault("rec", recs))
     df = pd.DataFrame({"Group": ["G"], "Ticker": ["AAA"], "Name": ["Alpha"], "Extra": [1]})
     ga.save_groups(df, "dummy.xlsx")
-    assert captured["rec"] == [{"Group": "G", "Ticker": "AAA", "Name": "Alpha"}]
+    assert captured["rec"] == [df.to_dict(orient="records")[0]]
 
 
 def test_confirm_or_adjust_ticker_yes(monkeypatch):

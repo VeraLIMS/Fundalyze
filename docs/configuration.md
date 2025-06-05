@@ -45,6 +45,12 @@ The timezone can be changed later by running the **Timezone** wizard inside the
 Settings Manager. Additional wizards help configure Directus connectivity and the notes directory.
 `load_settings()` returns the parsed dictionary so other modules can access these values.
 
+## Directus Field Mapping
+`config/directus_field_map.json` defines how local field names map to your Directus collections.
+Each key is a collection name with a dictionary mapping local column names to the
+corresponding Directus field. Adjust this file if you rename fields or add new
+attributes to Directus.
+
 ## Initial Setup
 1. Clone the repository and run one of the `bootstrap_env` scripts to create a virtual environment and install dependencies.
 2. Populate `config/.env` and optionally `config/settings.json` as shown above.
