@@ -21,6 +21,9 @@ except Exception:  # pragma: no cover - wizard optional
 
 def run_directus_wizard() -> None:
     """Interactive wizard for common Directus API operations."""
+    # Reload environment variables in case the user recently updated config/.env
+    dc.reload_env()
+
     if not dc.DIRECTUS_URL:
         print("DIRECTUS_URL not configured in config/.env")
         if _directus_setup:

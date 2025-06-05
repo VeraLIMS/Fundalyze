@@ -10,7 +10,9 @@ from modules.config_utils import load_settings  # noqa: E402
 
 load_settings()  # ensure .env is read when this module is imported
 
-DIRECTUS_URL = os.getenv("DIRECTUS_URL", "http://localhost:8055")
+# Default to empty string so missing configuration doesn't silently point to
+# localhost. Consumers should explicitly set DIRECTUS_URL or handle the error.
+DIRECTUS_URL = os.getenv("DIRECTUS_URL", "")
 # Support legacy DIRECTUS_TOKEN as well as DIRECTUS_API_TOKEN
 DIRECTUS_TOKEN = os.getenv("DIRECTUS_API_TOKEN") or os.getenv("DIRECTUS_TOKEN")
 # Support both underscore and hyphen env var names for Cloudflare credentials
@@ -39,7 +41,8 @@ def reload_env() -> None:
     """Reload Directus environment variables from ``config/.env``."""
     load_settings()  # ensures .env is loaded
     global DIRECTUS_URL, DIRECTUS_TOKEN, CF_ACCESS_CLIENT_ID, CF_ACCESS_CLIENT_SECRET
-    DIRECTUS_URL = os.getenv("DIRECTUS_URL", "http://localhost:8055")
+    # Do not fall back to localhost automatically when reloading
+    DIRECTUS_URL = os.getenv("DIRECTUS_URL", "")
     DIRECTUS_TOKEN = os.getenv("DIRECTUS_API_TOKEN") or os.getenv("DIRECTUS_TOKEN")
     CF_ACCESS_CLIENT_ID = os.getenv("CF_ACCESS_CLIENT_ID") or os.getenv(
         "CF-Access-Client-Id"
