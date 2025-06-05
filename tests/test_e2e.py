@@ -1,18 +1,13 @@
-"""End-to-end integration tests for report generation."""
+"""End-to-end tests for report generation and CLI helpers."""
+
 import pandas as pd
+
 from openpyxl import load_workbook
 
 import modules.generate_report.report_generator as rg
 import modules.generate_report.excel_dashboard as ed
 import modules.management.portfolio_manager.portfolio_manager as pm
-
-
-class Dummy:
-    def __init__(self, df):
-        self._df = df
-
-    def to_df(self):
-        return self._df
+from tests.helpers import make_fake_obb
 
 
 def test_report_generation_end_to_end(tmp_path, monkeypatch):
@@ -34,35 +29,11 @@ def test_report_generation_end_to_end(tmp_path, monkeypatch):
         {"Revenue": [100], "EPS": [5]}, index=pd.Index(["2023"], name="Period")
     )
 
-    class FakeEquity:
-        def __init__(self):
-            class _Profile:
-                def __call__(self, symbol):
-                    return Dummy(profile_df)
-
-            class _Price:
-                def historical(self, symbol, period, provider=None):
-                    return Dummy(price_df)
-
-            class _Fundamental:
-                def income(self, symbol, period):
-                    return Dummy(stmt_df)
-
-                def balance(self, symbol, period):
-                    return Dummy(stmt_df)
-
-                def cash(self, symbol, period):
-                    return Dummy(stmt_df)
-
-            self.profile = _Profile()
-            self.price = _Price()
-            self.fundamental = _Fundamental()
-
-    class FakeOBB:
-        def __init__(self):
-            self.equity = FakeEquity()
-
-    monkeypatch.setattr(rg, "obb", FakeOBB())
+    monkeypatch.setattr(
+        rg,
+        "obb",
+        make_fake_obb(profile_df=profile_df, price_df=price_df, stmt_df=stmt_df),
+    )
 
     rg.fetch_and_compile("AAA", base_output=str(tmp_path))
     ticker_dir = tmp_path / "AAA"
