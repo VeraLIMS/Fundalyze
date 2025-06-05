@@ -1,6 +1,6 @@
 # Codebase Overview
 
-This document summarizes the major modules and entry points within **Fundalyze**. Use it as a quick reference when exploring or extending the project.
+This document summarizes the key modules and entry points in **Fundalyze**. Use it as a quick reference when navigating or extending the project.
 
 ## Module Packages
 
