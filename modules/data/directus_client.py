@@ -57,7 +57,17 @@ def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any] | None:
     try:
         resp = requests.request(method, url, headers=headers, timeout=30, **kwargs)
         resp.raise_for_status()
-        return resp.json()
+        try:
+            return resp.json()
+        except ValueError as exc:
+            # HTML login pages or other non-JSON content will trigger this
+            logger.error(
+                "Invalid JSON response: %s | URL: %s | Content: %.100s",
+                exc,
+                url,
+                resp.text,
+            )
+            return None
     except requests.exceptions.HTTPError as errh:
         status = getattr(resp, "status_code", "?")
         body = getattr(resp, "text", "")
@@ -74,19 +84,22 @@ def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any] | None:
 
 def list_collections() -> list[str]:
     """Return available collection names."""
-    data = directus_request("GET", "collections").get("data", [])
+    result = directus_request("GET", "collections")
+    data = result.get("data", []) if result else []
     return [c.get("collection") for c in data]
 
 
 def list_fields(collection: str) -> list[str]:
     """Return list of field names for the given Directus collection."""
-    data = directus_request("GET", f"fields/{collection}").get("data", [])
+    result = directus_request("GET", f"fields/{collection}")
+    data = result.get("data", []) if result else []
     return [f.get("field") for f in data]
 
 
 def list_fields_with_types(collection: str) -> list[Dict[str, Any]]:
     """Return field metadata including name and type for a collection."""
-    data = directus_request("GET", f"fields/{collection}").get("data", [])
+    result = directus_request("GET", f"fields/{collection}")
+    data = result.get("data", []) if result else []
     fields = []
     for f in data:
         fields.append({"field": f.get("field"), "type": f.get("type")})
@@ -124,8 +137,8 @@ def create_field(collection: str, field: str, field_type: str = "string", **kwar
     """Create a new field in the given collection."""
     payload = {"field": field, "type": field_type}
     payload.update(kwargs)
-    data = directus_request("POST", f"fields/{collection}", json=payload).get("data")
-    return data
+    result = directus_request("POST", f"fields/{collection}", json=payload)
+    return result.get("data") if result else None
 
 
 def update_item(collection: str, item_id: Any, updates: Dict[str, Any]):
