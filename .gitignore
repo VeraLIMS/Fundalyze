@@ -1,5 +1,7 @@
 # Ignore secret config files but keep example configs
 config/.env
+.env
+.env.*
 config/settings.json
 fastcodes.txt
 
