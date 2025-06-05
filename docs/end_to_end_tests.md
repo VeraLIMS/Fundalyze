@@ -22,3 +22,12 @@ This document outlines the automated end-to-end tests for Fundalyze.
 
 These tests exercise the main user journeys without relying on network access
 and run automatically as part of the test suite.
+
+## Running the Tests
+
+1. Install dependencies with `pip install -r requirements.txt`.
+2. Run all tests using:
+   ```bash
+   pytest -q
+   ```
+3. Use `pytest -k <pattern> -s` to execute a subset while inspecting output.

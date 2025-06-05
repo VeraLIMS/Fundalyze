@@ -1,3 +1,5 @@
+"""Utility for configuring a consistent logging setup."""
+
 import logging
 from pathlib import Path
 

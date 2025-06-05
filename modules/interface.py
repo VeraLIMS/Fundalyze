@@ -1,3 +1,5 @@
+"""Shared user-interface helpers for CLI menus."""
+
 from __future__ import annotations
 
 import pandas as pd
