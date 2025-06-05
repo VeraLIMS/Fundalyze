@@ -1,3 +1,5 @@
+"""Thin wrapper around the Directus REST API used for optional remote storage."""
+
 import os
 import logging
 import math
