@@ -4,7 +4,7 @@
 [![Build](https://img.shields.io/badge/build-manual-lightgrey)](#)
 [![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)](#)
 
-**Fundalyze** is a small Python toolkit for downloading fundamental data, analysing your stock portfolio and exporting Excel dashboards. It builds on [OpenBB](https://openbb.co/) and `yfinance` with optional fallbacks to Financial Modeling Prep.
+**Fundalyze** is a lightweight toolkit for fetching fundamental market data, analysing portfolios and generating Excel dashboards. It relies on [OpenBB](https://openbb.co/) and `yfinance` with optional fallbacks to Financial Modeling Prep.
 
 ## Features
 
@@ -30,7 +30,7 @@ cd Fundalyze
 ```bash
 ./bootstrap_env.sh
 ```
-Both scripts create `.venv`, activate it and install requirements from `requirements.txt`.
+Both scripts create `.venv`, activate it and install dependencies from `requirements.txt`.
 
 Manual setup works as well:
 ```bash
@@ -38,6 +38,7 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+If JavaScript tooling is ever introduced, install Node.js and run `npm install` in the appropriate directory.
 
 ### 2. Configure environment variables
 Create `config/.env` with your API tokens:
@@ -64,6 +65,7 @@ from modules.generate_report import excel_dashboard
 fetch_and_compile("AAPL")
 excel_dashboard.create_and_open_dashboard(tickers=["AAPL"])
 ```
+Open the generated workbook to explore the profile, price history and financial statements.
 
 ## Folder Structure
 
@@ -72,10 +74,13 @@ excel_dashboard.create_and_open_dashboard(tickers=["AAPL"])
 - `tests/` – pytest suite
 - `docs/` – extended documentation
 
+`output/` will contain generated CSV files and dashboards.
+
 ## Resources
 
 - [User Documentation](docs/overview.md)
 - [Developer Guide](docs/DEVELOPER_GUIDE.md)
 - [Issue Tracker](https://github.com/VeraLIMS/Fundalyze/issues)
+- Community chat TBD
 
 Fundalyze is licensed under the [Apache 2.0 License](LICENSE).

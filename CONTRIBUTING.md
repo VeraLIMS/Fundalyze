@@ -1,6 +1,6 @@
 # Contributing to Fundalyze
 
-Thank you for helping to improve Fundalyze! This guide walks through setting up a local development environment and the steps required to submit code.
+Thank you for helping to improve Fundalyze! This document explains how to set up a development environment, follow the style rules and submit pull requests.
 
 ## Getting Started
 
@@ -21,7 +21,9 @@ Thank you for helping to improve Fundalyze! This guide walks through setting up 
    source .venv/bin/activate
    pip install -r requirements.txt
    ```
-   If JavaScript tooling is introduced, install Node.js and run `npm install` in the corresponding directory.
+   If JavaScript tooling is introduced, install Node.js and run `npm install` inside the appropriate folder.
+
+3. **Configure environment variables** by copying `config/.env` from the example and adding your API keys.
 
 ## Code Style
 
@@ -34,7 +36,7 @@ Execute the entire test suite with:
 ```bash
 pytest -q
 ```
-All tests must pass before you open a pull request.
+All tests must pass before you open a pull request. The suite should complete quickly; investigate and fix any failures.
 
 ## Workflow
 
@@ -42,7 +44,7 @@ All tests must pass before you open a pull request.
    ```bash
    git checkout -b feature/my-change
    ```
-2. Make your changes and commit with a descriptive message.
+2. Make your changes and commit with a short, present‑tense message.
 3. Push the branch to your fork and open a pull request against `main`.
 
 ### Pull Request Template
@@ -54,5 +56,22 @@ Include the following in your PR description:
   - [ ] Code follows style guidelines
   - [ ] Tests pass locally
   - [ ] Documentation updated if needed
+
+Example:
+
+```markdown
+### Summary
+Adds new analytics module for RSI calculations.
+
+### Testing
+```
+pytest -q
+```
+
+### Checklist
+- [ ] Code follows style guidelines
+- [ ] Tests pass locally
+- [ ] Documentation updated if needed
+```
 
 We appreciate your contributions!
