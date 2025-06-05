@@ -12,7 +12,9 @@
 - **tests/test_diff.py** – added test for empty dictionaries.
 - **tests/test_interactive_profile.py** – expanded test coverage for multiple branches.
 - **tests/test_directus_client.py & test_excel_dashboard_extra.py** – removed unused imports.
+- **modules/generate_report/__init__.py** – removed unused `run_metadata_checker` import.
+- **tests/test_data_utils_edge.py** – added edge case tests for data utilities.
 
 ## Remaining Warnings
-- `modules/generate_report/__init__.py` and `modules/management/directus_tools/__init__.py` re-export functions causing unused import warnings. These are intentional and can be ignored.
+- `modules/management/directus_tools/__init__.py` re-exports a function causing an unused import warning. This is intentional and can be ignored.
 

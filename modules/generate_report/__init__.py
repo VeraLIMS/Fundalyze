@@ -1,7 +1,7 @@
 # src/generate_report/__init__.py
 
 from .report_generator import fetch_and_compile
-from .metadata_checker import main as run_metadata_checker, run_for_tickers
+from .metadata_checker import run_for_tickers
 from .fallback_data import run_fallback_data
 from .excel_dashboard import create_and_open_dashboard
 
