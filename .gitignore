@@ -21,5 +21,10 @@ portfolio.xlsx
 notes/
 1/test-again.md
 config/term_mapping.json
-logs/
+config/directus_field_map.json
+1mo_prices.csv
+comprehensive_audit_report.md
+test_findings.txt
+logs/*
+!logs/README.md
 .log
