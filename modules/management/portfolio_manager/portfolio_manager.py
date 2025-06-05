@@ -113,7 +113,6 @@ def save_portfolio(df: pd.DataFrame, filepath: str):
             print(
                 f"→ Saved portfolio to Directus collection '{C_DIRECTUS_COLLECTION}'.\n"
             )
-            return
         except Exception as exc:
             print(f"Error saving portfolio to Directus: {exc}")
             print("Falling back to local Excel file.")

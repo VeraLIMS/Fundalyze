@@ -133,8 +133,9 @@ def _transpose_financials(ticker_dfs: dict[str, pd.DataFrame]) -> pd.DataFrame:
       - Columns C…: each distinct Period (as string)
     Rows stack one ticker-block after another.
 
-    We convert any non-string column names (e.g. Timestamp) into strings,
-    so that Excel table headers are valid.
+    The function concatenates each statement DataFrame after transposing
+    it so that periods become columns. Period labels are converted to
+    strings to ensure valid Excel headers.
     """
     all_blocks = []
 
@@ -142,22 +143,13 @@ def _transpose_financials(ticker_dfs: dict[str, pd.DataFrame]) -> pd.DataFrame:
         if df.empty:
             continue
 
-        # Ensure 'Period' exists for each statement DataFrame
         df = ensure_period_column(df)
 
-        temp = df.copy().set_index("Period")
-        # Now temp.index = periods, temp.columns = metrics
+        temp = df.set_index("Period")
         transposed = temp.T
-
-        # Convert period column names (index of temp) to strings
-        # Using vectorized conversion avoids the Python-level loop
         transposed.columns = [str(col) for col in transposed.columns]
-
-        # Insert 'Ticker' in column A
         transposed.insert(0, "Ticker", ticker)
-        # Insert 'Metric' in column B (old index)
         transposed.insert(1, "Metric", transposed.index)
-
         transposed = transposed.reset_index(drop=True)
         all_blocks.append(transposed)
 

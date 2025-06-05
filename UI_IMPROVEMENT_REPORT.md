@@ -96,3 +96,9 @@ These changes ensure consistent feedback across the CLI and provide clearer guid
 - Added `input_or_cancel` helper in `modules/interface.py` at lines 30-32 to standardize prompts.
 - Updated `modules/management/directus_tools/directus_wizard.py` lines 50-93 to use this helper and print "Canceled." when input is empty.
 
+### Latest CLI Refinements
+- Introduced `print_menu` helper in `modules/interface.py` for consistent menu formatting (lines 35-38).
+- Updated `scripts/main.py` menus to call `print_menu`; see lines 66-82 and 252-260.
+- Improved settings menus to use `print_menu` and added cancel options for delete prompts (lines 116-145 & 196-206 of settings_manager).
+- New helper imported throughout modules ensures consistent numbering across screens.
+
