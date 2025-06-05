@@ -2,14 +2,13 @@
 """Synchronize Directus field mappings with an interactive CLI."""
 from __future__ import annotations
 
-import json
 from typing import Any, Dict, List
 
 from modules.data.directus_client import (
     list_collections,
     list_fields_with_types,
 )
-from modules.data.directus_mapper import load_field_map, save_field_map, MAP_FILE
+from modules.data.directus_mapper import load_field_map, save_field_map, MAP_FILE  # noqa: F401
 
 
 def prompt_user(question: str, options: List[str]) -> str:

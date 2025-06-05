@@ -40,6 +40,7 @@ Provide concise commit messages and include PR summaries referencing relevant li
 ## Recent Findings
 
 ```
+
 ........................................................................ [ 63%]
 ..........................................                               [100%]
 =============================== warnings summary ===============================
@@ -49,8 +50,7 @@ tests/test_portfolio_manager.py::test_add_ticker_to_all_na_column
     portfolio = pd.concat([portfolio, new_row], ignore_index=True)
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-114 passed, 2 warnings in 3.47s
-```
+
 
 ## Recent Findings
 
@@ -64,5 +64,4 @@ tests/test_portfolio_manager.py::test_add_ticker_to_all_na_column
     portfolio = pd.concat([portfolio, new_row], ignore_index=True)
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-114 passed, 2 warnings in 3.14s
-```
+

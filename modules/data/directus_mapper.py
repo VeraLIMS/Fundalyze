@@ -1,9 +1,12 @@
 import json
 import logging
 from pathlib import Path
-from typing import Iterable, Dict, Any, List
+from typing import Iterable, Dict, Any, List, TYPE_CHECKING
 
 from .directus_client import list_fields_with_types, list_collections, list_fields
+
+if TYPE_CHECKING:  # pragma: no cover - for type hints only
+    import pandas as pd
 
 logger = logging.getLogger(__name__)
 
