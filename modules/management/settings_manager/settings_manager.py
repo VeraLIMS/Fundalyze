@@ -131,12 +131,18 @@ def _env_menu() -> None:
 
 def _wizards_menu() -> None:
     wiz_map = {label: func for label, func in _discover_wizards()}
-    order = [
+    default_order = [
         "Directus Connection",
+        "OpenBB API Token",
+        "FMP API Key",
+        "OpenAI API Key",
+        "Quick Setup",
         "Notes Directory",
         "Output Directory",
         "Timezone",
     ]
+    order = [label for label in default_order if label in wiz_map]
+    order.extend([lbl for lbl in wiz_map if lbl not in order])
     while True:
         print("\n⚙️ Setup Wizards")
         for idx, lbl in enumerate(order, start=1):
