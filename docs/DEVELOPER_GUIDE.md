@@ -42,8 +42,8 @@ Fundalyze/
 ### Adding Analysis Modules
 
 1. Drop a `.py` file into `modules/analytics/` and implement your functions.
-2. Re-export them in `modules/analytics/__init__.py` so other packages can import
-   them.
+2. Register the module in `modules/analytics/__init__.py` (this acts as the
+   simple *analysis registry*).
 3. Regenerate `docs/API_REFERENCE.md` with `pydoc` on the new module.
 
 ### Adding CLI Components or UI Elements
