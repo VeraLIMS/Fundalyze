@@ -4,7 +4,11 @@
 [![Build](https://img.shields.io/badge/build-manual-lightgrey)](#)
 [![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)](#)
 
-**Fundalyze** is an open source toolkit for retrieving fundamental market data and generating Excel dashboards. It wraps [OpenBB](https://openbb.co/) and `yfinance` so you can quickly analyze companies and maintain a local portfolio.
+## What is Fundalyze?
+Fundalyze is an open source toolkit for retrieving market fundamentals and
+building Excel dashboards. It wraps [OpenBB](https://openbb.co/) and
+`yfinance` so you can quickly analyze companies and maintain a local
+portfolio.
 
 ## Features
 - Download company profiles, historical prices and financial statements

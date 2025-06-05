@@ -2,6 +2,8 @@
 ## Recent Findings
 
 ```
+ rezv6y-codex/revamp-documentation-and-contribution-guide
+=======
  codex/improve-fundalyze-ui/ux
 
 ==================================== ERRORS ====================================
@@ -171,6 +173,7 @@ ERROR tests/test_output_dir_env.py
 !!!!!!!!!!!!!!!!!!! Interrupted: 6 errors during collection !!!!!!!!!!!!!!!!!!!!
 6 errors in 2.85s
 =======
+ main
 ........................................................................ [ 61%]
 ..............................................                           [100%]
 =============================== warnings summary ===============================
@@ -180,8 +183,12 @@ tests/test_portfolio_manager.py::test_add_ticker_to_all_na_column
     portfolio = pd.concat([portfolio, new_row], ignore_index=True)
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+ rezv6y-codex/revamp-documentation-and-contribution-guide
+118 passed, 2 warnings in 14.74s
+=======
 118 passed, 2 warnings in 18.89s
 
+> main
 ```
 
 ## Recent Findings
@@ -192,6 +199,8 @@ tests/test_portfolio_manager.py::test_add_ticker_to_all_na_column
 =============================== warnings summary ===============================
 tests/test_portfolio_manager.py::test_add_new_ticker_with_nas_present
 tests/test_portfolio_manager.py::test_add_ticker_to_all_na_column
+ rezv6y-codex/revamp-documentation-and-contribution-guide
+=======
  codex/improve-fundalyze-ui/ux
   /workspace/Fundalyze/modules/management/portfolio_manager/portfolio_manager.py:273: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
     portfolio = pd.concat([portfolio, new_row], ignore_index=True)
@@ -199,10 +208,15 @@ tests/test_portfolio_manager.py::test_add_ticker_to_all_na_column
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 118 passed, 2 warnings in 12.49s
 =======
+ main
   /workspace/Fundalyze/modules/management/portfolio_manager/portfolio_manager.py:268: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
     portfolio = pd.concat([portfolio, new_row], ignore_index=True)
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+ rezv6y-codex/revamp-documentation-and-contribution-guide
+118 passed, 2 warnings in 14.93s
+=======
 118 passed, 2 warnings in 19.60s
 main
+ main
 ```

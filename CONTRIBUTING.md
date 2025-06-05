@@ -37,6 +37,7 @@ Thank you for considering a contribution! This guide shows how to set up a local
 Execute the suite before committing:
 ```bash
 pytest -q
+npm test  # if applicable
 ```
 All tests must pass. Investigate and fix any failures.
 

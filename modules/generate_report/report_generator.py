@@ -58,7 +58,9 @@ def fetch_and_compile(
     obb_mod = _get_openbb()
 
     if local_output is None:
- codex/improve-fundalyze-ui/ux
+ rezv6y-codex/revamp-documentation-and-contribution-guide
+=======
+ main
         # If a base_output path was provided, assume the caller expects local
         # files regardless of DIRECTUS_URL. Otherwise default to uploading when
         # DIRECTUS_URL is configured.
