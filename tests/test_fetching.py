@@ -85,3 +85,59 @@ def test_fetch_basic_stock_data_fmp_fallback():
     }
     assert result == expected
 
+
+def test_fetch_basic_stock_data_provider_yf(monkeypatch):
+    mock_info = {
+        "longName": "Acme Corp",
+        "sector": "Tech",
+        "industry": "Software",
+        "currentPrice": 100.0,
+        "marketCap": 2000000,
+        "trailingPE": 15.0,
+        "dividendYield": 0.01,
+    }
+
+    class FakeTicker:
+        def get_info(self):
+            return mock_info
+
+    monkeypatch.setattr("modules.data.fetching.yf.Ticker", lambda t: FakeTicker())
+    monkeypatch.setattr("modules.data.fetching.resolve_term", lambda x: x)
+
+    result = fetch_basic_stock_data("ACME", provider="yf")
+    assert result["Name"] == "Acme Corp"
+
+
+def test_fetch_basic_stock_data_provider_fmp(monkeypatch):
+    mock_resp = MagicMock()
+    mock_resp.json.return_value = [
+        {
+            "symbol": "ACME",
+            "companyName": "Acme Corp",
+            "sector": "Tech",
+            "industry": "Software",
+            "price": 50.0,
+            "mktCap": 1000000,
+            "pe": 12.0,
+            "lastDiv": 0.02,
+        }
+    ]
+    mock_resp.raise_for_status.return_value = None
+    monkeypatch.setattr("modules.data.fetching.requests.get", lambda *a, **k: mock_resp)
+    monkeypatch.setattr("modules.data.fetching.resolve_term", lambda x: x)
+
+    result = fetch_basic_stock_data("ACME", provider="fmp")
+    assert result["PE Ratio"] == 12.0
+
+
+def test_fetch_basic_stock_data_provider_yf_failure(monkeypatch):
+    class FakeTicker:
+        def get_info(self):
+            return {}
+
+    monkeypatch.setattr("modules.data.fetching.yf.Ticker", lambda t: FakeTicker())
+    monkeypatch.setattr("modules.data.fetching.resolve_term", lambda x: x)
+    import pytest
+    with pytest.raises(ValueError):
+        fetch_basic_stock_data("BAD", provider="yf")
+
