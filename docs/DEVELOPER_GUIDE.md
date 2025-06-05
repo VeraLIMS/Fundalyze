@@ -26,8 +26,9 @@ Fundalyze/
 ## Debugging Environment
 
 1. Create the virtual environment with `bootstrap_env.sh` (or `.ps1` on Windows).
-2. Open the project in VS Code and start the **Python: Current File** debugger on
-   `scripts/main.py`. Breakpoints under `modules/` will be hit.
+2. Open the project in VS Code and select **Run → Start Debugging** on
+   `scripts/main.py`. Breakpoints in any file under `modules/` will pause
+   execution.
 3. Set `LOG_LEVEL=DEBUG` in `config/.env` for verbose output.
 4. Optionally set `OUTPUT_DIR` to a temporary folder when testing report
    generation.
