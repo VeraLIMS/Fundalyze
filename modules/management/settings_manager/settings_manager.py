@@ -5,6 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Dict
 
+from modules.interface import print_invalid_choice
+
 import importlib
 
 from modules.config_utils import CONFIG_DIR, load_env, load_settings, save_env, save_settings
@@ -105,7 +107,7 @@ def _general_settings_menu() -> None:
         elif choice == "4":
             break
         else:
-            print("Invalid choice.\n")
+            print_invalid_choice()
 
 
 def _env_menu() -> None:
@@ -125,7 +127,7 @@ def _env_menu() -> None:
         elif choice == "4":
             break
         else:
-            print("Invalid choice.\n")
+            print_invalid_choice()
 
 
 def _wizards_menu() -> None:
@@ -149,7 +151,7 @@ def _wizards_menu() -> None:
         print(f"{len(order)+1}) Return to Settings Menu")
         choice = input(f"Enter 1-{len(order)+1}: ").strip()
         if not choice.isdigit() or not (1 <= int(choice) <= len(order)+1):
-            print("Invalid choice.\n")
+            print_invalid_choice()
             continue
         idx = int(choice)
         if idx == len(order)+1:
@@ -179,7 +181,7 @@ def run_settings_manager() -> None:
             print(f"{idx}) {lbl}")
         choice = input("Enter 1-5: ").strip()
         if not choice.isdigit() or not (1 <= int(choice) <= len(options)):
-            print("Invalid choice.\n")
+            print_invalid_choice()
             continue
         idx = int(choice) - 1
         _, action = options[idx]

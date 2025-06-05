@@ -3,6 +3,7 @@
 from zoneinfo import available_timezones
 
 from modules.config_utils import load_settings, save_settings
+from modules.interface import print_invalid_choice
 
 LABEL = "Timezone"
 
@@ -21,7 +22,7 @@ def run_wizard() -> None:
             break
     choice = input(f"Select 1-{min(len(matches),50)}: ").strip()
     if not choice.isdigit() or not (1 <= int(choice) <= min(len(matches),50)):
-        print("Invalid choice.\n")
+        print_invalid_choice()
         return
     tz = matches[int(choice) - 1]
     settings = load_settings()

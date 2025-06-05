@@ -8,6 +8,7 @@ to the various management tools bundled with Fundalyze.
 import sys
 import os
 import argparse
+import textwrap
 
 # Add the repository root to sys.path so 'modules' can be imported when this
 # script is executed directly via `python scripts/main.py`.
@@ -18,6 +19,7 @@ if REPO_ROOT not in sys.path:
 
 # Ensure environment variables from config/.env are loaded before other modules
 from modules.config_utils import load_settings  # noqa: E402
+from modules.interface import print_invalid_choice
 
 from modules.management.portfolio_manager.portfolio_manager import main as run_portfolio_manager
 from modules.management.group_analysis.group_analysis import main as run_group_analysis
@@ -46,7 +48,7 @@ def exit_program():
 
 def invalid_choice():
     """Handle invalid menu selection."""
-    print("Invalid choice. Please select a valid option.\n")
+    print_invalid_choice()
 
 
 def run_portfolio_groups() -> None:
@@ -71,7 +73,7 @@ def run_portfolio_groups() -> None:
         print("8) Remove Ticker from Group")
         print("9) Delete Group")
         print("10) Return to Main Menu")
-        choice = input("Enter 1-10: ").strip()
+        choice = input("Select an option [1-10]: ").strip()
 
         if choice == "1":
             pm.view_portfolio(portfolio)
@@ -114,7 +116,7 @@ def run_portfolio_groups() -> None:
                     groups = ga.add_tickers_to_group(groups, grp_name)
                     ga.save_groups(groups, ga.GROUPS_FILE)
                 else:
-                    print("Invalid selection.\n")
+                    print_invalid_choice()
         elif choice == "8":
             groups = ga.remove_ticker_from_group(groups)
             ga.save_groups(groups, ga.GROUPS_FILE)
@@ -171,7 +173,7 @@ def interactive_menu():
         print("\n📂 Main Menu")
         for idx, (label, _) in enumerate(actions, start=1):
             print(f"{idx}) {label}")
-        choice = input(f"Enter 1-{len(actions)}: ").strip()
+        choice = input(f"Select an option [1-{len(actions)}]: ").strip()
 
         if choice.isdigit():
             idx = int(choice) - 1
@@ -186,11 +188,23 @@ def interactive_menu():
 
 def parse_args() -> argparse.Namespace:
     """Return parsed CLI arguments."""
-    parser = argparse.ArgumentParser(description="Fundalyze command line interface")
+    examples = textwrap.dedent(
+        """
+        Examples:
+          python scripts/main.py portfolio  # open portfolio manager
+          python scripts/main.py report     # generate reports
+        """
+    )
+    parser = argparse.ArgumentParser(
+        description="Fundalyze command line interface",
+        epilog=examples,
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
     sub = parser.add_subparsers(dest="command")
     for cmd in COMMAND_MAP:
         sub.add_parser(cmd, help=COMMAND_HELP.get(cmd, cmd))
     sub.add_parser("menu", help="Interactive menu (default)")
+    parser.add_argument("--version", action="version", version="Fundalyze 1.0")
     return parser.parse_args()
 
 

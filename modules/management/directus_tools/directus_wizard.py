@@ -1,5 +1,7 @@
 import json
 
+from modules.interface import print_invalid_choice
+
 from modules.data import directus_client as dc
 
 try:
@@ -69,4 +71,4 @@ def run_directus_wizard() -> None:
         elif choice == "6":
             break
         else:
-            print("Invalid choice.\n")
+            print_invalid_choice()

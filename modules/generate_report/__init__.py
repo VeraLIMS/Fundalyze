@@ -13,6 +13,7 @@ from modules.management.group_analysis.group_analysis import (
     load_groups,
     GROUPS_FILE,
 )
+from modules.interface import print_invalid_choice
 
 
 def _select_tickers() -> list[str]:
@@ -45,12 +46,12 @@ def _select_tickers() -> list[str]:
             grp = names[int(sel) - 1]
             df = groups[groups["Group"] == grp]
             return df["Ticker"].dropna().astype(str).str.upper().unique().tolist()
-        print("Invalid selection.\n")
+        print_invalid_choice()
         return []
 
     if choice == "4":
         return []
-    print("Invalid choice.\n")
+    print_invalid_choice()
     return []
 
 
