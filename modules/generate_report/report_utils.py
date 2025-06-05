@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+from pathlib import Path
 from typing import Iterable
 
 import matplotlib.pyplot as plt
@@ -11,6 +12,7 @@ import pandas as pd
 
 from modules.config_utils import get_output_dir
 from modules.data import insert_items, prepare_records
+from modules.utils.data_utils import write_dataframe
 from .utils import iso_timestamp_utc
 
 
@@ -58,15 +60,34 @@ def fetch_profile(
     lines: list[str],
     *,
     write_files: bool = True,
+    write_json: bool = False,
 ) -> None:
-    """Fetch company profile via OpenBB."""
+    """Fetch company profile via OpenBB.
+
+    Parameters
+    ----------
+    obb:
+        Loaded OpenBB module.
+    symbol:
+        Ticker symbol to fetch.
+    ticker_dir:
+        Folder where output files will be stored.
+    metadata:
+        Metadata dictionary updated with file info.
+    lines:
+        List of Markdown lines describing actions.
+    write_files:
+        When ``True`` save CSV/JSON files locally.
+    write_json:
+        Additionally write a JSON version alongside the CSV.
+    """
     profile_path = os.path.join(ticker_dir, "profile.csv")
     fmp_profile_url = f"https://financialmodelingprep.com/api/v3/profile/{symbol}"
 
     try:
         profile_df = obb.equity.profile(symbol=symbol).to_df()
         if write_files:
-            profile_df.to_csv(profile_path, index=False)
+            write_dataframe(profile_df, Path(profile_path), write_json=write_json)
         upload_dataframe(profile_df, os.getenv("DIRECTUS_COMPANIES_COLLECTION", "companies"))
         lines.append("- → Saved full profile to `profile.csv`\n\n")
         lines.append(
@@ -123,8 +144,29 @@ def fetch_price_history(
     *,
     price_period: str = "1mo",
     write_files: bool = True,
+    write_json: bool = False,
 ) -> None:
-    """Fetch price history and chart using OpenBB/yfinance."""
+    """Fetch price history and chart using OpenBB/yfinance.
+
+    Parameters
+    ----------
+    obb:
+        Loaded OpenBB module.
+    symbol:
+        Ticker symbol.
+    ticker_dir:
+        Directory to write output files.
+    metadata:
+        Metadata dictionary updated with file info.
+    lines:
+        Markdown lines describing actions.
+    price_period:
+        History duration passed to OpenBB/yfinance.
+    write_files:
+        When ``True`` save CSV/PNG output locally.
+    write_json:
+        Additionally write JSON alongside the CSV file.
+    """
     price_csv_path = os.path.join(ticker_dir, "1mo_prices.csv")
     price_chart_path = os.path.join(ticker_dir, "1mo_close.png")
     yahoo_hist_url = f"https://finance.yahoo.com/quote/{symbol}/history?p={symbol}"
@@ -140,7 +182,7 @@ def fetch_price_history(
                 hist_df = hist_df.drop(columns=[col])
 
         if write_files:
-            hist_df.to_csv(price_csv_path, index=False)
+            write_dataframe(hist_df, Path(price_csv_path), write_json=write_json)
         upload_dataframe(hist_df, os.getenv("DIRECTUS_PRICES_COLLECTION", "price_history"))
         msg = (
             "- → Saved 1 month price history to `1mo_prices.csv`\n\n"
@@ -198,8 +240,29 @@ def fetch_financial_statements(
     *,
     statements: Iterable[str] | None = None,
     write_files: bool = True,
+    write_json: bool = False,
 ) -> None:
-    """Fetch income, balance and cash statements from OpenBB."""
+    """Fetch income, balance and cash statements from OpenBB.
+
+    Parameters
+    ----------
+    obb:
+        Loaded OpenBB module.
+    symbol:
+        Ticker symbol.
+    ticker_dir:
+        Directory for output files.
+    metadata:
+        Metadata dictionary updated with file info.
+    lines:
+        Markdown log lines.
+    statements:
+        Iterable of statement types to fetch.
+    write_files:
+        Save CSV files when ``True``.
+    write_json:
+        Additionally save JSON alongside CSV.
+    """
     if statements is None:
         statements = ["income", "balance", "cash"]
 
@@ -224,7 +287,7 @@ def fetch_financial_statements(
             fin_df = fn(symbol=symbol, period=period).to_df()
             if isinstance(fin_df, pd.DataFrame) and not fin_df.empty:
                 if write_files:
-                    fin_df.to_csv(fin_path, index=True)
+                    write_dataframe(fin_df, Path(fin_path), write_json=write_json)
                 collection = f"{stmt}_statement" if stmt != "cash" else "cash_flow"
                 upload_dataframe(fin_df.reset_index(), os.getenv(f"DIRECTUS_{collection.upper()}_COLLECTION", collection))
                 lines.append(f"- → Saved to `{filename}`\n\n")
@@ -247,12 +310,14 @@ def fetch_financial_statements(
                     "fetched_at": iso_timestamp_utc(),
                 }
                 if write_files:
-                    pd.DataFrame().to_csv(fin_path)
+                    empty_df = pd.DataFrame()
+                    write_dataframe(empty_df, Path(fin_path), write_json=write_json)
         except Exception as exc:
             lines.append(f"> {label} error for {symbol}: {exc}\n\n")
             lines.append("**Source:** ERROR occurred; see metadata.json\n\n")
             if write_files:
-                pd.DataFrame().to_csv(fin_path)
+                empty_df = pd.DataFrame()
+                write_dataframe(empty_df, Path(fin_path), write_json=write_json)
             metadata["files"][filename] = {
                 "source": f"ERROR: {exc}",
                 "source_url": source_url,

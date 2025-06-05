@@ -131,3 +131,10 @@ for item in progress_iter(items, description="work"):
 - **modules/generate_report/report_generator.py** – default `local_output` logic respects custom `OUTPUT_DIR` or explicit `base_output`.
 - **modules/generate_report/excel_dashboard.py** – `_transpose_financials` refactored for clarity; docstring expanded.
 - **modules/management/portfolio_manager/portfolio_manager.py** – always writes local portfolio file even when Directus sync succeeds.
+
+### 2028 JSON export option
+- **modules/utils/data_utils.py** – added `write_dataframe` helper to save DataFrames as CSV and optional JSON.
+- **modules/generate_report/report_utils.py** – profile, price history and statement functions accept `write_json` flag.
+- **modules/generate_report/report_generator.py** – exposes `write_json` parameter forwarding to report utilities.
+- **README.md** – updated example to demonstrate JSON export.
+
