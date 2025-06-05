@@ -18,6 +18,12 @@
 - **tests/test_fetching.py** – Added test ensuring FMP requests include timeout.
 - **tests/test_fallback_data.py** – Updated mocks to accept timeout argument.
 - **tests/test_metadata_checker.py** – Updated mocks to accept timeout argument.
+- **modules/data/directus_mapper.py** – Added `TYPE_CHECKING` import and optional
+  pandas import for type hints, fixing flake8 undefined-name warning.
+- **scripts/main.py** – Removed unused `logging` import.
+- **scripts/sync_directus_fields.py** – Dropped unused `json` import and retained
+  `MAP_FILE` export for tests.
+- **tests/test_sync_directus_fields.py** – Removed unused `Path` import.
 
 ## Remaining Warnings/TODOs
 - No outstanding warnings.

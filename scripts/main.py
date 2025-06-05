@@ -10,7 +10,6 @@ import os
 import argparse
 import textwrap
 import subprocess
-import logging
 
 # Add the repository root to sys.path so 'modules' can be imported when this
 # script is executed directly via `python scripts/main.py`.

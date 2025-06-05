@@ -1,6 +1,5 @@
 import importlib
 import json
-from pathlib import Path
 
 import modules.data.directus_mapper as dm
 
