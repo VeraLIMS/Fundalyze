@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 from modules.config_utils import get_output_dir
+from modules.data import insert_items, prepare_records
 from .utils import iso_timestamp_utc
 
 
@@ -20,6 +21,17 @@ def ensure_output_dir(symbol: str, base_output: str | None = None) -> str:
     ticker_dir = os.path.join(base_output, symbol.upper())
     os.makedirs(ticker_dir, exist_ok=True)
     return ticker_dir
+
+
+def upload_dataframe(df: pd.DataFrame, collection: str) -> None:
+    """Insert DataFrame rows into a Directus collection if configured."""
+    if not bool(os.getenv("DIRECTUS_URL")) or df.empty:
+        return
+    records = prepare_records(collection, df.to_dict(orient="records"))
+    try:
+        insert_items(collection, records)
+    except Exception as exc:  # pragma: no cover - network errors
+        print(f"Warning uploading to Directus: {exc}")
 
 
 def write_report_and_metadata(ticker_dir: str, lines: Iterable[str], metadata: dict) -> None:
@@ -38,14 +50,24 @@ def write_report_and_metadata(ticker_dir: str, lines: Iterable[str], metadata: d
         json.dump(metadata, f, indent=2)
 
 
-def fetch_profile(obb, symbol: str, ticker_dir: str, metadata: dict, lines: list[str]) -> None:
-    """Fetch company profile via OpenBB and save CSV + metadata."""
+def fetch_profile(
+    obb,
+    symbol: str,
+    ticker_dir: str,
+    metadata: dict,
+    lines: list[str],
+    *,
+    write_files: bool = True,
+) -> None:
+    """Fetch company profile via OpenBB."""
     profile_path = os.path.join(ticker_dir, "profile.csv")
     fmp_profile_url = f"https://financialmodelingprep.com/api/v3/profile/{symbol}"
 
     try:
         profile_df = obb.equity.profile(symbol=symbol).to_df()
-        profile_df.to_csv(profile_path, index=False)
+        if write_files:
+            profile_df.to_csv(profile_path, index=False)
+        upload_dataframe(profile_df, os.getenv("DIRECTUS_COMPANIES_COLLECTION", "companies"))
         lines.append("- → Saved full profile to `profile.csv`\n\n")
         lines.append(
             f"**Source:** OpenBB (`equity.profile`) — [FMP Company Profile]({fmp_profile_url})\n\n"
@@ -100,6 +122,7 @@ def fetch_price_history(
     lines: list[str],
     *,
     price_period: str = "1mo",
+    write_files: bool = True,
 ) -> None:
     """Fetch price history and chart using OpenBB/yfinance."""
     price_csv_path = os.path.join(ticker_dir, "1mo_prices.csv")
@@ -107,14 +130,18 @@ def fetch_price_history(
     yahoo_hist_url = f"https://finance.yahoo.com/quote/{symbol}/history?p={symbol}"
 
     try:
-        hist_df = obb.equity.price.historical(
-            symbol=symbol, period=price_period, provider="yfinance"
-        ).to_df()
+        hist_df = (
+            obb.equity.price.historical(
+                symbol=symbol, period=price_period, provider="yfinance"
+            ).to_df()
+        )
         for col in ("Dividends", "Stock Splits"):
             if col in hist_df.columns:
                 hist_df = hist_df.drop(columns=[col])
 
-        hist_df.to_csv(price_csv_path, index=False)
+        if write_files:
+            hist_df.to_csv(price_csv_path, index=False)
+        upload_dataframe(hist_df, os.getenv("DIRECTUS_PRICES_COLLECTION", "price_history"))
         msg = (
             "- → Saved 1 month price history to `1mo_prices.csv`\n\n"
             if price_period == "1mo"
@@ -125,15 +152,16 @@ def fetch_price_history(
             f"**Source:** OpenBB (`equity.price.historical`, provider=`yfinance`) — [Yahoo Finance History]({yahoo_hist_url})\n\n"
         )
 
-        plt.figure(figsize=(8, 4))
-        hist_df["Close"].plot(title=f"{symbol} Close Price ({price_period})")
-        plt.xlabel("Date")
-        plt.ylabel("Close Price (USD)")
-        plt.tight_layout()
-        plt.savefig(price_chart_path, dpi=150)
-        plt.close()
+        if write_files:
+            plt.figure(figsize=(8, 4))
+            hist_df["Close"].plot(title=f"{symbol} Close Price ({price_period})")
+            plt.xlabel("Date")
+            plt.ylabel("Close Price (USD)")
+            plt.tight_layout()
+            plt.savefig(price_chart_path, dpi=150)
+            plt.close()
 
-        lines.append("- → Saved price chart to `1mo_close.png`\n\n")
+            lines.append("- → Saved price chart to `1mo_close.png`\n\n")
         metadata["files"]["1mo_close.png"] = {
             "source": "Visualization (matplotlib)",
             "source_url": "",
@@ -169,6 +197,7 @@ def fetch_financial_statements(
     lines: list[str],
     *,
     statements: Iterable[str] | None = None,
+    write_files: bool = True,
 ) -> None:
     """Fetch income, balance and cash statements from OpenBB."""
     if statements is None:
@@ -194,7 +223,10 @@ def fetch_financial_statements(
             fn = getattr(obb.equity.fundamental, stmt)
             fin_df = fn(symbol=symbol, period=period).to_df()
             if isinstance(fin_df, pd.DataFrame) and not fin_df.empty:
-                fin_df.to_csv(fin_path, index=True)
+                if write_files:
+                    fin_df.to_csv(fin_path, index=True)
+                collection = f"{stmt}_statement" if stmt != "cash" else "cash_flow"
+                upload_dataframe(fin_df.reset_index(), os.getenv(f"DIRECTUS_{collection.upper()}_COLLECTION", collection))
                 lines.append(f"- → Saved to `{filename}`\n\n")
                 lines.append(
                     f"**Source:** OpenBB (`equity.fundamental.{stmt}`, {period}) — [Yahoo Finance]({source_url})\n\n"
@@ -214,11 +246,13 @@ def fetch_financial_statements(
                     "source_url": source_url,
                     "fetched_at": iso_timestamp_utc(),
                 }
-                pd.DataFrame().to_csv(fin_path)
+                if write_files:
+                    pd.DataFrame().to_csv(fin_path)
         except Exception as exc:
             lines.append(f"> {label} error for {symbol}: {exc}\n\n")
             lines.append("**Source:** ERROR occurred; see metadata.json\n\n")
-            pd.DataFrame().to_csv(fin_path)
+            if write_files:
+                pd.DataFrame().to_csv(fin_path)
             metadata["files"][filename] = {
                 "source": f"ERROR: {exc}",
                 "source_url": source_url,

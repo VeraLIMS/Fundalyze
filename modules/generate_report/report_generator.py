@@ -35,6 +35,7 @@ def fetch_and_compile(
     *,
     price_period: str = "1mo",
     statements: list[str] | None = None,
+    local_output: bool | None = None,
 ) -> None:
     """Generate all report files for ``symbol``.
 
@@ -53,7 +54,10 @@ def fetch_and_compile(
     """
     obb_mod = _get_openbb()
 
-    ticker_dir = rutils.ensure_output_dir(symbol, base_output)
+    if local_output is None:
+        local_output = not bool(os.getenv("DIRECTUS_URL"))
+
+    ticker_dir = rutils.ensure_output_dir(symbol, base_output) if local_output else (base_output or ".")
     metadata = {
         "ticker": symbol.upper(),
         "generated_on": iso_timestamp_utc(),
@@ -62,7 +66,7 @@ def fetch_and_compile(
 
     lines: list[str] = [f"# Report for {symbol.upper()}", "*Generated via OpenBB Platform*", ""]
 
-    rutils.fetch_profile(obb_mod, symbol, ticker_dir, metadata, lines)
+    rutils.fetch_profile(obb_mod, symbol, ticker_dir, metadata, lines, write_files=local_output)
     lines.append("## 2) Price History (Last 1 Month)\n")
     rutils.fetch_price_history(
         obb_mod,
@@ -71,6 +75,7 @@ def fetch_and_compile(
         metadata,
         lines,
         price_period=price_period,
+        write_files=local_output,
     )
     rutils.fetch_financial_statements(
         obb_mod,
@@ -79,9 +84,13 @@ def fetch_and_compile(
         metadata,
         lines,
         statements=statements,
+        write_files=local_output,
     )
-    rutils.write_report_and_metadata(ticker_dir, lines, metadata)
-    print(f"✅ Completed report for {symbol.upper()}: {os.path.join(ticker_dir, 'report.md')}")
+    if local_output:
+        rutils.write_report_and_metadata(ticker_dir, lines, metadata)
+        print(f"✅ Completed report for {symbol.upper()}: {os.path.join(ticker_dir, 'report.md')}")
+    else:
+        print(f"✅ Completed report for {symbol.upper()} (uploaded to Directus)")
 
 
 if __name__ == "__main__":
