@@ -1,3 +1,5 @@
+"""Public interface for the Markdown note manager CLI."""
+
 from .note_manager import (
     create_note,
     get_note_path,

@@ -1,5 +1,8 @@
+"""Markdown note system with a minimal interactive CLI."""
+
 import os
 import re
+
 from pathlib import Path
 from typing import List, Optional
 
