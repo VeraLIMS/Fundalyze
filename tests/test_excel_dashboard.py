@@ -27,6 +27,11 @@ def test_safe_concat_normal():
     assert result.iloc[1].tolist() == ["BBB", 3, 4]
 
 
+def test_safe_concat_normal_empty():
+    result = _safe_concat_normal({})
+    assert result.empty
+
+
 def test_transpose_financials():
     dfs = {
         "AAA": pd.DataFrame({
@@ -59,6 +64,22 @@ def test_transpose_financials():
     assert second_block.iloc[1, 1] == "EPS"
     assert second_block.iloc[1, 2] == 3
     assert pd.isna(second_block.iloc[1, 3])
+
+
+def test_transpose_financials_index_input():
+    dfs = {
+        "AAA": pd.DataFrame({"Revenue": [10, 20]}, index=["2023-06", "2023-03"]),
+        "BBB": pd.DataFrame({"Revenue": [30]}, index=["2023-06"]),
+    }
+    result = _transpose_financials(dfs)
+    assert list(result.columns) == ["Ticker", "Metric", "2023-06", "2023-03"]
+    assert len(result) == 2
+    assert result.iloc[0].tolist() == ["AAA", "Revenue", 10, 20]
+    second = result.iloc[1].tolist()
+    assert second[0] == "BBB"
+    assert second[1] == "Revenue"
+    assert second[2] == 30
+    assert pd.isna(second[3])
 
 
 def test_strip_timezones_removes_tz():

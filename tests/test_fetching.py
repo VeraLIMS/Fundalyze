@@ -1,6 +1,9 @@
 from unittest.mock import MagicMock, patch
 
-from modules.data.fetching import fetch_basic_stock_data, fetch_basic_stock_data_batch
+from modules.data.fetching import (
+    fetch_basic_stock_data,
+    fetch_basic_stock_data_batch,
+)
 
 
 def test_fetch_basic_stock_data_basic():
@@ -177,4 +180,16 @@ def test_fetch_basic_stock_data_batch(monkeypatch):
     df = fetch_basic_stock_data_batch(["AAA", "BBB"])
     assert list(df["Ticker"]) == ["AAA", "BBB"]
     assert df.loc[0, "Market Cap"] == 10
+
+
+def test_fetch_basic_stock_data_invalid_provider():
+    import pytest
+    with pytest.raises(ValueError):
+        fetch_basic_stock_data("AAA", provider="unknown")
+
+
+def test_fetch_basic_stock_data_batch_empty():
+    df = fetch_basic_stock_data_batch([])
+    # Should return DataFrame with BASIC_FIELDS columns but no rows
+    assert df.empty
 
