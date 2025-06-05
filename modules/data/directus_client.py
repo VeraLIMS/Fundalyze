@@ -13,8 +13,13 @@ load_settings()  # ensure .env is read when this module is imported
 DIRECTUS_URL = os.getenv("DIRECTUS_URL", "http://localhost:8055")
 # Support legacy DIRECTUS_TOKEN as well as DIRECTUS_API_TOKEN
 DIRECTUS_TOKEN = os.getenv("DIRECTUS_API_TOKEN") or os.getenv("DIRECTUS_TOKEN")
-CF_ACCESS_CLIENT_ID = os.getenv("CF_ACCESS_CLIENT_ID")
-CF_ACCESS_CLIENT_SECRET = os.getenv("CF_ACCESS_CLIENT_SECRET")
+# Support both underscore and hyphen env var names for Cloudflare credentials
+CF_ACCESS_CLIENT_ID = os.getenv("CF_ACCESS_CLIENT_ID") or os.getenv(
+    "CF-Access-Client-Id"
+)
+CF_ACCESS_CLIENT_SECRET = os.getenv("CF_ACCESS_CLIENT_SECRET") or os.getenv(
+    "CF-Access-Client-Secret"
+)
 
 logger = logging.getLogger(__name__)
 
@@ -36,8 +41,12 @@ def reload_env() -> None:
     global DIRECTUS_URL, DIRECTUS_TOKEN, CF_ACCESS_CLIENT_ID, CF_ACCESS_CLIENT_SECRET
     DIRECTUS_URL = os.getenv("DIRECTUS_URL", "http://localhost:8055")
     DIRECTUS_TOKEN = os.getenv("DIRECTUS_API_TOKEN") or os.getenv("DIRECTUS_TOKEN")
-    CF_ACCESS_CLIENT_ID = os.getenv("CF_ACCESS_CLIENT_ID")
-    CF_ACCESS_CLIENT_SECRET = os.getenv("CF_ACCESS_CLIENT_SECRET")
+    CF_ACCESS_CLIENT_ID = os.getenv("CF_ACCESS_CLIENT_ID") or os.getenv(
+        "CF-Access-Client-Id"
+    )
+    CF_ACCESS_CLIENT_SECRET = os.getenv("CF_ACCESS_CLIENT_SECRET") or os.getenv(
+        "CF-Access-Client-Secret"
+    )
 
 
 def _headers():
