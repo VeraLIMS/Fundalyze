@@ -46,3 +46,12 @@ These changes ensure consistent feedback across the CLI and provide clearer guid
 - Fixed prompt wording in `modules/generate_report/__init__.py` and standardized
   group-selection messages to the `[1-n]` format.
 - Improved note creation flow to allow cancellation with Enter or 'q'.
+
+### Recent Updates
+
+- Fixed CLI crash when running `scripts/main.py` due to missing
+  `run_metadata_checker` export. Added a backwards compatible alias in
+  `modules/generate_report/__init__.py` at line 8.
+- Clarified group creation prompts in
+  `modules/management/group_analysis/group_analysis.py` lines
+  205–219 to mention pressing Enter to cancel selections.

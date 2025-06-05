@@ -202,16 +202,20 @@ def choose_group(portfolio: pd.DataFrame) -> str:
             print(f"  {i}) {t}")
         print(f"  {len(unique_ts) + 1}) Create a custom group name")
 
-        choice = input(f"Select 1-{len(unique_ts)+1}: ").strip()
+        choice = input(
+            f"Select 1-{len(unique_ts)+1} (or press Enter to cancel): "
+        ).strip()
+        if not choice:
+            return ""
         if choice.isdigit():
             idx = int(choice)
             if 1 <= idx <= len(unique_ts):
                 return unique_ts[idx - 1]  # use portfolio ticker as group name
-            elif idx == len(unique_ts) + 1:
-                name = input("Enter custom group name: ").strip()
+            if idx == len(unique_ts) + 1:
+                name = input("Enter custom group name (or press Enter to cancel): ").strip()
                 return name if name else ""
     # If portfolio is empty or user skipped above
-    name = input("Enter new group name: ").strip()
+    name = input("Enter new group name (or press Enter to cancel): ").strip()
     return name if name else ""
 
 
