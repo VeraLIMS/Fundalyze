@@ -135,6 +135,34 @@ def test_fetch_basic_stock_data_provider_fmp(monkeypatch):
     assert result["PE Ratio"] == 12.0
 
 
+def test_fetch_from_fmp_uses_timeout(monkeypatch):
+    mock_resp = MagicMock()
+    mock_resp.json.return_value = [
+        {
+            "symbol": "ACME",
+            "companyName": "Acme Corp",
+            "sector": "Tech",
+            "industry": "Software",
+            "price": 50.0,
+            "mktCap": 1000000,
+            "pe": 12.0,
+            "lastDiv": 0.02,
+        }
+    ]
+    mock_resp.raise_for_status.return_value = None
+    called = {}
+
+    def fake_get(url, **kwargs):
+        called.update(kwargs)
+        return mock_resp
+
+    monkeypatch.setattr("modules.data.fetching.requests.get", fake_get)
+    monkeypatch.setattr("modules.data.fetching.resolve_term", lambda x: x)
+
+    fetch_basic_stock_data("ACME", provider="fmp")
+    assert called.get("timeout") == 10
+
+
 def test_fetch_basic_stock_data_provider_yf_failure(monkeypatch):
     class FakeTicker:
         def get_info(self):

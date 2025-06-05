@@ -16,7 +16,7 @@ def test_fetch_profile_from_fmp_success(monkeypatch):
         "website": "example.com",
     }]
     resp.raise_for_status.return_value = None
-    monkeypatch.setattr(fb.requests, "get", lambda url: resp)
+    monkeypatch.setattr(fb.requests, "get", lambda url, **kwargs: resp)
 
     df = fb.fetch_profile_from_fmp("AAA")
     assert df.iloc[0]["sector"] == "Tech"
@@ -27,7 +27,7 @@ def test_fetch_profile_from_fmp_no_data(monkeypatch):
     resp = MagicMock()
     resp.json.return_value = []
     resp.raise_for_status.return_value = None
-    monkeypatch.setattr(fb.requests, "get", lambda url: resp)
+    monkeypatch.setattr(fb.requests, "get", lambda url, **kwargs: resp)
 
     import pytest
     with pytest.raises(ValueError):
@@ -38,7 +38,7 @@ def test_fetch_fmp_statement(monkeypatch):
     resp = MagicMock()
     resp.json.return_value = [{"date": "2023", "Revenue": 5}]
     resp.raise_for_status.return_value = None
-    monkeypatch.setattr(fb.requests, "get", lambda url: resp)
+    monkeypatch.setattr(fb.requests, "get", lambda url, **kwargs: resp)
 
     df = fb.fetch_fmp_statement("AAA", "income-statement", "annual")
     assert df.index.name == "date"
@@ -61,7 +61,7 @@ def test_fetch_1mo_prices_fmp(monkeypatch):
         ]
     }
     resp.raise_for_status.return_value = None
-    monkeypatch.setattr(fb.requests, "get", lambda url: resp)
+    monkeypatch.setattr(fb.requests, "get", lambda url, **kwargs: resp)
 
     df = fb.fetch_1mo_prices_fmp("AAA")
     assert list(df.columns) == [
@@ -80,7 +80,7 @@ def test_fetch_1mo_prices_fmp_no_data(monkeypatch):
     resp = MagicMock()
     resp.json.return_value = {"historical": []}
     resp.raise_for_status.return_value = None
-    monkeypatch.setattr(fb.requests, "get", lambda url: resp)
+    monkeypatch.setattr(fb.requests, "get", lambda url, **kwargs: resp)
 
     import pytest
 
