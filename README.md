@@ -51,6 +51,10 @@ See [docs/configuration.md](docs/configuration.md) for all available settings.
 
 ## Quickstart
 
+Launch `python scripts/main.py` with no arguments to open an
+interactive menu exposing all tools (portfolio management, reports,
+notes, settings and more).
+
 Generate a report from the command line:
 ```bash
 python scripts/main.py report

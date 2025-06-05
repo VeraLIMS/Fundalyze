@@ -35,7 +35,7 @@ Loads environment variables from `config/.env` and user settings from `config/se
 ## Script Entry Points
 
 The `scripts/` directory contains small wrappers that import the modules above:
-- `main.py` – interactive menu and command-line interface. From here you can launch portfolio management, group tools, report generation and the note manager.
+- `main.py` – interactive menu and command-line interface. It provides access to portfolio and group management, reporting utilities, the note manager, settings and Directus tools.
 - `note_cli.py` – legacy entry point equivalent to running `main.py notes`.
 - `performance_profile.py` – micro-benchmark utility.
 
