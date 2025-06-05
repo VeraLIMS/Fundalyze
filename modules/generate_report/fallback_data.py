@@ -15,7 +15,7 @@ Usage example::
 import json
 import os
 from pathlib import Path
-from typing import Tuple
+from typing import Iterable, Tuple
 
 from modules.config_utils import get_output_dir, add_fmp_api_key
 
@@ -27,11 +27,86 @@ from .utils import iso_timestamp_utc
 
 FMP_BASE = "https://financialmodelingprep.com/api/v3"
 
+PRICE_PERIOD = "1mo"
+PRICE_COLUMNS = ["Date", "Open", "High", "Low", "Close", "Adj Close", "Volume"]
 
 #
 # ─── Step 1: Define fallback helpers: yfinance full-fetch (fetch_and_display) ─────────────────────
 #
 
+
+def _fetch_yf_profile(ticker: yf.Ticker, symbol: str, output_dir: Path) -> None:
+    """Save a minimal company profile fetched via yfinance."""
+    try:
+        info = ticker.info or {}
+    except Exception as exc:  # pragma: no cover - network errors
+        print(f"  Error fetching profile info via yfinance: {exc}")
+        info = {}
+
+    if not info or info.get("longName") is None:
+        print(f"  No profile info available via yfinance for {symbol}.")
+        return
+
+    print(f"  Long Name : {info.get('longName')}")
+    print(f"  Sector    : {info.get('sector')}")
+    print(f"  Industry  : {info.get('industry')}")
+    mc = info.get("marketCap")
+    if isinstance(mc, (int, float)):
+        print(f"  Market Cap: {mc:,}")
+    else:
+        print(f"  Market Cap: {mc}")
+    print(f"  Website   : {info.get('website')}")
+
+    profile_df = pd.DataFrame([
+        {
+            "symbol": symbol,
+            "longName": info.get("longName", ""),
+            "sector": info.get("sector", ""),
+            "industry": info.get("industry", ""),
+            "marketCap": info.get("marketCap", pd.NA),
+            "website": info.get("website", ""),
+        }
+    ])
+    profile_path = output_dir / "profile.csv"
+    profile_df.to_csv(profile_path, index=False)
+    print(f"  → Saved profile.csv to: {profile_path}")
+
+
+def _fetch_yf_price_history(ticker: yf.Ticker, symbol: str, output_dir: Path) -> None:
+    """Fetch and save one month of price history via yfinance."""
+    try:
+        hist = ticker.history(period=PRICE_PERIOD)
+    except Exception as exc:  # pragma: no cover - network errors
+        print(f"  Error fetching price history via ticker.history(): {exc}")
+        hist = pd.DataFrame()
+
+    if hist is None or hist.empty or "Close" not in hist.columns:
+        print(f"  No {PRICE_PERIOD} price data from ticker.history; trying yf.download()...")
+        try:
+            hist = yf.download(symbol, period=PRICE_PERIOD)
+        except Exception as exc:  # pragma: no cover - network errors
+            print(f"  Error fetching price via yf.download(): {exc}")
+            hist = pd.DataFrame()
+
+    if hist is None or hist.empty:
+        print(f"  No price history available for {symbol}.")
+        return
+
+    df_price = hist.copy()
+    for col in ("Dividends", "Stock Splits"):
+        if col in df_price.columns:
+            df_price = df_price.drop(columns=[col])
+
+    print(f"\n  Last 5 rows of price history ({PRICE_PERIOD}):")
+    print(df_price.tail(5).to_string())
+
+    if "Adj Close" not in df_price.columns and "Close" in df_price.columns:
+        df_price["Adj Close"] = df_price["Close"]
+
+    df_price_reset = df_price.reset_index()
+    price_csv_path = output_dir / "1mo_prices.csv"
+    df_price_reset.to_csv(price_csv_path, index=False)
+    print(f"  → Saved 1-month price history to: {price_csv_path}")
 def yf_full_fetch(symbol: str):
     """
     A “full” fallback that uses yfinance to retrieve Profile, 1-month price history,
@@ -47,82 +122,20 @@ def yf_full_fetch(symbol: str):
 
     ticker = yf.Ticker(symbol)
 
-    # 1) Company Info (profile.csv)
-    try:
-        info = ticker.info or {}
-    except Exception as e:
-        print(f"  Error fetching profile info via yfinance: {e}")
-        info = {}
+    _fetch_yf_profile(ticker, symbol, output_dir)
+    _fetch_yf_price_history(ticker, symbol, output_dir)
 
-    if not info or info.get("longName") is None:
-        print(f"  No profile info available via yfinance for {symbol}.")
-    else:
-        print(f"  Long Name : {info.get('longName')}")
-        print(f"  Sector    : {info.get('sector')}")
-        print(f"  Industry  : {info.get('industry')}")
-        mc = info.get("marketCap")
-        if isinstance(mc, (int, float)):
-            print(f"  Market Cap: {mc:,}")
-        else:
-            print(f"  Market Cap: {mc}")
-        print(f"  Website   : {info.get('website')}")
+    statements: Iterable[tuple[str, str]] = [
+        ("financials", "Annual Income Statement"),
+        ("quarterly_financials", "Quarterly Income Statement"),
+        ("balance_sheet", "Annual Balance Sheet"),
+        ("quarterly_balance_sheet", "Quarterly Balance Sheet"),
+        ("cashflow", "Annual Cash Flow"),
+        ("quarterly_cashflow", "Quarterly Cash Flow"),
+    ]
 
-        # Build a minimal profile DataFrame
-        profile_df = pd.DataFrame([{
-            "symbol": symbol,
-            "longName": info.get("longName", ""),
-            "sector": info.get("sector", ""),
-            "industry": info.get("industry", ""),
-            "marketCap": info.get("marketCap", pd.NA),
-            "website": info.get("website", "")
-        }])
-        profile_path = output_dir / "profile.csv"
-        profile_df.to_csv(profile_path, index=False)
-        print(f"  → Saved profile.csv to: {profile_path}")
-
-    # 2) Recent Price History (1mo_prices.csv)
-    try:
-        hist = ticker.history(period="1mo")
-    except Exception as e:
-        print(f"  Error fetching price history via ticker.history(): {e}")
-        hist = pd.DataFrame()
-
-    if hist is None or hist.empty or "Close" not in hist.columns:
-        print("  No 1-month price data from ticker.history; trying yf.download()...")
-        try:
-            hist = yf.download(symbol, period="1mo")
-        except Exception as e:
-            print(f"  Error fetching price via yf.download(): {e}")
-            hist = pd.DataFrame()
-
-    if hist is None or hist.empty:
-        print(f"  No price history available for {symbol}.")
-    else:
-        df_price = hist.copy()
-        # Drop unwanted columns if present
-        for col in ("Dividends", "Stock Splits"):
-            if col in df_price.columns:
-                df_price = df_price.drop(columns=[col])
-
-        print("\n  Last 5 rows of price history (1 month):")
-        print(df_price.tail(5).to_string())
-
-        # Save to CSV (include Date column)
-        if "Adj Close" not in df_price.columns and "Close" in df_price.columns:
-            df_price["Adj Close"] = df_price["Close"]
-
-        df_price_reset = df_price.reset_index()
-        price_csv_path = output_dir / "1mo_prices.csv"
-        df_price_reset.to_csv(price_csv_path, index=False)
-        print(f"  → Saved 1-month price history to: {price_csv_path}")
-
-    # 3) Annual & Quarterly Financial Statements via yfinance
-    _yf_fetch_and_save_statement(ticker, symbol, "financials", "Annual Income Statement", output_dir)
-    _yf_fetch_and_save_statement(ticker, symbol, "quarterly_financials", "Quarterly Income Statement", output_dir)
-    _yf_fetch_and_save_statement(ticker, symbol, "balance_sheet", "Annual Balance Sheet", output_dir)
-    _yf_fetch_and_save_statement(ticker, symbol, "quarterly_balance_sheet", "Quarterly Balance Sheet", output_dir)
-    _yf_fetch_and_save_statement(ticker, symbol, "cashflow", "Annual Cash Flow", output_dir)
-    _yf_fetch_and_save_statement(ticker, symbol, "quarterly_cashflow", "Quarterly Cash Flow", output_dir)
+    for stmt, label in statements:
+        _yf_fetch_and_save_statement(ticker, symbol, stmt, label, output_dir)
 
 
 def _yf_fetch_and_save_statement(
