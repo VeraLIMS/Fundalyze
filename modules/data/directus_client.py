@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 import math
 import os
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 import requests
 
@@ -31,8 +31,52 @@ logger = logging.getLogger(__name__)
 DEFAULT_TIMEOUT = 30  # seconds
 
 
+def _build_url(path: str) -> str:
+    """Return full API URL for the given path."""
+    return f"{DIRECTUS_URL.rstrip('/')}/{path.lstrip('/')}"
+
+
+def _log_request(method: str, url: str, payload: Any) -> None:
+    """Log an outgoing request with optional payload."""
+    if payload:
+        logger.debug("Directus request %s %s payload=%s", method, url, payload)
+    else:
+        logger.debug("Directus request %s %s", method, url)
+
+
+def _parse_response(resp: requests.Response, url: str) -> Dict[str, Any] | None:
+    """Return parsed JSON from ``resp`` or ``None`` on error."""
+    if "text/html" in resp.headers.get("content-type", ""):
+        logger.error(
+            "Directus responded with HTML content. This usually indicates a login page or Cloudflare Access protection. URL: %s | Content: %.100s",
+            url,
+            resp.text,
+        )
+        return None
+    try:
+        return resp.json()
+    except ValueError as exc:
+        logger.error(
+            "Invalid JSON response: %s | URL: %s | Content: %.100s",
+            exc,
+            url,
+            resp.text,
+        )
+    return None
+
+
 def clean_record(record: Dict[str, Any]) -> Dict[str, Any]:
-    """Return a copy of ``record`` with NaN/inf values converted to ``None``."""
+    """Return a sanitized copy of ``record``.
+
+    Numeric ``NaN`` or infinite values are replaced with ``None`` to avoid
+    serialization issues.
+
+    Args:
+        record: Original record dictionary.
+
+    Returns:
+        A copy of ``record`` with problematic floats replaced by ``None``.
+    """
     cleaned = {}
     for key, value in record.items():
         if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
@@ -43,7 +87,7 @@ def clean_record(record: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def reload_env() -> None:
-    """Reload Directus environment variables from ``config/.env``."""
+    """Reload environment variables used for Directus communication."""
     load_settings()  # ensures .env is loaded
     global DIRECTUS_URL, DIRECTUS_TOKEN, CF_ACCESS_CLIENT_ID, CF_ACCESS_CLIENT_SECRET
     # Do not fall back to localhost automatically when reloading
@@ -57,9 +101,9 @@ def reload_env() -> None:
     )
 
 
-def _headers():
+def _headers() -> Dict[str, str]:
     """Return authentication headers for Directus requests."""
-    headers = {}
+    headers: Dict[str, str] = {}
     if DIRECTUS_TOKEN:
         headers["Authorization"] = f"Bearer {DIRECTUS_TOKEN}"
     if CF_ACCESS_CLIENT_ID:
@@ -69,50 +113,43 @@ def _headers():
     return headers
 
 
-def _extract_data(result: Dict[str, Any] | None) -> list[Any]:
+def _extract_data(result: Dict[str, Any] | None) -> List[Any]:
     """Return ``result['data']`` if present else an empty list."""
     return result.get("data", []) if result else []
 
 
 def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any] | None:
-    """Send an HTTP request to the Directus API and return parsed JSON."""
+    """Send a request to the Directus API.
+
+    Args:
+        method: HTTP verb such as ``"GET"`` or ``"POST"``.
+        path: API path relative to the Directus base URL.
+        **kwargs: Additional options forwarded to ``requests.request``.
+
+    Returns:
+        Parsed JSON from the response or ``None`` if an error occurred.
+    """
     if not DIRECTUS_URL:
         raise RuntimeError("DIRECTUS_URL not configured")
 
-    url = f"{DIRECTUS_URL.rstrip('/')}/{path.lstrip('/')}"
+    url = _build_url(path)
     payload = kwargs.get("json") or kwargs.get("data") or kwargs.get("params")
-    if payload:
-        logger.debug("Directus request %s %s payload=%s", method, url, payload)
-    else:
-        logger.debug("Directus request %s %s", method, url)
+    _log_request(method, url, payload)
     headers = {
         "Content-Type": "application/json",
         "Accept": "application/json",
+        **_headers(),
     }
-    headers.update(_headers())
     try:
         resp = requests.request(
-            method, url, headers=headers, timeout=DEFAULT_TIMEOUT, **kwargs
+            method,
+            url,
+            headers=headers,
+            timeout=DEFAULT_TIMEOUT,
+            **kwargs,
         )
         resp.raise_for_status()
-        # If Cloudflare Access blocks the request we get HTML instead of JSON.
-        if "text/html" in resp.headers.get("content-type", ""):
-            logger.error(
-                "Directus responded with HTML content. This usually indicates a login page or Cloudflare Access protection. URL: %s | Content: %.100s",
-                url,
-                resp.text,
-            )
-            return None
-        try:
-            return resp.json()
-        except ValueError as exc:
-            logger.error(
-                "Invalid JSON response: %s | URL: %s | Content: %.100s",
-                exc,
-                url,
-                resp.text,
-            )
-            return None
+        return _parse_response(resp, url)
     except requests.exceptions.HTTPError as errh:
         status = getattr(resp, "status_code", "?")
         body = getattr(resp, "text", "")
@@ -142,10 +179,10 @@ def list_fields(collection: str) -> list[str]:
 def list_fields_with_types(collection: str) -> list[Dict[str, Any]]:
     """Return field metadata including name and type for a collection."""
     result = directus_request("GET", f"fields/{collection}")
-    fields = []
-    for f in _extract_data(result):
-        fields.append({"field": f.get("field"), "type": f.get("type")})
-    return fields
+    return [
+        {"field": f.get("field"), "type": f.get("type")}
+        for f in _extract_data(result)
+    ]
 
 
 def fetch_items(collection: str, limit: int | None = None) -> list[Dict[str, Any]]:
