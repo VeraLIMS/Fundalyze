@@ -27,7 +27,7 @@ from typing import Optional
 
 from modules.config_utils import load_settings  # noqa: E402
 from modules.analytics import portfolio_summary
-from modules.interface import print_table
+from modules.interface import print_table, print_invalid_choice
 
 SETTINGS = load_settings()
 
@@ -223,7 +223,7 @@ def add_tickers_to_group(groups: pd.DataFrame, group_name: str) -> pd.DataFrame:
     Append to 'groups' DataFrame under the given group_name.
     """
     raw = input(
-        f"Enter ticker symbol(s) to add to group '{group_name}' (comma-separated): "
+        f"Enter ticker symbol(s) to add to group '{group_name}' (comma-separated, or press Enter to cancel): "
     ).strip()
     if not raw:
         print("No tickers entered. Returning to menu.\n")
@@ -293,7 +293,7 @@ def remove_ticker_from_group(groups: pd.DataFrame) -> pd.DataFrame:
         print(f"  {i}) {g}")
     choice = input(f"Select group to modify (1-{len(unique_groups)}): ").strip()
     if not (choice.isdigit() and 1 <= int(choice) <= len(unique_groups)):
-        print("Invalid selection.\n")
+        print_invalid_choice()
         return groups
 
     grp = unique_groups[int(choice) - 1]
@@ -303,7 +303,7 @@ def remove_ticker_from_group(groups: pd.DataFrame) -> pd.DataFrame:
         print(f"  {i}) {t}")
     idx = input(f"Select ticker to remove (1-{len(members)}): ").strip()
     if not (idx.isdigit() and 1 <= int(idx) <= len(members)):
-        print("Invalid selection.\n")
+        print_invalid_choice()
         return groups
 
     to_remove = members[int(idx) - 1]
@@ -327,7 +327,7 @@ def delete_group(groups: pd.DataFrame) -> pd.DataFrame:
         print(f"  {i}) {g}")
     choice = input(f"Select group to delete (1-{len(unique_groups)}): ").strip()
     if not (choice.isdigit() and 1 <= int(choice) <= len(unique_groups)):
-        print("Invalid selection.\n")
+        print_invalid_choice()
         return groups
 
     grp = unique_groups[int(choice) - 1]
@@ -404,7 +404,7 @@ def main():
                     groups = add_tickers_to_group(groups, grp_name)
                     save_groups(groups, GROUPS_FILE)
                 else:
-                    print("Invalid selection.\n")
+                    print_invalid_choice()
 
         elif choice == "4":
             groups = remove_ticker_from_group(groups)
@@ -419,7 +419,7 @@ def main():
             break
 
         else:
-            print("Invalid choice. Please select 1-6.\n")
+            print_invalid_choice()
 
 
 if __name__ == "__main__":

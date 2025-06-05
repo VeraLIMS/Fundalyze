@@ -20,7 +20,7 @@ import sys
 from typing import Optional
 
 from modules.analytics import portfolio_summary, sector_counts
-from modules.interface import print_table
+from modules.interface import print_table, print_invalid_choice
 
 import pandas as pd
 import requests
@@ -186,7 +186,7 @@ def add_tickers(portfolio: pd.DataFrame) -> pd.DataFrame:
     - Append a new row to the portfolio DataFrame.
     """
     raw = input(
-        "Enter ticker symbol(s) to add (comma-separated, e.g. AAPL, MSFT): "
+        "Enter ticker symbol(s) to add (comma-separated, or press Enter to cancel): "
     ).strip()
     if not raw:
         print("No tickers entered. Returning to main menu.\n")
@@ -334,7 +334,7 @@ def main():
             break
 
         else:
-            print("Invalid choice. Please select 1-5.\n")
+            print_invalid_choice()
 
 
 if __name__ == "__main__":

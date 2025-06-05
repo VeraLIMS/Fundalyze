@@ -3,6 +3,8 @@ import re
 from pathlib import Path
 from typing import List, Optional
 
+from modules.interface import print_invalid_choice
+
 
 def get_notes_dir() -> Path:
     """Return the notes directory, creating it if needed."""
@@ -98,4 +100,4 @@ def run_note_manager() -> None:
         elif choice == "4":
             break
         else:
-            print("Invalid choice.\n")
+            print_invalid_choice()
