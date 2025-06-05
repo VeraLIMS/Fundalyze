@@ -10,6 +10,14 @@
 - **tests/test_directus_tools_init.py** – New tests verifying `run_directus_wizard` export.
 - **modules/utils/excel_utils.py** – Added validation for negative indices in `col_to_letter`.
 - **tests/test_excel_dashboard.py** – Added test for negative column index handling.
+- **modules/data/fetching.py** – Added timeout parameter to FMP request.
+- **modules/generate_report/fallback_data.py** – Added timeouts for all HTTP calls.
+- **modules/generate_report/metadata_checker.py** – Added timeouts for FMP requests.
+- **modules/management/group_analysis/group_analysis.py** – Added timeout to Directus POST request.
+- **modules/management/portfolio_manager/portfolio_manager.py** – Added timeout to Directus POST request.
+- **tests/test_fetching.py** – Added test ensuring FMP requests include timeout.
+- **tests/test_fallback_data.py** – Updated mocks to accept timeout argument.
+- **tests/test_metadata_checker.py** – Updated mocks to accept timeout argument.
 
 ## Remaining Warnings/TODOs
 - No outstanding warnings.

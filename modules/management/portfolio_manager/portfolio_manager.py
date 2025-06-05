@@ -107,7 +107,13 @@ def save_portfolio(df: pd.DataFrame, filepath: str):
             url = f"{api_url.rstrip('/')}/items/portfolio"
             headers = {"Authorization": f"Bearer {token}"}
             records = df.to_dict(orient="records")
-            resp = requests.post(url, json=records, headers=headers, params={"upsert": "Ticker"})
+            resp = requests.post(
+                url,
+                json=records,
+                headers=headers,
+                params={"upsert": "Ticker"},
+                timeout=10,
+            )
             if resp.status_code >= 300:
                 print(f"Warning syncing portfolio to Directus: {resp.status_code} {resp.text}")
             else:

@@ -174,7 +174,7 @@ def fetch_profile_from_fmp(symbol: str) -> pd.DataFrame:
     Raises ValueError if no data is returned.
     """
     url = add_fmp_api_key(f"{FMP_BASE}/profile/{symbol}")
-    resp = requests.get(url)
+    resp = requests.get(url, timeout=10)
     resp.raise_for_status()
     data = resp.json()
     if not data or not isinstance(data, list) or not data[0].get("companyName"):
@@ -196,7 +196,7 @@ def fetch_1mo_prices_fmp(symbol: str) -> pd.DataFrame:
     url = add_fmp_api_key(
         f"{FMP_BASE}/historical-price-full/{symbol}?timeseries=30"
     )
-    resp = requests.get(url)
+    resp = requests.get(url, timeout=10)
     resp.raise_for_status()
     data = resp.json()
     hist = data.get("historical") if isinstance(data, dict) else None
@@ -228,7 +228,7 @@ def fetch_fmp_statement(symbol: str, stmt_endpoint: str, period: str) -> pd.Data
     Returns a DataFrame indexed by date if successful; raises ValueError otherwise.
     """
     url = add_fmp_api_key(f"{FMP_BASE}/{stmt_endpoint}/{symbol}?period={period}")
-    resp = requests.get(url)
+    resp = requests.get(url, timeout=10)
     resp.raise_for_status()
     data = resp.json()
     if not data or not isinstance(data, list):

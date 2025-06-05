@@ -45,7 +45,7 @@ def test_fetch_profile_from_yf_fmp_fallback(monkeypatch):
         "website": "example.com",
     }]
     resp.raise_for_status.return_value = None
-    monkeypatch.setattr(mc.requests, "get", lambda url: resp)
+    monkeypatch.setattr(mc.requests, "get", lambda url, **kwargs: resp)
 
     df = mc.fetch_profile_from_yf("AAA")
     assert df.iloc[0]["sector"] == "Tech"
@@ -56,7 +56,7 @@ def test_fetch_fmp_statement(monkeypatch):
     resp = MagicMock()
     resp.json.return_value = [{"date": "2023", "Revenue": 5}]
     resp.raise_for_status.return_value = None
-    monkeypatch.setattr(mc.requests, "get", lambda url: resp)
+    monkeypatch.setattr(mc.requests, "get", lambda url, **kwargs: resp)
     df = mc.fetch_fmp_statement("AAA", "income-statement", "annual")
     assert df.index.name == "date"
     assert df.loc["2023", "Revenue"] == 5

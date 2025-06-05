@@ -40,7 +40,7 @@ def fetch_profile_from_yf(symbol: str) -> pd.DataFrame:
     if not info or info.get("longName") is None:
         # Fallback to FMP
         url = add_fmp_api_key(f"{FMP_BASE}/profile/{symbol}")
-        resp = requests.get(url)
+        resp = requests.get(url, timeout=10)
         resp.raise_for_status()
         data = resp.json()
         if not data or not isinstance(data, list) or not data[0].get("companyName"):
@@ -137,7 +137,7 @@ def fetch_fmp_statement(symbol: str, stmt_endpoint: str, period: str) -> pd.Data
     period: 'annual' or 'quarter' 
     """
     url = add_fmp_api_key(f"{FMP_BASE}/{stmt_endpoint}/{symbol}?period={period}")
-    resp = requests.get(url)
+    resp = requests.get(url, timeout=10)
     resp.raise_for_status()
     data = resp.json()
     if not data or not isinstance(data, list):
