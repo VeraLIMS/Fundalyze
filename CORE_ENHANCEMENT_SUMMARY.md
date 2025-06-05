@@ -125,3 +125,9 @@ from modules.utils.progress_utils import progress_iter
 for item in progress_iter(items, description="work"):
     do_work(item)
 ```
+
+### 2027 Updates
+- **modules/data/fetching.py** – progress bar now works when using `ThreadPoolExecutor` and updated docstring.
+- **modules/generate_report/report_generator.py** – default `local_output` logic respects custom `OUTPUT_DIR` or explicit `base_output`.
+- **modules/generate_report/excel_dashboard.py** – `_transpose_financials` refactored for clarity; docstring expanded.
+- **modules/management/portfolio_manager/portfolio_manager.py** – always writes local portfolio file even when Directus sync succeeds.

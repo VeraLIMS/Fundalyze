@@ -55,7 +55,11 @@ def fetch_and_compile(
     obb_mod = _get_openbb()
 
     if local_output is None:
-        local_output = not bool(os.getenv("DIRECTUS_URL"))
+        if base_output is not None or os.getenv("OUTPUT_DIR"):
+            # Explicit output folder implies local writes even when Directus is configured
+            local_output = True
+        else:
+            local_output = not bool(os.getenv("DIRECTUS_URL"))
 
     ticker_dir = rutils.ensure_output_dir(symbol, base_output) if local_output else (base_output or ".")
     metadata = {
