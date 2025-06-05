@@ -233,9 +233,6 @@ def _safe_concat_normal(ticker_dfs: dict[str, pd.DataFrame]) -> pd.DataFrame:
     return pd.concat(frames, axis=0, ignore_index=True, sort=True)
 
 
-from typing import Iterable, Optional
-
-from modules.config_utils import get_output_dir
 
 
 def create_dashboard(

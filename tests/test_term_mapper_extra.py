@@ -1,4 +1,3 @@
-import os
 import importlib
 from modules.data import term_mapper
 
