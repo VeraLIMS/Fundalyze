@@ -1,6 +1,14 @@
 """Convenience wrappers for generating ticker reports and dashboards."""
 
 # src/generate_report/__init__.py
+"""Convenience entry points for the report-generation workflow.
+
+The :mod:`generate_report` package orchestrates fetching data, fixing missing
+files and building an Excel dashboard.  ``fetch_and_compile`` collects the raw
+datasets and Markdown report, ``run_for_tickers`` repairs failed downloads,
+``run_fallback_data`` performs a last-resort yfinance pull, and
+``create_and_open_dashboard`` produces the final Excel workbook.
+"""
 
 from .report_generator import fetch_and_compile
 from .metadata_checker import run_for_tickers

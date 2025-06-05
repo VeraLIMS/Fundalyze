@@ -101,7 +101,13 @@ def _write_dashboard(
     df_cash_ann: pd.DataFrame,
     df_cash_qtr: pd.DataFrame,
 ) -> None:
-    """Write all tables to ``dash_path`` as an Excel workbook."""
+    """Write all tables to ``dash_path`` as an Excel workbook.
+
+    Each ``DataFrame`` becomes an Excel *Table* so formulas can use structured
+    references.  Sheets are only created when the corresponding DataFrame is not
+    empty.  The caller receives the path to the workbook and may open it with
+    :func:`show_dashboard_in_excel`.
+    """
     tables = [
         (df_profiles, "Profile", "Profile_Table", "Table Style Medium 2"),
         (df_prices, "PriceHistory", "PriceHistory_Table", "Table Style Medium 3"),

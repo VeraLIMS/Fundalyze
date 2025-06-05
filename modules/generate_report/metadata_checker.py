@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 # metadata_checker.py
 
-"""
-This script examines each metadata.json under output/<TICKER>/,
-finds any files whose 'source' field indicates an ERROR, and
-re-fetches that piece of data via yfinance (or via FMP as a fallback
-for financial statements). It then overwrites the CSV and updates
-metadata.json with new source, source_url, and fetched_at timestamp.
+"""Validate downloaded datasets and attempt targeted repairs.
+
+``metadata_checker.py`` scans each ``metadata.json`` under ``output/<TICKER>/``
+for entries whose ``source`` value begins with ``ERROR``.  Those files are
+re‑fetched using yfinance and, for financial statements, Financial Modeling
+Prep as a secondary source.  The CSV is overwritten and metadata updated with
+the new ``source`` and ``fetched_at`` timestamp.  Any remaining ``ERROR``
+entries are later handled by :mod:`fallback_data`.
 """
 
 import json

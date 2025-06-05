@@ -64,6 +64,11 @@ def fetch_profile(
 ) -> None:
     """Fetch company profile via OpenBB.
 
+    Successful data is written to ``profile.csv`` and recorded in
+    ``metadata.json``.  If the OpenBB call fails a placeholder CSV is written and
+    the metadata entry is marked with ``ERROR`` so later stages (metadata
+    checker and fallback) can attempt a repair.
+
     Parameters
     ----------
     obb:
@@ -133,6 +138,8 @@ def fetch_profile(
             "source_url": fmp_profile_url,
             "fetched_at": iso_timestamp_utc(),
         }
+        # Later steps (metadata_checker, fallback_data) look for this ERROR
+        # entry to decide whether a re-fetch is required.
 
 
 def fetch_price_history(
@@ -147,6 +154,12 @@ def fetch_price_history(
     write_json: bool = False,
 ) -> None:
     """Fetch price history and chart using OpenBB/yfinance.
+
+    A CSV file (``1mo_prices.csv``) and PNG chart (``1mo_close.png``) are
+    created for successful downloads.  Metadata entries reference the data
+    source and the chart is noted as being generated locally.  Errors result in
+    empty placeholder files with ``ERROR`` marked in ``metadata.json`` so that
+    the fallback process knows to try again.
 
     Parameters
     ----------
@@ -229,6 +242,7 @@ def fetch_price_history(
             "source_url": yahoo_hist_url,
             "fetched_at": iso_timestamp_utc(),
         }
+        # This ERROR flag tells metadata_checker to re-fetch price data later.
 
 
 def fetch_financial_statements(
@@ -243,6 +257,11 @@ def fetch_financial_statements(
     write_json: bool = False,
 ) -> None:
     """Fetch income, balance and cash statements from OpenBB.
+
+    Each statement is saved to a CSV file (and optional JSON) and logged in the
+    ticker's ``metadata.json``.  Failures create empty placeholder files with an
+    ``ERROR`` source entry so :mod:`metadata_checker` or :mod:`fallback_data` can
+    attempt retrieval from alternate sources later.
 
     Parameters
     ----------
@@ -323,3 +342,4 @@ def fetch_financial_statements(
                 "source_url": source_url,
                 "fetched_at": iso_timestamp_utc(),
             }
+            # Metadata checker/fallback will revisit this ERROR entry.

@@ -46,10 +46,13 @@ Importing `modules.management` exposes convenience functions such as
 directly.
 
 ### `modules.data`
-Lower-level helpers used across the app:
-- `fetching.py` – small wrappers around yfinance and HTTP calls.
+Lower-level helpers used across the app (see [modules/data/README.md](../modules/data/README.md)):
+- `fetching.py` – wrappers around yfinance with FMP fallback.
 - `directus_client.py` – optional Directus integration for remote storage.
-- `term_mapper.py` – maps common financial terms to API field names and stores the mapping in `config/term_mapping.json`.
+- `directus_mapper.py` – keeps `directus_field_map.json` in sync and prepares records for upload.
+- `term_mapper.py` – maps common financial terms to canonical names.
+- `compare.py` – compares profile data from different providers.
+
 
 ### `modules.utils`
 Small helper utilities reused across the codebase:
@@ -60,6 +63,12 @@ Small helper utilities reused across the codebase:
 
 See [docs/utils_overview.md](utils_overview.md) for examples and additional
 details on these helpers as well as logging setup.
+
+### `modules.analytics`
+Lightweight portfolio analysis helpers:
+- `portfolio_summary` – mean, min and max statistics for numeric columns.
+- `sector_counts` – distribution of tickers by sector.
+- `correlation_matrix` – Pearson correlation matrix for numeric data.
 
 ### `modules.config_utils`
 Loads environment variables from `config/.env` and user settings from `config/settings.json`. Call `load_settings()` once during startup so other modules can access configuration values via `os.getenv()` or the returned dictionary.
