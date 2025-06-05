@@ -46,3 +46,20 @@ def read_json_if_exists(path: Path) -> Optional[Any]:
         except Exception:
             return None
     return None
+
+
+def write_dataframe(
+    df: pd.DataFrame,
+    csv_path: Path,
+    *,
+    write_csv: bool = True,
+    write_json: bool = False,
+) -> None:
+    """Save ``df`` to CSV and/or JSON using ``csv_path`` as base path."""
+
+    if write_csv:
+        df.to_csv(csv_path, index=False)
+
+    if write_json:
+        json_path = csv_path.with_suffix(".json")
+        df.to_json(json_path, orient="records", indent=2, date_format="iso")

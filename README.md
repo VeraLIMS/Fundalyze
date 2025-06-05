@@ -60,7 +60,7 @@ Programmatic use:
 ```python
 from modules.generate_report import fetch_and_compile, excel_dashboard
 
-fetch_and_compile("AAPL")
+fetch_and_compile("AAPL", write_json=True)
 excel_dashboard.create_and_open_dashboard(tickers=["AAPL"])
 ```
 Open the workbook to explore profile information, prices and statements.
