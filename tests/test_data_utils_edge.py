@@ -1,5 +1,9 @@
 import pandas as pd
-from modules.utils.data_utils import ensure_period_column, read_csv_if_exists
+from modules.utils.data_utils import (
+    ensure_period_column,
+    read_csv_if_exists,
+    read_json_if_exists,
+)
 
 
 def test_ensure_period_column_existing():
@@ -33,3 +37,16 @@ def test_read_csv_if_exists_success(tmp_path):
     result = read_csv_if_exists(path)
     assert result is not None
     assert result['A'].tolist() == [1]
+
+
+def test_read_json_if_exists(tmp_path):
+    path = tmp_path / 'data.json'
+    data = {"a": 1, "b": 2}
+    path.write_text('{"a": 1, "b": 2}', encoding='utf-8')
+    result = read_json_if_exists(path)
+    assert result == data
+
+
+def test_read_json_if_exists_missing(tmp_path):
+    path = tmp_path / 'missing.json'
+    assert read_json_if_exists(path) is None
