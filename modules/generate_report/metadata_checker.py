@@ -13,6 +13,7 @@ entries are later handled by :mod:`fallback_data`.
 
 import json
 from pathlib import Path
+from typing import Optional, Tuple
 
 from modules.config_utils import get_output_dir, add_fmp_api_key
 
@@ -153,6 +154,88 @@ def fetch_fmp_statement(symbol: str, stmt_endpoint: str, period: str) -> pd.Data
     return df
 
 
+STATEMENT_MAP = {
+    "income": ("financials", "quarterly_financials", "income-statement"),
+    "balance": ("balance_sheet", "quarterly_balance_sheet", "balance-sheet-statement"),
+    "cash": ("cashflow", "quarterly_cashflow", "cash-flow-statement"),
+}
+
+
+def _re_fetch_profile(symbol: str, csv_path: Path) -> Tuple[str, str]:
+    """Fetch company profile and write to ``csv_path``.
+
+    Returns
+    -------
+    tuple[str, str]
+        ``source`` and ``source_url`` for metadata updates.
+    """
+    df = fetch_profile_from_yf(symbol)
+    df.to_csv(csv_path, index=False)
+    print("    • Company profile re-fetched via yfinance/FMP.")
+    return (
+        "yfinance / FMP (profile fallback)",
+        f"https://finance.yahoo.com/quote/{symbol}/profile",
+    )
+
+
+def _re_fetch_prices(symbol: str, csv_path: Path) -> Tuple[str, str]:
+    """Fetch one month of prices and save to ``csv_path``."""
+    df = fetch_1mo_prices_yf(symbol)
+    df.to_csv(csv_path, index=False)
+    print("    • 1‐month price history re-fetched via yfinance.")
+    return (
+        "yfinance.history",
+        f"https://finance.yahoo.com/quote/{symbol}/history?p={symbol}",
+    )
+
+
+def _re_fetch_statement(symbol: str, stmt: str, period: str, csv_path: Path) -> Tuple[str, str]:
+    """Fetch financial statement via yfinance or FMP and save to ``csv_path``."""
+    yf_attr = STATEMENT_MAP[stmt][0] if period == "annual" else STATEMENT_MAP[stmt][1]
+    endpoint = STATEMENT_MAP[stmt][2]
+    df_yf = fetch_fin_stmt_from_yf(symbol, yf_attr)
+    if not df_yf.empty:
+        should_transpose = any(isinstance(col, pd.Timestamp) for col in df_yf.columns)
+        df_to_save = df_yf.T if should_transpose else df_yf
+        df_to_save.to_csv(csv_path, index=True)
+        print(f"    • {stmt.title()} ({period}) re-fetched via yfinance.")
+        url = f"https://finance.yahoo.com/quote/{symbol}/financials"
+        if stmt == "balance":
+            url = f"https://finance.yahoo.com/quote/{symbol}/balance-sheet"
+        elif stmt == "cash":
+            url = f"https://finance.yahoo.com/quote/{symbol}/cash-flow"
+        return f"yfinance.{yf_attr}", url
+
+    df_fmp = fetch_fmp_statement(symbol, endpoint, period)
+    if df_fmp.empty:
+        raise ValueError(f"No FMP data for {csv_path.name}")
+    df_fmp.to_csv(csv_path, index=True)
+    print(f"    • {stmt.title()} ({period}) re-fetched via FMP.")
+    return (
+        f"FMP ({endpoint}, {period})",
+        f"{FMP_BASE}/{endpoint}/{symbol}",
+    )
+
+
+def _process_file(symbol: str, filename: str, csv_path: Path) -> Optional[Tuple[str, str]]:
+    """Handle a single file based on its name."""
+    if filename == "profile.csv":
+        return _re_fetch_profile(symbol, csv_path)
+    if filename == "1mo_prices.csv":
+        return _re_fetch_prices(symbol, csv_path)
+    if filename.endswith("_annual.csv") or filename.endswith("_quarter.csv"):
+        key = filename.replace(".csv", "")
+        stmt, period = key.split("_")
+        if stmt not in STATEMENT_MAP:
+            raise ValueError(f"Unknown financial statement type in '{filename}'")
+        return _re_fetch_statement(symbol, stmt, period, csv_path)
+    if filename == "report.md":
+        print("    • Skipping report.md – needs to be manually regenerated via report_generator.py.")
+        return None
+    print(f"    • Unrecognized file '{filename}', skipping.")
+    return None
+
+
 def enrich_ticker_folder(ticker_dir: Path):
     """
     Examine metadata.json in ticker_dir, find any file entries whose 'source'
@@ -173,99 +256,22 @@ def enrich_ticker_folder(ticker_dir: Path):
     for filename, fileinfo in files_meta.items():
         source = fileinfo.get("source", "")
         if not source.startswith("ERROR"):
-            # Nothing to fix for this file
             continue
 
         print(f"\n  ↻ Re-fetching '{filename}' for {ticker_dir.name} (was ERROR)...")
         symbol = ticker_dir.name.upper()
-        new_source = None
-        new_source_url = ""
-        new_fetched = iso_timestamp_utc()
         csv_path = ticker_dir / filename
-
         try:
-            if filename == "profile.csv":
-                df = fetch_profile_from_yf(symbol)
-                df.to_csv(csv_path, index=False)
-                new_source = "yfinance / FMP (profile fallback)"
-                new_source_url = f"https://finance.yahoo.com/quote/{symbol}/profile"
-                print("    • Company profile re-fetched via yfinance/FMP.")
-
-            elif filename == "1mo_prices.csv":
-                df = fetch_1mo_prices_yf(symbol)
-                df.to_csv(csv_path, index=False)
-                new_source = "yfinance.history"
-                new_source_url = f"https://finance.yahoo.com/quote/{symbol}/history?p={symbol}"
-                print("    • 1‐month price history re-fetched via yfinance.")
-
-            elif filename.endswith("_annual.csv") or filename.endswith("_quarter.csv"):
-                # Determine which statement and whether annual/quarter.
-                # Example filenames: 'income_annual.csv', 'income_quarter.csv', etc.
-                key = filename.replace(".csv", "")  # e.g. 'income_annual'
-                parts = key.split("_")
-                stmt = parts[0]  # income, balance, or cash
-                period = parts[1]  # 'annual' or 'quarter'
-
-                # Map to yfinance attribute names:
-                # income → 'financials' or 'quarterly_financials'
-                # balance → 'balance_sheet' or 'quarterly_balance_sheet'
-                # cash → 'cashflow' or 'quarterly_cashflow'
-                if stmt == "income":
-                    yf_attr = "financials" if period == "annual" else "quarterly_financials"
-                    fmp_endpoint = "income-statement"
-                elif stmt == "balance":
-                    yf_attr = "balance_sheet" if period == "annual" else "quarterly_balance_sheet"
-                    fmp_endpoint = "balance-sheet-statement"
-                elif stmt == "cash":
-                    yf_attr = "cashflow" if period == "annual" else "quarterly_cashflow"
-                    fmp_endpoint = "cash-flow-statement"
-                else:
-                    raise ValueError(f"Unknown financial statement type in '{filename}'")
-
-                # Try yfinance first
-                df_yf = fetch_fin_stmt_from_yf(symbol, yf_attr)
-                if not df_yf.empty:
-                    # If columns are timestamps, transpose so index is date
-                    should_transpose = any(isinstance(col, pd.Timestamp) for col in df_yf.columns)
-                    df_to_save = df_yf.T if should_transpose else df_yf
-                    df_to_save.to_csv(csv_path, index=True)
-                    new_source = f"yfinance.{yf_attr}"
-                    new_source_url = f"https://finance.yahoo.com/quote/{symbol}/financials"
-                    if stmt == "balance":
-                        new_source_url = f"https://finance.yahoo.com/quote/{symbol}/balance-sheet"
-                    elif stmt == "cash":
-                        new_source_url = f"https://finance.yahoo.com/quote/{symbol}/cash-flow"
-                    print(f"    • {stmt.title()} ({period}) re-fetched via yfinance.")
-
-                else:
-                    # Fallback to FMP
-                    df_fmp = fetch_fmp_statement(symbol, fmp_endpoint, period)
-                    if df_fmp.empty:
-                        raise ValueError(f"No FMP data for {filename}")
-                    df_fmp.to_csv(csv_path, index=True)
-                    new_source = f"FMP ({fmp_endpoint}, {period})"
-                    new_source_url = f"{FMP_BASE}/{fmp_endpoint}/{symbol}"
-                    print(f"    • {stmt.title()} ({period}) re-fetched via FMP.")
-
-            elif filename == "report.md":
-                # We do not regenerate the entire markdown here. Skip.
-                print("    • Skipping report.md – needs to be manually regenerated via report_generator.py.")
+            result = _process_file(symbol, filename, csv_path)
+            if result is None:
                 continue
-
-            else:
-                # Unknown filename; skip
-                print(f"    • Unrecognized file '{filename}', skipping.")
-                continue
-
-            # Update metadata for this file
+            new_source, new_source_url = result
             files_meta[filename]["source"] = new_source
             files_meta[filename]["source_url"] = new_source_url
-            files_meta[filename]["fetched_at"] = new_fetched
+            files_meta[filename]["fetched_at"] = iso_timestamp_utc()
             updated = True
-
         except Exception as e:
             print(f"    ⚠ Failed to re-fetch '{filename}': {e}")
-            # Leave the ERROR as-is (or append details)
             continue
 
     if updated:
