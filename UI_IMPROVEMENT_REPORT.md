@@ -36,3 +36,13 @@ These changes ensure consistent feedback across the CLI and provide clearer guid
   clarity.
 - Added subcommand descriptions in `scripts/main.py` so `--help` shows a brief
   explanation for each command.
+
+### Latest Updates
+
+- Added `print_header` helper in `modules/interface.py` for consistent section
+  headings and expanded `INVALID_CHOICE_MSG` to mention running the help flag.
+- Updated menu headers in `scripts/main.py`, `group_analysis.py`, `note_manager.py`
+  and report generation to use `print_header`.
+- Fixed prompt wording in `modules/generate_report/__init__.py` and standardized
+  group-selection messages to the `[1-n]` format.
+- Improved note creation flow to allow cancellation with Enter or 'q'.

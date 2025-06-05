@@ -3,7 +3,7 @@ import re
 from pathlib import Path
 from typing import List, Optional
 
-from modules.interface import print_invalid_choice
+from modules.interface import print_invalid_choice, print_header
 
 
 def get_notes_dir() -> Path:
@@ -60,7 +60,7 @@ def parse_links(content: str) -> List[str]:
 def run_note_manager() -> None:
     """Interactive menu for creating and viewing notes."""
     while True:
-        print("\n📝 Notes")
+        print_header("📝 Notes")
         print("1) List Notes")
         print("2) View Note")
         print("3) Create Note")
@@ -87,11 +87,17 @@ def run_note_manager() -> None:
                     for link in links:
                         print(f"- {link}")
         elif choice == "3":
-            title = input("New note title: ").strip()
-            print("Enter note content. End with an empty line.")
+            title = input("New note title (or press Enter to cancel): ").strip()
+            if not title:
+                print("Canceled.\n")
+                continue
+            print("Enter note content. Finish with an empty line or 'q' to cancel.")
             lines: list[str] = []
             while True:
                 line = input()
+                if line.lower() == "q":
+                    print("Canceled.\n")
+                    return
                 if line == "":
                     break
                 lines.append(line)

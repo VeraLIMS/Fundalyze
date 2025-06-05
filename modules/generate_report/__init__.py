@@ -13,12 +13,12 @@ from modules.management.group_analysis.group_analysis import (
     load_groups,
     GROUPS_FILE,
 )
-from modules.interface import print_invalid_choice
+from modules.interface import print_invalid_choice, print_header
 
 
 def _select_tickers() -> list[str]:
     """Prompt user to choose tickers manually, from portfolio or a group."""
-    print("\n📑 Reports")
+    print_header("📑 Reports")
     print("1) Enter ticker symbols manually")
     print("2) Use all tickers from portfolio")
     print("3) Choose a group")
@@ -26,7 +26,9 @@ def _select_tickers() -> list[str]:
     choice = input("Select an option [1-4]: ").strip()
 
     if choice == "1":
-        raw = input("Enter ticker symbol(s), comma-separated): ").strip()
+        raw = input(
+            "Enter ticker symbol(s), comma-separated (or press Enter to cancel): "
+        ).strip()
         return [t.strip().upper() for t in raw.split(",") if t.strip()]
 
     if choice == "2":
@@ -41,7 +43,7 @@ def _select_tickers() -> list[str]:
             return []
         for i, g in enumerate(names, start=1):
             print(f"  {i}) {g}")
-        sel = input(f"Select group 1-{len(names)}: ").strip()
+        sel = input(f"Select a group [1-{len(names)}]: ").strip()
         if sel.isdigit() and 1 <= int(sel) <= len(names):
             grp = names[int(sel) - 1]
             df = groups[groups["Group"] == grp]
@@ -63,7 +65,7 @@ def run_generate_report():
     4) run fallback data.
     5) build and open an Excel dashboard.
     """
-    print("\n📑 Reports")
+    print_header("📑 Reports")
     print("Generate reports (metadata, fallback & Excel export).")
     tickers = _select_tickers()
     if not tickers:

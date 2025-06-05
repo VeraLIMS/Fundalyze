@@ -4,8 +4,14 @@ import pandas as pd
 from tabulate import tabulate
 
 INVALID_CHOICE_MSG = (
-    "Invalid choice. Enter a number from the menu or press Ctrl+C to exit.\n"
+    "Invalid choice. Enter a number from the menu or press Ctrl+C to exit. "
+    "Run 'python scripts/main.py --help' for usage.\n"
 )
+
+
+def print_header(title: str) -> None:
+    """Display a section heading consistently across menus."""
+    print(f"\n=== {title} ===")
 
 
 def print_table(df: pd.DataFrame, *, showindex: bool = False) -> None:
