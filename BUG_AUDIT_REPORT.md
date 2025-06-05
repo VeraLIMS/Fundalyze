@@ -1,23 +1,9 @@
 # Bug Audit Report
 
 ## Modified Files
-- **bootstrap_env.py** – removed unnecessary f-strings when no placeholders were present.
-- **modules/generate_report/fallback_data.py** – replaced constant f-string.
-- **modules/generate_report/report_generator.py** – converted several constant f-strings to plain strings.
-- **modules/generate_report/yf_fallback.py** – converted constant f-string to plain string.
-- **modules/management/group_analysis/group_analysis.py** – removed unused imports.
-- **modules/management/portfolio_manager/portfolio_manager.py** – removed unused imports.
-- **modules/management/settings_manager/settings_manager.py** – removed unused config constants.
-- **wizards/directus_setup.py & notes_dir.py** – removed unused os imports.
-- **tests/test_diff.py** – added test for empty dictionaries.
-- **tests/test_interactive_profile.py** – expanded test coverage for multiple branches.
-- **tests/test_directus_client.py & test_excel_dashboard_extra.py** – removed unused imports.
-- **modules/generate_report/__init__.py** – removed unused `run_metadata_checker` import.
-- **tests/test_data_utils_edge.py** – added edge case tests for data utilities.
-- **tests/test_group_analysis.py** – added input-handling tests for ticker confirmation and group selection.
-- **tests/test_excel_dashboard.py** – added empty input and index-based cases for data transposition utilities.
-- **tests/test_fetching.py** – added tests for invalid providers and empty batch requests.
+- **modules/data/term_mapper.py** – Updated OpenAI integration to use the v1 client interface.
+- **modules/generate_report/excel_dashboard.py** – Guarded `os.startfile` usage for non-Windows platforms and silenced linter false positive.
+- **tests/test_term_mapper_extra.py** – Added new tests for `_suggest_with_openai` covering missing API key and missing module cases.
 
-## Remaining Warnings
-- `modules/management/directus_tools/__init__.py` re-exports a function causing an unused import warning. This is intentional and can be ignored.
-
+## Remaining Warnings/TODOs
+- No outstanding warnings.

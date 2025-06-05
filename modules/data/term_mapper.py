@@ -52,16 +52,16 @@ def _suggest_with_openai(term: str, options: List[str]) -> Optional[str]:
     if openai is None or not os.getenv('OPENAI_API_KEY'):
         return None
     try:
-        openai.api_key = os.getenv('OPENAI_API_KEY')
+        client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         prompt = (
             "You are an assistant that maps financial sector or industry terms to a canonical term. "
             f"Given the term '{term}', choose the best match from the following options: {', '.join(options)}. "
             "Respond with only the best matching option or 'Unknown'."
         )
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=6
+            max_tokens=6,
         )
         choice = response.choices[0].message.content.strip()
         if choice and choice != 'Unknown':
