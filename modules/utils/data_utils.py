@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import pandas as pd
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Any
+import json
 
 
 def strip_timezones(df: pd.DataFrame) -> pd.DataFrame:
@@ -31,6 +32,17 @@ def read_csv_if_exists(path: Path, **kwargs) -> Optional[pd.DataFrame]:
     if path.exists():
         try:
             return pd.read_csv(path, **kwargs)
+        except Exception:
+            return None
+    return None
+
+
+def read_json_if_exists(path: Path) -> Optional[Any]:
+    """Return deserialized JSON object from ``path`` if it exists."""
+    if path.exists():
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
         except Exception:
             return None
     return None

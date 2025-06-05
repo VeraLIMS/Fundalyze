@@ -180,7 +180,9 @@ def test_fetch_basic_stock_data_batch(monkeypatch):
     monkeypatch.setattr("modules.data.fetching.yf.Ticker", lambda s: FakeTicker(s))
     monkeypatch.setattr("modules.data.fetching.resolve_term", lambda x: x)
 
-    df = fetch_basic_stock_data_batch(["AAA", "BBB"], progress=True, dedup=True)
+    df = fetch_basic_stock_data_batch(
+        ["AAA", "BBB"], progress=True, dedup=True, max_workers=2
+    )
     assert list(df["Ticker"]) == ["AAA", "BBB"]
     assert df.loc[0, "Market Cap"] == 10
 

@@ -113,6 +113,7 @@ def fetch_basic_stock_data_batch(
     provider: str = "auto",
     dedup: bool = False,
     progress: bool = False,
+    max_workers: int | None = None,
 ) -> pd.DataFrame:
     """Fetch :func:`fetch_basic_stock_data` for multiple tickers.
 
@@ -129,6 +130,8 @@ def fetch_basic_stock_data_batch(
         If ``True``, remove duplicate symbols before fetching.
     progress:
         When ``True`` print a progress line for each ticker.
+    max_workers:
+        If greater than 1, fetch tickers in parallel using ``ThreadPoolExecutor``.
 
     Returns
     -------
@@ -142,9 +145,20 @@ def fetch_basic_stock_data_batch(
 
     rows = []
     total = len(tickers)
-    for idx, tk in enumerate(tickers, start=1):
+
+    def _worker(args):
+        idx, tk = args
         if progress:
             print(f"[{idx}/{total}] Fetching {tk}...")
-        data = fetch_basic_stock_data(tk, fallback=fallback, provider=provider)
-        rows.append(data)
+        return fetch_basic_stock_data(tk, fallback=fallback, provider=provider)
+
+    if max_workers and max_workers > 1:
+        from concurrent.futures import ThreadPoolExecutor
+
+        with ThreadPoolExecutor(max_workers=max_workers) as ex:
+            rows = list(ex.map(_worker, enumerate(tickers, start=1)))
+    else:
+        for idx, tk in enumerate(tickers, start=1):
+            rows.append(_worker((idx, tk)))
+
     return pd.DataFrame(rows, columns=BASIC_FIELDS)

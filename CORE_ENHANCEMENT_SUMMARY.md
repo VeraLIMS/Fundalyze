@@ -1,6 +1,10 @@
 # Core Enhancement Summary
 
 ## Updated Modules
+- **modules/data/fetching.py** – `fetch_basic_stock_data_batch` now supports a
+  `max_workers` parameter for optional parallel fetching.
+- **modules/utils/data_utils.py** – added `read_json_if_exists` helper for safe
+  JSON ingestion.
 
 - **modules/utils/data_utils.py** – new helper module providing `strip_timezones`, `ensure_period_column`, and `read_csv_if_exists`.
 - **modules/generate_report/excel_dashboard.py** – refactored to use the new utilities, reducing repetitive CSV loading logic and simplifying timezone handling.
