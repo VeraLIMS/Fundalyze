@@ -19,7 +19,7 @@ if REPO_ROOT not in sys.path:
 
 # Ensure environment variables from config/.env are loaded before other modules
 from modules.config_utils import load_settings  # noqa: E402
-from modules.interface import print_invalid_choice
+from modules.interface import print_invalid_choice, print_header
 
 from modules.management.portfolio_manager.portfolio_manager import main as run_portfolio_manager
 from modules.management.group_analysis.group_analysis import main as run_group_analysis
@@ -60,7 +60,7 @@ def run_portfolio_groups() -> None:
     groups = ga.load_groups(ga.GROUPS_FILE)
 
     while True:
-        print("\n🔁 Portfolio & Groups")
+        print_header("🔁 Portfolio & Groups")
         print("--- Portfolio ---")
         print("1) View Portfolio")
         print("2) Add Ticker(s)")
@@ -170,7 +170,7 @@ def interactive_menu():
     actions = ACTION_ITEMS
 
     while True:
-        print("\n📂 Main Menu")
+        print_header("📂 Main Menu")
         for idx, (label, _) in enumerate(actions, start=1):
             print(f"{idx}) {label}")
         choice = input(f"Select an option [1-{len(actions)}]: ").strip()
