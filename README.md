@@ -115,7 +115,7 @@ The report **Output Directory** can likewise be set via the corresponding wizard
 
 ### Configuration & Secrets
 
-Place API keys (Directus, OpenBB, OpenAI) in `config/.env` and preferences in `config/settings.json`. These files are ignored by Git and are loaded automatically using `python-dotenv`.
+Place API keys (Directus, OpenBB, FMP, OpenAI) in `config/.env` and preferences in `config/settings.json`. These files are ignored by Git and are loaded automatically using `python-dotenv`.
 
 ### End-to-End Tests
 

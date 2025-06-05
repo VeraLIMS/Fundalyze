@@ -12,6 +12,7 @@ Example contents:
 ```env
 # API keys
 OPENBB_TOKEN=your-openbb-key
+FMP_API_KEY=your-fmp-key
 DIRECTUS_URL=https://your-directus.example.com
 DIRECTUS_TOKEN=secret-token
 
@@ -26,6 +27,9 @@ and sign up for an account. Once acquired, run the **OpenBB API Token** wizard
 inside the Settings Manager to store the token. The Settings Manager also
 provides wizards for configuring your **Directus connection** and **Notes
 directory**. Another wizard sets the **Output Directory** used for reports.
+Similarly, obtain a Financial Modeling Prep key from
+[fmp](https://financialmodelingprep.com/) and run the **FMP API Key** wizard
+to store it in `.env`.
 `modules.config_utils` automatically loads this file using [python-dotenv](https://github.com/theskumar/python-dotenv) whenever `load_settings()` is called.
 
 ## Creating `config/settings.json`

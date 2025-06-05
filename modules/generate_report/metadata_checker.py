@@ -12,7 +12,7 @@ metadata.json with new source, source_url, and fetched_at timestamp.
 import json
 from pathlib import Path
 
-from modules.config_utils import get_output_dir
+from modules.config_utils import get_output_dir, add_fmp_api_key
 
 import pandas as pd
 import yfinance as yf
@@ -39,7 +39,7 @@ def fetch_profile_from_yf(symbol: str) -> pd.DataFrame:
     # If yfinance.info is empty or missing longName, try FMP for profile
     if not info or info.get("longName") is None:
         # Fallback to FMP
-        url = f"{FMP_BASE}/profile/{symbol}"
+        url = add_fmp_api_key(f"{FMP_BASE}/profile/{symbol}")
         resp = requests.get(url)
         resp.raise_for_status()
         data = resp.json()
@@ -136,7 +136,7 @@ def fetch_fmp_statement(symbol: str, stmt_endpoint: str, period: str) -> pd.Data
     stmt_endpoint: 'income-statement', 'balance-sheet-statement', or 'cash-flow-statement'.
     period: 'annual' or 'quarter' 
     """
-    url = f"{FMP_BASE}/{stmt_endpoint}/{symbol}?period={period}"
+    url = add_fmp_api_key(f"{FMP_BASE}/{stmt_endpoint}/{symbol}?period={period}")
     resp = requests.get(url)
     resp.raise_for_status()
     data = resp.json()

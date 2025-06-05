@@ -6,6 +6,8 @@ import pandas as pd
 import requests
 import yfinance as yf
 
+from modules.config_utils import add_fmp_api_key
+
 from .term_mapper import resolve_term
 
 BASIC_FIELDS = [
@@ -39,7 +41,7 @@ def _parse_yf_info(info: dict, ticker: str) -> dict:
 
 def _fetch_from_fmp(ticker: str) -> dict:
     """Return BASIC_FIELDS dict using FMP profile endpoint."""
-    url = FMP_PROFILE_URL.format(symbol=ticker)
+    url = add_fmp_api_key(FMP_PROFILE_URL.format(symbol=ticker))
     resp = requests.get(url)
     resp.raise_for_status()
     data = resp.json()

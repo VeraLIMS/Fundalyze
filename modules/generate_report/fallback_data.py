@@ -15,7 +15,7 @@ import json
 import os
 from pathlib import Path
 
-from modules.config_utils import get_output_dir
+from modules.config_utils import get_output_dir, add_fmp_api_key
 
 import pandas as pd
 import requests
@@ -173,7 +173,7 @@ def fetch_profile_from_fmp(symbol: str) -> pd.DataFrame:
     at least these columns: symbol, longName, sector, industry, marketCap, website.
     Raises ValueError if no data is returned.
     """
-    url = f"{FMP_BASE}/profile/{symbol}"
+    url = add_fmp_api_key(f"{FMP_BASE}/profile/{symbol}")
     resp = requests.get(url)
     resp.raise_for_status()
     data = resp.json()
@@ -205,7 +205,7 @@ def fetch_fmp_statement(symbol: str, stmt_endpoint: str, period: str) -> pd.Data
     'balance-sheet-statement', 'cash-flow-statement'. Period: 'annual' or 'quarter'.
     Returns a DataFrame indexed by date if successful; raises ValueError otherwise.
     """
-    url = f"{FMP_BASE}/{stmt_endpoint}/{symbol}?period={period}"
+    url = add_fmp_api_key(f"{FMP_BASE}/{stmt_endpoint}/{symbol}?period={period}")
     resp = requests.get(url)
     resp.raise_for_status()
     data = resp.json()
