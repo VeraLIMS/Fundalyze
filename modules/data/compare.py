@@ -1,8 +1,10 @@
 """Utilities for comparing company profiles from OpenBB and yfinance."""
 
+from __future__ import annotations
+
 import logging
 import sys
-from typing import Dict, Tuple
+from typing import Any, Dict, Tuple
 
 import pandas as pd
 import yfinance as yf
@@ -10,27 +12,57 @@ from modules.utils import get_openbb
 
 logger = logging.getLogger(__name__)
 
-ESSENTIAL_COLS = ["longName", "sector", "industry", "marketCap", "website"]
+# Core company profile fields we expect from data sources
+ESSENTIAL_COLS: list[str] = [
+    "longName",
+    "sector",
+    "industry",
+    "marketCap",
+    "website",
+]
+
+PROMPT_MSG = "Use OpenBB data (O) or yfinance data (Y)? [O/Y]: "
 
 
 def fetch_profile_openbb(symbol: str) -> pd.DataFrame:
-    """Fetch company profile via OpenBB. Returns empty DataFrame on error."""
+    """Return a company profile from OpenBB.
+
+    Parameters
+    ----------
+    symbol:
+        The ticker symbol to query.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame containing the profile or empty on failure.
+    """
     try:
         obb = get_openbb()
         obj = obb.equity.profile(symbol=symbol)
-        df = obj.to_df()
-        return df
-    except Exception as exc:
+        return obj.to_df()
+    except Exception as exc:  # pragma: no cover - network errors
         logger.error("OpenBB profile fetch error for %s: %s", symbol, exc)
         return pd.DataFrame()
 
 
 def fetch_profile_yf(symbol: str) -> pd.DataFrame:
-    """Fetch company profile via yfinance. Returns empty DataFrame on error."""
+    """Return a company profile from yfinance.
+
+    Parameters
+    ----------
+    symbol:
+        The ticker symbol to query.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame containing the profile or empty on failure.
+    """
     ticker = yf.Ticker(symbol)
     try:
         info = ticker.get_info()
-    except Exception as exc:
+    except Exception as exc:  # pragma: no cover - network errors
         logger.error("yfinance info error for %s: %s", symbol, exc)
         return pd.DataFrame()
     if not info:
@@ -39,36 +71,51 @@ def fetch_profile_yf(symbol: str) -> pd.DataFrame:
 
 
 def is_complete(df: pd.DataFrame) -> bool:
-    """Return True if DataFrame has essential columns and is non-empty."""
+    """Return ``True`` if *df* contains all essential columns with any values."""
+
     if df is None or df.empty:
         return False
     return all(col in df.columns and df[col].notna().any() for col in ESSENTIAL_COLS)
 
 
-def diff_dict(d1: Dict, d2: Dict) -> Dict[str, Tuple]:
-    """Return dictionary of differing keys and their values."""
-    out = {}
-    keys = set(d1.keys()) | set(d2.keys())
-    for k in keys:
-        v1 = d1.get(k)
-        v2 = d2.get(k)
-        if v1 != v2:
-            out[k] = (v1, v2)
-    return out
+def diff_dict(d1: Dict, d2: Dict) -> Dict[str, Tuple[Any, Any]]:
+    """Return dictionary of differing keys and their corresponding values."""
+
+    return {
+        k: (d1.get(k), d2.get(k)) for k in set(d1) | set(d2) if d1.get(k) != d2.get(k)
+    }
 
 
-def _show_differences(symbol: str, diffs: Dict[str, Tuple]) -> None:
-    """Print human-readable differences between profile dictionaries."""
+def compare_profiles(
+    obb_df: pd.DataFrame, yf_df: pd.DataFrame
+) -> Dict[str, Tuple[Any, Any]]:
+    """Return differences between two profile DataFrames using ``ESSENTIAL_COLS``."""
+
+    d1 = obb_df.iloc[0].to_dict() if not obb_df.empty else {}
+    d2 = yf_df.iloc[0].to_dict() if not yf_df.empty else {}
+    return diff_dict(
+        {k: d1.get(k) for k in ESSENTIAL_COLS}, {k: d2.get(k) for k in ESSENTIAL_COLS}
+    )
+
+
+def _show_differences(symbol: str, diffs: Dict[str, Tuple[Any, Any]]) -> None:
+    """Pretty-print profile differences for ``symbol``."""
+
     if diffs:
         print(f"\nDifferences for {symbol}:")
-        for k, (v1, v2) in diffs.items():
-            print(f"  {k}: OpenBB='{v1}'  vs  yfinance='{v2}'")
+        for key, (v1, v2) in diffs.items():
+            print(f"  {key}: OpenBB='{v1}'  vs  yfinance='{v2}'")
     else:
         print(f"No differences detected for {symbol} on essential fields.")
 
 
 def interactive_profile(symbol: str) -> pd.DataFrame:
-    """Fetch profile from OpenBB and yfinance, compare and prompt user to choose."""
+    """Interactively choose between OpenBB and yfinance profile data.
+
+    Both data sources are queried. If only one returns a complete profile it is
+    used automatically. When both provide profiles, the differences are shown and
+    the user is asked which dataset to keep.
+    """
     obb_df = fetch_profile_openbb(symbol)
     yf_df = fetch_profile_yf(symbol)
 
@@ -86,22 +133,23 @@ def interactive_profile(symbol: str) -> pd.DataFrame:
         return yf_df
 
     # Both have data, compare
-    d1 = obb_df.iloc[0].to_dict()
-    d2 = yf_df.iloc[0].to_dict()
-    diffs = diff_dict(
-        {k: d1.get(k) for k in ESSENTIAL_COLS},
-        {k: d2.get(k) for k in ESSENTIAL_COLS},
-    )
+    diffs = compare_profiles(obb_df, yf_df)
     _show_differences(symbol, diffs)
 
-    choice = input("Use OpenBB data (O) or yfinance data (Y)? [O/Y]: ").strip().lower()
-    if choice == 'y':
+    choice = input(PROMPT_MSG).strip().lower()
+    if choice == "y":
         return yf_df
     return obb_df
 
 
 def _main(argv: list[str]) -> int:
-    """Entry point for ``python -m data.compare``."""
+    """Run module as a script.
+
+    Parameters
+    ----------
+    argv:
+        Command-line arguments.
+    """
     if len(argv) != 2:
         print("Usage: python -m data.compare <TICKER>")
         return 1
@@ -116,4 +164,3 @@ def _main(argv: list[str]) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(_main(sys.argv))
-
