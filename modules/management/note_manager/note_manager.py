@@ -58,11 +58,11 @@ def parse_links(content: str) -> List[str]:
 def run_note_manager() -> None:
     """Interactive menu for creating and viewing notes."""
     while True:
-        print("\n=== Notes ===")
-        print("1) List notes")
-        print("2) View note")
-        print("3) Create note")
-        print("4) Exit")
+        print("\n📝 Notes")
+        print("1) List Notes")
+        print("2) View Note")
+        print("3) Create Note")
+        print("4) Return to Main Menu")
         choice = input("Enter 1-4: ").strip()
 
         if choice == "1":

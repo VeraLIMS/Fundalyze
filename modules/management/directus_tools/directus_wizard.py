@@ -22,14 +22,14 @@ def run_directus_wizard() -> None:
             return
 
     while True:
-        print("\n=== Directus API Wizard ===")
-        print("1) List collections")
-        print("2) View fields of a collection")
-        print("3) Add field to a collection")
-        print("4) Fetch items from a collection")
-        print("5) Insert item into a collection")
-        print("6) Exit")
-        choice = input("Select 1-6: ").strip()
+        print("\n🧩 Directus Tools")
+        print("1) List Collections")
+        print("2) View Fields in Collection")
+        print("3) Add Field to Collection")
+        print("4) Fetch Items from Collection")
+        print("5) Insert Item into Collection")
+        print("6) Return to Main Menu")
+        choice = input("Enter 1-6: ").strip()
 
         if choice == "1":
             cols = dc.list_collections()

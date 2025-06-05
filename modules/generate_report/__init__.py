@@ -16,12 +16,13 @@ from modules.management.group_analysis.group_analysis import (
 
 
 def _select_tickers() -> list[str]:
-    """Prompt user to choose tickers manually, from portfolio or from a group."""
-    print("\nChoose ticker source:")
-    print("  1) Enter ticker symbols manually")
-    print("  2) Use all tickers from portfolio")
-    print("  3) Choose a group")
-    choice = input("Select 1/2/3: ").strip()
+    """Prompt user to choose tickers manually, from portfolio or a group."""
+    print("\n📑 Reports")
+    print("1) Enter ticker symbols manually")
+    print("2) Use all tickers from portfolio")
+    print("3) Choose a group")
+    print("4) Return to Main Menu")
+    choice = input("Enter 1-4: ").strip()
 
     if choice == "1":
         raw = input("Enter ticker symbol(s), comma-separated): ").strip()
@@ -47,6 +48,8 @@ def _select_tickers() -> list[str]:
         print("Invalid selection.\n")
         return []
 
+    if choice == "4":
+        return []
     print("Invalid choice.\n")
     return []
 
@@ -59,7 +62,8 @@ def run_generate_report():
     4) run fallback data.
     5) build and open an Excel dashboard.
     """
-    print("\n=== Generate Reports (with metadata check + fallback) ===")
+    print("\n📑 Reports")
+    print("Generate reports (metadata, fallback & Excel export).")
     tickers = _select_tickers()
     if not tickers:
         print("No tickers selected. Returning to main menu.\n")
