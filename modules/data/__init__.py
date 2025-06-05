@@ -6,6 +6,7 @@ them directly.  All submodules remain importable on their own.
 """
 
 from .fetching import fetch_basic_stock_data, BASIC_FIELDS
+from .finance_api import FinanceAPIClient, FinanceAPIConfig
 from .directus_client import (
     list_collections,
     list_fields,
@@ -49,5 +50,7 @@ __all__ = [
     "prepare_records",
     "interactive_prepare_records",
     "refresh_field_map",
+    "FinanceAPIClient",
+    "FinanceAPIConfig",
     "ensure_field_mapping",
 ]
