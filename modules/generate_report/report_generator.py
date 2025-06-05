@@ -36,6 +36,7 @@ def fetch_and_compile(
     price_period: str = "1mo",
     statements: list[str] | None = None,
     local_output: bool | None = None,
+    write_json: bool = False,
 ) -> None:
     """Generate all report files for ``symbol``.
 
@@ -51,13 +52,13 @@ def fetch_and_compile(
     statements:
         Iterable of statement types (``"income"``, ``"balance"``, ``"cash"``)
         to download. By default all three are fetched.
+    write_json:
+        When ``True`` also output JSON files in addition to CSV/PNG.
     """
     obb_mod = _get_openbb()
 
     if local_output is None:
-        # If a base_output path was provided, assume the caller expects local
-        # files regardless of DIRECTUS_URL. Otherwise default to uploading when
-        # DIRECTUS_URL is configured.
+
         local_output = bool(base_output or os.getenv("OUTPUT_DIR")) or not bool(
             os.getenv("DIRECTUS_URL")
         )
@@ -77,7 +78,15 @@ def fetch_and_compile(
 
     lines: list[str] = [f"# Report for {symbol.upper()}", "*Generated via OpenBB Platform*", ""]
 
-    rutils.fetch_profile(obb_mod, symbol, ticker_dir, metadata, lines, write_files=local_output)
+    rutils.fetch_profile(
+        obb_mod,
+        symbol,
+        ticker_dir,
+        metadata,
+        lines,
+        write_files=local_output,
+        write_json=write_json,
+    )
     lines.append("## 2) Price History (Last 1 Month)\n")
     rutils.fetch_price_history(
         obb_mod,
@@ -87,6 +96,7 @@ def fetch_and_compile(
         lines,
         price_period=price_period,
         write_files=local_output,
+        write_json=write_json,
     )
     rutils.fetch_financial_statements(
         obb_mod,
@@ -96,6 +106,7 @@ def fetch_and_compile(
         lines,
         statements=statements,
         write_files=local_output,
+        write_json=write_json,
     )
     if local_output:
         rutils.write_report_and_metadata(ticker_dir, lines, metadata)
