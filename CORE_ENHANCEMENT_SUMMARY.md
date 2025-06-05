@@ -112,3 +112,16 @@ from modules.utils.math_utils import percentage_change
 s = pd.Series([1, 2, 4])
 pct = percentage_change(s)
 ```
+
+## 2026 Progress utilities and dashboard improvements
+
+- **modules/utils/progress_utils.py** – new helper providing ``progress_iter`` for optional ``tqdm`` progress bars.
+- **modules/data/fetching.py** – ``fetch_basic_stock_data_batch`` now uses ``progress_iter`` for sequential progress output.
+- **modules/generate_report/excel_dashboard.py** – ``create_dashboard`` and ``create_and_open_dashboard`` accept a ``progress`` flag and use ``progress_iter`` when loading ticker data. ``_safe_concat_normal`` optimized via list comprehension.
+- **tests** – added ``test_progress_utils.py`` and a progress variant of dashboard creation.
+
+```python
+from modules.utils.progress_utils import progress_iter
+for item in progress_iter(items, description="work"):
+    do_work(item)
+```
