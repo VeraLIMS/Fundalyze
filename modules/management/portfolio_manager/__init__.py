@@ -1,13 +1,5 @@
- codex/create-comprehensive-documentation-for-fundalyze
-"""CLI for editing and viewing portfolio.xlsx."""
-=======
- codex/create-documentation-for-tests-module
-"""Portfolio manager CLI entry point."""
-=======
- codex/document-cli-management-tools-and-helpers
-"""Expose the portfolio manager CLI entry point."""
-=======
-"""CLI helpers for editing the local stock portfolio."""
- main
- main
- main
+"""Public API for the portfolio manager CLI."""
+
+from .portfolio_manager import main as run_portfolio_manager
+
+__all__ = ["run_portfolio_manager"]

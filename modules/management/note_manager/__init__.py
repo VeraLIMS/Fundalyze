@@ -1,12 +1,5 @@
- codex/create-comprehensive-documentation-for-fundalyze
-"""Helpers for the Markdown note management system."""
-=======
- codex/document-cli-management-tools-and-helpers
-"""Public interface for the Markdown note manager CLI."""
-=======
-"""Public API for the note management utilities."""
- main
- main
+"""Public API for the note manager CLI."""
+
 from .note_manager import (
     create_note,
     get_note_path,

@@ -109,3 +109,9 @@ These changes ensure consistent feedback across the CLI and provide clearer guid
 - Converted the report ticker selection menu to use `print_menu` (see `modules/generate_report/__init__.py` lines 24-34).
 - Fixed stray text in `report_generator.py` that caused an `IndentationError`.
 
+
+### Latest UX Fixes
+- Removed merge artifact text from several modules which caused syntax errors.
+- Restored `report_generator.py`, `logging_utils.py`, `interface.py` and note manager modules to their proper state.
+- Updated `portfolio_manager.py` and `group_analysis.py` to show their headers on each loop iteration for consistent navigation.
+- Cleaned `docs/DEVELOPER_GUIDE.md` of stray lines.

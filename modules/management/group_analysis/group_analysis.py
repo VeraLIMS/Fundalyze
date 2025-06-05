@@ -400,12 +400,11 @@ def view_groups(groups: pd.DataFrame):
 
 
 def main():
-    print_header("\U0001F4CA Group Analysis Manager")
     portfolio = load_portfolio(PORTFOLIO_FILE)
     groups = load_groups(GROUPS_FILE)
 
     while True:
-        print("Choose an action:")
+        print_header("\U0001F4CA Group Analysis Manager")
         options = [
             "View all groups",
             "Create a new group (or link to portfolio)",

@@ -334,11 +334,10 @@ def view_portfolio(portfolio: pd.DataFrame):
 
 
 def main():
-    print_header("\U0001F4C8 Portfolio Manager")
     portfolio = load_portfolio(PORTFOLIO_FILE)
 
     while True:
-        print("Choose an action:")
+        print_header("\U0001F4C8 Portfolio Manager")
         options = [
             "View portfolio",
             "Add ticker(s)",
