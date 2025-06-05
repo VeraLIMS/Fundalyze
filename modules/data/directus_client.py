@@ -1,10 +1,13 @@
+"""Lightweight Directus REST client used across the project."""
 
+from __future__ import annotations
 
-import os
 import logging
 import math
-import requests
+import os
 from typing import Any, Dict
+
+import requests
 
 from modules.config_utils import load_settings  # noqa: E402
 
@@ -24,6 +27,8 @@ CF_ACCESS_CLIENT_SECRET = os.getenv("CF_ACCESS_CLIENT_SECRET") or os.getenv(
 )
 
 logger = logging.getLogger(__name__)
+
+DEFAULT_TIMEOUT = 30  # seconds
 
 
 def clean_record(record: Dict[str, Any]) -> Dict[str, Any]:
@@ -64,8 +69,13 @@ def _headers():
     return headers
 
 
+def _extract_data(result: Dict[str, Any] | None) -> list[Any]:
+    """Return ``result['data']`` if present else an empty list."""
+    return result.get("data", []) if result else []
+
+
 def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any] | None:
-    """Send a request to the Directus API and return the JSON response."""
+    """Send an HTTP request to the Directus API and return parsed JSON."""
     if not DIRECTUS_URL:
         raise RuntimeError("DIRECTUS_URL not configured")
 
@@ -81,7 +91,9 @@ def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any] | None:
     }
     headers.update(_headers())
     try:
-        resp = requests.request(method, url, headers=headers, timeout=30, **kwargs)
+        resp = requests.request(
+            method, url, headers=headers, timeout=DEFAULT_TIMEOUT, **kwargs
+        )
         resp.raise_for_status()
         # If Cloudflare Access blocks the request we get HTML instead of JSON.
         if "text/html" in resp.headers.get("content-type", ""):
@@ -118,23 +130,20 @@ def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any] | None:
 def list_collections() -> list[str]:
     """Return available collection names."""
     result = directus_request("GET", "collections")
-    data = result.get("data", []) if result else []
-    return [c.get("collection") for c in data]
+    return [c.get("collection") for c in _extract_data(result)]
 
 
 def list_fields(collection: str) -> list[str]:
     """Return list of field names for the given Directus collection."""
     result = directus_request("GET", f"fields/{collection}")
-    data = result.get("data", []) if result else []
-    return [f.get("field") for f in data]
+    return [f.get("field") for f in _extract_data(result)]
 
 
 def list_fields_with_types(collection: str) -> list[Dict[str, Any]]:
     """Return field metadata including name and type for a collection."""
     result = directus_request("GET", f"fields/{collection}")
-    data = result.get("data", []) if result else []
     fields = []
-    for f in data:
+    for f in _extract_data(result):
         fields.append({"field": f.get("field"), "type": f.get("type")})
     return fields
 
@@ -145,18 +154,21 @@ def fetch_items(collection: str, limit: int | None = None) -> list[Dict[str, Any
     if limit is not None:
         endpoint += f"?limit={limit}"
     result = directus_request("GET", endpoint)
-    return result.get("data", []) if result else []
+    return _extract_data(result)
 
 
 def fetch_items_filtered(collection: str, params: Dict[str, Any]) -> list[Dict[str, Any]]:
     """Fetch items from ``collection`` applying Directus filter parameters."""
     payload = {"filter": params}
     result = directus_request("GET", f"items/{collection}", params=payload)
-    return result.get("data", []) if result else []
+    return _extract_data(result)
 
 
 def insert_items(collection: str, items):
-    """Insert one or more items into a Directus collection."""
+    """Insert one or more items into a Directus collection.
+
+    Any numeric NaN/inf values are converted to ``None`` before submission.
+    """
     if not items:
         logger.warning("No records to insert.")
         return []
@@ -170,7 +182,7 @@ def insert_items(collection: str, items):
 
     payload = {"data": cleaned}
     result = directus_request("POST", f"items/{collection}", json=payload)
-    return result.get("data") if result else []
+    return _extract_data(result)
 
 
 def create_field(collection: str, field: str, field_type: str = "string", **kwargs):
@@ -178,14 +190,16 @@ def create_field(collection: str, field: str, field_type: str = "string", **kwar
     payload = {"field": field, "type": field_type}
     payload.update(kwargs)
     result = directus_request("POST", f"fields/{collection}", json=payload)
-    return result.get("data") if result else None
+    data = _extract_data(result)
+    return data if data else None
 
 
 def update_item(collection: str, item_id: Any, updates: Dict[str, Any]):
     """Update a single item by ``item_id`` in ``collection``."""
     updates = clean_record(updates)
     result = directus_request("PATCH", f"items/{collection}/{item_id}", json=updates)
-    return result.get("data") if result else None
+    data = _extract_data(result)
+    return data if data else None
 
 
 def delete_item(collection: str, item_id: Any) -> bool:
