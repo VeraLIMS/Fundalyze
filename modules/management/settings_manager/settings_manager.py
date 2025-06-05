@@ -89,42 +89,93 @@ def _del_env_var() -> None:
     else:
         print("Key not found.\n")
 
+def _general_settings_menu() -> None:
+    while True:
+        print("\n⚙️ General Settings")
+        print("1) View settings.json")
+        print("2) Set Setting")
+        print("3) Delete Setting")
+        print("4) Return to Settings Menu")
+        choice = input("Enter 1-4: ").strip()
+        if choice == "1":
+            _show_dict(load_settings())
+        elif choice == "2":
+            _set_setting()
+        elif choice == "3":
+            _del_setting()
+        elif choice == "4":
+            break
+        else:
+            print("Invalid choice.\n")
+
+
+def _env_menu() -> None:
+    while True:
+        print("\n⚙️ Environment (.env)")
+        print("1) View .env")
+        print("2) Set .env Variable")
+        print("3) Delete .env Variable")
+        print("4) Return to Settings Menu")
+        choice = input("Enter 1-4: ").strip()
+        if choice == "1":
+            _show_dict(load_env())
+        elif choice == "2":
+            _set_env_var()
+        elif choice == "3":
+            _del_env_var()
+        elif choice == "4":
+            break
+        else:
+            print("Invalid choice.\n")
+
+
+def _wizards_menu() -> None:
+    wiz_map = {label: func for label, func in _discover_wizards()}
+    order = [
+        "Directus Connection",
+        "Notes Directory",
+        "Output Directory",
+        "Timezone",
+    ]
+    while True:
+        print("\n⚙️ Setup Wizards")
+        for idx, lbl in enumerate(order, start=1):
+            print(f"{idx}) Setup {lbl}")
+        print(f"{len(order)+1}) Return to Settings Menu")
+        choice = input(f"Enter 1-{len(order)+1}: ").strip()
+        if not choice.isdigit() or not (1 <= int(choice) <= len(order)+1):
+            print("Invalid choice.\n")
+            continue
+        idx = int(choice)
+        if idx == len(order)+1:
+            break
+        label = order[idx-1]
+        func = wiz_map.get(label)
+        if func:
+            func()
+        else:
+            print("Wizard not available.\n")
+
 
 def run_settings_manager() -> None:
     """Interactive menu to edit configuration and run setup wizards."""
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
-    wizards = _discover_wizards()
 
     while True:
-        print("\n=== Settings Manager ===")
-        print(f"Config directory : {CONFIG_DIR}")
-        print(f"settings.json    : {SETTINGS_PATH}")
-        print(f".env             : {ENV_PATH}\n")
-
-        options: list[tuple[str, callable | None]] = [
-            ("View settings.json", lambda: _show_dict(load_settings())),
-            ("Set setting", _set_setting),
-            ("Delete setting", _del_setting),
-            ("View .env", lambda: _show_dict(load_env())),
-            ("View API keys", _show_api_keys),
-            ("Set .env variable", _set_env_var),
-            ("Delete .env variable", _del_env_var),
+        print("\n⚙️ Settings")
+        options = [
+            ("General Settings", _general_settings_menu),
+            ("Environment (.env)", _env_menu),
+            ("Setup Wizards", _wizards_menu),
+            ("API Keys", _show_api_keys),
+            ("Return to Main Menu", None),
         ]
-
-        # Append dynamic wizards
-        for label, func in wizards:
-            options.append((f"Run wizard: {label}", func))
-
-        options.append(("Exit", None))
-
         for idx, (lbl, _) in enumerate(options, start=1):
             print(f"{idx}) {lbl}")
-
-        choice = input("Enter choice: ").strip()
+        choice = input("Enter 1-5: ").strip()
         if not choice.isdigit() or not (1 <= int(choice) <= len(options)):
             print("Invalid choice.\n")
             continue
-
         idx = int(choice) - 1
         _, action = options[idx]
         if action is None:

@@ -49,13 +49,90 @@ def invalid_choice():
     print("Invalid choice. Please select a valid option.\n")
 
 
+def run_portfolio_groups() -> None:
+    """Combined menu for portfolio and group management."""
+    from modules.management.portfolio_manager import portfolio_manager as pm
+    from modules.management.group_analysis import group_analysis as ga
+
+    portfolio = pm.load_portfolio(pm.PORTFOLIO_FILE)
+    groups = ga.load_groups(ga.GROUPS_FILE)
+
+    while True:
+        print("\n🔁 Portfolio & Groups")
+        print("--- Portfolio ---")
+        print("1) View Portfolio")
+        print("2) Add Ticker(s)")
+        print("3) Update Ticker Data")
+        print("4) Remove Ticker")
+        print("--- Groups ---")
+        print("5) View All Groups")
+        print("6) Create New Group / Link Portfolio")
+        print("7) Add Ticker(s) to Group")
+        print("8) Remove Ticker from Group")
+        print("9) Delete Group")
+        print("10) Return to Main Menu")
+        choice = input("Enter 1-10: ").strip()
+
+        if choice == "1":
+            pm.view_portfolio(portfolio)
+        elif choice == "2":
+            portfolio = pm.add_tickers(portfolio)
+            pm.save_portfolio(portfolio, pm.PORTFOLIO_FILE)
+        elif choice == "3":
+            portfolio = pm.update_tickers(portfolio)
+            pm.save_portfolio(portfolio, pm.PORTFOLIO_FILE)
+        elif choice == "4":
+            portfolio = pm.remove_ticker(portfolio)
+            pm.save_portfolio(portfolio, pm.PORTFOLIO_FILE)
+        elif choice == "5":
+            ga.view_groups(groups)
+        elif choice == "6":
+            grp_name = ga.choose_group(portfolio)
+            if not grp_name:
+                print("No group name entered; canceling.\n")
+            else:
+                if grp_name in groups["Group"].values:
+                    print(f"Group '{grp_name}' already exists.\n")
+                else:
+                    placeholder = {col: pm.pd.NA for col in ga.COLUMNS}
+                    placeholder["Group"] = grp_name
+                    placeholder["Ticker"] = ""
+                    groups.loc[len(groups)] = placeholder
+                    print(f"  ✓ Created new group '{grp_name}'.\n")
+                ga.save_groups(groups, ga.GROUPS_FILE)
+        elif choice == "7":
+            if groups.empty:
+                print("No groups exist. Create one first.\n")
+            else:
+                print("\nExisting groups:")
+                unique_groups = groups["Group"].dropna().unique().tolist()
+                for i, g in enumerate(unique_groups, start=1):
+                    print(f"  {i}) {g}")
+                sel = input(f"Select group (1-{len(unique_groups)}): ").strip()
+                if sel.isdigit() and 1 <= int(sel) <= len(unique_groups):
+                    grp_name = unique_groups[int(sel) - 1]
+                    groups = ga.add_tickers_to_group(groups, grp_name)
+                    ga.save_groups(groups, ga.GROUPS_FILE)
+                else:
+                    print("Invalid selection.\n")
+        elif choice == "8":
+            groups = ga.remove_ticker_from_group(groups)
+            ga.save_groups(groups, ga.GROUPS_FILE)
+        elif choice == "9":
+            groups = ga.delete_group(groups)
+            ga.save_groups(groups, ga.GROUPS_FILE)
+        elif choice == "10":
+            break
+        else:
+            invalid_choice()
+
+
 ACTION_ITEMS: list[tuple[str, callable]] = [
-    ("Manage Portfolio", run_portfolio_manager),
-    ("Manage Groups", run_group_analysis),
-    ("Generate Reports (with metadata, fallback & Excel)", run_generate_report),
-    ("Manage Notes", run_note_manager),
-    ("Manage Settings", run_settings_manager),
-    ("Directus Wizard", run_directus_wizard),
+    ("Portfolio & Groups", run_portfolio_groups),
+    ("Reports", run_generate_report),
+    ("Notes", run_note_manager),
+    ("Directus Tools", run_directus_wizard),
+    ("Settings", run_settings_manager),
     ("Exit", exit_program),
 ]
 
@@ -86,22 +163,14 @@ COMMAND_HELP = {
 
 def interactive_menu():
     """
-    Main menu loop. Each submenu is grouped into its own package:
-
-      1) Manage Portfolio       → portfolio_manager/portfolio_manager.py
-      2) Manage Groups          → group_analysis/group_analysis.py
-      3) Generate Reports       → generate_report/run_generate_report()
-      4) Manage Notes           → note_manager/run_note_manager()
-      5) Manage Settings        → settings_manager/settings_manager.py
-      6) Directus Wizard        → directus_tools/directus_wizard.py
-      7) Exit
+    Main menu loop displayed with simple numbered options.
     """
     actions = ACTION_ITEMS
 
     while True:
-        print("\n=== Main Menu ===")
+        print("\n📂 Main Menu")
         for idx, (label, _) in enumerate(actions, start=1):
-            print(f"  {idx}) {label}")
+            print(f"{idx}) {label}")
         choice = input(f"Enter 1-{len(actions)}: ").strip()
 
         if choice.isdigit():
