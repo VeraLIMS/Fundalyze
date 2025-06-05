@@ -58,13 +58,28 @@ def fetch_and_compile(
     obb_mod = _get_openbb()
 
     if local_output is None:
+ codex/document-logging_utils.py-usage
 
         local_output = bool(base_output or os.getenv("OUTPUT_DIR")) or not bool(
             os.getenv("DIRECTUS_URL")
         )
+=======
+ codex/document-config-folder-files
+        # If a base_output path was provided, assume the caller expects local
+        # files regardless of DIRECTUS_URL. Otherwise default to uploading when
+        # DIRECTUS_URL is configured.
+        local_output = bool(base_output or os.getenv("OUTPUT_DIR")) or not bool(os.getenv("DIRECTUS_URL"))
+ main
 
         if base_output is not None or os.getenv("OUTPUT_DIR"):
-            # Explicit output folder implies local writes even when Directus is configured
+            # Explicit output folder implies local writes even when Directus is
+            # configured
+=======
+        # Write locally when a specific output folder is provided or when no
+        # Directus URL is configured. Otherwise default to uploading to
+        # Directus.
+        if base_output is not None or os.getenv("OUTPUT_DIR"):
+ main
             local_output = True
         else:
             local_output = not bool(os.getenv("DIRECTUS_URL"))

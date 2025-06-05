@@ -1,7 +1,14 @@
+ codex/document-logging_utils.py-usage
 """Simple logging configuration helper.
 
 Use :func:`setup_logging` at application startup to create ``fundalyze.log``
 and enable console output.  Log records use the format::
+=======
+"""Utility for configuring a consistent logging setup."""
+
+import logging
+from pathlib import Path
+ main
 
     YYYY-MM-DD HH:MM:SS [LEVEL] logger: message
 """
