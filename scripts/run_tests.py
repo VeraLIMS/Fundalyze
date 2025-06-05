@@ -8,15 +8,32 @@ manually.
 """
 from __future__ import annotations
 
+import argparse
 import subprocess
 import sys
 from pathlib import Path
 
 
+def parse_args() -> argparse.Namespace:
+    """Return parsed CLI arguments."""
+    parser = argparse.ArgumentParser(
+        description="Run each test file under the tests directory sequentially",
+        epilog="Example: python scripts/run_tests.py test_analytics*.py",
+    )
+    parser.add_argument(
+        "pattern",
+        nargs="?",
+        default="test_*.py",
+        help="Glob pattern to select test files (default: test_*.py)",
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
     repo_root = Path(__file__).resolve().parents[1]
     tests_dir = repo_root / "tests"
-    test_files = sorted(tests_dir.glob("test_*.py"))
+    test_files = sorted(tests_dir.glob(args.pattern))
     failures: list[str] = []
 
     for test_file in test_files:
