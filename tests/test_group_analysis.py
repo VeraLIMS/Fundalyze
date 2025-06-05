@@ -20,3 +20,42 @@ def test_save_groups_directus(monkeypatch):
     ga.save_groups(df, "dummy.xlsx")
     assert captured["rec"] == [{"Group": "G", "Ticker": "AAA", "Name": "Alpha"}]
 
+
+def test_confirm_or_adjust_ticker_yes(monkeypatch):
+    inputs = iter(["y"])
+    monkeypatch.setattr("builtins.input", lambda *_: next(inputs))
+    assert ga.confirm_or_adjust_ticker("AAA") == "AAA"
+
+
+def test_confirm_or_adjust_ticker_no_change(monkeypatch):
+    inputs = iter(["n", "BBB"])
+    monkeypatch.setattr("builtins.input", lambda *_: next(inputs))
+    assert ga.confirm_or_adjust_ticker("AAA") == "BBB"
+
+
+def test_confirm_or_adjust_ticker_cancel(monkeypatch):
+    inputs = iter(["maybe", "n", ""])
+    monkeypatch.setattr("builtins.input", lambda *_: next(inputs))
+    assert ga.confirm_or_adjust_ticker("AAA") == ""
+
+
+def test_choose_group_with_portfolio(monkeypatch):
+    df = pd.DataFrame({"Ticker": ["AAA", "BBB"]})
+    inputs = iter(["1"])
+    monkeypatch.setattr("builtins.input", lambda *_: next(inputs))
+    assert ga.choose_group(df) == "AAA"
+
+
+def test_choose_group_custom(monkeypatch):
+    df = pd.DataFrame({"Ticker": ["AAA"]})
+    inputs = iter(["2", "MyGrp"])
+    monkeypatch.setattr("builtins.input", lambda *_: next(inputs))
+    assert ga.choose_group(df) == "MyGrp"
+
+
+def test_choose_group_empty(monkeypatch):
+    df = pd.DataFrame()
+    inputs = iter(["GroupX"])
+    monkeypatch.setattr("builtins.input", lambda *_: next(inputs))
+    assert ga.choose_group(df) == "GroupX"
+
