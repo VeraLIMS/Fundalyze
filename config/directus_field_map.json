@@ -1,1027 +1,3976 @@
 {
-  "companies": {
-    "Ticker": "ticker_symbol",
-    "Name": "company_name",
-    "Sector": "sector",
-    "Industry": "industry",
-    "Country": "country",
-    "Market": "market",
-    "Logo": "logo",
-    "Website": "website",
-    "Company Information": "Company_Information",
-    "Notes": "notes",
-    "id": "id",
-    "company_name": "company_name",
-    "isin_symbol": "isin_symbol",
-    "ticker_symbol": "ticker_symbol",
-    "sector": "sector",
-    "industry": "industry",
-    "country": "country",
-    "market": "market",
-    "logo": "logo",
-    "website": "website",
-    "Company_Information": "Company_Information",
-    "notes": "notes"
-  },
-  "balance_sheet": {
-    "id": "id",
-    "company_id": "company_id",
-    "period": "period",
-    "total_assets": "total_assets",
-    "current_assets": "current_assets",
-    "cash_cash_equivalents_short_term_investments": "cash_cash_equivalents_short_term_investments",
-    "cash_and_cash_equivalents": "cash_and_cash_equivalents",
-    "cash": "cash",
-    "other_short_term_investments": "other_short_term_investments",
-    "receivables": "receivables",
-    "accounts_receivable": "accounts_receivable",
-    "gross_accounts_receivable": "gross_accounts_receivable",
-    "accrued_interest_receivable": "accrued_interest_receivable",
-    "due_from_related_parties_current": "due_from_related_parties_current",
-    "other_receivables": "other_receivables",
-    "receivables_adjustments_allowances": "receivables_adjustments_allowances",
-    "inventory": "inventory",
-    "raw_materials": "raw_materials",
-    "finished_goods": "finished_goods",
-    "other_inventories": "other_inventories",
-    "prepaid_assets": "prepaid_assets",
-    "restricted_cash": "restricted_cash",
-    "assets_held_for_sale_current": "assets_held_for_sale_current",
-    "hedging_assets_current": "hedging_assets_current",
-    "other_current_assets": "other_current_assets",
-    "non_current_assets": "non_current_assets",
-    "net_ppe_property_plant_equipment": "net_ppe_property_plant_equipment",
-    "gross_ppe_property_plant_equipment": "gross_ppe_property_plant_equipment",
-    "properties": "properties",
-    "land_and_improvements": "land_and_improvements",
-    "buildings_and_improvements": "buildings_and_improvements",
-    "machinery_furniture_equipment": "machinery_furniture_equipment",
-    "other_properties": "other_properties",
-    "leases": "leases",
-    "construction_in_progress": "construction_in_progress",
-    "accumulated_depreciation": "accumulated_depreciation",
-    "goodwill_and_other_intangible_assets": "goodwill_and_other_intangible_assets",
-    "goodwill": "goodwill",
-    "other_intangible_assets": "other_intangible_assets",
-    "investments_and_advances": "investments_and_advances",
-    "long_term_equity_investment": "long_term_equity_investment",
-    "investments_in_subsidiaries_at_cost": "investments_in_subsidiaries_at_cost",
-    "investment_in_financial_assets": "investment_in_financial_assets",
-    "available_for_sale_securities": "available_for_sale_securities",
-    "held_to_maturity_securities": "held_to_maturity_securities",
-    "other_investments": "other_investments",
-    "non_current_accounts_receivable": "non_current_accounts_receivable",
-    "non_current_deferred_assets": "non_current_deferred_assets",
-    "non_current_deferred_taxes_assets": "non_current_deferred_taxes_assets",
-    "non_current_prepaid_assets": "non_current_prepaid_assets",
-    "defined_pension_benefit": "defined_pension_benefit",
-    "other_non_current_assets": "other_non_current_assets",
-    "total_liabilities_net_minority_interest": "total_liabilities_net_minority_interest",
-    "current_liabilities": "current_liabilities",
-    "payables_and_accrued_expenses": "payables_and_accrued_expenses",
-    "payables": "payables",
-    "accounts_payable": "accounts_payable",
-    "total_tax_payable": "total_tax_payable",
-    "other_payable": "other_payable",
-    "current_accrued_expenses": "current_accrued_expenses",
-    "interest_payable": "interest_payable",
-    "pension_other_post_retirement_benefit_plans_current": "pension_other_post_retirement_benefit_plans_current",
-    "current_debt_and_capital_lease_obligation": "current_debt_and_capital_lease_obligation",
-    "current_debt": "current_debt",
-    "commercial_paper": "commercial_paper",
-    "other_current_borrowings": "other_current_borrowings",
-    "current_deferred_liabilities": "current_deferred_liabilities",
-    "current_deferred_revenue": "current_deferred_revenue",
-    "other_current_liabilities": "other_current_liabilities",
-    "total_non_current_liabilities_net_minority_interest": "total_non_current_liabilities_net_minority_interest",
-    "non_current_liabilities": "non_current_liabilities",
-    "long_term_debt_and_capital_lease_obligation": "long_term_debt_and_capital_lease_obligation",
-    "long_term_debt": "long_term_debt",
-    "long_term_capital_lease_obligation": "long_term_capital_lease_obligation",
-    "non_current_deferred_liabilities": "non_current_deferred_liabilities",
-    "non_current_deferred_revenue": "non_current_deferred_revenue",
-    "trade_and_other_payables_non_current": "trade_and_other_payables_non_current",
-    "employee_benefits": "employee_benefits",
-    "liabilities_held_for_sale_non_current": "liabilities_held_for_sale_non_current",
-    "other_non_current_liabilities": "other_non_current_liabilities",
-    "long_term_provisions": "long_term_provisions",
-    "equity": "equity",
-    "total_equity_gross_minority_interest": "total_equity_gross_minority_interest",
-    "stockholders_equity": "stockholders_equity",
-    "capital_stock": "capital_stock",
-    "preferred_stock": "preferred_stock",
-    "common_stock": "common_stock",
-    "retained_earnings": "retained_earnings",
-    "treasury_stock": "treasury_stock",
-    "gains_losses_not_affecting_retained_earnings": "gains_losses_not_affecting_retained_earnings",
-    "other_equity_adjustments": "other_equity_adjustments",
-    "other_equity_interest": "other_equity_interest",
-    "minority_interest": "minority_interest",
-    "total_capitalization": "total_capitalization",
-    "preferred_stock_equity": "preferred_stock_equity",
-    "common_stock_equity": "common_stock_equity",
-    "capital_lease_obligations": "capital_lease_obligations",
-    "net_tangible_assets": "net_tangible_assets",
-    "working_capital": "working_capital",
-    "invested_capital": "invested_capital",
-    "tangible_book_value": "tangible_book_value",
-    "total_debt": "total_debt",
-    "net_debt": "net_debt",
-    "share_issued": "share_issued",
-    "ordinary_shares_number": "ordinary_shares_number",
-    "preferred_shares_number": "preferred_shares_number",
-    "treasury_shares_number": "treasury_shares_number"
-  },
-  "cash_flow": {
-    "id": "id",
-    "company_id": "company_id",
-    "period": "period",
-    "cash_flow_from_operating_activities": "cash_flow_from_operating_activities",
-    "operating_cash_flow": "operating_cash_flow",
-    "cash_flow_from_continuing_operating_activities": "cash_flow_from_continuing_operating_activities",
-    "net_income_from_continuing_operations": "net_income_from_continuing_operations",
-    "operating_gains_losses": "operating_gains_losses",
-    "gain_loss_on_sale_of_business": "gain_loss_on_sale_of_business",
-    "gain_loss_on_investment_securities": "gain_loss_on_investment_securities",
-    "earnings_losses_from_equity_investments": "earnings_losses_from_equity_investments",
-    "pension_and_employee_benefit_expense": "pension_and_employee_benefit_expense",
-    "depreciation_amortization_depletion": "depreciation_amortization_depletion",
-    "depreciation_amortization": "depreciation_amortization",
-    "depreciation": "depreciation",
-    "amortization": "amortization",
-    "amortization_of_intangibles": "amortization_of_intangibles",
-    "deferred_tax": "deferred_tax",
-    "deferred_income_tax": "deferred_income_tax",
-    "asset_impairment_charge": "asset_impairment_charge",
-    "other_noncash_items": "other_noncash_items",
-    "change_in_working_capital": "change_in_working_capital",
-    "change_in_receivables": "change_in_receivables",
-    "changes_in_account_receivables": "changes_in_account_receivables",
-    "change_in_inventory": "change_in_inventory",
-    "change_in_payables_and_accrued_expense": "change_in_payables_and_accrued_expense",
-    "change_in_payable": "change_in_payable",
-    "change_in_account_payable": "change_in_account_payable",
-    "change_in_accrued_expense": "change_in_accrued_expense",
-    "change_in_other_working_capital": "change_in_other_working_capital",
-    "taxes_refund_paid": "taxes_refund_paid",
-    "cash_from_discontinued_operating_activities": "cash_from_discontinued_operating_activities",
-    "cash_flow_from_investing_activities": "cash_flow_from_investing_activities",
-    "investing_cash_flow": "investing_cash_flow",
-    "cash_flow_from_continuing_investing_activities": "cash_flow_from_continuing_investing_activities",
-    "net_ppe_purchase_and_sale": "net_ppe_purchase_and_sale",
-    "purchase_of_ppe": "purchase_of_ppe",
-    "sale_of_ppe": "sale_of_ppe",
-    "net_intangibles_purchase_and_sale": "net_intangibles_purchase_and_sale",
-    "purchase_of_intangibles": "purchase_of_intangibles",
-    "net_business_purchase_and_sale": "net_business_purchase_and_sale",
-    "purchase_of_business": "purchase_of_business",
-    "sale_of_business": "sale_of_business",
-    "net_investment_purchase_and_sale": "net_investment_purchase_and_sale",
-    "net_other_investing_changes": "net_other_investing_changes",
-    "cash_from_discontinued_investing_activities": "cash_from_discontinued_investing_activities",
-    "cash_flow_from_financing_activities": "cash_flow_from_financing_activities",
-    "financing_cash_flow": "financing_cash_flow",
-    "cash_flow_from_continuing_financing_activities": "cash_flow_from_continuing_financing_activities",
-    "net_issuance_payments_of_debt": "net_issuance_payments_of_debt",
-    "net_long_term_debt_issuance": "net_long_term_debt_issuance",
-    "long_term_debt_issuance": "long_term_debt_issuance",
-    "long_term_debt_payments": "long_term_debt_payments",
-    "net_short_term_debt_issuance": "net_short_term_debt_issuance",
-    "net_common_stock_issuance": "net_common_stock_issuance",
-    "common_stock_payments": "common_stock_payments",
-    "net_preferred_stock_issuance": "net_preferred_stock_issuance",
-    "preferred_stock_payments": "preferred_stock_payments",
-    "cash_dividends_paid": "cash_dividends_paid",
-    "common_stock_dividend_paid": "common_stock_dividend_paid",
-    "net_other_financing_charges": "net_other_financing_charges",
-    "cash_from_discontinued_financing_activities": "cash_from_discontinued_financing_activities",
-    "cash_flow_from_discontinued_operation": "cash_flow_from_discontinued_operation",
-    "other_cash_flow_items": "other_cash_flow_items",
-    "end_cash_position": "end_cash_position",
-    "changes_in_cash": "changes_in_cash",
-    "effect_of_exchange_rate_changes": "effect_of_exchange_rate_changes",
-    "beginning_cash_position": "beginning_cash_position",
-    "interest_paid_supplemental_data": "interest_paid_supplemental_data",
-    "capital_expenditure": "capital_expenditure",
-    "issuance_of_capital_stock": "issuance_of_capital_stock",
-    "issuance_of_debt": "issuance_of_debt",
-    "repayment_of_debt": "repayment_of_debt",
-    "repurchase_of_capital_stock": "repurchase_of_capital_stock",
-    "free_cash_flow": "free_cash_flow"
-  },
-  "financials": {
-    "id": "id",
-    "company_id": "company_id",
-    "period": "period",
-    "current_ratio": "current_ratio",
-    "Quick_Ratio": "Quick_Ratio",
-    "Debt_to_Equity_Ratio": "Debt_to_Equity_Ratio",
-    "Interest_Coverage_Ratio": "Interest_Coverage_Ratio",
-    "Working_Capital": "Working_Capital",
-    "Cash_and_Cash_Equivalents": "Cash_and_Cash_Equivalents",
-    "Altman_Z_Score": "Altman_Z_Score",
-    "Piotroski_F_Score": "Piotroski_F_Score",
-    "Debt_Ratio": "Debt_Ratio",
-    "Cash_Ratio": "Cash_Ratio",
-    "Gross_Profit_Margin": "Gross_Profit_Margin",
-    "Operating_Profit_Margin": "Operating_Profit_Margin",
-    "Net_Profit_Margin": "Net_Profit_Margin",
-    "Return_on_Assets_ROA": "Return_on_Assets_ROA",
-    "Return_on_Equity_ROE": "Return_on_Equity_ROE",
-    "Return_on_Investment_ROI": "Return_on_Investment_ROI",
-    "EBITDA_Margin": "EBITDA_Margin",
-    "Return_on_Invested_Capital_ROIC": "Return_on_Invested_Capital_ROIC",
-    "Operating_Margin": "Operating_Margin",
-    "Gross_Margin": "Gross_Margin",
-    "Price_to_Earnings_PE_Ratio": "Price_to_Earnings_PE_Ratio",
-    "Price_to_Book_PB_Ratio": "Price_to_Book_PB_Ratio",
-    "Price_to_Sales_PS_Ratio": "Price_to_Sales_PS_Ratio",
-    "Enterprise_Value_to_EBITDA_EVEBITDA": "Enterprise_Value_to_EBITDA_EVEBITDA",
-    "Price_to_Cash_Flow_PCF_Ratio": "Price_to_Cash_Flow_PCF_Ratio",
-    "Dividend_Discount_Model_DDM_Value": "Dividend_Discount_Model_DDM_Value",
-    "Economic_Value_Added_EVA": "Economic_Value_Added_EVA",
-    "Book_Value_Per_Share_BVPS": "Book_Value_Per_Share_BVPS",
-    "Weighted_Average_Cost_of_Capital_WACC": "Weighted_Average_Cost_of_Capital_WACC",
-    "Cost_of_Equity_CAPM": "Cost_of_Equity_CAPM",
-    "Market_Value_of_Equity": "Market_Value_of_Equity",
-    "Market_Value_of_Debt": "Market_Value_of_Debt",
-    "Total_Market_Value_of_Equity_and_Debt": "Total_Market_Value_of_Equity_and_Debt",
-    "Cost_of_Equity": "Cost_of_Equity",
-    "Cost_of_Debt": "Cost_of_Debt",
-    "Corporate_Tax_Rate": "Corporate_Tax_Rate",
-    "Risk_Free_Rate": "Risk_Free_Rate",
-    "Beta": "Beta",
-    "Market_Return": "Market_Return",
-    "Net_Operating_Profit_After_Taxes_NOPAT": "Net_Operating_Profit_After_Taxes_NOPAT",
-    "revenue_growth_yoy": "revenue_growth_yoy",
-    "earnings_growth_yoy": "earnings_growth_yoy",
-    "dividend_growth_yoy": "dividend_growth_yoy",
-    "future_earnings_growth_analyst_estimates": "future_earnings_growth_analyst_estimates",
-    "historical_earnings_growth": "historical_earnings_growth",
-    "rd_expenditure_growth": "rd_expenditure_growth",
-    "ebitda_growth_rate": "ebitda_growth_rate",
-    "revenue_per_share_growth": "revenue_per_share_growth",
-    "dividend_yield": "dividend_yield",
-    "payout_ratio": "payout_ratio",
-    "dividend_per_share": "dividend_per_share",
-    "dividend_growth_rate": "dividend_growth_rate",
-    "exdividend_date": "exdividend_date",
-    "dividend_payout_history": "dividend_payout_history",
-    "dividend_coverage_ratio": "dividend_coverage_ratio",
-    "asset_turnover_ratio": "asset_turnover_ratio",
-    "inventory_turnover_ratio": "inventory_turnover_ratio",
-    "receivables_turnover_ratio": "receivables_turnover_ratio",
-    "days_sales_outstanding_dso": "days_sales_outstanding_dso",
-    "days_inventory_outstanding_dio": "days_inventory_outstanding_dio",
-    "cash_conversion_cycle_ccc": "cash_conversion_cycle_ccc",
-    "days_payable_outstanding_dpo": "days_payable_outstanding_dpo",
-    "free_cash_flow": "free_cash_flow",
-    "market_capitalization": "market_capitalization",
-    "earnings_per_share_eps": "earnings_per_share_eps",
-    "peg_ratio_pe_to_growth": "peg_ratio_pe_to_growth",
-    "insider_transactions": "insider_transactions",
-    "analyst_recommendations": "analyst_recommendations",
-    "institutional_ownership": "institutional_ownership",
-    "esg_score": "esg_score",
-    "carbon_footprint": "carbon_footprint",
-    "board_diversity": "board_diversity",
-    "executive_compensation": "executive_compensation",
-    "social_responsibility_initiatives": "social_responsibility_initiatives",
-    "sustainability_score": "sustainability_score",
-    "social_impact_score": "social_impact_score",
-    "environmental_impact": "environmental_impact",
-    "social_metrics": "social_metrics",
-    "governance_metrics": "governance_metrics",
-    "return_on_invested_capital_roic": "return_on_invested_capital_roic",
-    "management_tenure": "management_tenure",
-    "management_effectiveness_ratios": "management_effectiveness_ratios",
-    "ebitda": "ebitda",
-    "ebitda_margin": "ebitda_margin",
-    "adjusted_ebitda": "adjusted_ebitda",
-    "ebitda_to_interest_coverage_ratio": "ebitda_to_interest_coverage_ratio",
-    "total_revenue": "total_revenue",
-    "operating_revenue": "operating_revenue",
-    "cost_of_revenue": "cost_of_revenue",
-    "gross_profit": "gross_profit",
-    "operating_expense": "operating_expense",
-    "selling_general_and_administrative": "selling_general_and_administrative",
-    "rental_landing_fees": "rental_landing_fees",
-    "general_administrative_expense": "general_administrative_expense",
-    "other_operating_expenses": "other_operating_expenses",
-    "other_ga_expenses": "other_ga_expenses",
-    "research_development": "research_development",
-    "other_operating_income": "other_operating_income",
-    "operating_income": "operating_income",
-    "net_non_operating_interest_income_expense": "net_non_operating_interest_income_expense",
-    "interest_income_non_operating": "interest_income_non_operating",
-    "interest_expense_non_operating": "interest_expense_non_operating",
-    "other_income_expense": "other_income_expense",
-    "gain_on_sale_of_security": "gain_on_sale_of_security",
-    "earnings_from_equity_interest": "earnings_from_equity_interest",
-    "special_income_charges": "special_income_charges",
-    "restructuring_mergers_acquisition": "restructuring_mergers_acquisition",
-    "impairment_of_capital_assets": "impairment_of_capital_assets",
-    "other_special_charges": "other_special_charges",
-    "gain_on_sale_of_business": "gain_on_sale_of_business",
-    "other_non_operating_income_expenses": "other_non_operating_income_expenses",
-    "total_other_finance_cost": "total_other_finance_cost",
-    "pretax_income": "pretax_income",
-    "tax_provision": "tax_provision",
-    "net_income_common_stockholders": "net_income_common_stockholders",
-    "net_income": "net_income",
-    "net_income_including_noncontrolling_interests": "net_income_including_noncontrolling_interests",
-    "net_income_continuous_operations": "net_income_continuous_operations",
-    "net_income_discontinuous_operations": "net_income_discontinuous_operations",
-    "minority_interests": "minority_interests",
-    "preferred_stock_dividends": "preferred_stock_dividends",
-    "diluted_ni_available_to_com_stockholders": "diluted_ni_available_to_com_stockholders",
-    "basic_eps": "basic_eps",
-    "diluted_eps": "diluted_eps",
-    "basic_average_shares": "basic_average_shares",
-    "diluted_average_shares": "diluted_average_shares",
-    "rent_expense_supplemental": "rent_expense_supplemental",
-    "total_expenses": "total_expenses",
-    "net_income_from_continuing_discontinued_operation": "net_income_from_continuing_discontinued_operation",
-    "normalized_income": "normalized_income",
-    "interest_income": "interest_income",
-    "interest_expense": "interest_expense",
-    "net_interest_income": "net_interest_income",
-    "ebit": "ebit",
-    "reconciled_cost_of_revenue": "reconciled_cost_of_revenue",
-    "reconciled_depreciation": "reconciled_depreciation",
-    "net_income_from_continuing_operation_net_minority_interest": "net_income_from_continuing_operation_net_minority_interest",
-    "total_unusual_items_excluding_goodwill": "total_unusual_items_excluding_goodwill",
-    "total_unusual_items": "total_unusual_items",
-    "normalized_ebitda": "normalized_ebitda",
-    "tax_rate_for_calcs": "tax_rate_for_calcs",
-    "tax_effect_of_unusual_items": "tax_effect_of_unusual_items",
-    "sales_returns_and_allowances": "sales_returns_and_allowances",
-    "bad_debt_expense": "bad_debt_expense",
-    "amortization_of_deferred_charges": "amortization_of_deferred_charges",
-    "loss_on_sale_of_assets": "loss_on_sale_of_assets",
-    "provision_for_income_taxes": "provision_for_income_taxes",
-    "discontinued_operations": "discontinued_operations",
-    "extraordinary_items": "extraordinary_items",
-    "total_assets": "total_assets",
-    "current_assets": "current_assets",
-    "cash_cash_equivalents_short_term_investments": "cash_cash_equivalents_short_term_investments",
-    "cash_and_cash_equivalents": "cash_and_cash_equivalents",
-    "cash": "cash",
-    "other_short_term_investments": "other_short_term_investments",
-    "receivables": "receivables",
-    "accounts_receivable": "accounts_receivable",
-    "gross_accounts_receivable": "gross_accounts_receivable",
-    "accrued_interest_receivable": "accrued_interest_receivable",
-    "due_from_related_parties_current": "due_from_related_parties_current",
-    "other_receivables": "other_receivables",
-    "receivables_adjustments_allowances": "receivables_adjustments_allowances",
-    "inventory": "inventory",
-    "raw_materials": "raw_materials",
-    "finished_goods": "finished_goods",
-    "other_inventories": "other_inventories",
-    "prepaid_assets": "prepaid_assets",
-    "restricted_cash": "restricted_cash",
-    "assets_held_for_sale_current": "assets_held_for_sale_current",
-    "hedging_assets_current": "hedging_assets_current",
-    "other_current_assets": "other_current_assets",
-    "total_noncurrent_assets": "total_noncurrent_assets",
-    "net_ppe_property_plant_equipment": "net_ppe_property_plant_equipment",
-    "gross_ppe_property_plant_equipment": "gross_ppe_property_plant_equipment",
-    "properties": "properties",
-    "land_and_improvements": "land_and_improvements",
-    "buildings_and_improvements": "buildings_and_improvements",
-    "machinery_furniture_equipment": "machinery_furniture_equipment",
-    "other_properties": "other_properties",
-    "leases": "leases",
-    "construction_in_progress": "construction_in_progress",
-    "accumulated_depreciation": "accumulated_depreciation",
-    "goodwill_and_other_intangible_assets": "goodwill_and_other_intangible_assets",
-    "goodwill": "goodwill",
-    "other_intangible_assets": "other_intangible_assets",
-    "investments_and_advances": "investments_and_advances",
-    "long_term_equity_investment": "long_term_equity_investment",
-    "investments_in_subsidiaries_at_cost": "investments_in_subsidiaries_at_cost",
-    "investment_in_financial_assets": "investment_in_financial_assets",
-    "available_for_sale_securities": "available_for_sale_securities",
-    "held_to_maturity_securities": "held_to_maturity_securities",
-    "other_investments": "other_investments",
-    "non_current_accounts_receivable": "non_current_accounts_receivable",
-    "non_current_deferred_assets": "non_current_deferred_assets",
-    "non_current_deferred_taxes_assets": "non_current_deferred_taxes_assets",
-    "non_current_prepaid_assets": "non_current_prepaid_assets",
-    "defined_pension_benefit": "defined_pension_benefit",
-    "other_non_current_assets": "other_non_current_assets",
-    "total_liabilities_net_minority_interest": "total_liabilities_net_minority_interest",
-    "current_liabilities": "current_liabilities",
-    "payables_and_accrued_expenses": "payables_and_accrued_expenses",
-    "payables": "payables",
-    "accounts_payable": "accounts_payable",
-    "total_tax_payable": "total_tax_payable",
-    "other_payable": "other_payable",
-    "current_accrued_expenses": "current_accrued_expenses",
-    "interest_payable": "interest_payable",
-    "pension_other_post_retirement_benefit_plans_current": "pension_other_post_retirement_benefit_plans_current",
-    "current_debt_and_capital_lease_obligation": "current_debt_and_capital_lease_obligation",
-    "current_debt": "current_debt",
-    "commercial_paper": "commercial_paper",
-    "other_current_borrowings": "other_current_borrowings",
-    "current_deferred_liabilities": "current_deferred_liabilities",
-    "current_deferred_revenue": "current_deferred_revenue",
-    "other_current_liabilities": "other_current_liabilities",
-    "total_non_current_liabilities_net_minority_interest": "total_non_current_liabilities_net_minority_interest",
-    "non_current_liabilities": "non_current_liabilities",
-    "long_term_debt_and_capital_lease_obligation": "long_term_debt_and_capital_lease_obligation",
-    "long_term_debt": "long_term_debt",
-    "long_term_capital_lease_obligation": "long_term_capital_lease_obligation",
-    "non_current_deferred_liabilities": "non_current_deferred_liabilities",
-    "non_current_deferred_revenue": "non_current_deferred_revenue",
-    "trade_and_other_payables_non_current": "trade_and_other_payables_non_current",
-    "employee_benefits": "employee_benefits",
-    "liabilities_held_for_sale_non_current": "liabilities_held_for_sale_non_current",
-    "other_non_current_liabilities": "other_non_current_liabilities",
-    "long_term_provisions": "long_term_provisions",
-    "equity": "equity",
-    "total_equity_gross_minority_interest": "total_equity_gross_minority_interest",
-    "stockholders_equity": "stockholders_equity",
-    "capital_stock": "capital_stock",
-    "preferred_stock": "preferred_stock",
-    "common_stock": "common_stock",
-    "retained_earnings": "retained_earnings",
-    "treasury_stock": "treasury_stock",
-    "gains_losses_not_affecting_retained_earnings": "gains_losses_not_affecting_retained_earnings",
-    "other_equity_adjustments": "other_equity_adjustments",
-    "other_equity_interest": "other_equity_interest",
-    "minority_interest": "minority_interest",
-    "total_capitalization": "total_capitalization",
-    "preferred_stock_equity": "preferred_stock_equity",
-    "common_stock_equity": "common_stock_equity",
-    "capital_lease_obligations": "capital_lease_obligations",
-    "net_tangible_assets": "net_tangible_assets",
-    "working_capital": "working_capital",
-    "invested_capital": "invested_capital",
-    "tangible_book_value": "tangible_book_value",
-    "total_debt": "total_debt",
-    "net_debt": "net_debt",
-    "share_issued": "share_issued",
-    "ordinary_shares_number": "ordinary_shares_number",
-    "preferred_shares_number": "preferred_shares_number",
-    "treasury_shares_number": "treasury_shares_number",
-    "cash_flow_from_operating_activities": "cash_flow_from_operating_activities",
-    "operating_cash_flow": "operating_cash_flow",
-    "cash_flow_from_continuing_operating_activities": "cash_flow_from_continuing_operating_activities",
-    "net_income_from_continuing_operations": "net_income_from_continuing_operations",
-    "operating_gains_losses": "operating_gains_losses",
-    "gain_loss_on_sale_of_business": "gain_loss_on_sale_of_business",
-    "gain_loss_on_investment_securities": "gain_loss_on_investment_securities",
-    "earnings_losses_from_equity_investments": "earnings_losses_from_equity_investments",
-    "pension_and_employee_benefit_expense": "pension_and_employee_benefit_expense",
-    "depreciation_amortization_depletion": "depreciation_amortization_depletion",
-    "depreciation_amortization": "depreciation_amortization",
-    "depreciation": "depreciation",
-    "amortization": "amortization",
-    "amortization_of_intangibles": "amortization_of_intangibles",
-    "deferred_tax": "deferred_tax",
-    "deferred_income_tax": "deferred_income_tax",
-    "asset_impairment_charge": "asset_impairment_charge",
-    "other_noncash_items": "other_noncash_items",
-    "change_in_working_capital": "change_in_working_capital",
-    "change_in_receivables": "change_in_receivables",
-    "changes_in_account_receivables": "changes_in_account_receivables",
-    "change_in_inventory": "change_in_inventory",
-    "change_in_payables_and_accrued_expense": "change_in_payables_and_accrued_expense",
-    "change_in_payable": "change_in_payable",
-    "change_in_account_payable": "change_in_account_payable",
-    "change_in_accrued_expense": "change_in_accrued_expense",
-    "change_in_other_working_capital": "change_in_other_working_capital",
-    "taxes_refund_paid": "taxes_refund_paid",
-    "cash_from_discontinued_operating_activities": "cash_from_discontinued_operating_activities",
-    "cash_flow_from_investing_activities": "cash_flow_from_investing_activities",
-    "investing_cash_flow": "investing_cash_flow",
-    "cash_flow_from_continuing_investing_activities": "cash_flow_from_continuing_investing_activities",
-    "net_ppe_purchase_and_sale": "net_ppe_purchase_and_sale",
-    "purchase_of_ppe": "purchase_of_ppe",
-    "sale_of_ppe": "sale_of_ppe",
-    "net_intangibles_purchase_and_sale": "net_intangibles_purchase_and_sale",
-    "purchase_of_intangibles": "purchase_of_intangibles",
-    "net_business_purchase_and_sale": "net_business_purchase_and_sale",
-    "purchase_of_business": "purchase_of_business",
-    "sale_of_business": "sale_of_business",
-    "net_investment_purchase_and_sale": "net_investment_purchase_and_sale",
-    "net_other_investing_changes": "net_other_investing_changes",
-    "cash_from_discontinued_investing_activities": "cash_from_discontinued_investing_activities",
-    "cash_flow_from_financing_activities": "cash_flow_from_financing_activities",
-    "financing_cash_flow": "financing_cash_flow",
-    "cash_flow_from_continuing_financing_activities": "cash_flow_from_continuing_financing_activities",
-    "net_issuance_payments_of_debt": "net_issuance_payments_of_debt",
-    "net_long_term_debt_issuance": "net_long_term_debt_issuance",
-    "long_term_debt_issuance": "long_term_debt_issuance",
-    "long_term_debt_payments": "long_term_debt_payments",
-    "net_short_term_debt_issuance": "net_short_term_debt_issuance",
-    "net_common_stock_issuance": "net_common_stock_issuance",
-    "common_stock_payments": "common_stock_payments",
-    "net_preferred_stock_issuance": "net_preferred_stock_issuance",
-    "preferred_stock_payments": "preferred_stock_payments",
-    "cash_dividends_paid": "cash_dividends_paid",
-    "common_stock_dividend_paid": "common_stock_dividend_paid",
-    "net_other_financing_charges": "net_other_financing_charges",
-    "cash_from_discontinued_financing_activities": "cash_from_discontinued_financing_activities",
-    "cash_flow_from_discontinued_operation": "cash_flow_from_discontinued_operation",
-    "other_cash_flow_items": "other_cash_flow_items",
-    "end_cash_position": "end_cash_position",
-    "changes_in_cash": "changes_in_cash",
-    "effect_of_exchange_rate_changes": "effect_of_exchange_rate_changes",
-    "beginning_cash_position": "beginning_cash_position",
-    "interest_paid_supplemental_data": "interest_paid_supplemental_data",
-    "capital_expenditure": "capital_expenditure",
-    "issuance_of_capital_stock": "issuance_of_capital_stock",
-    "issuance_of_debt": "issuance_of_debt",
-    "repayment_of_debt": "repayment_of_debt",
-    "repurchase_of_capital_stock": "repurchase_of_capital_stock",
-    "dividend_information": "dividend_information",
-    "Profitability": "Profitability",
-    "Valuation": "Valuation",
-    "cash_flow_metrics": "cash_flow_metrics",
-    "other_metrics": "other_metrics",
-    "growth_potential": "growth_potential",
-    "esg": "esg",
-    "efficiency": "efficiency",
-    "ebitda_metrics": "ebitda_metrics",
-    "balance_sheet": "balance_sheet",
-    "income_statement": "income_statement",
-    "cash_flow": "cash_flow",
-    "Financial_Health": "Financial_Health",
-    "management_efficiency": "management_efficiency"
-  },
-  "income_statement": {
-    "id": "id",
-    "company_id": "company_id",
-    "period": "period",
-    "total_revenue": "total_revenue",
-    "operating_revenue": "operating_revenue",
-    "cost_of_revenue": "cost_of_revenue",
-    "gross_profit": "gross_profit",
-    "operating_expense": "operating_expense",
-    "selling_general_and_administrative": "selling_general_and_administrative",
-    "general_administrative_expense": "general_administrative_expense",
-    "insurance_claims": "insurance_claims",
-    "rental_landing_fees": "rental_landing_fees",
-    "other_operating_expenses": "other_operating_expenses",
-    "other_ga_expenses": "other_ga_expenses",
-    "research_development": "research_development",
-    "other_operating_income": "other_operating_income",
-    "operating_income": "operating_income",
-    "net_non_operating_interest_income_expense": "net_non_operating_interest_income_expense",
-    "interest_income_non_operating": "interest_income_non_operating",
-    "interest_expense_non_operating": "interest_expense_non_operating",
-    "other_income_expense": "other_income_expense",
-    "gain_on_sale_of_security": "gain_on_sale_of_security",
-    "earnings_from_equity_interest": "earnings_from_equity_interest",
-    "special_income_charges": "special_income_charges",
-    "restructuring_mergers_acquisition": "restructuring_mergers_acquisition",
-    "impairment_of_capital_assets": "impairment_of_capital_assets",
-    "other_special_charges": "other_special_charges",
-    "gain_on_sale_of_business": "gain_on_sale_of_business",
-    "other_non_operating_income_expenses": "other_non_operating_income_expenses",
-    "total_other_finance_cost": "total_other_finance_cost",
-    "pretax_income": "pretax_income",
-    "tax_provision": "tax_provision",
-    "net_income_common_stockholders": "net_income_common_stockholders",
-    "net_income": "net_income",
-    "net_income_including_noncontrolling_interests": "net_income_including_noncontrolling_interests",
-    "net_income_continuous_operations": "net_income_continuous_operations",
-    "net_income_discontinuous_operations": "net_income_discontinuous_operations",
-    "minority_interests": "minority_interests",
-    "preferred_stock_dividends": "preferred_stock_dividends",
-    "diluted_ni_available_to_com_stockholders": "diluted_ni_available_to_com_stockholders",
-    "basic_eps": "basic_eps",
-    "diluted_eps": "diluted_eps",
-    "basic_average_shares": "basic_average_shares",
-    "diluted_average_shares": "diluted_average_shares",
-    "rent_expense_supplemental": "rent_expense_supplemental",
-    "total_expenses": "total_expenses",
-    "net_income_from_continuing_discontinued_operation": "net_income_from_continuing_discontinued_operation",
-    "normalized_income": "normalized_income",
-    "interest_income": "interest_income",
-    "interest_expense": "interest_expense",
-    "net_interest_income": "net_interest_income",
-    "ebit": "ebit",
-    "ebitda": "ebitda",
-    "reconciled_cost_of_revenue": "reconciled_cost_of_revenue",
-    "reconciled_depreciation": "reconciled_depreciation",
-    "net_income_from_continuing_operation_net_minority_interest": "net_income_from_continuing_operation_net_minority_interest",
-    "total_unusual_items_excluding_goodwill": "total_unusual_items_excluding_goodwill",
-    "total_unusual_items": "total_unusual_items",
-    "normalized_ebitda": "normalized_ebitda",
-    "tax_rate_for_calcs": "tax_rate_for_calcs",
-    "tax_effect_of_unusual_items": "tax_effect_of_unusual_items",
-    "sales_returns_and_allowances": "sales_returns_and_allowances",
-    "bad_debt_expense": "bad_debt_expense",
-    "amortization_of_deferred_charges": "amortization_of_deferred_charges",
-    "loss_on_sale_of_assets": "loss_on_sale_of_assets",
-    "provision_for_income_taxes": "provision_for_income_taxes",
-    "discontinued_operations": "discontinued_operations",
-    "extraordinary_items": "extraordinary_items"
-  },
-  "directus_access": {
-    "id": "id",
-    "role": "role",
-    "user": "user",
-    "policy": "policy",
-    "sort": "sort"
-  },
-  "directus_activity": {
-    "id": "id",
-    "action": "action",
-    "user": "user",
-    "timestamp": "timestamp",
-    "ip": "ip",
-    "user_agent": "user_agent",
-    "collection": "collection",
-    "item": "item",
-    "origin": "origin",
-    "revisions": "revisions"
-  },
-  "directus_collections": {
-    "collection": "collection",
-    "icon": "icon",
-    "note": "note",
-    "display_template": "display_template",
-    "hidden": "hidden",
-    "singleton": "singleton",
-    "translations": "translations",
-    "archive_field": "archive_field",
-    "archive_app_filter": "archive_app_filter",
-    "archive_value": "archive_value",
-    "unarchive_value": "unarchive_value",
-    "sort_field": "sort_field",
-    "accountability": "accountability",
-    "color": "color",
-    "item_duplication_fields": "item_duplication_fields",
-    "sort": "sort",
-    "group": "group",
-    "collapse": "collapse",
-    "preview_url": "preview_url",
-    "versioning": "versioning",
-    "collection_divider": "collection_divider",
-    "preview_divider": "preview_divider",
-    "content_versioning_divider": "content_versioning_divider",
-    "archive_divider": "archive_divider",
-    "sort_divider": "sort_divider",
-    "accountability_divider": "accountability_divider",
-    "duplication_divider": "duplication_divider"
-  },
-  "directus_comments": {
-    "id": "id",
-    "collection": "collection",
-    "item": "item",
-    "comment": "comment",
-    "date_created": "date_created",
-    "date_updated": "date_updated",
-    "user_created": "user_created",
-    "user_updated": "user_updated"
-  },
-  "directus_fields": {
-    "id": "id",
-    "collection": "collection",
-    "field": "field",
-    "special": "special",
-    "interface": "interface",
-    "options": "options",
-    "display": "display",
-    "display_options": "display_options",
-    "readonly": "readonly",
-    "hidden": "hidden",
-    "sort": "sort",
-    "width": "width",
-    "translations": "translations",
-    "note": "note",
-    "conditions": "conditions",
-    "required": "required",
-    "group": "group",
-    "validation": "validation",
-    "validation_message": "validation_message"
-  },
-  "directus_files": {
-    "id": "id",
-    "storage": "storage",
-    "filename_disk": "filename_disk",
-    "filename_download": "filename_download",
-    "title": "title",
-    "type": "type",
-    "folder": "folder",
-    "uploaded_by": "uploaded_by",
-    "created_on": "created_on",
-    "modified_by": "modified_by",
-    "modified_on": "modified_on",
-    "charset": "charset",
-    "filesize": "filesize",
-    "width": "width",
-    "height": "height",
-    "duration": "duration",
-    "embed": "embed",
-    "description": "description",
-    "location": "location",
-    "tags": "tags",
-    "metadata": "metadata",
-    "focal_point_x": "focal_point_x",
-    "focal_point_y": "focal_point_y",
-    "tus_id": "tus_id",
-    "tus_data": "tus_data",
-    "uploaded_on": "uploaded_on",
-    "focal_point_divider": "focal_point_divider",
-    "storage_divider": "storage_divider"
-  },
-  "directus_folders": {
-    "id": "id",
-    "name": "name",
-    "parent": "parent"
-  },
-  "directus_migrations": {
-    "version": "version",
-    "name": "name",
-    "timestamp": "timestamp"
-  },
-  "directus_permissions": {
-    "id": "id",
-    "collection": "collection",
-    "action": "action",
-    "permissions": "permissions",
-    "validation": "validation",
-    "presets": "presets",
-    "fields": "fields",
-    "policy": "policy"
-  },
-  "directus_policies": {
-    "id": "id",
-    "name": "name",
-    "icon": "icon",
-    "description": "description",
-    "ip_access": "ip_access",
-    "enforce_tfa": "enforce_tfa",
-    "admin_access": "admin_access",
-    "app_access": "app_access",
-    "permissions": "permissions",
-    "assigned_to_divider": "assigned_to_divider",
-    "users": "users",
-    "roles": "roles"
-  },
-  "directus_presets": {
-    "id": "id",
-    "bookmark": "bookmark",
-    "user": "user",
-    "role": "role",
-    "collection": "collection",
-    "search": "search",
-    "layout": "layout",
-    "layout_query": "layout_query",
-    "layout_options": "layout_options",
-    "refresh_interval": "refresh_interval",
-    "filter": "filter",
-    "icon": "icon",
-    "color": "color"
-  },
-  "directus_relations": {
-    "id": "id",
-    "many_collection": "many_collection",
-    "many_field": "many_field",
-    "one_collection": "one_collection",
-    "one_field": "one_field",
-    "one_collection_field": "one_collection_field",
-    "one_allowed_collections": "one_allowed_collections",
-    "junction_field": "junction_field",
-    "sort_field": "sort_field",
-    "one_deselect_action": "one_deselect_action"
-  },
-  "directus_revisions": {
-    "id": "id",
-    "activity": "activity",
-    "collection": "collection",
-    "item": "item",
-    "data": "data",
-    "delta": "delta",
-    "parent": "parent",
-    "version": "version"
-  },
-  "directus_roles": {
-    "id": "id",
-    "name": "name",
-    "icon": "icon",
-    "description": "description",
-    "parent": "parent",
-    "children": "children",
-    "policies": "policies",
-    "users_group": "users_group",
-    "users_divider": "users_divider",
-    "users": "users"
-  },
-  "directus_sessions": {
-    "token": "token",
-    "user": "user",
-    "expires": "expires",
-    "ip": "ip",
-    "user_agent": "user_agent",
-    "share": "share",
-    "origin": "origin",
-    "next_token": "next_token"
-  },
-  "directus_settings": {
-    "id": "id",
-    "project_name": "project_name",
-    "project_url": "project_url",
-    "project_color": "project_color",
-    "project_logo": "project_logo",
-    "public_foreground": "public_foreground",
-    "public_background": "public_background",
-    "public_note": "public_note",
-    "auth_login_attempts": "auth_login_attempts",
-    "auth_password_policy": "auth_password_policy",
-    "storage_asset_transform": "storage_asset_transform",
-    "storage_asset_presets": "storage_asset_presets",
-    "custom_css": "custom_css",
-    "storage_default_folder": "storage_default_folder",
-    "basemaps": "basemaps",
-    "mapbox_key": "mapbox_key",
-    "module_bar": "module_bar",
-    "project_descriptor": "project_descriptor",
-    "default_language": "default_language",
-    "custom_aspect_ratios": "custom_aspect_ratios",
-    "public_favicon": "public_favicon",
-    "default_appearance": "default_appearance",
-    "default_theme_light": "default_theme_light",
-    "theme_light_overrides": "theme_light_overrides",
-    "default_theme_dark": "default_theme_dark",
-    "theme_dark_overrides": "theme_dark_overrides",
-    "report_error_url": "report_error_url",
-    "report_bug_url": "report_bug_url",
-    "report_feature_url": "report_feature_url",
-    "public_registration": "public_registration",
-    "public_registration_verify_email": "public_registration_verify_email",
-    "public_registration_role": "public_registration_role",
-    "public_registration_email_filter": "public_registration_email_filter",
-    "visual_editor_urls": "visual_editor_urls",
-    "theming_group": "theming_group",
-    "branding_divider": "branding_divider",
-    "theming_divider": "theming_divider",
-    "modules_divider": "modules_divider",
-    "visual_editor_divider": "visual_editor_divider",
-    "security_divider": "security_divider",
-    "public_registration_divider": "public_registration_divider",
-    "files_divider": "files_divider",
-    "reporting_divider": "reporting_divider",
-    "map_divider": "map_divider",
-    "image_editor": "image_editor"
-  },
-  "directus_users": {
-    "id": "id",
-    "first_name": "first_name",
-    "last_name": "last_name",
-    "email": "email",
-    "password": "password",
-    "location": "location",
-    "title": "title",
-    "description": "description",
-    "tags": "tags",
-    "avatar": "avatar",
-    "language": "language",
-    "tfa_secret": "tfa_secret",
-    "status": "status",
-    "role": "role",
-    "token": "token",
-    "last_access": "last_access",
-    "last_page": "last_page",
-    "provider": "provider",
-    "external_identifier": "external_identifier",
-    "auth_data": "auth_data",
-    "email_notifications": "email_notifications",
-    "appearance": "appearance",
-    "theme_dark": "theme_dark",
-    "theme_light": "theme_light",
-    "theme_light_overrides": "theme_light_overrides",
-    "theme_dark_overrides": "theme_dark_overrides",
-    "preferences_divider": "preferences_divider",
-    "theming_divider": "theming_divider",
-    "admin_divider": "admin_divider",
-    "policies": "policies"
-  },
-  "directus_webhooks": {
-    "id": "id",
-    "name": "name",
-    "method": "method",
-    "url": "url",
-    "status": "status",
-    "data": "data",
-    "actions": "actions",
-    "collections": "collections",
-    "headers": "headers",
-    "was_active_before_deprecation": "was_active_before_deprecation",
-    "migrated_flow": "migrated_flow",
-    "triggers_divider": "triggers_divider"
-  },
-  "directus_dashboards": {
-    "id": "id",
-    "name": "name",
-    "icon": "icon",
-    "note": "note",
-    "date_created": "date_created",
-    "user_created": "user_created",
-    "color": "color",
-    "panels": "panels"
-  },
-  "directus_panels": {
-    "id": "id",
-    "dashboard": "dashboard",
-    "name": "name",
-    "icon": "icon",
-    "color": "color",
-    "show_header": "show_header",
-    "note": "note",
-    "type": "type",
-    "position_x": "position_x",
-    "position_y": "position_y",
-    "width": "width",
-    "height": "height",
-    "options": "options",
-    "date_created": "date_created",
-    "user_created": "user_created"
-  },
-  "directus_notifications": {
-    "id": "id",
-    "timestamp": "timestamp",
-    "status": "status",
-    "recipient": "recipient",
-    "sender": "sender",
-    "subject": "subject",
-    "message": "message",
-    "collection": "collection",
-    "item": "item"
-  },
-  "directus_shares": {
-    "id": "id",
-    "name": "name",
-    "collection": "collection",
-    "item": "item",
-    "role": "role",
-    "password": "password",
-    "user_created": "user_created",
-    "date_created": "date_created",
-    "date_start": "date_start",
-    "date_end": "date_end",
-    "times_used": "times_used",
-    "max_uses": "max_uses"
-  },
-  "directus_flows": {
-    "id": "id",
-    "name": "name",
-    "icon": "icon",
-    "color": "color",
-    "description": "description",
-    "status": "status",
-    "trigger": "trigger",
-    "accountability": "accountability",
-    "options": "options",
-    "operation": "operation",
-    "date_created": "date_created",
-    "user_created": "user_created",
-    "operations": "operations"
-  },
-  "directus_operations": {
-    "id": "id",
-    "name": "name",
-    "key": "key",
-    "type": "type",
-    "position_x": "position_x",
-    "position_y": "position_y",
-    "options": "options",
-    "resolve": "resolve",
-    "reject": "reject",
-    "flow": "flow",
-    "date_created": "date_created",
-    "user_created": "user_created"
-  },
-  "directus_translations": {
-    "id": "id",
-    "language": "language",
-    "key": "key",
-    "value": "value"
-  },
-  "directus_versions": {
-    "id": "id",
-    "key": "key",
-    "name": "name",
-    "collection": "collection",
-    "item": "item",
-    "hash": "hash",
-    "date_created": "date_created",
-    "date_updated": "date_updated",
-    "user_created": "user_created",
-    "user_updated": "user_updated",
-    "delta": "delta"
-  },
-  "directus_extensions": {
-    "enabled": "enabled",
-    "id": "id",
-    "folder": "folder",
-    "source": "source",
-    "bundle": "bundle"
+  "collections": {
+    "companies": {
+      "fields": {
+        "Ticker": {
+          "type": null,
+          "mapped_to": "ticker_symbol"
+        },
+        "Name": {
+          "type": null,
+          "mapped_to": "company_name"
+        },
+        "Sector": {
+          "type": null,
+          "mapped_to": "sector"
+        },
+        "Industry": {
+          "type": null,
+          "mapped_to": "industry"
+        },
+        "Country": {
+          "type": null,
+          "mapped_to": "country"
+        },
+        "Market": {
+          "type": null,
+          "mapped_to": "market"
+        },
+        "Logo": {
+          "type": null,
+          "mapped_to": "logo"
+        },
+        "Website": {
+          "type": null,
+          "mapped_to": "website"
+        },
+        "Company Information": {
+          "type": null,
+          "mapped_to": "Company_Information"
+        },
+        "Notes": {
+          "type": null,
+          "mapped_to": "notes"
+        },
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "company_name": {
+          "type": null,
+          "mapped_to": "company_name"
+        },
+        "isin_symbol": {
+          "type": null,
+          "mapped_to": "isin_symbol"
+        },
+        "ticker_symbol": {
+          "type": null,
+          "mapped_to": "ticker_symbol"
+        },
+        "sector": {
+          "type": null,
+          "mapped_to": "sector"
+        },
+        "industry": {
+          "type": null,
+          "mapped_to": "industry"
+        },
+        "country": {
+          "type": null,
+          "mapped_to": "country"
+        },
+        "market": {
+          "type": null,
+          "mapped_to": "market"
+        },
+        "logo": {
+          "type": null,
+          "mapped_to": "logo"
+        },
+        "website": {
+          "type": null,
+          "mapped_to": "website"
+        },
+        "Company_Information": {
+          "type": null,
+          "mapped_to": "Company_Information"
+        },
+        "notes": {
+          "type": null,
+          "mapped_to": "notes"
+        }
+      }
+    },
+    "balance_sheet": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "company_id": {
+          "type": null,
+          "mapped_to": "company_id"
+        },
+        "period": {
+          "type": null,
+          "mapped_to": "period"
+        },
+        "total_assets": {
+          "type": null,
+          "mapped_to": "total_assets"
+        },
+        "current_assets": {
+          "type": null,
+          "mapped_to": "current_assets"
+        },
+        "cash_cash_equivalents_short_term_investments": {
+          "type": null,
+          "mapped_to": "cash_cash_equivalents_short_term_investments"
+        },
+        "cash_and_cash_equivalents": {
+          "type": null,
+          "mapped_to": "cash_and_cash_equivalents"
+        },
+        "cash": {
+          "type": null,
+          "mapped_to": "cash"
+        },
+        "other_short_term_investments": {
+          "type": null,
+          "mapped_to": "other_short_term_investments"
+        },
+        "receivables": {
+          "type": null,
+          "mapped_to": "receivables"
+        },
+        "accounts_receivable": {
+          "type": null,
+          "mapped_to": "accounts_receivable"
+        },
+        "gross_accounts_receivable": {
+          "type": null,
+          "mapped_to": "gross_accounts_receivable"
+        },
+        "accrued_interest_receivable": {
+          "type": null,
+          "mapped_to": "accrued_interest_receivable"
+        },
+        "due_from_related_parties_current": {
+          "type": null,
+          "mapped_to": "due_from_related_parties_current"
+        },
+        "other_receivables": {
+          "type": null,
+          "mapped_to": "other_receivables"
+        },
+        "receivables_adjustments_allowances": {
+          "type": null,
+          "mapped_to": "receivables_adjustments_allowances"
+        },
+        "inventory": {
+          "type": null,
+          "mapped_to": "inventory"
+        },
+        "raw_materials": {
+          "type": null,
+          "mapped_to": "raw_materials"
+        },
+        "finished_goods": {
+          "type": null,
+          "mapped_to": "finished_goods"
+        },
+        "other_inventories": {
+          "type": null,
+          "mapped_to": "other_inventories"
+        },
+        "prepaid_assets": {
+          "type": null,
+          "mapped_to": "prepaid_assets"
+        },
+        "restricted_cash": {
+          "type": null,
+          "mapped_to": "restricted_cash"
+        },
+        "assets_held_for_sale_current": {
+          "type": null,
+          "mapped_to": "assets_held_for_sale_current"
+        },
+        "hedging_assets_current": {
+          "type": null,
+          "mapped_to": "hedging_assets_current"
+        },
+        "other_current_assets": {
+          "type": null,
+          "mapped_to": "other_current_assets"
+        },
+        "non_current_assets": {
+          "type": null,
+          "mapped_to": "non_current_assets"
+        },
+        "net_ppe_property_plant_equipment": {
+          "type": null,
+          "mapped_to": "net_ppe_property_plant_equipment"
+        },
+        "gross_ppe_property_plant_equipment": {
+          "type": null,
+          "mapped_to": "gross_ppe_property_plant_equipment"
+        },
+        "properties": {
+          "type": null,
+          "mapped_to": "properties"
+        },
+        "land_and_improvements": {
+          "type": null,
+          "mapped_to": "land_and_improvements"
+        },
+        "buildings_and_improvements": {
+          "type": null,
+          "mapped_to": "buildings_and_improvements"
+        },
+        "machinery_furniture_equipment": {
+          "type": null,
+          "mapped_to": "machinery_furniture_equipment"
+        },
+        "other_properties": {
+          "type": null,
+          "mapped_to": "other_properties"
+        },
+        "leases": {
+          "type": null,
+          "mapped_to": "leases"
+        },
+        "construction_in_progress": {
+          "type": null,
+          "mapped_to": "construction_in_progress"
+        },
+        "accumulated_depreciation": {
+          "type": null,
+          "mapped_to": "accumulated_depreciation"
+        },
+        "goodwill_and_other_intangible_assets": {
+          "type": null,
+          "mapped_to": "goodwill_and_other_intangible_assets"
+        },
+        "goodwill": {
+          "type": null,
+          "mapped_to": "goodwill"
+        },
+        "other_intangible_assets": {
+          "type": null,
+          "mapped_to": "other_intangible_assets"
+        },
+        "investments_and_advances": {
+          "type": null,
+          "mapped_to": "investments_and_advances"
+        },
+        "long_term_equity_investment": {
+          "type": null,
+          "mapped_to": "long_term_equity_investment"
+        },
+        "investments_in_subsidiaries_at_cost": {
+          "type": null,
+          "mapped_to": "investments_in_subsidiaries_at_cost"
+        },
+        "investment_in_financial_assets": {
+          "type": null,
+          "mapped_to": "investment_in_financial_assets"
+        },
+        "available_for_sale_securities": {
+          "type": null,
+          "mapped_to": "available_for_sale_securities"
+        },
+        "held_to_maturity_securities": {
+          "type": null,
+          "mapped_to": "held_to_maturity_securities"
+        },
+        "other_investments": {
+          "type": null,
+          "mapped_to": "other_investments"
+        },
+        "non_current_accounts_receivable": {
+          "type": null,
+          "mapped_to": "non_current_accounts_receivable"
+        },
+        "non_current_deferred_assets": {
+          "type": null,
+          "mapped_to": "non_current_deferred_assets"
+        },
+        "non_current_deferred_taxes_assets": {
+          "type": null,
+          "mapped_to": "non_current_deferred_taxes_assets"
+        },
+        "non_current_prepaid_assets": {
+          "type": null,
+          "mapped_to": "non_current_prepaid_assets"
+        },
+        "defined_pension_benefit": {
+          "type": null,
+          "mapped_to": "defined_pension_benefit"
+        },
+        "other_non_current_assets": {
+          "type": null,
+          "mapped_to": "other_non_current_assets"
+        },
+        "total_liabilities_net_minority_interest": {
+          "type": null,
+          "mapped_to": "total_liabilities_net_minority_interest"
+        },
+        "current_liabilities": {
+          "type": null,
+          "mapped_to": "current_liabilities"
+        },
+        "payables_and_accrued_expenses": {
+          "type": null,
+          "mapped_to": "payables_and_accrued_expenses"
+        },
+        "payables": {
+          "type": null,
+          "mapped_to": "payables"
+        },
+        "accounts_payable": {
+          "type": null,
+          "mapped_to": "accounts_payable"
+        },
+        "total_tax_payable": {
+          "type": null,
+          "mapped_to": "total_tax_payable"
+        },
+        "other_payable": {
+          "type": null,
+          "mapped_to": "other_payable"
+        },
+        "current_accrued_expenses": {
+          "type": null,
+          "mapped_to": "current_accrued_expenses"
+        },
+        "interest_payable": {
+          "type": null,
+          "mapped_to": "interest_payable"
+        },
+        "pension_other_post_retirement_benefit_plans_current": {
+          "type": null,
+          "mapped_to": "pension_other_post_retirement_benefit_plans_current"
+        },
+        "current_debt_and_capital_lease_obligation": {
+          "type": null,
+          "mapped_to": "current_debt_and_capital_lease_obligation"
+        },
+        "current_debt": {
+          "type": null,
+          "mapped_to": "current_debt"
+        },
+        "commercial_paper": {
+          "type": null,
+          "mapped_to": "commercial_paper"
+        },
+        "other_current_borrowings": {
+          "type": null,
+          "mapped_to": "other_current_borrowings"
+        },
+        "current_deferred_liabilities": {
+          "type": null,
+          "mapped_to": "current_deferred_liabilities"
+        },
+        "current_deferred_revenue": {
+          "type": null,
+          "mapped_to": "current_deferred_revenue"
+        },
+        "other_current_liabilities": {
+          "type": null,
+          "mapped_to": "other_current_liabilities"
+        },
+        "total_non_current_liabilities_net_minority_interest": {
+          "type": null,
+          "mapped_to": "total_non_current_liabilities_net_minority_interest"
+        },
+        "non_current_liabilities": {
+          "type": null,
+          "mapped_to": "non_current_liabilities"
+        },
+        "long_term_debt_and_capital_lease_obligation": {
+          "type": null,
+          "mapped_to": "long_term_debt_and_capital_lease_obligation"
+        },
+        "long_term_debt": {
+          "type": null,
+          "mapped_to": "long_term_debt"
+        },
+        "long_term_capital_lease_obligation": {
+          "type": null,
+          "mapped_to": "long_term_capital_lease_obligation"
+        },
+        "non_current_deferred_liabilities": {
+          "type": null,
+          "mapped_to": "non_current_deferred_liabilities"
+        },
+        "non_current_deferred_revenue": {
+          "type": null,
+          "mapped_to": "non_current_deferred_revenue"
+        },
+        "trade_and_other_payables_non_current": {
+          "type": null,
+          "mapped_to": "trade_and_other_payables_non_current"
+        },
+        "employee_benefits": {
+          "type": null,
+          "mapped_to": "employee_benefits"
+        },
+        "liabilities_held_for_sale_non_current": {
+          "type": null,
+          "mapped_to": "liabilities_held_for_sale_non_current"
+        },
+        "other_non_current_liabilities": {
+          "type": null,
+          "mapped_to": "other_non_current_liabilities"
+        },
+        "long_term_provisions": {
+          "type": null,
+          "mapped_to": "long_term_provisions"
+        },
+        "equity": {
+          "type": null,
+          "mapped_to": "equity"
+        },
+        "total_equity_gross_minority_interest": {
+          "type": null,
+          "mapped_to": "total_equity_gross_minority_interest"
+        },
+        "stockholders_equity": {
+          "type": null,
+          "mapped_to": "stockholders_equity"
+        },
+        "capital_stock": {
+          "type": null,
+          "mapped_to": "capital_stock"
+        },
+        "preferred_stock": {
+          "type": null,
+          "mapped_to": "preferred_stock"
+        },
+        "common_stock": {
+          "type": null,
+          "mapped_to": "common_stock"
+        },
+        "retained_earnings": {
+          "type": null,
+          "mapped_to": "retained_earnings"
+        },
+        "treasury_stock": {
+          "type": null,
+          "mapped_to": "treasury_stock"
+        },
+        "gains_losses_not_affecting_retained_earnings": {
+          "type": null,
+          "mapped_to": "gains_losses_not_affecting_retained_earnings"
+        },
+        "other_equity_adjustments": {
+          "type": null,
+          "mapped_to": "other_equity_adjustments"
+        },
+        "other_equity_interest": {
+          "type": null,
+          "mapped_to": "other_equity_interest"
+        },
+        "minority_interest": {
+          "type": null,
+          "mapped_to": "minority_interest"
+        },
+        "total_capitalization": {
+          "type": null,
+          "mapped_to": "total_capitalization"
+        },
+        "preferred_stock_equity": {
+          "type": null,
+          "mapped_to": "preferred_stock_equity"
+        },
+        "common_stock_equity": {
+          "type": null,
+          "mapped_to": "common_stock_equity"
+        },
+        "capital_lease_obligations": {
+          "type": null,
+          "mapped_to": "capital_lease_obligations"
+        },
+        "net_tangible_assets": {
+          "type": null,
+          "mapped_to": "net_tangible_assets"
+        },
+        "working_capital": {
+          "type": null,
+          "mapped_to": "working_capital"
+        },
+        "invested_capital": {
+          "type": null,
+          "mapped_to": "invested_capital"
+        },
+        "tangible_book_value": {
+          "type": null,
+          "mapped_to": "tangible_book_value"
+        },
+        "total_debt": {
+          "type": null,
+          "mapped_to": "total_debt"
+        },
+        "net_debt": {
+          "type": null,
+          "mapped_to": "net_debt"
+        },
+        "share_issued": {
+          "type": null,
+          "mapped_to": "share_issued"
+        },
+        "ordinary_shares_number": {
+          "type": null,
+          "mapped_to": "ordinary_shares_number"
+        },
+        "preferred_shares_number": {
+          "type": null,
+          "mapped_to": "preferred_shares_number"
+        },
+        "treasury_shares_number": {
+          "type": null,
+          "mapped_to": "treasury_shares_number"
+        }
+      }
+    },
+    "cash_flow": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "company_id": {
+          "type": null,
+          "mapped_to": "company_id"
+        },
+        "period": {
+          "type": null,
+          "mapped_to": "period"
+        },
+        "cash_flow_from_operating_activities": {
+          "type": null,
+          "mapped_to": "cash_flow_from_operating_activities"
+        },
+        "operating_cash_flow": {
+          "type": null,
+          "mapped_to": "operating_cash_flow"
+        },
+        "cash_flow_from_continuing_operating_activities": {
+          "type": null,
+          "mapped_to": "cash_flow_from_continuing_operating_activities"
+        },
+        "net_income_from_continuing_operations": {
+          "type": null,
+          "mapped_to": "net_income_from_continuing_operations"
+        },
+        "operating_gains_losses": {
+          "type": null,
+          "mapped_to": "operating_gains_losses"
+        },
+        "gain_loss_on_sale_of_business": {
+          "type": null,
+          "mapped_to": "gain_loss_on_sale_of_business"
+        },
+        "gain_loss_on_investment_securities": {
+          "type": null,
+          "mapped_to": "gain_loss_on_investment_securities"
+        },
+        "earnings_losses_from_equity_investments": {
+          "type": null,
+          "mapped_to": "earnings_losses_from_equity_investments"
+        },
+        "pension_and_employee_benefit_expense": {
+          "type": null,
+          "mapped_to": "pension_and_employee_benefit_expense"
+        },
+        "depreciation_amortization_depletion": {
+          "type": null,
+          "mapped_to": "depreciation_amortization_depletion"
+        },
+        "depreciation_amortization": {
+          "type": null,
+          "mapped_to": "depreciation_amortization"
+        },
+        "depreciation": {
+          "type": null,
+          "mapped_to": "depreciation"
+        },
+        "amortization": {
+          "type": null,
+          "mapped_to": "amortization"
+        },
+        "amortization_of_intangibles": {
+          "type": null,
+          "mapped_to": "amortization_of_intangibles"
+        },
+        "deferred_tax": {
+          "type": null,
+          "mapped_to": "deferred_tax"
+        },
+        "deferred_income_tax": {
+          "type": null,
+          "mapped_to": "deferred_income_tax"
+        },
+        "asset_impairment_charge": {
+          "type": null,
+          "mapped_to": "asset_impairment_charge"
+        },
+        "other_noncash_items": {
+          "type": null,
+          "mapped_to": "other_noncash_items"
+        },
+        "change_in_working_capital": {
+          "type": null,
+          "mapped_to": "change_in_working_capital"
+        },
+        "change_in_receivables": {
+          "type": null,
+          "mapped_to": "change_in_receivables"
+        },
+        "changes_in_account_receivables": {
+          "type": null,
+          "mapped_to": "changes_in_account_receivables"
+        },
+        "change_in_inventory": {
+          "type": null,
+          "mapped_to": "change_in_inventory"
+        },
+        "change_in_payables_and_accrued_expense": {
+          "type": null,
+          "mapped_to": "change_in_payables_and_accrued_expense"
+        },
+        "change_in_payable": {
+          "type": null,
+          "mapped_to": "change_in_payable"
+        },
+        "change_in_account_payable": {
+          "type": null,
+          "mapped_to": "change_in_account_payable"
+        },
+        "change_in_accrued_expense": {
+          "type": null,
+          "mapped_to": "change_in_accrued_expense"
+        },
+        "change_in_other_working_capital": {
+          "type": null,
+          "mapped_to": "change_in_other_working_capital"
+        },
+        "taxes_refund_paid": {
+          "type": null,
+          "mapped_to": "taxes_refund_paid"
+        },
+        "cash_from_discontinued_operating_activities": {
+          "type": null,
+          "mapped_to": "cash_from_discontinued_operating_activities"
+        },
+        "cash_flow_from_investing_activities": {
+          "type": null,
+          "mapped_to": "cash_flow_from_investing_activities"
+        },
+        "investing_cash_flow": {
+          "type": null,
+          "mapped_to": "investing_cash_flow"
+        },
+        "cash_flow_from_continuing_investing_activities": {
+          "type": null,
+          "mapped_to": "cash_flow_from_continuing_investing_activities"
+        },
+        "net_ppe_purchase_and_sale": {
+          "type": null,
+          "mapped_to": "net_ppe_purchase_and_sale"
+        },
+        "purchase_of_ppe": {
+          "type": null,
+          "mapped_to": "purchase_of_ppe"
+        },
+        "sale_of_ppe": {
+          "type": null,
+          "mapped_to": "sale_of_ppe"
+        },
+        "net_intangibles_purchase_and_sale": {
+          "type": null,
+          "mapped_to": "net_intangibles_purchase_and_sale"
+        },
+        "purchase_of_intangibles": {
+          "type": null,
+          "mapped_to": "purchase_of_intangibles"
+        },
+        "net_business_purchase_and_sale": {
+          "type": null,
+          "mapped_to": "net_business_purchase_and_sale"
+        },
+        "purchase_of_business": {
+          "type": null,
+          "mapped_to": "purchase_of_business"
+        },
+        "sale_of_business": {
+          "type": null,
+          "mapped_to": "sale_of_business"
+        },
+        "net_investment_purchase_and_sale": {
+          "type": null,
+          "mapped_to": "net_investment_purchase_and_sale"
+        },
+        "net_other_investing_changes": {
+          "type": null,
+          "mapped_to": "net_other_investing_changes"
+        },
+        "cash_from_discontinued_investing_activities": {
+          "type": null,
+          "mapped_to": "cash_from_discontinued_investing_activities"
+        },
+        "cash_flow_from_financing_activities": {
+          "type": null,
+          "mapped_to": "cash_flow_from_financing_activities"
+        },
+        "financing_cash_flow": {
+          "type": null,
+          "mapped_to": "financing_cash_flow"
+        },
+        "cash_flow_from_continuing_financing_activities": {
+          "type": null,
+          "mapped_to": "cash_flow_from_continuing_financing_activities"
+        },
+        "net_issuance_payments_of_debt": {
+          "type": null,
+          "mapped_to": "net_issuance_payments_of_debt"
+        },
+        "net_long_term_debt_issuance": {
+          "type": null,
+          "mapped_to": "net_long_term_debt_issuance"
+        },
+        "long_term_debt_issuance": {
+          "type": null,
+          "mapped_to": "long_term_debt_issuance"
+        },
+        "long_term_debt_payments": {
+          "type": null,
+          "mapped_to": "long_term_debt_payments"
+        },
+        "net_short_term_debt_issuance": {
+          "type": null,
+          "mapped_to": "net_short_term_debt_issuance"
+        },
+        "net_common_stock_issuance": {
+          "type": null,
+          "mapped_to": "net_common_stock_issuance"
+        },
+        "common_stock_payments": {
+          "type": null,
+          "mapped_to": "common_stock_payments"
+        },
+        "net_preferred_stock_issuance": {
+          "type": null,
+          "mapped_to": "net_preferred_stock_issuance"
+        },
+        "preferred_stock_payments": {
+          "type": null,
+          "mapped_to": "preferred_stock_payments"
+        },
+        "cash_dividends_paid": {
+          "type": null,
+          "mapped_to": "cash_dividends_paid"
+        },
+        "common_stock_dividend_paid": {
+          "type": null,
+          "mapped_to": "common_stock_dividend_paid"
+        },
+        "net_other_financing_charges": {
+          "type": null,
+          "mapped_to": "net_other_financing_charges"
+        },
+        "cash_from_discontinued_financing_activities": {
+          "type": null,
+          "mapped_to": "cash_from_discontinued_financing_activities"
+        },
+        "cash_flow_from_discontinued_operation": {
+          "type": null,
+          "mapped_to": "cash_flow_from_discontinued_operation"
+        },
+        "other_cash_flow_items": {
+          "type": null,
+          "mapped_to": "other_cash_flow_items"
+        },
+        "end_cash_position": {
+          "type": null,
+          "mapped_to": "end_cash_position"
+        },
+        "changes_in_cash": {
+          "type": null,
+          "mapped_to": "changes_in_cash"
+        },
+        "effect_of_exchange_rate_changes": {
+          "type": null,
+          "mapped_to": "effect_of_exchange_rate_changes"
+        },
+        "beginning_cash_position": {
+          "type": null,
+          "mapped_to": "beginning_cash_position"
+        },
+        "interest_paid_supplemental_data": {
+          "type": null,
+          "mapped_to": "interest_paid_supplemental_data"
+        },
+        "capital_expenditure": {
+          "type": null,
+          "mapped_to": "capital_expenditure"
+        },
+        "issuance_of_capital_stock": {
+          "type": null,
+          "mapped_to": "issuance_of_capital_stock"
+        },
+        "issuance_of_debt": {
+          "type": null,
+          "mapped_to": "issuance_of_debt"
+        },
+        "repayment_of_debt": {
+          "type": null,
+          "mapped_to": "repayment_of_debt"
+        },
+        "repurchase_of_capital_stock": {
+          "type": null,
+          "mapped_to": "repurchase_of_capital_stock"
+        },
+        "free_cash_flow": {
+          "type": null,
+          "mapped_to": "free_cash_flow"
+        }
+      }
+    },
+    "financials": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "company_id": {
+          "type": null,
+          "mapped_to": "company_id"
+        },
+        "period": {
+          "type": null,
+          "mapped_to": "period"
+        },
+        "current_ratio": {
+          "type": null,
+          "mapped_to": "current_ratio"
+        },
+        "Quick_Ratio": {
+          "type": null,
+          "mapped_to": "Quick_Ratio"
+        },
+        "Debt_to_Equity_Ratio": {
+          "type": null,
+          "mapped_to": "Debt_to_Equity_Ratio"
+        },
+        "Interest_Coverage_Ratio": {
+          "type": null,
+          "mapped_to": "Interest_Coverage_Ratio"
+        },
+        "Working_Capital": {
+          "type": null,
+          "mapped_to": "Working_Capital"
+        },
+        "Cash_and_Cash_Equivalents": {
+          "type": null,
+          "mapped_to": "Cash_and_Cash_Equivalents"
+        },
+        "Altman_Z_Score": {
+          "type": null,
+          "mapped_to": "Altman_Z_Score"
+        },
+        "Piotroski_F_Score": {
+          "type": null,
+          "mapped_to": "Piotroski_F_Score"
+        },
+        "Debt_Ratio": {
+          "type": null,
+          "mapped_to": "Debt_Ratio"
+        },
+        "Cash_Ratio": {
+          "type": null,
+          "mapped_to": "Cash_Ratio"
+        },
+        "Gross_Profit_Margin": {
+          "type": null,
+          "mapped_to": "Gross_Profit_Margin"
+        },
+        "Operating_Profit_Margin": {
+          "type": null,
+          "mapped_to": "Operating_Profit_Margin"
+        },
+        "Net_Profit_Margin": {
+          "type": null,
+          "mapped_to": "Net_Profit_Margin"
+        },
+        "Return_on_Assets_ROA": {
+          "type": null,
+          "mapped_to": "Return_on_Assets_ROA"
+        },
+        "Return_on_Equity_ROE": {
+          "type": null,
+          "mapped_to": "Return_on_Equity_ROE"
+        },
+        "Return_on_Investment_ROI": {
+          "type": null,
+          "mapped_to": "Return_on_Investment_ROI"
+        },
+        "EBITDA_Margin": {
+          "type": null,
+          "mapped_to": "EBITDA_Margin"
+        },
+        "Return_on_Invested_Capital_ROIC": {
+          "type": null,
+          "mapped_to": "Return_on_Invested_Capital_ROIC"
+        },
+        "Operating_Margin": {
+          "type": null,
+          "mapped_to": "Operating_Margin"
+        },
+        "Gross_Margin": {
+          "type": null,
+          "mapped_to": "Gross_Margin"
+        },
+        "Price_to_Earnings_PE_Ratio": {
+          "type": null,
+          "mapped_to": "Price_to_Earnings_PE_Ratio"
+        },
+        "Price_to_Book_PB_Ratio": {
+          "type": null,
+          "mapped_to": "Price_to_Book_PB_Ratio"
+        },
+        "Price_to_Sales_PS_Ratio": {
+          "type": null,
+          "mapped_to": "Price_to_Sales_PS_Ratio"
+        },
+        "Enterprise_Value_to_EBITDA_EVEBITDA": {
+          "type": null,
+          "mapped_to": "Enterprise_Value_to_EBITDA_EVEBITDA"
+        },
+        "Price_to_Cash_Flow_PCF_Ratio": {
+          "type": null,
+          "mapped_to": "Price_to_Cash_Flow_PCF_Ratio"
+        },
+        "Dividend_Discount_Model_DDM_Value": {
+          "type": null,
+          "mapped_to": "Dividend_Discount_Model_DDM_Value"
+        },
+        "Economic_Value_Added_EVA": {
+          "type": null,
+          "mapped_to": "Economic_Value_Added_EVA"
+        },
+        "Book_Value_Per_Share_BVPS": {
+          "type": null,
+          "mapped_to": "Book_Value_Per_Share_BVPS"
+        },
+        "Weighted_Average_Cost_of_Capital_WACC": {
+          "type": null,
+          "mapped_to": "Weighted_Average_Cost_of_Capital_WACC"
+        },
+        "Cost_of_Equity_CAPM": {
+          "type": null,
+          "mapped_to": "Cost_of_Equity_CAPM"
+        },
+        "Market_Value_of_Equity": {
+          "type": null,
+          "mapped_to": "Market_Value_of_Equity"
+        },
+        "Market_Value_of_Debt": {
+          "type": null,
+          "mapped_to": "Market_Value_of_Debt"
+        },
+        "Total_Market_Value_of_Equity_and_Debt": {
+          "type": null,
+          "mapped_to": "Total_Market_Value_of_Equity_and_Debt"
+        },
+        "Cost_of_Equity": {
+          "type": null,
+          "mapped_to": "Cost_of_Equity"
+        },
+        "Cost_of_Debt": {
+          "type": null,
+          "mapped_to": "Cost_of_Debt"
+        },
+        "Corporate_Tax_Rate": {
+          "type": null,
+          "mapped_to": "Corporate_Tax_Rate"
+        },
+        "Risk_Free_Rate": {
+          "type": null,
+          "mapped_to": "Risk_Free_Rate"
+        },
+        "Beta": {
+          "type": null,
+          "mapped_to": "Beta"
+        },
+        "Market_Return": {
+          "type": null,
+          "mapped_to": "Market_Return"
+        },
+        "Net_Operating_Profit_After_Taxes_NOPAT": {
+          "type": null,
+          "mapped_to": "Net_Operating_Profit_After_Taxes_NOPAT"
+        },
+        "revenue_growth_yoy": {
+          "type": null,
+          "mapped_to": "revenue_growth_yoy"
+        },
+        "earnings_growth_yoy": {
+          "type": null,
+          "mapped_to": "earnings_growth_yoy"
+        },
+        "dividend_growth_yoy": {
+          "type": null,
+          "mapped_to": "dividend_growth_yoy"
+        },
+        "future_earnings_growth_analyst_estimates": {
+          "type": null,
+          "mapped_to": "future_earnings_growth_analyst_estimates"
+        },
+        "historical_earnings_growth": {
+          "type": null,
+          "mapped_to": "historical_earnings_growth"
+        },
+        "rd_expenditure_growth": {
+          "type": null,
+          "mapped_to": "rd_expenditure_growth"
+        },
+        "ebitda_growth_rate": {
+          "type": null,
+          "mapped_to": "ebitda_growth_rate"
+        },
+        "revenue_per_share_growth": {
+          "type": null,
+          "mapped_to": "revenue_per_share_growth"
+        },
+        "dividend_yield": {
+          "type": null,
+          "mapped_to": "dividend_yield"
+        },
+        "payout_ratio": {
+          "type": null,
+          "mapped_to": "payout_ratio"
+        },
+        "dividend_per_share": {
+          "type": null,
+          "mapped_to": "dividend_per_share"
+        },
+        "dividend_growth_rate": {
+          "type": null,
+          "mapped_to": "dividend_growth_rate"
+        },
+        "exdividend_date": {
+          "type": null,
+          "mapped_to": "exdividend_date"
+        },
+        "dividend_payout_history": {
+          "type": null,
+          "mapped_to": "dividend_payout_history"
+        },
+        "dividend_coverage_ratio": {
+          "type": null,
+          "mapped_to": "dividend_coverage_ratio"
+        },
+        "asset_turnover_ratio": {
+          "type": null,
+          "mapped_to": "asset_turnover_ratio"
+        },
+        "inventory_turnover_ratio": {
+          "type": null,
+          "mapped_to": "inventory_turnover_ratio"
+        },
+        "receivables_turnover_ratio": {
+          "type": null,
+          "mapped_to": "receivables_turnover_ratio"
+        },
+        "days_sales_outstanding_dso": {
+          "type": null,
+          "mapped_to": "days_sales_outstanding_dso"
+        },
+        "days_inventory_outstanding_dio": {
+          "type": null,
+          "mapped_to": "days_inventory_outstanding_dio"
+        },
+        "cash_conversion_cycle_ccc": {
+          "type": null,
+          "mapped_to": "cash_conversion_cycle_ccc"
+        },
+        "days_payable_outstanding_dpo": {
+          "type": null,
+          "mapped_to": "days_payable_outstanding_dpo"
+        },
+        "free_cash_flow": {
+          "type": null,
+          "mapped_to": "free_cash_flow"
+        },
+        "market_capitalization": {
+          "type": null,
+          "mapped_to": "market_capitalization"
+        },
+        "earnings_per_share_eps": {
+          "type": null,
+          "mapped_to": "earnings_per_share_eps"
+        },
+        "peg_ratio_pe_to_growth": {
+          "type": null,
+          "mapped_to": "peg_ratio_pe_to_growth"
+        },
+        "insider_transactions": {
+          "type": null,
+          "mapped_to": "insider_transactions"
+        },
+        "analyst_recommendations": {
+          "type": null,
+          "mapped_to": "analyst_recommendations"
+        },
+        "institutional_ownership": {
+          "type": null,
+          "mapped_to": "institutional_ownership"
+        },
+        "esg_score": {
+          "type": null,
+          "mapped_to": "esg_score"
+        },
+        "carbon_footprint": {
+          "type": null,
+          "mapped_to": "carbon_footprint"
+        },
+        "board_diversity": {
+          "type": null,
+          "mapped_to": "board_diversity"
+        },
+        "executive_compensation": {
+          "type": null,
+          "mapped_to": "executive_compensation"
+        },
+        "social_responsibility_initiatives": {
+          "type": null,
+          "mapped_to": "social_responsibility_initiatives"
+        },
+        "sustainability_score": {
+          "type": null,
+          "mapped_to": "sustainability_score"
+        },
+        "social_impact_score": {
+          "type": null,
+          "mapped_to": "social_impact_score"
+        },
+        "environmental_impact": {
+          "type": null,
+          "mapped_to": "environmental_impact"
+        },
+        "social_metrics": {
+          "type": null,
+          "mapped_to": "social_metrics"
+        },
+        "governance_metrics": {
+          "type": null,
+          "mapped_to": "governance_metrics"
+        },
+        "return_on_invested_capital_roic": {
+          "type": null,
+          "mapped_to": "return_on_invested_capital_roic"
+        },
+        "management_tenure": {
+          "type": null,
+          "mapped_to": "management_tenure"
+        },
+        "management_effectiveness_ratios": {
+          "type": null,
+          "mapped_to": "management_effectiveness_ratios"
+        },
+        "ebitda": {
+          "type": null,
+          "mapped_to": "ebitda"
+        },
+        "ebitda_margin": {
+          "type": null,
+          "mapped_to": "ebitda_margin"
+        },
+        "adjusted_ebitda": {
+          "type": null,
+          "mapped_to": "adjusted_ebitda"
+        },
+        "ebitda_to_interest_coverage_ratio": {
+          "type": null,
+          "mapped_to": "ebitda_to_interest_coverage_ratio"
+        },
+        "total_revenue": {
+          "type": null,
+          "mapped_to": "total_revenue"
+        },
+        "operating_revenue": {
+          "type": null,
+          "mapped_to": "operating_revenue"
+        },
+        "cost_of_revenue": {
+          "type": null,
+          "mapped_to": "cost_of_revenue"
+        },
+        "gross_profit": {
+          "type": null,
+          "mapped_to": "gross_profit"
+        },
+        "operating_expense": {
+          "type": null,
+          "mapped_to": "operating_expense"
+        },
+        "selling_general_and_administrative": {
+          "type": null,
+          "mapped_to": "selling_general_and_administrative"
+        },
+        "rental_landing_fees": {
+          "type": null,
+          "mapped_to": "rental_landing_fees"
+        },
+        "general_administrative_expense": {
+          "type": null,
+          "mapped_to": "general_administrative_expense"
+        },
+        "other_operating_expenses": {
+          "type": null,
+          "mapped_to": "other_operating_expenses"
+        },
+        "other_ga_expenses": {
+          "type": null,
+          "mapped_to": "other_ga_expenses"
+        },
+        "research_development": {
+          "type": null,
+          "mapped_to": "research_development"
+        },
+        "other_operating_income": {
+          "type": null,
+          "mapped_to": "other_operating_income"
+        },
+        "operating_income": {
+          "type": null,
+          "mapped_to": "operating_income"
+        },
+        "net_non_operating_interest_income_expense": {
+          "type": null,
+          "mapped_to": "net_non_operating_interest_income_expense"
+        },
+        "interest_income_non_operating": {
+          "type": null,
+          "mapped_to": "interest_income_non_operating"
+        },
+        "interest_expense_non_operating": {
+          "type": null,
+          "mapped_to": "interest_expense_non_operating"
+        },
+        "other_income_expense": {
+          "type": null,
+          "mapped_to": "other_income_expense"
+        },
+        "gain_on_sale_of_security": {
+          "type": null,
+          "mapped_to": "gain_on_sale_of_security"
+        },
+        "earnings_from_equity_interest": {
+          "type": null,
+          "mapped_to": "earnings_from_equity_interest"
+        },
+        "special_income_charges": {
+          "type": null,
+          "mapped_to": "special_income_charges"
+        },
+        "restructuring_mergers_acquisition": {
+          "type": null,
+          "mapped_to": "restructuring_mergers_acquisition"
+        },
+        "impairment_of_capital_assets": {
+          "type": null,
+          "mapped_to": "impairment_of_capital_assets"
+        },
+        "other_special_charges": {
+          "type": null,
+          "mapped_to": "other_special_charges"
+        },
+        "gain_on_sale_of_business": {
+          "type": null,
+          "mapped_to": "gain_on_sale_of_business"
+        },
+        "other_non_operating_income_expenses": {
+          "type": null,
+          "mapped_to": "other_non_operating_income_expenses"
+        },
+        "total_other_finance_cost": {
+          "type": null,
+          "mapped_to": "total_other_finance_cost"
+        },
+        "pretax_income": {
+          "type": null,
+          "mapped_to": "pretax_income"
+        },
+        "tax_provision": {
+          "type": null,
+          "mapped_to": "tax_provision"
+        },
+        "net_income_common_stockholders": {
+          "type": null,
+          "mapped_to": "net_income_common_stockholders"
+        },
+        "net_income": {
+          "type": null,
+          "mapped_to": "net_income"
+        },
+        "net_income_including_noncontrolling_interests": {
+          "type": null,
+          "mapped_to": "net_income_including_noncontrolling_interests"
+        },
+        "net_income_continuous_operations": {
+          "type": null,
+          "mapped_to": "net_income_continuous_operations"
+        },
+        "net_income_discontinuous_operations": {
+          "type": null,
+          "mapped_to": "net_income_discontinuous_operations"
+        },
+        "minority_interests": {
+          "type": null,
+          "mapped_to": "minority_interests"
+        },
+        "preferred_stock_dividends": {
+          "type": null,
+          "mapped_to": "preferred_stock_dividends"
+        },
+        "diluted_ni_available_to_com_stockholders": {
+          "type": null,
+          "mapped_to": "diluted_ni_available_to_com_stockholders"
+        },
+        "basic_eps": {
+          "type": null,
+          "mapped_to": "basic_eps"
+        },
+        "diluted_eps": {
+          "type": null,
+          "mapped_to": "diluted_eps"
+        },
+        "basic_average_shares": {
+          "type": null,
+          "mapped_to": "basic_average_shares"
+        },
+        "diluted_average_shares": {
+          "type": null,
+          "mapped_to": "diluted_average_shares"
+        },
+        "rent_expense_supplemental": {
+          "type": null,
+          "mapped_to": "rent_expense_supplemental"
+        },
+        "total_expenses": {
+          "type": null,
+          "mapped_to": "total_expenses"
+        },
+        "net_income_from_continuing_discontinued_operation": {
+          "type": null,
+          "mapped_to": "net_income_from_continuing_discontinued_operation"
+        },
+        "normalized_income": {
+          "type": null,
+          "mapped_to": "normalized_income"
+        },
+        "interest_income": {
+          "type": null,
+          "mapped_to": "interest_income"
+        },
+        "interest_expense": {
+          "type": null,
+          "mapped_to": "interest_expense"
+        },
+        "net_interest_income": {
+          "type": null,
+          "mapped_to": "net_interest_income"
+        },
+        "ebit": {
+          "type": null,
+          "mapped_to": "ebit"
+        },
+        "reconciled_cost_of_revenue": {
+          "type": null,
+          "mapped_to": "reconciled_cost_of_revenue"
+        },
+        "reconciled_depreciation": {
+          "type": null,
+          "mapped_to": "reconciled_depreciation"
+        },
+        "net_income_from_continuing_operation_net_minority_interest": {
+          "type": null,
+          "mapped_to": "net_income_from_continuing_operation_net_minority_interest"
+        },
+        "total_unusual_items_excluding_goodwill": {
+          "type": null,
+          "mapped_to": "total_unusual_items_excluding_goodwill"
+        },
+        "total_unusual_items": {
+          "type": null,
+          "mapped_to": "total_unusual_items"
+        },
+        "normalized_ebitda": {
+          "type": null,
+          "mapped_to": "normalized_ebitda"
+        },
+        "tax_rate_for_calcs": {
+          "type": null,
+          "mapped_to": "tax_rate_for_calcs"
+        },
+        "tax_effect_of_unusual_items": {
+          "type": null,
+          "mapped_to": "tax_effect_of_unusual_items"
+        },
+        "sales_returns_and_allowances": {
+          "type": null,
+          "mapped_to": "sales_returns_and_allowances"
+        },
+        "bad_debt_expense": {
+          "type": null,
+          "mapped_to": "bad_debt_expense"
+        },
+        "amortization_of_deferred_charges": {
+          "type": null,
+          "mapped_to": "amortization_of_deferred_charges"
+        },
+        "loss_on_sale_of_assets": {
+          "type": null,
+          "mapped_to": "loss_on_sale_of_assets"
+        },
+        "provision_for_income_taxes": {
+          "type": null,
+          "mapped_to": "provision_for_income_taxes"
+        },
+        "discontinued_operations": {
+          "type": null,
+          "mapped_to": "discontinued_operations"
+        },
+        "extraordinary_items": {
+          "type": null,
+          "mapped_to": "extraordinary_items"
+        },
+        "total_assets": {
+          "type": null,
+          "mapped_to": "total_assets"
+        },
+        "current_assets": {
+          "type": null,
+          "mapped_to": "current_assets"
+        },
+        "cash_cash_equivalents_short_term_investments": {
+          "type": null,
+          "mapped_to": "cash_cash_equivalents_short_term_investments"
+        },
+        "cash_and_cash_equivalents": {
+          "type": null,
+          "mapped_to": "cash_and_cash_equivalents"
+        },
+        "cash": {
+          "type": null,
+          "mapped_to": "cash"
+        },
+        "other_short_term_investments": {
+          "type": null,
+          "mapped_to": "other_short_term_investments"
+        },
+        "receivables": {
+          "type": null,
+          "mapped_to": "receivables"
+        },
+        "accounts_receivable": {
+          "type": null,
+          "mapped_to": "accounts_receivable"
+        },
+        "gross_accounts_receivable": {
+          "type": null,
+          "mapped_to": "gross_accounts_receivable"
+        },
+        "accrued_interest_receivable": {
+          "type": null,
+          "mapped_to": "accrued_interest_receivable"
+        },
+        "due_from_related_parties_current": {
+          "type": null,
+          "mapped_to": "due_from_related_parties_current"
+        },
+        "other_receivables": {
+          "type": null,
+          "mapped_to": "other_receivables"
+        },
+        "receivables_adjustments_allowances": {
+          "type": null,
+          "mapped_to": "receivables_adjustments_allowances"
+        },
+        "inventory": {
+          "type": null,
+          "mapped_to": "inventory"
+        },
+        "raw_materials": {
+          "type": null,
+          "mapped_to": "raw_materials"
+        },
+        "finished_goods": {
+          "type": null,
+          "mapped_to": "finished_goods"
+        },
+        "other_inventories": {
+          "type": null,
+          "mapped_to": "other_inventories"
+        },
+        "prepaid_assets": {
+          "type": null,
+          "mapped_to": "prepaid_assets"
+        },
+        "restricted_cash": {
+          "type": null,
+          "mapped_to": "restricted_cash"
+        },
+        "assets_held_for_sale_current": {
+          "type": null,
+          "mapped_to": "assets_held_for_sale_current"
+        },
+        "hedging_assets_current": {
+          "type": null,
+          "mapped_to": "hedging_assets_current"
+        },
+        "other_current_assets": {
+          "type": null,
+          "mapped_to": "other_current_assets"
+        },
+        "total_noncurrent_assets": {
+          "type": null,
+          "mapped_to": "total_noncurrent_assets"
+        },
+        "net_ppe_property_plant_equipment": {
+          "type": null,
+          "mapped_to": "net_ppe_property_plant_equipment"
+        },
+        "gross_ppe_property_plant_equipment": {
+          "type": null,
+          "mapped_to": "gross_ppe_property_plant_equipment"
+        },
+        "properties": {
+          "type": null,
+          "mapped_to": "properties"
+        },
+        "land_and_improvements": {
+          "type": null,
+          "mapped_to": "land_and_improvements"
+        },
+        "buildings_and_improvements": {
+          "type": null,
+          "mapped_to": "buildings_and_improvements"
+        },
+        "machinery_furniture_equipment": {
+          "type": null,
+          "mapped_to": "machinery_furniture_equipment"
+        },
+        "other_properties": {
+          "type": null,
+          "mapped_to": "other_properties"
+        },
+        "leases": {
+          "type": null,
+          "mapped_to": "leases"
+        },
+        "construction_in_progress": {
+          "type": null,
+          "mapped_to": "construction_in_progress"
+        },
+        "accumulated_depreciation": {
+          "type": null,
+          "mapped_to": "accumulated_depreciation"
+        },
+        "goodwill_and_other_intangible_assets": {
+          "type": null,
+          "mapped_to": "goodwill_and_other_intangible_assets"
+        },
+        "goodwill": {
+          "type": null,
+          "mapped_to": "goodwill"
+        },
+        "other_intangible_assets": {
+          "type": null,
+          "mapped_to": "other_intangible_assets"
+        },
+        "investments_and_advances": {
+          "type": null,
+          "mapped_to": "investments_and_advances"
+        },
+        "long_term_equity_investment": {
+          "type": null,
+          "mapped_to": "long_term_equity_investment"
+        },
+        "investments_in_subsidiaries_at_cost": {
+          "type": null,
+          "mapped_to": "investments_in_subsidiaries_at_cost"
+        },
+        "investment_in_financial_assets": {
+          "type": null,
+          "mapped_to": "investment_in_financial_assets"
+        },
+        "available_for_sale_securities": {
+          "type": null,
+          "mapped_to": "available_for_sale_securities"
+        },
+        "held_to_maturity_securities": {
+          "type": null,
+          "mapped_to": "held_to_maturity_securities"
+        },
+        "other_investments": {
+          "type": null,
+          "mapped_to": "other_investments"
+        },
+        "non_current_accounts_receivable": {
+          "type": null,
+          "mapped_to": "non_current_accounts_receivable"
+        },
+        "non_current_deferred_assets": {
+          "type": null,
+          "mapped_to": "non_current_deferred_assets"
+        },
+        "non_current_deferred_taxes_assets": {
+          "type": null,
+          "mapped_to": "non_current_deferred_taxes_assets"
+        },
+        "non_current_prepaid_assets": {
+          "type": null,
+          "mapped_to": "non_current_prepaid_assets"
+        },
+        "defined_pension_benefit": {
+          "type": null,
+          "mapped_to": "defined_pension_benefit"
+        },
+        "other_non_current_assets": {
+          "type": null,
+          "mapped_to": "other_non_current_assets"
+        },
+        "total_liabilities_net_minority_interest": {
+          "type": null,
+          "mapped_to": "total_liabilities_net_minority_interest"
+        },
+        "current_liabilities": {
+          "type": null,
+          "mapped_to": "current_liabilities"
+        },
+        "payables_and_accrued_expenses": {
+          "type": null,
+          "mapped_to": "payables_and_accrued_expenses"
+        },
+        "payables": {
+          "type": null,
+          "mapped_to": "payables"
+        },
+        "accounts_payable": {
+          "type": null,
+          "mapped_to": "accounts_payable"
+        },
+        "total_tax_payable": {
+          "type": null,
+          "mapped_to": "total_tax_payable"
+        },
+        "other_payable": {
+          "type": null,
+          "mapped_to": "other_payable"
+        },
+        "current_accrued_expenses": {
+          "type": null,
+          "mapped_to": "current_accrued_expenses"
+        },
+        "interest_payable": {
+          "type": null,
+          "mapped_to": "interest_payable"
+        },
+        "pension_other_post_retirement_benefit_plans_current": {
+          "type": null,
+          "mapped_to": "pension_other_post_retirement_benefit_plans_current"
+        },
+        "current_debt_and_capital_lease_obligation": {
+          "type": null,
+          "mapped_to": "current_debt_and_capital_lease_obligation"
+        },
+        "current_debt": {
+          "type": null,
+          "mapped_to": "current_debt"
+        },
+        "commercial_paper": {
+          "type": null,
+          "mapped_to": "commercial_paper"
+        },
+        "other_current_borrowings": {
+          "type": null,
+          "mapped_to": "other_current_borrowings"
+        },
+        "current_deferred_liabilities": {
+          "type": null,
+          "mapped_to": "current_deferred_liabilities"
+        },
+        "current_deferred_revenue": {
+          "type": null,
+          "mapped_to": "current_deferred_revenue"
+        },
+        "other_current_liabilities": {
+          "type": null,
+          "mapped_to": "other_current_liabilities"
+        },
+        "total_non_current_liabilities_net_minority_interest": {
+          "type": null,
+          "mapped_to": "total_non_current_liabilities_net_minority_interest"
+        },
+        "non_current_liabilities": {
+          "type": null,
+          "mapped_to": "non_current_liabilities"
+        },
+        "long_term_debt_and_capital_lease_obligation": {
+          "type": null,
+          "mapped_to": "long_term_debt_and_capital_lease_obligation"
+        },
+        "long_term_debt": {
+          "type": null,
+          "mapped_to": "long_term_debt"
+        },
+        "long_term_capital_lease_obligation": {
+          "type": null,
+          "mapped_to": "long_term_capital_lease_obligation"
+        },
+        "non_current_deferred_liabilities": {
+          "type": null,
+          "mapped_to": "non_current_deferred_liabilities"
+        },
+        "non_current_deferred_revenue": {
+          "type": null,
+          "mapped_to": "non_current_deferred_revenue"
+        },
+        "trade_and_other_payables_non_current": {
+          "type": null,
+          "mapped_to": "trade_and_other_payables_non_current"
+        },
+        "employee_benefits": {
+          "type": null,
+          "mapped_to": "employee_benefits"
+        },
+        "liabilities_held_for_sale_non_current": {
+          "type": null,
+          "mapped_to": "liabilities_held_for_sale_non_current"
+        },
+        "other_non_current_liabilities": {
+          "type": null,
+          "mapped_to": "other_non_current_liabilities"
+        },
+        "long_term_provisions": {
+          "type": null,
+          "mapped_to": "long_term_provisions"
+        },
+        "equity": {
+          "type": null,
+          "mapped_to": "equity"
+        },
+        "total_equity_gross_minority_interest": {
+          "type": null,
+          "mapped_to": "total_equity_gross_minority_interest"
+        },
+        "stockholders_equity": {
+          "type": null,
+          "mapped_to": "stockholders_equity"
+        },
+        "capital_stock": {
+          "type": null,
+          "mapped_to": "capital_stock"
+        },
+        "preferred_stock": {
+          "type": null,
+          "mapped_to": "preferred_stock"
+        },
+        "common_stock": {
+          "type": null,
+          "mapped_to": "common_stock"
+        },
+        "retained_earnings": {
+          "type": null,
+          "mapped_to": "retained_earnings"
+        },
+        "treasury_stock": {
+          "type": null,
+          "mapped_to": "treasury_stock"
+        },
+        "gains_losses_not_affecting_retained_earnings": {
+          "type": null,
+          "mapped_to": "gains_losses_not_affecting_retained_earnings"
+        },
+        "other_equity_adjustments": {
+          "type": null,
+          "mapped_to": "other_equity_adjustments"
+        },
+        "other_equity_interest": {
+          "type": null,
+          "mapped_to": "other_equity_interest"
+        },
+        "minority_interest": {
+          "type": null,
+          "mapped_to": "minority_interest"
+        },
+        "total_capitalization": {
+          "type": null,
+          "mapped_to": "total_capitalization"
+        },
+        "preferred_stock_equity": {
+          "type": null,
+          "mapped_to": "preferred_stock_equity"
+        },
+        "common_stock_equity": {
+          "type": null,
+          "mapped_to": "common_stock_equity"
+        },
+        "capital_lease_obligations": {
+          "type": null,
+          "mapped_to": "capital_lease_obligations"
+        },
+        "net_tangible_assets": {
+          "type": null,
+          "mapped_to": "net_tangible_assets"
+        },
+        "working_capital": {
+          "type": null,
+          "mapped_to": "working_capital"
+        },
+        "invested_capital": {
+          "type": null,
+          "mapped_to": "invested_capital"
+        },
+        "tangible_book_value": {
+          "type": null,
+          "mapped_to": "tangible_book_value"
+        },
+        "total_debt": {
+          "type": null,
+          "mapped_to": "total_debt"
+        },
+        "net_debt": {
+          "type": null,
+          "mapped_to": "net_debt"
+        },
+        "share_issued": {
+          "type": null,
+          "mapped_to": "share_issued"
+        },
+        "ordinary_shares_number": {
+          "type": null,
+          "mapped_to": "ordinary_shares_number"
+        },
+        "preferred_shares_number": {
+          "type": null,
+          "mapped_to": "preferred_shares_number"
+        },
+        "treasury_shares_number": {
+          "type": null,
+          "mapped_to": "treasury_shares_number"
+        },
+        "cash_flow_from_operating_activities": {
+          "type": null,
+          "mapped_to": "cash_flow_from_operating_activities"
+        },
+        "operating_cash_flow": {
+          "type": null,
+          "mapped_to": "operating_cash_flow"
+        },
+        "cash_flow_from_continuing_operating_activities": {
+          "type": null,
+          "mapped_to": "cash_flow_from_continuing_operating_activities"
+        },
+        "net_income_from_continuing_operations": {
+          "type": null,
+          "mapped_to": "net_income_from_continuing_operations"
+        },
+        "operating_gains_losses": {
+          "type": null,
+          "mapped_to": "operating_gains_losses"
+        },
+        "gain_loss_on_sale_of_business": {
+          "type": null,
+          "mapped_to": "gain_loss_on_sale_of_business"
+        },
+        "gain_loss_on_investment_securities": {
+          "type": null,
+          "mapped_to": "gain_loss_on_investment_securities"
+        },
+        "earnings_losses_from_equity_investments": {
+          "type": null,
+          "mapped_to": "earnings_losses_from_equity_investments"
+        },
+        "pension_and_employee_benefit_expense": {
+          "type": null,
+          "mapped_to": "pension_and_employee_benefit_expense"
+        },
+        "depreciation_amortization_depletion": {
+          "type": null,
+          "mapped_to": "depreciation_amortization_depletion"
+        },
+        "depreciation_amortization": {
+          "type": null,
+          "mapped_to": "depreciation_amortization"
+        },
+        "depreciation": {
+          "type": null,
+          "mapped_to": "depreciation"
+        },
+        "amortization": {
+          "type": null,
+          "mapped_to": "amortization"
+        },
+        "amortization_of_intangibles": {
+          "type": null,
+          "mapped_to": "amortization_of_intangibles"
+        },
+        "deferred_tax": {
+          "type": null,
+          "mapped_to": "deferred_tax"
+        },
+        "deferred_income_tax": {
+          "type": null,
+          "mapped_to": "deferred_income_tax"
+        },
+        "asset_impairment_charge": {
+          "type": null,
+          "mapped_to": "asset_impairment_charge"
+        },
+        "other_noncash_items": {
+          "type": null,
+          "mapped_to": "other_noncash_items"
+        },
+        "change_in_working_capital": {
+          "type": null,
+          "mapped_to": "change_in_working_capital"
+        },
+        "change_in_receivables": {
+          "type": null,
+          "mapped_to": "change_in_receivables"
+        },
+        "changes_in_account_receivables": {
+          "type": null,
+          "mapped_to": "changes_in_account_receivables"
+        },
+        "change_in_inventory": {
+          "type": null,
+          "mapped_to": "change_in_inventory"
+        },
+        "change_in_payables_and_accrued_expense": {
+          "type": null,
+          "mapped_to": "change_in_payables_and_accrued_expense"
+        },
+        "change_in_payable": {
+          "type": null,
+          "mapped_to": "change_in_payable"
+        },
+        "change_in_account_payable": {
+          "type": null,
+          "mapped_to": "change_in_account_payable"
+        },
+        "change_in_accrued_expense": {
+          "type": null,
+          "mapped_to": "change_in_accrued_expense"
+        },
+        "change_in_other_working_capital": {
+          "type": null,
+          "mapped_to": "change_in_other_working_capital"
+        },
+        "taxes_refund_paid": {
+          "type": null,
+          "mapped_to": "taxes_refund_paid"
+        },
+        "cash_from_discontinued_operating_activities": {
+          "type": null,
+          "mapped_to": "cash_from_discontinued_operating_activities"
+        },
+        "cash_flow_from_investing_activities": {
+          "type": null,
+          "mapped_to": "cash_flow_from_investing_activities"
+        },
+        "investing_cash_flow": {
+          "type": null,
+          "mapped_to": "investing_cash_flow"
+        },
+        "cash_flow_from_continuing_investing_activities": {
+          "type": null,
+          "mapped_to": "cash_flow_from_continuing_investing_activities"
+        },
+        "net_ppe_purchase_and_sale": {
+          "type": null,
+          "mapped_to": "net_ppe_purchase_and_sale"
+        },
+        "purchase_of_ppe": {
+          "type": null,
+          "mapped_to": "purchase_of_ppe"
+        },
+        "sale_of_ppe": {
+          "type": null,
+          "mapped_to": "sale_of_ppe"
+        },
+        "net_intangibles_purchase_and_sale": {
+          "type": null,
+          "mapped_to": "net_intangibles_purchase_and_sale"
+        },
+        "purchase_of_intangibles": {
+          "type": null,
+          "mapped_to": "purchase_of_intangibles"
+        },
+        "net_business_purchase_and_sale": {
+          "type": null,
+          "mapped_to": "net_business_purchase_and_sale"
+        },
+        "purchase_of_business": {
+          "type": null,
+          "mapped_to": "purchase_of_business"
+        },
+        "sale_of_business": {
+          "type": null,
+          "mapped_to": "sale_of_business"
+        },
+        "net_investment_purchase_and_sale": {
+          "type": null,
+          "mapped_to": "net_investment_purchase_and_sale"
+        },
+        "net_other_investing_changes": {
+          "type": null,
+          "mapped_to": "net_other_investing_changes"
+        },
+        "cash_from_discontinued_investing_activities": {
+          "type": null,
+          "mapped_to": "cash_from_discontinued_investing_activities"
+        },
+        "cash_flow_from_financing_activities": {
+          "type": null,
+          "mapped_to": "cash_flow_from_financing_activities"
+        },
+        "financing_cash_flow": {
+          "type": null,
+          "mapped_to": "financing_cash_flow"
+        },
+        "cash_flow_from_continuing_financing_activities": {
+          "type": null,
+          "mapped_to": "cash_flow_from_continuing_financing_activities"
+        },
+        "net_issuance_payments_of_debt": {
+          "type": null,
+          "mapped_to": "net_issuance_payments_of_debt"
+        },
+        "net_long_term_debt_issuance": {
+          "type": null,
+          "mapped_to": "net_long_term_debt_issuance"
+        },
+        "long_term_debt_issuance": {
+          "type": null,
+          "mapped_to": "long_term_debt_issuance"
+        },
+        "long_term_debt_payments": {
+          "type": null,
+          "mapped_to": "long_term_debt_payments"
+        },
+        "net_short_term_debt_issuance": {
+          "type": null,
+          "mapped_to": "net_short_term_debt_issuance"
+        },
+        "net_common_stock_issuance": {
+          "type": null,
+          "mapped_to": "net_common_stock_issuance"
+        },
+        "common_stock_payments": {
+          "type": null,
+          "mapped_to": "common_stock_payments"
+        },
+        "net_preferred_stock_issuance": {
+          "type": null,
+          "mapped_to": "net_preferred_stock_issuance"
+        },
+        "preferred_stock_payments": {
+          "type": null,
+          "mapped_to": "preferred_stock_payments"
+        },
+        "cash_dividends_paid": {
+          "type": null,
+          "mapped_to": "cash_dividends_paid"
+        },
+        "common_stock_dividend_paid": {
+          "type": null,
+          "mapped_to": "common_stock_dividend_paid"
+        },
+        "net_other_financing_charges": {
+          "type": null,
+          "mapped_to": "net_other_financing_charges"
+        },
+        "cash_from_discontinued_financing_activities": {
+          "type": null,
+          "mapped_to": "cash_from_discontinued_financing_activities"
+        },
+        "cash_flow_from_discontinued_operation": {
+          "type": null,
+          "mapped_to": "cash_flow_from_discontinued_operation"
+        },
+        "other_cash_flow_items": {
+          "type": null,
+          "mapped_to": "other_cash_flow_items"
+        },
+        "end_cash_position": {
+          "type": null,
+          "mapped_to": "end_cash_position"
+        },
+        "changes_in_cash": {
+          "type": null,
+          "mapped_to": "changes_in_cash"
+        },
+        "effect_of_exchange_rate_changes": {
+          "type": null,
+          "mapped_to": "effect_of_exchange_rate_changes"
+        },
+        "beginning_cash_position": {
+          "type": null,
+          "mapped_to": "beginning_cash_position"
+        },
+        "interest_paid_supplemental_data": {
+          "type": null,
+          "mapped_to": "interest_paid_supplemental_data"
+        },
+        "capital_expenditure": {
+          "type": null,
+          "mapped_to": "capital_expenditure"
+        },
+        "issuance_of_capital_stock": {
+          "type": null,
+          "mapped_to": "issuance_of_capital_stock"
+        },
+        "issuance_of_debt": {
+          "type": null,
+          "mapped_to": "issuance_of_debt"
+        },
+        "repayment_of_debt": {
+          "type": null,
+          "mapped_to": "repayment_of_debt"
+        },
+        "repurchase_of_capital_stock": {
+          "type": null,
+          "mapped_to": "repurchase_of_capital_stock"
+        },
+        "dividend_information": {
+          "type": null,
+          "mapped_to": "dividend_information"
+        },
+        "Profitability": {
+          "type": null,
+          "mapped_to": "Profitability"
+        },
+        "Valuation": {
+          "type": null,
+          "mapped_to": "Valuation"
+        },
+        "cash_flow_metrics": {
+          "type": null,
+          "mapped_to": "cash_flow_metrics"
+        },
+        "other_metrics": {
+          "type": null,
+          "mapped_to": "other_metrics"
+        },
+        "growth_potential": {
+          "type": null,
+          "mapped_to": "growth_potential"
+        },
+        "esg": {
+          "type": null,
+          "mapped_to": "esg"
+        },
+        "efficiency": {
+          "type": null,
+          "mapped_to": "efficiency"
+        },
+        "ebitda_metrics": {
+          "type": null,
+          "mapped_to": "ebitda_metrics"
+        },
+        "balance_sheet": {
+          "type": null,
+          "mapped_to": "balance_sheet"
+        },
+        "income_statement": {
+          "type": null,
+          "mapped_to": "income_statement"
+        },
+        "cash_flow": {
+          "type": null,
+          "mapped_to": "cash_flow"
+        },
+        "Financial_Health": {
+          "type": null,
+          "mapped_to": "Financial_Health"
+        },
+        "management_efficiency": {
+          "type": null,
+          "mapped_to": "management_efficiency"
+        }
+      }
+    },
+    "income_statement": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "company_id": {
+          "type": null,
+          "mapped_to": "company_id"
+        },
+        "period": {
+          "type": null,
+          "mapped_to": "period"
+        },
+        "total_revenue": {
+          "type": null,
+          "mapped_to": "total_revenue"
+        },
+        "operating_revenue": {
+          "type": null,
+          "mapped_to": "operating_revenue"
+        },
+        "cost_of_revenue": {
+          "type": null,
+          "mapped_to": "cost_of_revenue"
+        },
+        "gross_profit": {
+          "type": null,
+          "mapped_to": "gross_profit"
+        },
+        "operating_expense": {
+          "type": null,
+          "mapped_to": "operating_expense"
+        },
+        "selling_general_and_administrative": {
+          "type": null,
+          "mapped_to": "selling_general_and_administrative"
+        },
+        "general_administrative_expense": {
+          "type": null,
+          "mapped_to": "general_administrative_expense"
+        },
+        "insurance_claims": {
+          "type": null,
+          "mapped_to": "insurance_claims"
+        },
+        "rental_landing_fees": {
+          "type": null,
+          "mapped_to": "rental_landing_fees"
+        },
+        "other_operating_expenses": {
+          "type": null,
+          "mapped_to": "other_operating_expenses"
+        },
+        "other_ga_expenses": {
+          "type": null,
+          "mapped_to": "other_ga_expenses"
+        },
+        "research_development": {
+          "type": null,
+          "mapped_to": "research_development"
+        },
+        "other_operating_income": {
+          "type": null,
+          "mapped_to": "other_operating_income"
+        },
+        "operating_income": {
+          "type": null,
+          "mapped_to": "operating_income"
+        },
+        "net_non_operating_interest_income_expense": {
+          "type": null,
+          "mapped_to": "net_non_operating_interest_income_expense"
+        },
+        "interest_income_non_operating": {
+          "type": null,
+          "mapped_to": "interest_income_non_operating"
+        },
+        "interest_expense_non_operating": {
+          "type": null,
+          "mapped_to": "interest_expense_non_operating"
+        },
+        "other_income_expense": {
+          "type": null,
+          "mapped_to": "other_income_expense"
+        },
+        "gain_on_sale_of_security": {
+          "type": null,
+          "mapped_to": "gain_on_sale_of_security"
+        },
+        "earnings_from_equity_interest": {
+          "type": null,
+          "mapped_to": "earnings_from_equity_interest"
+        },
+        "special_income_charges": {
+          "type": null,
+          "mapped_to": "special_income_charges"
+        },
+        "restructuring_mergers_acquisition": {
+          "type": null,
+          "mapped_to": "restructuring_mergers_acquisition"
+        },
+        "impairment_of_capital_assets": {
+          "type": null,
+          "mapped_to": "impairment_of_capital_assets"
+        },
+        "other_special_charges": {
+          "type": null,
+          "mapped_to": "other_special_charges"
+        },
+        "gain_on_sale_of_business": {
+          "type": null,
+          "mapped_to": "gain_on_sale_of_business"
+        },
+        "other_non_operating_income_expenses": {
+          "type": null,
+          "mapped_to": "other_non_operating_income_expenses"
+        },
+        "total_other_finance_cost": {
+          "type": null,
+          "mapped_to": "total_other_finance_cost"
+        },
+        "pretax_income": {
+          "type": null,
+          "mapped_to": "pretax_income"
+        },
+        "tax_provision": {
+          "type": null,
+          "mapped_to": "tax_provision"
+        },
+        "net_income_common_stockholders": {
+          "type": null,
+          "mapped_to": "net_income_common_stockholders"
+        },
+        "net_income": {
+          "type": null,
+          "mapped_to": "net_income"
+        },
+        "net_income_including_noncontrolling_interests": {
+          "type": null,
+          "mapped_to": "net_income_including_noncontrolling_interests"
+        },
+        "net_income_continuous_operations": {
+          "type": null,
+          "mapped_to": "net_income_continuous_operations"
+        },
+        "net_income_discontinuous_operations": {
+          "type": null,
+          "mapped_to": "net_income_discontinuous_operations"
+        },
+        "minority_interests": {
+          "type": null,
+          "mapped_to": "minority_interests"
+        },
+        "preferred_stock_dividends": {
+          "type": null,
+          "mapped_to": "preferred_stock_dividends"
+        },
+        "diluted_ni_available_to_com_stockholders": {
+          "type": null,
+          "mapped_to": "diluted_ni_available_to_com_stockholders"
+        },
+        "basic_eps": {
+          "type": null,
+          "mapped_to": "basic_eps"
+        },
+        "diluted_eps": {
+          "type": null,
+          "mapped_to": "diluted_eps"
+        },
+        "basic_average_shares": {
+          "type": null,
+          "mapped_to": "basic_average_shares"
+        },
+        "diluted_average_shares": {
+          "type": null,
+          "mapped_to": "diluted_average_shares"
+        },
+        "rent_expense_supplemental": {
+          "type": null,
+          "mapped_to": "rent_expense_supplemental"
+        },
+        "total_expenses": {
+          "type": null,
+          "mapped_to": "total_expenses"
+        },
+        "net_income_from_continuing_discontinued_operation": {
+          "type": null,
+          "mapped_to": "net_income_from_continuing_discontinued_operation"
+        },
+        "normalized_income": {
+          "type": null,
+          "mapped_to": "normalized_income"
+        },
+        "interest_income": {
+          "type": null,
+          "mapped_to": "interest_income"
+        },
+        "interest_expense": {
+          "type": null,
+          "mapped_to": "interest_expense"
+        },
+        "net_interest_income": {
+          "type": null,
+          "mapped_to": "net_interest_income"
+        },
+        "ebit": {
+          "type": null,
+          "mapped_to": "ebit"
+        },
+        "ebitda": {
+          "type": null,
+          "mapped_to": "ebitda"
+        },
+        "reconciled_cost_of_revenue": {
+          "type": null,
+          "mapped_to": "reconciled_cost_of_revenue"
+        },
+        "reconciled_depreciation": {
+          "type": null,
+          "mapped_to": "reconciled_depreciation"
+        },
+        "net_income_from_continuing_operation_net_minority_interest": {
+          "type": null,
+          "mapped_to": "net_income_from_continuing_operation_net_minority_interest"
+        },
+        "total_unusual_items_excluding_goodwill": {
+          "type": null,
+          "mapped_to": "total_unusual_items_excluding_goodwill"
+        },
+        "total_unusual_items": {
+          "type": null,
+          "mapped_to": "total_unusual_items"
+        },
+        "normalized_ebitda": {
+          "type": null,
+          "mapped_to": "normalized_ebitda"
+        },
+        "tax_rate_for_calcs": {
+          "type": null,
+          "mapped_to": "tax_rate_for_calcs"
+        },
+        "tax_effect_of_unusual_items": {
+          "type": null,
+          "mapped_to": "tax_effect_of_unusual_items"
+        },
+        "sales_returns_and_allowances": {
+          "type": null,
+          "mapped_to": "sales_returns_and_allowances"
+        },
+        "bad_debt_expense": {
+          "type": null,
+          "mapped_to": "bad_debt_expense"
+        },
+        "amortization_of_deferred_charges": {
+          "type": null,
+          "mapped_to": "amortization_of_deferred_charges"
+        },
+        "loss_on_sale_of_assets": {
+          "type": null,
+          "mapped_to": "loss_on_sale_of_assets"
+        },
+        "provision_for_income_taxes": {
+          "type": null,
+          "mapped_to": "provision_for_income_taxes"
+        },
+        "discontinued_operations": {
+          "type": null,
+          "mapped_to": "discontinued_operations"
+        },
+        "extraordinary_items": {
+          "type": null,
+          "mapped_to": "extraordinary_items"
+        }
+      }
+    },
+    "directus_access": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "role": {
+          "type": null,
+          "mapped_to": "role"
+        },
+        "user": {
+          "type": null,
+          "mapped_to": "user"
+        },
+        "policy": {
+          "type": null,
+          "mapped_to": "policy"
+        },
+        "sort": {
+          "type": null,
+          "mapped_to": "sort"
+        }
+      }
+    },
+    "directus_activity": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "action": {
+          "type": null,
+          "mapped_to": "action"
+        },
+        "user": {
+          "type": null,
+          "mapped_to": "user"
+        },
+        "timestamp": {
+          "type": null,
+          "mapped_to": "timestamp"
+        },
+        "ip": {
+          "type": null,
+          "mapped_to": "ip"
+        },
+        "user_agent": {
+          "type": null,
+          "mapped_to": "user_agent"
+        },
+        "collection": {
+          "type": null,
+          "mapped_to": "collection"
+        },
+        "item": {
+          "type": null,
+          "mapped_to": "item"
+        },
+        "origin": {
+          "type": null,
+          "mapped_to": "origin"
+        },
+        "revisions": {
+          "type": null,
+          "mapped_to": "revisions"
+        }
+      }
+    },
+    "directus_collections": {
+      "fields": {
+        "collection": {
+          "type": null,
+          "mapped_to": "collection"
+        },
+        "icon": {
+          "type": null,
+          "mapped_to": "icon"
+        },
+        "note": {
+          "type": null,
+          "mapped_to": "note"
+        },
+        "display_template": {
+          "type": null,
+          "mapped_to": "display_template"
+        },
+        "hidden": {
+          "type": null,
+          "mapped_to": "hidden"
+        },
+        "singleton": {
+          "type": null,
+          "mapped_to": "singleton"
+        },
+        "translations": {
+          "type": null,
+          "mapped_to": "translations"
+        },
+        "archive_field": {
+          "type": null,
+          "mapped_to": "archive_field"
+        },
+        "archive_app_filter": {
+          "type": null,
+          "mapped_to": "archive_app_filter"
+        },
+        "archive_value": {
+          "type": null,
+          "mapped_to": "archive_value"
+        },
+        "unarchive_value": {
+          "type": null,
+          "mapped_to": "unarchive_value"
+        },
+        "sort_field": {
+          "type": null,
+          "mapped_to": "sort_field"
+        },
+        "accountability": {
+          "type": null,
+          "mapped_to": "accountability"
+        },
+        "color": {
+          "type": null,
+          "mapped_to": "color"
+        },
+        "item_duplication_fields": {
+          "type": null,
+          "mapped_to": "item_duplication_fields"
+        },
+        "sort": {
+          "type": null,
+          "mapped_to": "sort"
+        },
+        "group": {
+          "type": null,
+          "mapped_to": "group"
+        },
+        "collapse": {
+          "type": null,
+          "mapped_to": "collapse"
+        },
+        "preview_url": {
+          "type": null,
+          "mapped_to": "preview_url"
+        },
+        "versioning": {
+          "type": null,
+          "mapped_to": "versioning"
+        },
+        "collection_divider": {
+          "type": null,
+          "mapped_to": "collection_divider"
+        },
+        "preview_divider": {
+          "type": null,
+          "mapped_to": "preview_divider"
+        },
+        "content_versioning_divider": {
+          "type": null,
+          "mapped_to": "content_versioning_divider"
+        },
+        "archive_divider": {
+          "type": null,
+          "mapped_to": "archive_divider"
+        },
+        "sort_divider": {
+          "type": null,
+          "mapped_to": "sort_divider"
+        },
+        "accountability_divider": {
+          "type": null,
+          "mapped_to": "accountability_divider"
+        },
+        "duplication_divider": {
+          "type": null,
+          "mapped_to": "duplication_divider"
+        }
+      }
+    },
+    "directus_comments": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "collection": {
+          "type": null,
+          "mapped_to": "collection"
+        },
+        "item": {
+          "type": null,
+          "mapped_to": "item"
+        },
+        "comment": {
+          "type": null,
+          "mapped_to": "comment"
+        },
+        "date_created": {
+          "type": null,
+          "mapped_to": "date_created"
+        },
+        "date_updated": {
+          "type": null,
+          "mapped_to": "date_updated"
+        },
+        "user_created": {
+          "type": null,
+          "mapped_to": "user_created"
+        },
+        "user_updated": {
+          "type": null,
+          "mapped_to": "user_updated"
+        }
+      }
+    },
+    "directus_fields": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "collection": {
+          "type": null,
+          "mapped_to": "collection"
+        },
+        "field": {
+          "type": null,
+          "mapped_to": "field"
+        },
+        "special": {
+          "type": null,
+          "mapped_to": "special"
+        },
+        "interface": {
+          "type": null,
+          "mapped_to": "interface"
+        },
+        "options": {
+          "type": null,
+          "mapped_to": "options"
+        },
+        "display": {
+          "type": null,
+          "mapped_to": "display"
+        },
+        "display_options": {
+          "type": null,
+          "mapped_to": "display_options"
+        },
+        "readonly": {
+          "type": null,
+          "mapped_to": "readonly"
+        },
+        "hidden": {
+          "type": null,
+          "mapped_to": "hidden"
+        },
+        "sort": {
+          "type": null,
+          "mapped_to": "sort"
+        },
+        "width": {
+          "type": null,
+          "mapped_to": "width"
+        },
+        "translations": {
+          "type": null,
+          "mapped_to": "translations"
+        },
+        "note": {
+          "type": null,
+          "mapped_to": "note"
+        },
+        "conditions": {
+          "type": null,
+          "mapped_to": "conditions"
+        },
+        "required": {
+          "type": null,
+          "mapped_to": "required"
+        },
+        "group": {
+          "type": null,
+          "mapped_to": "group"
+        },
+        "validation": {
+          "type": null,
+          "mapped_to": "validation"
+        },
+        "validation_message": {
+          "type": null,
+          "mapped_to": "validation_message"
+        }
+      }
+    },
+    "directus_files": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "storage": {
+          "type": null,
+          "mapped_to": "storage"
+        },
+        "filename_disk": {
+          "type": null,
+          "mapped_to": "filename_disk"
+        },
+        "filename_download": {
+          "type": null,
+          "mapped_to": "filename_download"
+        },
+        "title": {
+          "type": null,
+          "mapped_to": "title"
+        },
+        "type": {
+          "type": null,
+          "mapped_to": "type"
+        },
+        "folder": {
+          "type": null,
+          "mapped_to": "folder"
+        },
+        "uploaded_by": {
+          "type": null,
+          "mapped_to": "uploaded_by"
+        },
+        "created_on": {
+          "type": null,
+          "mapped_to": "created_on"
+        },
+        "modified_by": {
+          "type": null,
+          "mapped_to": "modified_by"
+        },
+        "modified_on": {
+          "type": null,
+          "mapped_to": "modified_on"
+        },
+        "charset": {
+          "type": null,
+          "mapped_to": "charset"
+        },
+        "filesize": {
+          "type": null,
+          "mapped_to": "filesize"
+        },
+        "width": {
+          "type": null,
+          "mapped_to": "width"
+        },
+        "height": {
+          "type": null,
+          "mapped_to": "height"
+        },
+        "duration": {
+          "type": null,
+          "mapped_to": "duration"
+        },
+        "embed": {
+          "type": null,
+          "mapped_to": "embed"
+        },
+        "description": {
+          "type": null,
+          "mapped_to": "description"
+        },
+        "location": {
+          "type": null,
+          "mapped_to": "location"
+        },
+        "tags": {
+          "type": null,
+          "mapped_to": "tags"
+        },
+        "metadata": {
+          "type": null,
+          "mapped_to": "metadata"
+        },
+        "focal_point_x": {
+          "type": null,
+          "mapped_to": "focal_point_x"
+        },
+        "focal_point_y": {
+          "type": null,
+          "mapped_to": "focal_point_y"
+        },
+        "tus_id": {
+          "type": null,
+          "mapped_to": "tus_id"
+        },
+        "tus_data": {
+          "type": null,
+          "mapped_to": "tus_data"
+        },
+        "uploaded_on": {
+          "type": null,
+          "mapped_to": "uploaded_on"
+        },
+        "focal_point_divider": {
+          "type": null,
+          "mapped_to": "focal_point_divider"
+        },
+        "storage_divider": {
+          "type": null,
+          "mapped_to": "storage_divider"
+        }
+      }
+    },
+    "directus_folders": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "name": {
+          "type": null,
+          "mapped_to": "name"
+        },
+        "parent": {
+          "type": null,
+          "mapped_to": "parent"
+        }
+      }
+    },
+    "directus_migrations": {
+      "fields": {
+        "version": {
+          "type": null,
+          "mapped_to": "version"
+        },
+        "name": {
+          "type": null,
+          "mapped_to": "name"
+        },
+        "timestamp": {
+          "type": null,
+          "mapped_to": "timestamp"
+        }
+      }
+    },
+    "directus_permissions": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "collection": {
+          "type": null,
+          "mapped_to": "collection"
+        },
+        "action": {
+          "type": null,
+          "mapped_to": "action"
+        },
+        "permissions": {
+          "type": null,
+          "mapped_to": "permissions"
+        },
+        "validation": {
+          "type": null,
+          "mapped_to": "validation"
+        },
+        "presets": {
+          "type": null,
+          "mapped_to": "presets"
+        },
+        "fields": {
+          "type": null,
+          "mapped_to": "fields"
+        },
+        "policy": {
+          "type": null,
+          "mapped_to": "policy"
+        }
+      }
+    },
+    "directus_policies": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "name": {
+          "type": null,
+          "mapped_to": "name"
+        },
+        "icon": {
+          "type": null,
+          "mapped_to": "icon"
+        },
+        "description": {
+          "type": null,
+          "mapped_to": "description"
+        },
+        "ip_access": {
+          "type": null,
+          "mapped_to": "ip_access"
+        },
+        "enforce_tfa": {
+          "type": null,
+          "mapped_to": "enforce_tfa"
+        },
+        "admin_access": {
+          "type": null,
+          "mapped_to": "admin_access"
+        },
+        "app_access": {
+          "type": null,
+          "mapped_to": "app_access"
+        },
+        "permissions": {
+          "type": null,
+          "mapped_to": "permissions"
+        },
+        "assigned_to_divider": {
+          "type": null,
+          "mapped_to": "assigned_to_divider"
+        },
+        "users": {
+          "type": null,
+          "mapped_to": "users"
+        },
+        "roles": {
+          "type": null,
+          "mapped_to": "roles"
+        }
+      }
+    },
+    "directus_presets": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "bookmark": {
+          "type": null,
+          "mapped_to": "bookmark"
+        },
+        "user": {
+          "type": null,
+          "mapped_to": "user"
+        },
+        "role": {
+          "type": null,
+          "mapped_to": "role"
+        },
+        "collection": {
+          "type": null,
+          "mapped_to": "collection"
+        },
+        "search": {
+          "type": null,
+          "mapped_to": "search"
+        },
+        "layout": {
+          "type": null,
+          "mapped_to": "layout"
+        },
+        "layout_query": {
+          "type": null,
+          "mapped_to": "layout_query"
+        },
+        "layout_options": {
+          "type": null,
+          "mapped_to": "layout_options"
+        },
+        "refresh_interval": {
+          "type": null,
+          "mapped_to": "refresh_interval"
+        },
+        "filter": {
+          "type": null,
+          "mapped_to": "filter"
+        },
+        "icon": {
+          "type": null,
+          "mapped_to": "icon"
+        },
+        "color": {
+          "type": null,
+          "mapped_to": "color"
+        }
+      }
+    },
+    "directus_relations": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "many_collection": {
+          "type": null,
+          "mapped_to": "many_collection"
+        },
+        "many_field": {
+          "type": null,
+          "mapped_to": "many_field"
+        },
+        "one_collection": {
+          "type": null,
+          "mapped_to": "one_collection"
+        },
+        "one_field": {
+          "type": null,
+          "mapped_to": "one_field"
+        },
+        "one_collection_field": {
+          "type": null,
+          "mapped_to": "one_collection_field"
+        },
+        "one_allowed_collections": {
+          "type": null,
+          "mapped_to": "one_allowed_collections"
+        },
+        "junction_field": {
+          "type": null,
+          "mapped_to": "junction_field"
+        },
+        "sort_field": {
+          "type": null,
+          "mapped_to": "sort_field"
+        },
+        "one_deselect_action": {
+          "type": null,
+          "mapped_to": "one_deselect_action"
+        }
+      }
+    },
+    "directus_revisions": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "activity": {
+          "type": null,
+          "mapped_to": "activity"
+        },
+        "collection": {
+          "type": null,
+          "mapped_to": "collection"
+        },
+        "item": {
+          "type": null,
+          "mapped_to": "item"
+        },
+        "data": {
+          "type": null,
+          "mapped_to": "data"
+        },
+        "delta": {
+          "type": null,
+          "mapped_to": "delta"
+        },
+        "parent": {
+          "type": null,
+          "mapped_to": "parent"
+        },
+        "version": {
+          "type": null,
+          "mapped_to": "version"
+        }
+      }
+    },
+    "directus_roles": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "name": {
+          "type": null,
+          "mapped_to": "name"
+        },
+        "icon": {
+          "type": null,
+          "mapped_to": "icon"
+        },
+        "description": {
+          "type": null,
+          "mapped_to": "description"
+        },
+        "parent": {
+          "type": null,
+          "mapped_to": "parent"
+        },
+        "children": {
+          "type": null,
+          "mapped_to": "children"
+        },
+        "policies": {
+          "type": null,
+          "mapped_to": "policies"
+        },
+        "users_group": {
+          "type": null,
+          "mapped_to": "users_group"
+        },
+        "users_divider": {
+          "type": null,
+          "mapped_to": "users_divider"
+        },
+        "users": {
+          "type": null,
+          "mapped_to": "users"
+        }
+      }
+    },
+    "directus_sessions": {
+      "fields": {
+        "token": {
+          "type": null,
+          "mapped_to": "token"
+        },
+        "user": {
+          "type": null,
+          "mapped_to": "user"
+        },
+        "expires": {
+          "type": null,
+          "mapped_to": "expires"
+        },
+        "ip": {
+          "type": null,
+          "mapped_to": "ip"
+        },
+        "user_agent": {
+          "type": null,
+          "mapped_to": "user_agent"
+        },
+        "share": {
+          "type": null,
+          "mapped_to": "share"
+        },
+        "origin": {
+          "type": null,
+          "mapped_to": "origin"
+        },
+        "next_token": {
+          "type": null,
+          "mapped_to": "next_token"
+        }
+      }
+    },
+    "directus_settings": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "project_name": {
+          "type": null,
+          "mapped_to": "project_name"
+        },
+        "project_url": {
+          "type": null,
+          "mapped_to": "project_url"
+        },
+        "project_color": {
+          "type": null,
+          "mapped_to": "project_color"
+        },
+        "project_logo": {
+          "type": null,
+          "mapped_to": "project_logo"
+        },
+        "public_foreground": {
+          "type": null,
+          "mapped_to": "public_foreground"
+        },
+        "public_background": {
+          "type": null,
+          "mapped_to": "public_background"
+        },
+        "public_note": {
+          "type": null,
+          "mapped_to": "public_note"
+        },
+        "auth_login_attempts": {
+          "type": null,
+          "mapped_to": "auth_login_attempts"
+        },
+        "auth_password_policy": {
+          "type": null,
+          "mapped_to": "auth_password_policy"
+        },
+        "storage_asset_transform": {
+          "type": null,
+          "mapped_to": "storage_asset_transform"
+        },
+        "storage_asset_presets": {
+          "type": null,
+          "mapped_to": "storage_asset_presets"
+        },
+        "custom_css": {
+          "type": null,
+          "mapped_to": "custom_css"
+        },
+        "storage_default_folder": {
+          "type": null,
+          "mapped_to": "storage_default_folder"
+        },
+        "basemaps": {
+          "type": null,
+          "mapped_to": "basemaps"
+        },
+        "mapbox_key": {
+          "type": null,
+          "mapped_to": "mapbox_key"
+        },
+        "module_bar": {
+          "type": null,
+          "mapped_to": "module_bar"
+        },
+        "project_descriptor": {
+          "type": null,
+          "mapped_to": "project_descriptor"
+        },
+        "default_language": {
+          "type": null,
+          "mapped_to": "default_language"
+        },
+        "custom_aspect_ratios": {
+          "type": null,
+          "mapped_to": "custom_aspect_ratios"
+        },
+        "public_favicon": {
+          "type": null,
+          "mapped_to": "public_favicon"
+        },
+        "default_appearance": {
+          "type": null,
+          "mapped_to": "default_appearance"
+        },
+        "default_theme_light": {
+          "type": null,
+          "mapped_to": "default_theme_light"
+        },
+        "theme_light_overrides": {
+          "type": null,
+          "mapped_to": "theme_light_overrides"
+        },
+        "default_theme_dark": {
+          "type": null,
+          "mapped_to": "default_theme_dark"
+        },
+        "theme_dark_overrides": {
+          "type": null,
+          "mapped_to": "theme_dark_overrides"
+        },
+        "report_error_url": {
+          "type": null,
+          "mapped_to": "report_error_url"
+        },
+        "report_bug_url": {
+          "type": null,
+          "mapped_to": "report_bug_url"
+        },
+        "report_feature_url": {
+          "type": null,
+          "mapped_to": "report_feature_url"
+        },
+        "public_registration": {
+          "type": null,
+          "mapped_to": "public_registration"
+        },
+        "public_registration_verify_email": {
+          "type": null,
+          "mapped_to": "public_registration_verify_email"
+        },
+        "public_registration_role": {
+          "type": null,
+          "mapped_to": "public_registration_role"
+        },
+        "public_registration_email_filter": {
+          "type": null,
+          "mapped_to": "public_registration_email_filter"
+        },
+        "visual_editor_urls": {
+          "type": null,
+          "mapped_to": "visual_editor_urls"
+        },
+        "theming_group": {
+          "type": null,
+          "mapped_to": "theming_group"
+        },
+        "branding_divider": {
+          "type": null,
+          "mapped_to": "branding_divider"
+        },
+        "theming_divider": {
+          "type": null,
+          "mapped_to": "theming_divider"
+        },
+        "modules_divider": {
+          "type": null,
+          "mapped_to": "modules_divider"
+        },
+        "visual_editor_divider": {
+          "type": null,
+          "mapped_to": "visual_editor_divider"
+        },
+        "security_divider": {
+          "type": null,
+          "mapped_to": "security_divider"
+        },
+        "public_registration_divider": {
+          "type": null,
+          "mapped_to": "public_registration_divider"
+        },
+        "files_divider": {
+          "type": null,
+          "mapped_to": "files_divider"
+        },
+        "reporting_divider": {
+          "type": null,
+          "mapped_to": "reporting_divider"
+        },
+        "map_divider": {
+          "type": null,
+          "mapped_to": "map_divider"
+        },
+        "image_editor": {
+          "type": null,
+          "mapped_to": "image_editor"
+        }
+      }
+    },
+    "directus_users": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "first_name": {
+          "type": null,
+          "mapped_to": "first_name"
+        },
+        "last_name": {
+          "type": null,
+          "mapped_to": "last_name"
+        },
+        "email": {
+          "type": null,
+          "mapped_to": "email"
+        },
+        "password": {
+          "type": null,
+          "mapped_to": "password"
+        },
+        "location": {
+          "type": null,
+          "mapped_to": "location"
+        },
+        "title": {
+          "type": null,
+          "mapped_to": "title"
+        },
+        "description": {
+          "type": null,
+          "mapped_to": "description"
+        },
+        "tags": {
+          "type": null,
+          "mapped_to": "tags"
+        },
+        "avatar": {
+          "type": null,
+          "mapped_to": "avatar"
+        },
+        "language": {
+          "type": null,
+          "mapped_to": "language"
+        },
+        "tfa_secret": {
+          "type": null,
+          "mapped_to": "tfa_secret"
+        },
+        "status": {
+          "type": null,
+          "mapped_to": "status"
+        },
+        "role": {
+          "type": null,
+          "mapped_to": "role"
+        },
+        "token": {
+          "type": null,
+          "mapped_to": "token"
+        },
+        "last_access": {
+          "type": null,
+          "mapped_to": "last_access"
+        },
+        "last_page": {
+          "type": null,
+          "mapped_to": "last_page"
+        },
+        "provider": {
+          "type": null,
+          "mapped_to": "provider"
+        },
+        "external_identifier": {
+          "type": null,
+          "mapped_to": "external_identifier"
+        },
+        "auth_data": {
+          "type": null,
+          "mapped_to": "auth_data"
+        },
+        "email_notifications": {
+          "type": null,
+          "mapped_to": "email_notifications"
+        },
+        "appearance": {
+          "type": null,
+          "mapped_to": "appearance"
+        },
+        "theme_dark": {
+          "type": null,
+          "mapped_to": "theme_dark"
+        },
+        "theme_light": {
+          "type": null,
+          "mapped_to": "theme_light"
+        },
+        "theme_light_overrides": {
+          "type": null,
+          "mapped_to": "theme_light_overrides"
+        },
+        "theme_dark_overrides": {
+          "type": null,
+          "mapped_to": "theme_dark_overrides"
+        },
+        "preferences_divider": {
+          "type": null,
+          "mapped_to": "preferences_divider"
+        },
+        "theming_divider": {
+          "type": null,
+          "mapped_to": "theming_divider"
+        },
+        "admin_divider": {
+          "type": null,
+          "mapped_to": "admin_divider"
+        },
+        "policies": {
+          "type": null,
+          "mapped_to": "policies"
+        }
+      }
+    },
+    "directus_webhooks": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "name": {
+          "type": null,
+          "mapped_to": "name"
+        },
+        "method": {
+          "type": null,
+          "mapped_to": "method"
+        },
+        "url": {
+          "type": null,
+          "mapped_to": "url"
+        },
+        "status": {
+          "type": null,
+          "mapped_to": "status"
+        },
+        "data": {
+          "type": null,
+          "mapped_to": "data"
+        },
+        "actions": {
+          "type": null,
+          "mapped_to": "actions"
+        },
+        "collections": {
+          "type": null,
+          "mapped_to": "collections"
+        },
+        "headers": {
+          "type": null,
+          "mapped_to": "headers"
+        },
+        "was_active_before_deprecation": {
+          "type": null,
+          "mapped_to": "was_active_before_deprecation"
+        },
+        "migrated_flow": {
+          "type": null,
+          "mapped_to": "migrated_flow"
+        },
+        "triggers_divider": {
+          "type": null,
+          "mapped_to": "triggers_divider"
+        }
+      }
+    },
+    "directus_dashboards": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "name": {
+          "type": null,
+          "mapped_to": "name"
+        },
+        "icon": {
+          "type": null,
+          "mapped_to": "icon"
+        },
+        "note": {
+          "type": null,
+          "mapped_to": "note"
+        },
+        "date_created": {
+          "type": null,
+          "mapped_to": "date_created"
+        },
+        "user_created": {
+          "type": null,
+          "mapped_to": "user_created"
+        },
+        "color": {
+          "type": null,
+          "mapped_to": "color"
+        },
+        "panels": {
+          "type": null,
+          "mapped_to": "panels"
+        }
+      }
+    },
+    "directus_panels": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "dashboard": {
+          "type": null,
+          "mapped_to": "dashboard"
+        },
+        "name": {
+          "type": null,
+          "mapped_to": "name"
+        },
+        "icon": {
+          "type": null,
+          "mapped_to": "icon"
+        },
+        "color": {
+          "type": null,
+          "mapped_to": "color"
+        },
+        "show_header": {
+          "type": null,
+          "mapped_to": "show_header"
+        },
+        "note": {
+          "type": null,
+          "mapped_to": "note"
+        },
+        "type": {
+          "type": null,
+          "mapped_to": "type"
+        },
+        "position_x": {
+          "type": null,
+          "mapped_to": "position_x"
+        },
+        "position_y": {
+          "type": null,
+          "mapped_to": "position_y"
+        },
+        "width": {
+          "type": null,
+          "mapped_to": "width"
+        },
+        "height": {
+          "type": null,
+          "mapped_to": "height"
+        },
+        "options": {
+          "type": null,
+          "mapped_to": "options"
+        },
+        "date_created": {
+          "type": null,
+          "mapped_to": "date_created"
+        },
+        "user_created": {
+          "type": null,
+          "mapped_to": "user_created"
+        }
+      }
+    },
+    "directus_notifications": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "timestamp": {
+          "type": null,
+          "mapped_to": "timestamp"
+        },
+        "status": {
+          "type": null,
+          "mapped_to": "status"
+        },
+        "recipient": {
+          "type": null,
+          "mapped_to": "recipient"
+        },
+        "sender": {
+          "type": null,
+          "mapped_to": "sender"
+        },
+        "subject": {
+          "type": null,
+          "mapped_to": "subject"
+        },
+        "message": {
+          "type": null,
+          "mapped_to": "message"
+        },
+        "collection": {
+          "type": null,
+          "mapped_to": "collection"
+        },
+        "item": {
+          "type": null,
+          "mapped_to": "item"
+        }
+      }
+    },
+    "directus_shares": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "name": {
+          "type": null,
+          "mapped_to": "name"
+        },
+        "collection": {
+          "type": null,
+          "mapped_to": "collection"
+        },
+        "item": {
+          "type": null,
+          "mapped_to": "item"
+        },
+        "role": {
+          "type": null,
+          "mapped_to": "role"
+        },
+        "password": {
+          "type": null,
+          "mapped_to": "password"
+        },
+        "user_created": {
+          "type": null,
+          "mapped_to": "user_created"
+        },
+        "date_created": {
+          "type": null,
+          "mapped_to": "date_created"
+        },
+        "date_start": {
+          "type": null,
+          "mapped_to": "date_start"
+        },
+        "date_end": {
+          "type": null,
+          "mapped_to": "date_end"
+        },
+        "times_used": {
+          "type": null,
+          "mapped_to": "times_used"
+        },
+        "max_uses": {
+          "type": null,
+          "mapped_to": "max_uses"
+        }
+      }
+    },
+    "directus_flows": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "name": {
+          "type": null,
+          "mapped_to": "name"
+        },
+        "icon": {
+          "type": null,
+          "mapped_to": "icon"
+        },
+        "color": {
+          "type": null,
+          "mapped_to": "color"
+        },
+        "description": {
+          "type": null,
+          "mapped_to": "description"
+        },
+        "status": {
+          "type": null,
+          "mapped_to": "status"
+        },
+        "trigger": {
+          "type": null,
+          "mapped_to": "trigger"
+        },
+        "accountability": {
+          "type": null,
+          "mapped_to": "accountability"
+        },
+        "options": {
+          "type": null,
+          "mapped_to": "options"
+        },
+        "operation": {
+          "type": null,
+          "mapped_to": "operation"
+        },
+        "date_created": {
+          "type": null,
+          "mapped_to": "date_created"
+        },
+        "user_created": {
+          "type": null,
+          "mapped_to": "user_created"
+        },
+        "operations": {
+          "type": null,
+          "mapped_to": "operations"
+        }
+      }
+    },
+    "directus_operations": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "name": {
+          "type": null,
+          "mapped_to": "name"
+        },
+        "key": {
+          "type": null,
+          "mapped_to": "key"
+        },
+        "type": {
+          "type": null,
+          "mapped_to": "type"
+        },
+        "position_x": {
+          "type": null,
+          "mapped_to": "position_x"
+        },
+        "position_y": {
+          "type": null,
+          "mapped_to": "position_y"
+        },
+        "options": {
+          "type": null,
+          "mapped_to": "options"
+        },
+        "resolve": {
+          "type": null,
+          "mapped_to": "resolve"
+        },
+        "reject": {
+          "type": null,
+          "mapped_to": "reject"
+        },
+        "flow": {
+          "type": null,
+          "mapped_to": "flow"
+        },
+        "date_created": {
+          "type": null,
+          "mapped_to": "date_created"
+        },
+        "user_created": {
+          "type": null,
+          "mapped_to": "user_created"
+        }
+      }
+    },
+    "directus_translations": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "language": {
+          "type": null,
+          "mapped_to": "language"
+        },
+        "key": {
+          "type": null,
+          "mapped_to": "key"
+        },
+        "value": {
+          "type": null,
+          "mapped_to": "value"
+        }
+      }
+    },
+    "directus_versions": {
+      "fields": {
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "key": {
+          "type": null,
+          "mapped_to": "key"
+        },
+        "name": {
+          "type": null,
+          "mapped_to": "name"
+        },
+        "collection": {
+          "type": null,
+          "mapped_to": "collection"
+        },
+        "item": {
+          "type": null,
+          "mapped_to": "item"
+        },
+        "hash": {
+          "type": null,
+          "mapped_to": "hash"
+        },
+        "date_created": {
+          "type": null,
+          "mapped_to": "date_created"
+        },
+        "date_updated": {
+          "type": null,
+          "mapped_to": "date_updated"
+        },
+        "user_created": {
+          "type": null,
+          "mapped_to": "user_created"
+        },
+        "user_updated": {
+          "type": null,
+          "mapped_to": "user_updated"
+        },
+        "delta": {
+          "type": null,
+          "mapped_to": "delta"
+        }
+      }
+    },
+    "directus_extensions": {
+      "fields": {
+        "enabled": {
+          "type": null,
+          "mapped_to": "enabled"
+        },
+        "id": {
+          "type": null,
+          "mapped_to": "id"
+        },
+        "folder": {
+          "type": null,
+          "mapped_to": "folder"
+        },
+        "source": {
+          "type": null,
+          "mapped_to": "source"
+        },
+        "bundle": {
+          "type": null,
+          "mapped_to": "bundle"
+        }
+      }
+    }
   }
 }
