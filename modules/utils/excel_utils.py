@@ -7,6 +7,8 @@ import pandas as pd
 
 def col_to_letter(idx: int) -> str:
     """Return Excel-style column letters (0-based)."""
+    if idx < 0:
+        raise ValueError("Column index cannot be negative")
     letters = ""
     while idx >= 0:
         idx, rem = divmod(idx, 26)

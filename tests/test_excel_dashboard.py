@@ -1,4 +1,5 @@
 import pandas as pd
+import pytest
 from generate_report.excel_dashboard import (
     _safe_concat_normal,
     _transpose_financials,
@@ -14,6 +15,11 @@ def test_col_to_letter_basic():
     assert col_to_letter(26) == "AA"
     assert col_to_letter(51) == "AZ"
     assert col_to_letter(52) == "BA"
+
+
+def test_col_to_letter_negative():
+    with pytest.raises(ValueError):
+        col_to_letter(-1)
 
 
 def test_safe_concat_normal():

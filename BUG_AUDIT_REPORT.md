@@ -8,6 +8,8 @@
 - **modules/generate_report/excel_dashboard.py** – Removed duplicate imports flagged by static analysis.
 - **tests/test_term_mapper_extra.py** – Dropped unused `os` import.
 - **tests/test_directus_tools_init.py** – New tests verifying `run_directus_wizard` export.
+- **modules/utils/excel_utils.py** – Added validation for negative indices in `col_to_letter`.
+- **tests/test_excel_dashboard.py** – Added test for negative column index handling.
 
 ## Remaining Warnings/TODOs
 - No outstanding warnings.
