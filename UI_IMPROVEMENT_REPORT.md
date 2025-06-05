@@ -102,3 +102,10 @@ These changes ensure consistent feedback across the CLI and provide clearer guid
 - Improved settings menus to use `print_menu` and added cancel options for delete prompts (lines 116-145 & 196-206 of settings_manager).
 - New helper imported throughout modules ensures consistent numbering across screens.
 
+
+### New CLI Enhancements
+- Standardized all feature-specific menus to use `print_menu` for numbering consistency.
+- Added `print_menu` imports and refactored menus in `portfolio_manager.py`, `group_analysis.py`, `note_manager.py`, and `directus_wizard.py`.
+- Converted the report ticker selection menu to use `print_menu` (see `modules/generate_report/__init__.py` lines 24-34).
+- Fixed stray text in `report_generator.py` that caused an `IndentationError`.
+

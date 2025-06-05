@@ -4,6 +4,7 @@ from modules.interface import (
     print_invalid_choice,
     print_header,
     input_or_cancel,
+    print_menu,
 )
 
 from modules.data import directus_client as dc, prepare_records, refresh_field_map
@@ -32,14 +33,17 @@ def run_directus_wizard() -> None:
 
     while True:
         print_header("\U0001F9E9 Directus Tools")
-        print("1) List Collections")
-        print("2) View Fields in Collection")
-        print("3) Add Field to Collection")
-        print("4) Fetch Items from Collection")
-        print("5) Insert Item into Collection")
-        print("6) Refresh Field Map")
-        print("7) Return to Main Menu")
-        choice = input("Select an option [1-7]: ").strip()
+        options = [
+            "List Collections",
+            "View Fields in Collection",
+            "Add Field to Collection",
+            "Fetch Items from Collection",
+            "Insert Item into Collection",
+            "Refresh Field Map",
+            "Return to Main Menu",
+        ]
+        print_menu(options)
+        choice = input(f"Select an option [1-{len(options)}]: ").strip()
 
         if choice == "1":
             cols = dc.list_collections()
