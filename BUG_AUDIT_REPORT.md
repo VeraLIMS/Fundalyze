@@ -27,3 +27,8 @@
 
 ## Remaining Warnings/TODOs
 - No outstanding warnings.
+
+## Additional Updates
+- Fixed fetch_and_compile default output to respect OUTPUT_DIR when DIRECTUS_URL is set.
+- Updated portfolio_manager to only sync with Directus when token is available.
+- All tests passing.
