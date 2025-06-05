@@ -346,7 +346,7 @@ FUNCTIONS
         Pretty-print a DataFrame using :mod:`tabulate`.
 
 DATA
-    INVALID_CHOICE_MSG = 'Invalid choice. Please select a valid option.\n'
+    INVALID_CHOICE_MSG = 'Invalid choice. Enter a number from the menu or ...
 
 FILE
     /workspace/Fundalyze/modules/interface.py
