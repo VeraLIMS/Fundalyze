@@ -1,4 +1,4 @@
-# src/generate_report/yf_fallback.py
+"""Simplified fallback fetch using only :mod:`yfinance`."""
 
 import yfinance as yf
 import pandas as pd

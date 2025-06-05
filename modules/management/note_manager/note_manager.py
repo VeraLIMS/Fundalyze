@@ -1,3 +1,5 @@
+"""Simple markdown note system with a tiny CLI."""
+
 import os
 import re
 from pathlib import Path

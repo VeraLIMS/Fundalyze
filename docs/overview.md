@@ -46,3 +46,27 @@ The `scripts/` directory contains small wrappers that import the modules above:
 - `performance_profile.py` – micro-benchmark utility.
 
 Running `python scripts/main.py` without arguments opens the interactive menu; see the README for command examples.
+
+## Additional Documentation
+
+- [Directus Integration](directus_overview.md)
+- [CLI Utilities](cli_overview.md)
+- [Reporting Workflow](reporting_overview.md)
+- [Configuration & Environment](configuration.md)
+
+### Module Diagram
+
+```mermaid
+graph TD
+    scripts_main[scripts/main.py]
+    mgmt[modules.management]
+    rep[modules.generate_report]
+    datafetch[modules.data.fetching]
+    directus[modules.data.directus_client]
+
+    scripts_main --> mgmt
+    scripts_main --> rep
+    rep --> datafetch
+    rep --> directus
+    mgmt --> datafetch
+```

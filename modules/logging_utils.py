@@ -1,3 +1,5 @@
+"""Project-wide logging configuration helper."""
+
 import logging
 from pathlib import Path
 

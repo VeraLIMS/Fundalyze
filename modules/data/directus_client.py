@@ -1,3 +1,5 @@
+"""Thin wrapper around the Directus HTTP API."""
+
 import os
 import logging
 import math

@@ -1,4 +1,4 @@
-# src/generate_report/excel_dashboard.py
+"""Create Excel dashboards from the downloaded CSV files."""
 
 import os
 import subprocess

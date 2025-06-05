@@ -1,3 +1,5 @@
+"""Lightweight helpers shared by report generation modules."""
+
 from __future__ import annotations
 
 import time

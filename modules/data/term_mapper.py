@@ -1,3 +1,5 @@
+"""Map inconsistent sector or industry labels to canonical terms."""
+
 import json
 import os
 from pathlib import Path

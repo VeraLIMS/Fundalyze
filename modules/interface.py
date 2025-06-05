@@ -1,3 +1,5 @@
+"""Small text-based UI helpers used by the command line tools."""
+
 from __future__ import annotations
 
 import pandas as pd

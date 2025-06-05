@@ -1,3 +1,5 @@
+"""Interactive helper for common Directus API operations."""
+
 import json
 
 from modules.interface import (
