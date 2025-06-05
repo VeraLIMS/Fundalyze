@@ -2,6 +2,15 @@
 from __future__ import annotations
 
 import pandas as pd
+from modules.utils.math_utils import moving_average, percentage_change
+
+__all__ = [
+    "portfolio_summary",
+    "sector_counts",
+    "correlation_matrix",
+    "moving_average",
+    "percentage_change",
+]
 
 
 def portfolio_summary(df: pd.DataFrame) -> pd.DataFrame:
@@ -33,9 +42,3 @@ def correlation_matrix(df: pd.DataFrame) -> pd.DataFrame:
     return df[numeric_cols].corr()
 
 
-def moving_average(series: pd.Series, window: int) -> pd.Series:
-    """Return rolling mean over ``window`` periods."""
-
-    if series is None or series.empty:
-        return pd.Series(dtype="float64")
-    return series.rolling(window=window, min_periods=1).mean()

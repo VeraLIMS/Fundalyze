@@ -101,71 +101,21 @@ def _write_dashboard(
     df_cash_qtr: pd.DataFrame,
 ) -> None:
     """Write all tables to ``dash_path`` as an Excel workbook."""
+    tables = [
+        (df_profiles, "Profile", "Profile_Table", "Table Style Medium 2"),
+        (df_prices, "PriceHistory", "PriceHistory_Table", "Table Style Medium 3"),
+        (df_inc_ann, "Income_Annual", "Income_Annual_Table", "Table Style Medium 4"),
+        (df_inc_qtr, "Income_Quarter", "Income_Quarter_Table", "Table Style Medium 5"),
+        (df_bal_ann, "Balance_Annual", "Balance_Annual_Table", "Table Style Medium 6"),
+        (df_bal_qtr, "Balance_Quarter", "Balance_Quarter_Table", "Table Style Medium 7"),
+        (df_cash_ann, "Cash_Annual", "Cash_Annual_Table", "Table Style Medium 8"),
+        (df_cash_qtr, "Cash_Quarter", "Cash_Quarter_Table", "Table Style Medium 9"),
+    ]
+
     with pd.ExcelWriter(dash_path, engine="xlsxwriter") as writer:
-        if not df_profiles.empty:
-            write_table(
-                writer,
-                df_profiles,
-                "Profile",
-                "Profile_Table",
-                style="Table Style Medium 2",
-            )
-        if not df_prices.empty:
-            write_table(
-                writer,
-                df_prices,
-                "PriceHistory",
-                "PriceHistory_Table",
-                style="Table Style Medium 3",
-            )
-        if not df_inc_ann.empty:
-            write_table(
-                writer,
-                df_inc_ann,
-                "Income_Annual",
-                "Income_Annual_Table",
-                style="Table Style Medium 4",
-            )
-        if not df_inc_qtr.empty:
-            write_table(
-                writer,
-                df_inc_qtr,
-                "Income_Quarter",
-                "Income_Quarter_Table",
-                style="Table Style Medium 5",
-            )
-        if not df_bal_ann.empty:
-            write_table(
-                writer,
-                df_bal_ann,
-                "Balance_Annual",
-                "Balance_Annual_Table",
-                style="Table Style Medium 6",
-            )
-        if not df_bal_qtr.empty:
-            write_table(
-                writer,
-                df_bal_qtr,
-                "Balance_Quarter",
-                "Balance_Quarter_Table",
-                style="Table Style Medium 7",
-            )
-        if not df_cash_ann.empty:
-            write_table(
-                writer,
-                df_cash_ann,
-                "Cash_Annual",
-                "Cash_Annual_Table",
-                style="Table Style Medium 8",
-            )
-        if not df_cash_qtr.empty:
-            write_table(
-                writer,
-                df_cash_qtr,
-                "Cash_Quarter",
-                "Cash_Quarter_Table",
-                style="Table Style Medium 9",
-            )
+        for df, sheet, table, style in tables:
+            if not df.empty:
+                write_table(writer, df, sheet, table, style=style)
 
 
 def _strip_timezones(df: pd.DataFrame) -> pd.DataFrame:

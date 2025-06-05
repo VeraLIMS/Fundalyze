@@ -26,6 +26,22 @@ FILE
     /workspace/Fundalyze/modules/analytics/__init__.py
 
 
+Help on module modules.utils.math_utils in modules.utils:
+
+NAME
+    modules.utils.math_utils - Mathematical helper utilities.
+
+FUNCTIONS
+    moving_average(series: 'pd.Series', window: 'int') -> 'pd.Series'
+        Return rolling mean over ``window`` periods.
+
+    percentage_change(series: 'pd.Series', periods: 'int' = 1) -> 'pd.Series'
+        Return percent change from ``periods`` prior values.
+
+FILE
+    /workspace/Fundalyze/modules/utils/math_utils.py
+
+
 Help on module modules.data.fetching in modules.data:
 
 NAME

@@ -1,7 +1,7 @@
 import pandas as pd
 from analytics import portfolio_summary, sector_counts
 import pytest
-from analytics import correlation_matrix, moving_average
+from analytics import correlation_matrix, moving_average, percentage_change
 
 
 def test_portfolio_summary_numeric_columns():
@@ -55,3 +55,16 @@ def test_moving_average_basic():
     s = pd.Series([1, 2, 3, 4])
     result = moving_average(s, window=2)
     assert result.tolist() == [1.0, 1.5, 2.5, 3.5]
+
+
+def test_percentage_change_basic():
+    s = pd.Series([1, 2, 4])
+    result = percentage_change(s)
+    assert pytest.approx(result.iloc[2]) == 1.0
+    assert pd.isna(result.iloc[0])
+
+
+def test_percentage_change_empty():
+    empty = pd.Series(dtype=float)
+    result = percentage_change(empty)
+    assert result.empty
