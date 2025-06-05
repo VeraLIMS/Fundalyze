@@ -1,6 +1,6 @@
 # Developer Guide
 
-This guide provides a high level look at Fundalyze's architecture and practical tips for extending or debugging the project.
+This guide provides a high level look at Fundalyze's architecture along with practical tips for extending and debugging the project.
 
 ## Architecture Overview
 
@@ -29,6 +29,7 @@ Fundalyze/
    Breakpoints inside `modules/` will be hit automatically.
 3. Enable verbose logs by adding `LOG_LEVEL=DEBUG` to `config/.env`.
 4. When debugging report generation you can set `OUTPUT_DIR` to a temporary folder to avoid clutter.
+5. For quick inspection you can also run modules with `python -m pdb modules/<package>/file.py`.
 
 ## Extending Fundalyze
 
@@ -37,16 +38,18 @@ Fundalyze/
 1. Place a new `.py` file under `modules/analytics/` and implement your functions.
 2. Re-export them in `modules/analytics/__init__.py` so other packages can import them.
 3. Regenerate `docs/API_REFERENCE.md` by running `python -m pydoc` on the new module.
+4. Update imports in `modules/analytics/__init__.py` so the module is discoverable.
 
 ### Adding CLI Components or UI Elements
 
 1. Add your implementation under `modules/management/`.
 2. Register a menu entry in `scripts/main.py` so users can access it.
 3. Document any new commands in the README or user guide.
+4. If a new UI component is added, place reusable widgets in `modules/interface.py`.
 
 ## Writing Tests
 
 - Tests live in the `tests/` directory and should be named `test_*.py`.
 - Use `pytest -q` to run the suite. Aim to cover new code paths and keep coverage high.
-- Fixtures for common setup reside in `tests/conftest.py`.
+- Reusable fixtures live in the individual test modules; keep them small and focused.
 - Prefer temporary directories and small sample data to keep tests fast.
