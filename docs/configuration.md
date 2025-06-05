@@ -26,7 +26,8 @@ OUTPUT_DIR=output
 To obtain an OpenBB API token visit the
 [OpenBB documentation](https://docs.openbb.co/platform/getting_started/api_requests)
 and sign up for an account. Once acquired, run the **OpenBB API Token** wizard
-inside the Settings Manager to store the token. The Settings Manager also
+inside the Settings Manager to store the token. The `get_openbb()` helper uses this
+token to log in whenever OpenBB data is requested. The Settings Manager also
  provides wizards for configuring your **Directus connection** and **Notes
  directory**. Another wizard sets the **Output Directory** used for reports.
  A **Cloudflare Access** wizard stores the `CF_ACCESS_CLIENT_ID` and

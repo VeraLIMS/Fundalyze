@@ -15,17 +15,17 @@ import sys
 
 from modules.generate_report import report_utils as rutils
 from modules.generate_report.utils import iso_timestamp_utc
+from modules.utils import get_openbb
 
-# Delay heavy OpenBB import until needed
+# Lazily loaded OpenBB module for test monkeypatching
 obb = None
 
 
 def _get_openbb():
-    """Load OpenBB lazily and return the module."""
+    """Return cached OpenBB module logging in on first use."""
     global obb
     if obb is None:
-        from openbb import obb as _obb
-        obb = _obb
+        obb = get_openbb()
     return obb
 
 

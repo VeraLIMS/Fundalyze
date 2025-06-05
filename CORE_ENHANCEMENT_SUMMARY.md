@@ -91,7 +91,7 @@ def fetch_and_compile(...):
 
 # New approach
 def fetch_and_compile(...):
-    obb = _get_openbb()
+    obb = get_openbb()
     rutils.fetch_profile(...)
     rutils.fetch_price_history(...)
     rutils.fetch_financial_statements(...)

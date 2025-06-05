@@ -16,6 +16,7 @@ from .data_utils import (
 from .excel_utils import col_to_letter, write_table
 from .math_utils import moving_average, percentage_change
 from .progress_utils import progress_iter
+from .openbb_utils import get_openbb
 
 __all__ = [
     "strip_timezones",
@@ -27,4 +28,5 @@ __all__ = [
     "moving_average",
     "percentage_change",
     "progress_iter",
+    "get_openbb",
 ]
