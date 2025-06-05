@@ -25,3 +25,8 @@ def print_table(df: pd.DataFrame, *, showindex: bool = False) -> None:
 def print_invalid_choice() -> None:
     """Standard message for invalid menu selections."""
     print(INVALID_CHOICE_MSG)
+
+
+def input_or_cancel(prompt: str) -> str:
+    """Return user input or an empty string if canceled."""
+    return input(f"{prompt} (or press Enter to cancel): ").strip()
