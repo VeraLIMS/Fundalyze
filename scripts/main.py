@@ -9,6 +9,7 @@ import sys
 import os
 import argparse
 import textwrap
+import subprocess
 
 # Add the repository root to sys.path so 'modules' can be imported when this
 # script is executed directly via `python scripts/main.py`.
@@ -129,12 +130,82 @@ def run_portfolio_groups() -> None:
             invalid_choice()
 
 
+def _choose_tickers() -> list[str]:
+    """Prompt for tickers using the report helper."""
+    from modules.generate_report import _select_tickers
+
+    return _select_tickers()
+
+
+def run_reports_menu() -> None:
+    """Sub-menu for report related utilities."""
+    while True:
+        print_header("\U0001F4D1 Reports")
+        print("1) Full Workflow")
+        print("2) Metadata Checker Only")
+        print("3) Fallback Data Only")
+        print("4) Excel Dashboard Only")
+        print("5) Return to Main Menu")
+        choice = input("Select an option [1-5]: ").strip()
+
+        if choice == "1":
+            run_generate_report()
+        elif choice == "2":
+            tickers = _choose_tickers()
+            if tickers:
+                run_metadata_checker(tickers)
+        elif choice == "3":
+            tickers = _choose_tickers()
+            if tickers:
+                run_fallback_data(tickers)
+        elif choice == "4":
+            tickers = _choose_tickers()
+            if tickers:
+                create_and_open_dashboard(tickers=tickers)
+        elif choice == "5":
+            break
+        else:
+            invalid_choice()
+
+
+def run_tests_cli() -> None:
+    """Run the test suite via the bundled helper script."""
+    script = os.path.join(SCRIPT_DIR, "run_tests.py")
+    subprocess.run([sys.executable, script])
+
+
+def run_profile_cli() -> None:
+    """Launch the performance profiling helper."""
+    script = os.path.join(SCRIPT_DIR, "performance_profile.py")
+    subprocess.run([sys.executable, script])
+
+
+def run_utilities_menu() -> None:
+    """Sub-menu exposing extra helper utilities."""
+    while True:
+        print_header("\U0001F6E0 Utilities")
+        print("1) Run Test Suite")
+        print("2) Performance Profile")
+        print("3) Return to Main Menu")
+        choice = input("Select an option [1-3]: ").strip()
+
+        if choice == "1":
+            run_tests_cli()
+        elif choice == "2":
+            run_profile_cli()
+        elif choice == "3":
+            break
+        else:
+            invalid_choice()
+
+
 ACTION_ITEMS: list[tuple[str, callable]] = [
     ("Portfolio & Groups", run_portfolio_groups),
-    ("Reports", run_generate_report),
+    ("Reports", run_reports_menu),
     ("Notes", run_note_manager),
     ("Directus Tools", run_directus_wizard),
     ("Settings", run_settings_manager),
+    ("Utilities", run_utilities_menu),
     ("Exit", exit_program),
 ]
 
@@ -148,6 +219,8 @@ COMMAND_MAP: dict[str, callable] = {
     "fallback": run_fallback_data,
     "dashboard": create_and_open_dashboard,
     "directus": run_directus_wizard,
+    "tests": run_tests_cli,
+    "profile": run_profile_cli,
 }
 
 COMMAND_HELP = {
@@ -160,6 +233,8 @@ COMMAND_HELP = {
     "fallback": "Run fallback data fetch",
     "dashboard": "Create Excel dashboard",
     "directus": "Launch Directus wizard",
+    "tests": "Run unit tests",
+    "profile": "Run performance profiler",
 }
 
 
@@ -193,6 +268,8 @@ def parse_args() -> argparse.Namespace:
         Examples:
           python scripts/main.py portfolio  # open portfolio manager
           python scripts/main.py report     # generate reports
+          python scripts/main.py metadata   # run metadata checker
+          python scripts/main.py tests      # execute test suite
         """
     )
     parser = argparse.ArgumentParser(
