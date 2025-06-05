@@ -5,6 +5,9 @@ from .metadata_checker import run_for_tickers
 from .fallback_data import run_fallback_data
 from .excel_dashboard import create_and_open_dashboard
 
+# Backwards compatible alias used by `scripts/main.py`
+run_metadata_checker = run_for_tickers
+
 from modules.management.portfolio_manager.portfolio_manager import (
     load_portfolio,
     PORTFOLIO_FILE,
