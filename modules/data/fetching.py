@@ -111,6 +111,8 @@ def fetch_basic_stock_data_batch(
     *,
     fallback: bool = True,
     provider: str = "auto",
+    dedup: bool = False,
+    progress: bool = False,
 ) -> pd.DataFrame:
     """Fetch :func:`fetch_basic_stock_data` for multiple tickers.
 
@@ -123,6 +125,11 @@ def fetch_basic_stock_data_batch(
     provider:
         Data source to use: ``"auto"`` (default), ``"yf"`` or ``"fmp"``.
 
+    dedup:
+        If ``True``, remove duplicate symbols before fetching.
+    progress:
+        When ``True`` print a progress line for each ticker.
+
     Returns
     -------
     pandas.DataFrame
@@ -130,8 +137,14 @@ def fetch_basic_stock_data_batch(
         :data:`BASIC_FIELDS`.
     """
 
+    if dedup:
+        tickers = list(dict.fromkeys(tickers))
+
     rows = []
-    for tk in tickers:
+    total = len(tickers)
+    for idx, tk in enumerate(tickers, start=1):
+        if progress:
+            print(f"[{idx}/{total}] Fetching {tk}...")
         data = fetch_basic_stock_data(tk, fallback=fallback, provider=provider)
         rows.append(data)
     return pd.DataFrame(rows, columns=BASIC_FIELDS)

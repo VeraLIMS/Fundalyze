@@ -43,9 +43,15 @@ FUNCTIONS
             ``'yf'`` to use yfinance only, ``'fmp'`` for FMP only,
             or ``'auto'`` (default) to try yfinance then FMP if ``fallback``.
 
-    fetch_basic_stock_data_batch(tickers: 'list[str] | tuple[str, ...]', *, fallback: 'bool' = True, provider: 'str' = 'auto') -> 'pandas.DataFrame'
+    fetch_basic_stock_data_batch(
+        tickers: 'list[str] | tuple[str, ...]', *, fallback: 'bool' = True,
+        provider: 'str' = 'auto', dedup: 'bool' = False,
+        progress: 'bool' = False
+    ) -> 'pandas.DataFrame'
         Fetch :func:`fetch_basic_stock_data` for multiple tickers and
-        return a DataFrame with one row per ticker.
+        return a DataFrame with one row per ticker. When ``dedup`` is ``True``
+        duplicate symbols are ignored. If ``progress`` is enabled a progress
+        line is printed for each ticker.
 
 DATA
     BASIC_FIELDS = ['Ticker', 'Name', 'Sector', 'Industry', 'Current Price...

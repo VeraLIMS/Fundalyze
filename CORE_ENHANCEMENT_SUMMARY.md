@@ -14,6 +14,10 @@
 - **modules/generate_report/report_utils.py** – new helper module with reusable functions for profile, price and statement downloads.
 - **modules/generate_report/report_generator.py** – refactored to use `report_utils` and now supports a `statements` parameter to choose which financial statements to fetch.
 - **docs/API_REFERENCE.md** – signature updated again with the new `statements` option.
+- **modules/generate_report/excel_dashboard.py** – further modularized with `_load_ticker_data`, `_assemble_tables` and `_write_dashboard` helpers.
+- **modules/data/fetching.py** – `fetch_basic_stock_data_batch` now accepts `dedup` and `progress` parameters for convenience.
+- **docs/API_REFERENCE.md** – description updated for the new batch options.
+- **tests/test_fetching.py** – covers deduplication and progress output.
 
 ## Key Refactors
 
