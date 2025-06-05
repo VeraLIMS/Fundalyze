@@ -38,6 +38,7 @@ def _discover_wizards():
 
 
 def _prompt_kv() -> tuple[str, str]:
+    """Prompt for a key/value pair, returning empty strings if canceled."""
     key = input("Key (or press Enter to cancel): ").strip()
     if not key:
         return "", ""
@@ -46,6 +47,7 @@ def _prompt_kv() -> tuple[str, str]:
 
 
 def _show_dict(data: Dict[str, str]) -> None:
+    """Pretty-print a simple key/value mapping."""
     if not data:
         print("(empty)")
     else:
@@ -61,6 +63,7 @@ def _show_api_keys() -> None:
 
 
 def _set_setting() -> None:
+    """Prompt for and save a value in ``settings.json``."""
     key, val = _prompt_kv()
     if not key:
         print("Canceled.\n")
@@ -72,6 +75,7 @@ def _set_setting() -> None:
 
 
 def _del_setting() -> None:
+    """Delete a key from ``settings.json`` if it exists."""
     key = input_or_cancel("Key to delete")
     if not key:
         print("Canceled.\n")
@@ -86,6 +90,7 @@ def _del_setting() -> None:
 
 
 def _set_env_var() -> None:
+    """Add or update an environment variable in ``config/.env``."""
     key, val = _prompt_kv()
     if not key:
         print("Canceled.\n")
@@ -97,6 +102,7 @@ def _set_env_var() -> None:
 
 
 def _del_env_var() -> None:
+    """Remove a variable from ``config/.env`` if present."""
     key = input_or_cancel("Variable to delete")
     if not key:
         print("Canceled.\n")
@@ -110,6 +116,7 @@ def _del_env_var() -> None:
         print("Key not found.\n")
 
 def _general_settings_menu() -> None:
+    """Interactive submenu for managing ``settings.json``."""
     while True:
         print_header("\u2699\ufe0f General Settings")
         options = [
@@ -133,6 +140,7 @@ def _general_settings_menu() -> None:
 
 
 def _env_menu() -> None:
+    """Interactive submenu for editing ``config/.env``."""
     while True:
         print_header("\u2699\ufe0f Environment (.env)")
         options = [
@@ -156,6 +164,7 @@ def _env_menu() -> None:
 
 
 def _wizards_menu() -> None:
+    """Display available setup wizards and run the selected one."""
     wiz_map = {label: func for label, func in _discover_wizards()}
     default_order = [
         "Directus Connection",

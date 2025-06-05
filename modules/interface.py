@@ -1,3 +1,5 @@
+"""Shared user-interface helpers for CLI menus."""
+
 from __future__ import annotations
 """User interface helper functions for CLI menus and tables."""
 

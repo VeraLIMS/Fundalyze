@@ -1,6 +1,15 @@
 from __future__ import annotations
 
-"""Helper utilities for working with Excel files."""
+"""Helper utilities for working with Excel files.
+
+Typical usage::
+
+    import pandas as pd
+    from modules.utils import write_table
+
+    with pd.ExcelWriter("report.xlsx", engine="xlsxwriter") as writer:
+        write_table(writer, df, "Summary", "SummaryTable")
+"""
 
 import pandas as pd
 

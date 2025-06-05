@@ -1,4 +1,9 @@
+ codex/create-documentation-for-tests-module
 """Interactive wizard for configuring Directus integration."""
+=======
+"""Interactive wizard for basic Directus API operations."""
+
+ main
 import json
 
 from modules.interface import (
