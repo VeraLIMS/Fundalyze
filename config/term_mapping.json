@@ -1,12 +1,11 @@
 {
-  "Technology": [
-    "Tech",
-    "Information Technology",
-    "IT",
-    "Conglomerates",
-    "Consumer Electronics",
-    "Communication Services",
-    "Internet Content & Information"
+  "Aerospace & Defense": [],
+  "Consumer Discretionary": [
+    "Auto Manufacturers",
+    "Consumer Cyclical"
+  ],
+  "Consumer Staples": [
+    "Consumer Defensive"
   ],
   "Financials": [
     "Finance",
@@ -16,18 +15,17 @@
     "Health Care",
     "Medical"
   ],
-  "Consumer Discretionary": [
-    "Consumer Cyclical",
-    "Auto Manufacturers"
-  ],
-  "Consumer Staples": [
-    "Consumer Defensive"
-  ],
   "Industrials": [
-    "Industrials",
     "Specialty Industrial Machinery"
   ],
-  "Aerospace & Defense": [
-    "Aerospace & Defense"
+  "Technology": [
+    "Communication Services",
+    "Conglomerates",
+    "Consumer Electronics",
+    "IT",
+    "Information Technology",
+    "Internet Content & Information",
+    "Tech"
   ]
 }
+

@@ -1,5 +1,7 @@
 """Utilities to normalize sector and industry terminology."""
 
+from __future__ import annotations
+
 import json
 import os
 from pathlib import Path
@@ -21,27 +23,64 @@ MAPPING_FILE = PROJECT_ROOT / 'config' / 'term_mapping.json'
 
 
 def load_mapping() -> Dict[str, List[str]]:
-    """Return term mapping dictionary from :data:`MAPPING_FILE`."""
+    """Load the term mapping from disk.
+
+    Returns:
+        Dict[str, List[str]]: Canonical terms mapped to lists of aliases.
+    """
     if not MAPPING_FILE.is_file():
         return {}
     with open(MAPPING_FILE, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
-def save_mapping(mapping: Dict[str, List[str]]):
-    """Write ``mapping`` to :data:`MAPPING_FILE`."""
+def sort_mapping(mapping: Dict[str, List[str]]) -> Dict[str, List[str]]:
+    """Return mapping with sorted keys and unique aliases.
+
+    Args:
+        mapping: Raw mapping loaded from disk.
+
+    Returns:
+        Mapping where keys are alphabetical and alias lists are sorted and
+        deduplicated.
+    """
+    return {
+        key: sorted({alias for alias in aliases if alias != key})
+        for key, aliases in sorted(mapping.items())
+    }
+
+
+def save_mapping(mapping: Dict[str, List[str]]) -> None:
+    """Persist mapping to :data:`MAPPING_FILE`.
+
+    Args:
+        mapping: Mapping of canonical names to aliases.
+    """
+    sorted_mapping = sort_mapping(mapping)
     MAPPING_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(MAPPING_FILE, 'w', encoding='utf-8') as f:
-        json.dump(mapping, f, indent=2)
+        json.dump(sorted_mapping, f, indent=2)
 
 
 def _normalize(text: str) -> str:
-    """Return lowercase, trimmed representation of ``text``."""
+    """Normalize ``text`` for comparison.
+
+    Args:
+        text: Raw string to normalize.
+
+    Returns:
+        Lowercased and trimmed string.
+    """
     return text.strip().lower()
 
 
-def add_alias(canonical: str, alias: str):
-    """Persist ``alias`` as an alternative spelling for ``canonical``."""
+def add_alias(canonical: str, alias: str) -> None:
+    """Persist ``alias`` as an alternative spelling for ``canonical``.
+
+    Args:
+        canonical: The canonical term.
+        alias: Alternative representation to store.
+    """
     mapping = load_mapping()
     canonical_norm = canonical.strip()
     alias_norm = alias.strip()
@@ -55,7 +94,15 @@ def add_alias(canonical: str, alias: str):
 
 
 def _suggest_with_openai(term: str, options: List[str]) -> Optional[str]:
-    """Return best matching option suggested by OpenAI or ``None``."""
+    """Suggest the best canonical term using OpenAI.
+
+    Args:
+        term: Term needing normalization.
+        options: Available canonical options.
+
+    Returns:
+        The suggested canonical term or ``None`` if unavailable.
+    """
     if openai is None or not os.getenv('OPENAI_API_KEY'):
         return None
     try:
@@ -79,11 +126,16 @@ def _suggest_with_openai(term: str, options: List[str]) -> Optional[str]:
 
 
 def resolve_term(term: str) -> str:
-    """Return canonical representation for ``term``.
+    """Resolve ``term`` to a canonical representation.
 
-    The function checks existing aliases, optionally queries OpenAI for a best
-    guess and finally prompts the user to pick or create a mapping. Any new
-    mapping is saved via :func:`add_alias`.
+    The function first checks the local mapping, optionally asks OpenAI for a
+    recommendation and finally allows the user to create a new mapping.
+
+    Args:
+        term: Input term to normalize.
+
+    Returns:
+        Canonical term if resolved, otherwise the original input.
     """
     if not term:
         return term
@@ -91,7 +143,7 @@ def resolve_term(term: str) -> str:
     norm = _normalize(term)
     # direct match
     for canonical, aliases in mapping.items():
-        if norm == _normalize(canonical) or norm in [_normalize(a) for a in aliases]:
+        if norm == _normalize(canonical) or norm in {_normalize(a) for a in aliases}:
             return canonical
     # not found; try openai suggestion
     suggestion = _suggest_with_openai(term, list(mapping.keys()))
