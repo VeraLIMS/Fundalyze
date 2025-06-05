@@ -31,3 +31,11 @@ def correlation_matrix(df: pd.DataFrame) -> pd.DataFrame:
     if len(numeric_cols) < 2:
         return pd.DataFrame()
     return df[numeric_cols].corr()
+
+
+def moving_average(series: pd.Series, window: int) -> pd.Series:
+    """Return rolling mean over ``window`` periods."""
+
+    if series is None or series.empty:
+        return pd.Series(dtype="float64")
+    return series.rolling(window=window, min_periods=1).mean()

@@ -1,7 +1,7 @@
 import pandas as pd
 from analytics import portfolio_summary, sector_counts
 import pytest
-from analytics import correlation_matrix
+from analytics import correlation_matrix, moving_average
 
 
 def test_portfolio_summary_numeric_columns():
@@ -49,3 +49,9 @@ def test_correlation_matrix_basic():
 def test_correlation_matrix_insufficient_data():
     df = pd.DataFrame({"A": [1, 2, 3]})
     assert correlation_matrix(df).empty
+
+
+def test_moving_average_basic():
+    s = pd.Series([1, 2, 3, 4])
+    result = moving_average(s, window=2)
+    assert result.tolist() == [1.0, 1.5, 2.5, 3.5]
