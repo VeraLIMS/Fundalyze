@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+# ---------------------------------------------------------------------------
+# Helper to execute all test modules in sequence using pytest.
+# Useful when your editor lacks test discovery.
+# ---------------------------------------------------------------------------
 """Run each test file under the ``tests`` directory sequentially.
 
 This script discovers all ``test_*.py`` files inside the repository's ``tests``

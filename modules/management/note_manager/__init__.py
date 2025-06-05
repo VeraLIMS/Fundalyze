@@ -1,3 +1,5 @@
+"""Public API for the note management utilities."""
+
 from .note_manager import (
     create_note,
     get_note_path,

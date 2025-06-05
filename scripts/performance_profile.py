@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# ---------------------------------------------------------------------------
+# Profile the performance of critical data processing functions using
+# synthetic data. Helps catch regressions in execution time.
+# ---------------------------------------------------------------------------
 """Simple performance profiling for Fundalyze utilities.
 
 This script runs key functions with synthetic data and reports execution times
