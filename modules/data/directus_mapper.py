@@ -1,8 +1,11 @@
 import json
+import logging
 from pathlib import Path
 from typing import Iterable, Dict, Any, List
 
 from .directus_client import list_fields_with_types, list_collections, list_fields
+
+logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 MAP_FILE = PROJECT_ROOT / "config" / "directus_field_map.json"
@@ -48,12 +51,14 @@ def prepare_records(collection: str, records: Iterable[Dict[str, Any]]) -> List[
 
     prepared: List[Dict[str, Any]] = []
     for row in records:
+        logger.debug("Original record: %s", row)
         mapped = {}
         for key, value in row.items():
             entry = field_map.get(key)
             new_key = entry.get("mapped_to") if entry else key
             if not allowed or new_key in allowed:
                 mapped[new_key] = value
+        logger.debug("Mapped record: %s", mapped)
         prepared.append(mapped)
     return prepared
 

@@ -10,6 +10,7 @@ import os
 import argparse
 import textwrap
 import subprocess
+import logging
 
 # Add the repository root to sys.path so 'modules' can be imported when this
 # script is executed directly via `python scripts/main.py`.
@@ -17,6 +18,9 @@ SCRIPT_DIR = os.path.dirname(__file__)
 REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, os.pardir))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
+
+from modules.logging_utils import setup_logging
+setup_logging("logs/fundalyze.log")
 
 # Ensure environment variables from config/.env are loaded before other modules
 from modules.config_utils import load_settings  # noqa: E402
