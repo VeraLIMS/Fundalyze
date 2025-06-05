@@ -3992,7 +3992,7 @@
         },
         "ticker_symbol": {
           "type": "text",
-          "mapped_to": "ticker_symbol"
+          "mapped_to": "ticker_symbol, ticker_symbol, Ticker"
         },
         "industry": {
           "type": "text",
@@ -4013,6 +4013,14 @@
         "dividend_yield": {
           "type": "decimal",
           "mapped_to": "dividend_yield"
+        }
+      }
+    },
+    "groups": {
+      "fields": {
+        "id": {
+          "type": "integer",
+          "mapped_to": "id"
         }
       }
     }
