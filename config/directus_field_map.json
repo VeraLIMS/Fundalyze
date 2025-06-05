@@ -3992,7 +3992,7 @@
         },
         "ticker_symbol": {
           "type": "text",
-          "mapped_to": "ticker_symbol, ticker_symbol, Ticker"
+          "mapped_to": "symbol"
         },
         "industry": {
           "type": "text",
