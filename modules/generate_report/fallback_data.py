@@ -1,13 +1,14 @@
 # src/generate_report/fallback_data.py
 
-"""
-fallback_data.py
+"""Final safety net for repairing ticker folders.
 
-When some CSV files (profile, price history, or financial statements) fail to fetch
-via the primary methods (OpenBB → yfinance → FMP), this module attempts a “full”
-yfinance-based fallback to repopulate all missing files for a given ticker.
+If after running :mod:`metadata_checker` some files are still missing or contain
+``ERROR`` entries, ``fallback_data.py`` performs a full yfinance download of
+profile, price history and all statements.  The freshly fetched files replace
+any incomplete ones and ``metadata.json`` is updated accordingly.
 
-Usage:
+Usage example::
+
     run_fallback_data()  # scans output/, attempts fix for each ticker folder
 """
 

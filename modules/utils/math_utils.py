@@ -1,6 +1,12 @@
 from __future__ import annotations
 
-"""Mathematical helper utilities."""
+"""Mathematical helper utilities.
+
+These functions are intentionally small so they can be imported directly::
+
+    from modules.utils import moving_average
+    ma = moving_average(series, window=30)
+"""
 
 import pandas as pd
 

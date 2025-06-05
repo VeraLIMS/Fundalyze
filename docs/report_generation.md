@@ -37,4 +37,22 @@ python scripts/main.py report
 
 After completion the Excel dashboard opens so you can explore the results.
 
+## CLI vs API Usage
+
+The same workflow can be triggered programmatically. The CLI simply calls the
+functions shown below.
+
+### CLI
+```bash
+python scripts/main.py report --tickers AAPL MSFT
+```
+
+### API
+```python
+from modules.generate_report import fetch_and_compile, excel_dashboard
+
+fetch_and_compile("AAPL")
+excel_dashboard.create_and_open_dashboard(tickers=["AAPL"])
+```
+
 See [docs/end_to_end_tests.md](end_to_end_tests.md) for automated scenarios covering this process.
