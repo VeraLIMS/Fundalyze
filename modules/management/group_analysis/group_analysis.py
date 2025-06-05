@@ -53,6 +53,21 @@ COLUMNS = [
     "Dividend Yield",
 ]
 
+# Possible mapping of Directus field names to our expected columns
+FROM_DIRECTUS = {
+    "group": "Group",
+    "ticker": "Ticker",
+    "ticker_symbol": "Ticker",
+    "company_name": "Name",
+    "name": "Name",
+    "sector": "Sector",
+    "industry": "Industry",
+    "current_price": "Current Price",
+    "market_cap": "Market Cap",
+    "pe_ratio": "PE Ratio",
+    "dividend_yield": "Dividend Yield",
+}
+
 
 def load_portfolio(filepath: str) -> pd.DataFrame:
     """
@@ -78,9 +93,13 @@ def load_groups(filepath: str) -> pd.DataFrame:
             if not records:
                 return pd.DataFrame(columns=COLUMNS)
             df = pd.DataFrame(records)
+            df = df.rename(columns=FROM_DIRECTUS)
             for col in COLUMNS:
                 if col not in df.columns:
                     df[col] = pd.NA
+            df = df.dropna(how="all")
+            if "Group" in df.columns:
+                df = df[df["Group"].notna()]
             return df[COLUMNS]
         except Exception as exc:
             print(f"Error loading groups from Directus: {exc}")
@@ -92,6 +111,9 @@ def load_groups(filepath: str) -> pd.DataFrame:
             for col in COLUMNS:
                 if col not in df.columns:
                     df[col] = pd.NA
+            df = df.dropna(how="all")
+            if "Group" in df.columns:
+                df = df[df["Group"].notna()]
             return df[COLUMNS]
         except Exception as e:
             print(f"Error reading {filepath}: {e}\nStarting with empty groups.")

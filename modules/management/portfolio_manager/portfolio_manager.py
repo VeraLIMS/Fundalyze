@@ -43,6 +43,18 @@ COLUMNS = [
     "Dividend Yield"
 ]
 
+# Mapping of Directus field names to our dataframe columns when reading
+FROM_DIRECTUS = {
+    "ticker_symbol": "Ticker",
+    "company_name": "Name",
+    "sector": "Sector",
+    "industry": "Industry",
+    "current_price": "Current Price",
+    "market_cap": "Market Cap",
+    "pe_ratio": "PE Ratio",
+    "dividend_yield": "Dividend Yield",
+}
+
 
 def load_portfolio(filepath: str) -> pd.DataFrame:
     """
@@ -56,9 +68,13 @@ def load_portfolio(filepath: str) -> pd.DataFrame:
             if not records:
                 return pd.DataFrame(columns=COLUMNS)
             df = pd.DataFrame(records)
+            df = df.rename(columns=FROM_DIRECTUS)
             for col in COLUMNS:
                 if col not in df.columns:
                     df[col] = pd.NA
+            df = df.dropna(how="all")
+            if "Ticker" in df.columns:
+                df = df[df["Ticker"].notna()]
             return df[COLUMNS]
         except Exception as exc:
             print(f"Error loading portfolio from Directus: {exc}")
@@ -70,6 +86,9 @@ def load_portfolio(filepath: str) -> pd.DataFrame:
             for col in COLUMNS:
                 if col not in df.columns:
                     df[col] = pd.NA
+            df = df.dropna(how="all")
+            if "Ticker" in df.columns:
+                df = df[df["Ticker"].notna()]
             return df[COLUMNS]
         except Exception as e:
             print(f"Error reading {filepath}: {e}")
