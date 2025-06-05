@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any, Iterable, Mapping
+
 import pandas as pd
 import requests
 import yfinance as yf
@@ -26,9 +28,11 @@ BASIC_FIELDS = [
 FMP_PROFILE_URL = "https://financialmodelingprep.com/api/v3/profile/{symbol}"
 FMP_TIMEOUT = 10
 
+_PROVIDERS = {"auto", "yf", "fmp"}
 
-def _parse_yf_info(info: dict, ticker: str) -> dict:
-    """Return BASIC_FIELDS dict from yfinance info dict."""
+
+def _parse_yf_info(info: Mapping[str, Any], ticker: str) -> dict[str, Any]:
+    """Convert ``info`` from yfinance into the :data:`BASIC_FIELDS` format."""
     return {
         "Ticker": ticker.upper(),
         "Name": info.get("longName", ""),
@@ -41,8 +45,8 @@ def _parse_yf_info(info: dict, ticker: str) -> dict:
     }
 
 
-def _fetch_from_fmp(ticker: str) -> dict:
-    """Return BASIC_FIELDS dict using the FMP profile endpoint."""
+def _fetch_from_fmp(ticker: str) -> dict[str, Any]:
+    """Return :data:`BASIC_FIELDS` information using the FMP profile endpoint."""
     url = add_fmp_api_key(FMP_PROFILE_URL.format(symbol=ticker))
     resp = requests.get(url, timeout=FMP_TIMEOUT)
     resp.raise_for_status()
@@ -60,6 +64,18 @@ def _fetch_from_fmp(ticker: str) -> dict:
         "PE Ratio": row.get("pe", pd.NA),
         "Dividend Yield": row.get("lastDiv", pd.NA),
     }
+
+
+def _fetch_from_yf(ticker: str) -> dict[str, Any] | None:
+    """Return :data:`BASIC_FIELDS` information from yfinance or ``None``."""
+    ticker_obj = yf.Ticker(ticker)
+    try:
+        info = ticker_obj.get_info()
+    except Exception:
+        return None
+    if info and info.get("longName") is not None:
+        return _parse_yf_info(info, ticker)
+    return None
 
 
 def fetch_basic_stock_data(
@@ -84,18 +100,14 @@ def fetch_basic_stock_data(
 
     provider = provider.lower()
 
-    if provider not in {"auto", "yf", "fmp"}:
+    if provider not in _PROVIDERS:
         raise ValueError("provider must be 'auto', 'yf', or 'fmp'")
 
     if provider in {"auto", "yf"}:
-        ticker_obj = yf.Ticker(ticker)
-        try:
-            info = ticker_obj.get_info()
-        except Exception:
-            info = {}
-        if info and info.get("longName") is not None:
-            return _parse_yf_info(info, ticker)
-        if provider == "yf" and not info:
+        yf_data = _fetch_from_yf(ticker)
+        if yf_data is not None:
+            return yf_data
+        if provider == "yf":
             raise ValueError("No valid data returned by yfinance.")
 
     if provider in {"auto", "fmp"} and fallback:
@@ -146,10 +158,13 @@ def fetch_basic_stock_data_batch(
     if dedup:
         tickers = list(dict.fromkeys(tickers))
 
-    rows = []
+    if not tickers:
+        return pd.DataFrame(columns=BASIC_FIELDS)
+
+    rows: list[dict[str, Any]] = []
     total = len(tickers)
 
-    def _worker(args):
+    def _worker(args: tuple[int, str]) -> dict[str, Any]:
         idx, tk = args
         if progress and max_workers in (None, 0, 1):
             print(f"[{idx}/{total}] Fetching {tk}...")
@@ -158,17 +173,17 @@ def fetch_basic_stock_data_batch(
     if max_workers and max_workers > 1:
         from concurrent.futures import ThreadPoolExecutor
 
-        iterator = enumerate(tickers, start=1)
+        iterator: Iterable[tuple[int, str]] = enumerate(tickers, start=1)
         if progress:
             iterator = progress_iter(iterator, description="Tickers")
 
         with ThreadPoolExecutor(max_workers=max_workers) as ex:
             rows = list(ex.map(_worker, iterator))
     else:
-        iterator = enumerate(tickers, start=1)
+        iterator: Iterable[tuple[int, str]] = enumerate(tickers, start=1)
         if progress:
             iterator = progress_iter(iterator, description="Tickers")
-        for idx, tk in iterator:
-            rows.append(_worker((idx, tk)))
+        for item in iterator:
+            rows.append(_worker(item))
 
     return pd.DataFrame(rows, columns=BASIC_FIELDS)
