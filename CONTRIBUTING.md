@@ -1,42 +1,45 @@
 # Contributing to Fundalyze
 
-Thank you for helping to improve Fundalyze! This document explains how to set up a development environment, follow the style rules and submit pull requests.
+Thank you for considering a contribution! This guide explains how to get a local
+development environment running, follow the style rules and submit pull requests.
 
 ## Getting Started
 
-1. **Fork** the repository on GitHub and clone your fork:
+1. **Fork** the repository on GitHub then clone your fork:
    ```bash
    git clone https://github.com/<your-user>/Fundalyze.git
    cd Fundalyze
    ```
-2. **Create a Python virtual environment** using the helper scripts or manually:
+2. **Set up a virtual environment** using the helper scripts or manually:
    ```bash
    ./bootstrap_env.sh      # macOS / Linux
    ./bootstrap_env.ps1     # Windows PowerShell
    ```
    Both scripts create `.venv` and install dependencies from `requirements.txt`.
-   Manual setup works as well:
+   Manual setup works too:
    ```bash
    python -m venv .venv
    source .venv/bin/activate
    pip install -r requirements.txt
    ```
-   If JavaScript tooling is introduced, install Node.js and run `npm install` inside the appropriate folder.
-
-3. **Configure environment variables** by copying `config/.env` from the example and adding your API keys.
+   If JavaScript tooling is present, install Node.js and run `npm install` in
+   that directory.
+3. **Configure environment variables**. Copy the example `.env` and add your API
+   keys as described in [docs/configuration.md](docs/configuration.md).
 
 ## Code Style
 
-- **Python** – follow [PEP 8](https://peps.python.org/pep-0008/). Format code with `black` and sort imports with `isort` before committing.
-- **JavaScript** – use `prettier` and `eslint` if present.
+- **Python** – follow [PEP 8](https://peps.python.org/pep-0008/). Format with
+  `black` and sort imports using `isort`.
+- **JavaScript** – run `prettier` and `eslint` if the project contains JS files.
 
 ## Running Tests
 
-Execute the entire test suite with:
+Execute the suite before committing:
 ```bash
 pytest -q
 ```
-All tests must pass before you open a pull request. The suite should complete quickly; investigate and fix any failures.
+All tests must pass. Investigate and fix any failures.
 
 ## Workflow
 
@@ -50,23 +53,15 @@ All tests must pass before you open a pull request. The suite should complete qu
 ### Pull Request Template
 Include the following in your PR description:
 
-- **Summary** – what was changed and why
-- **Testing** – commands run and their output
-- **Checklist**
-  - [ ] Code follows style guidelines
-  - [ ] Tests pass locally
-  - [ ] Documentation updated if needed
-
-Example:
-
 ```markdown
 ### Summary
-Adds new analytics module for RSI calculations.
+Describe the change.
 
 ### Testing
-```
+```bash
 pytest -q
 ```
+Include any other relevant commands.
 
 ### Checklist
 - [ ] Code follows style guidelines
