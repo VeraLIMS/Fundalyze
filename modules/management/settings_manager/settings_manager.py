@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import Dict
 
 import importlib
 
-from modules.config_utils import CONFIG_DIR, ENV_PATH, SETTINGS_PATH, load_env, load_settings, save_env, save_settings
+from modules.config_utils import CONFIG_DIR, load_env, load_settings, save_env, save_settings
 
 
 def _discover_wizards():

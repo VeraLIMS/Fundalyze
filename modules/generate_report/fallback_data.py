@@ -86,7 +86,7 @@ def yf_full_fetch(symbol: str):
         hist = pd.DataFrame()
 
     if hist is None or hist.empty or "Close" not in hist.columns:
-        print(f"  No 1-month price data from ticker.history; trying yf.download()...")
+        print("  No 1-month price data from ticker.history; trying yf.download()...")
         try:
             hist = yf.download(symbol, period="1mo")
         except Exception as e:

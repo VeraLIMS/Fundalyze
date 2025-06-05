@@ -51,7 +51,7 @@ def fetch_and_compile(symbol: str, base_output: str | None = None):
 
     report_lines = []
     report_lines.append(f"# Report for {symbol}\n")
-    report_lines.append(f"*Generated via OpenBB Platform*\n\n")
+    report_lines.append("*Generated via OpenBB Platform*\n\n")
 
     #
     # 1) Company Profile
@@ -67,7 +67,7 @@ def fetch_and_compile(symbol: str, base_output: str | None = None):
         profile_df = profile_obj.to_df()
         profile_df.to_csv(profile_path, index=False)
 
-        report_lines.append(f"- → Saved full profile to `profile.csv`\n\n")
+        report_lines.append("- → Saved full profile to `profile.csv`\n\n")
         report_lines.append(f"**Source:** OpenBB (`equity.profile`) — [FMP Company Profile]({fmp_profile_url})\n\n")
 
         metadata["files"]["profile.csv"] = {
@@ -115,7 +115,7 @@ def fetch_and_compile(symbol: str, base_output: str | None = None):
                 hist_df = hist_df.drop(columns=[col])
 
         hist_df.to_csv(price_csv_path, index=False)
-        report_lines.append(f"- → Saved 1 month price history to `1mo_prices.csv`\n\n")
+        report_lines.append("- → Saved 1 month price history to `1mo_prices.csv`\n\n")
         report_lines.append(f"**Source:** OpenBB (`equity.price.historical`, provider=`yfinance`) — [Yahoo Finance History]({yahoo_hist_url})\n\n")
 
         # Plot closing price
@@ -127,7 +127,7 @@ def fetch_and_compile(symbol: str, base_output: str | None = None):
         plt.savefig(price_chart_path, dpi=150)
         plt.close()
 
-        report_lines.append(f"- → Saved price chart to `1mo_close.png`\n\n")
+        report_lines.append("- → Saved price chart to `1mo_close.png`\n\n")
         metadata["files"]["1mo_close.png"] = {
             "source": "Visualization (matplotlib)",
             "source_url": "",
