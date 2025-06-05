@@ -3971,6 +3971,50 @@
           "mapped_to": "bundle"
         }
       }
+    },
+    "portfolio": {
+      "fields": {
+        "id": {
+          "type": "integer",
+          "mapped_to": "id"
+        },
+        "company_name": {
+          "type": "integer",
+          "mapped_to": "company_name, name"
+        },
+        "date_of_entree": {
+          "type": "dateTime",
+          "mapped_to": "date_of_entree"
+        },
+        "sector": {
+          "type": "text",
+          "mapped_to": "sector"
+        },
+        "ticker_symbol": {
+          "type": "text",
+          "mapped_to": "ticker_symbol"
+        },
+        "industry": {
+          "type": "text",
+          "mapped_to": "industry"
+        },
+        "current_price": {
+          "type": "decimal",
+          "mapped_to": "current_price"
+        },
+        "market_cap": {
+          "type": "decimal",
+          "mapped_to": "market_cap"
+        },
+        "pe_ratio": {
+          "type": "decimal",
+          "mapped_to": "pe_ratio"
+        },
+        "dividend_yield": {
+          "type": "decimal",
+          "mapped_to": "dividend_yield"
+        }
+      }
     }
   }
 }
