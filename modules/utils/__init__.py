@@ -1,4 +1,11 @@
-"""Convenience imports for utility functions."""
+"""Convenience imports for utility functions.
+
+These are small helpers used throughout Fundalyze. Importing from the package
+provides shorter names::
+
+    from modules import utils
+    df = utils.read_csv_if_exists(Path("prices.csv"))
+"""
 
 from .data_utils import (
     strip_timezones,

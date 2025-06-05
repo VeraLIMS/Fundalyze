@@ -1,5 +1,12 @@
 # API Reference
 
+This reference is automatically generated using
+[pdoc](https://pdoc.dev). To update the documentation run:
+
+```bash
+pdoc --output-dir docs --force modules
+```
+
 ## modules.analytics
 ```
 Python Library Documentation: package modules.analytics in modules
