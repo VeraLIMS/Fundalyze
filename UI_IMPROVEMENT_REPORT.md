@@ -68,3 +68,12 @@ These changes ensure consistent feedback across the CLI and provide clearer guid
   `note_manager.py` lines 78–81.
 - Settings modifications can be canceled by leaving the key blank in
   `settings_manager.py` lines 58–66 and 80–88.
+
+### Latest Enhancements
+
+- Added a chart emoji to the group analysis header for consistent styling in
+  `group_analysis.py` line 376.
+- Allow canceling group selection when adding tickers; see
+  `group_analysis.py` lines 415–423.
+- The timezone wizard now accepts an empty response to cancel in
+  `timezone.py` lines 23–28.

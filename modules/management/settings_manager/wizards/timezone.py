@@ -20,7 +20,12 @@ def run_wizard() -> None:
         print(f"{idx}) {tz}")
         if idx >= 50:
             break
-    choice = input(f"Select 1-{min(len(matches),50)}: ").strip()
+    choice = input(
+        f"Select 1-{min(len(matches),50)} (or press Enter to cancel): "
+    ).strip()
+    if not choice:
+        print("Canceled.\n")
+        return
     if not choice.isdigit() or not (1 <= int(choice) <= min(len(matches),50)):
         print_invalid_choice()
         return
