@@ -77,3 +77,10 @@ These changes ensure consistent feedback across the CLI and provide clearer guid
   `group_analysis.py` lines 415–423.
 - The timezone wizard now accepts an empty response to cancel in
   `timezone.py` lines 23–28.
+
+### New Fixes
+
+- `scripts/run_tests.py` now provides `--help` and an optional glob pattern.
+  See lines 11–28 and 32–36 for the argument parser.
+- `scripts/note_cli.py` injects `sys.path` so running the script directly works
+  and exposes a help flag. See lines 4–27.
