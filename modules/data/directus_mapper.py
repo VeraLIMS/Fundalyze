@@ -1,4 +1,4 @@
-"""Utilities for mapping DataFrame fields to Directus collections."""
+
 
 import json
 import logging

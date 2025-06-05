@@ -1,3 +1,4 @@
+"""Additional mapping scenarios for Directus utilities."""
 import json
 import pandas as pd
 import modules.data.directus_mapper as dm

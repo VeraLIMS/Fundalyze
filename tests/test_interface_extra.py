@@ -1,3 +1,4 @@
+"""Additional tests for interface presentation functions."""
 import pandas as pd
 from modules.interface import print_table
 

@@ -1,3 +1,4 @@
+"""Extra scenarios for term_mapper helpers."""
 import importlib
 from modules.data import term_mapper
 

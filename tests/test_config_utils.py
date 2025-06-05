@@ -1,3 +1,4 @@
+"""Unit tests for configuration loading utilities."""
 import json
 import modules.config_utils as config_utils
 

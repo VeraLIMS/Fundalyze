@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sector and Industry Term Mapping",
+  "type": "object",
+  "description": "Maps canonical sector or industry names to a list of aliases used across APIs.",
+  "additionalProperties": {
+    "type": "array",
+    "items": {"type": "string"}
+  }
+}

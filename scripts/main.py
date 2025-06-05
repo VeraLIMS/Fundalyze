@@ -1,8 +1,37 @@
 #!/usr/bin/env python3
+# ---------------------------------------------------------------------------
+# Fundalyze CLI main entry point.
+# Provides an interactive menu as well as direct command execution for
+# portfolio management, reporting utilities and other helpers.
+# ---------------------------------------------------------------------------
 """Command line entry point for the Fundalyze utilities.
 
 This script exposes a simple CLI as well as an interactive menu which routes
 to the various management tools bundled with Fundalyze.
+
+Menu map::
+
+    1. Portfolio & Groups  -> portfolio and group management
+    2. Reports             -> reporting tools
+    3. Notes               -> note manager
+    4. Directus Tools      -> Directus wizard utilities
+    5. Settings            -> edit configuration
+    6. Utilities           -> run tests & profiler
+    7. Exit                -> quit the application
+
+Flow chart::
+
+    interactive_menu()
+        ├─ run_portfolio_groups()
+        ├─ run_reports_menu()
+        ├─ run_note_manager()
+        ├─ run_directus_wizard()
+        ├─ run_settings_manager()
+        ├─ run_utilities_menu()
+        └─ exit_program()
+
+You can also call this script with a subcommand such as ``report`` to skip
+the menu entirely.
 """
 
 import sys

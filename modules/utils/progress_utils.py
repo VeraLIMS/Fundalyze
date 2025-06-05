@@ -1,6 +1,12 @@
 from __future__ import annotations
 
-"""Utilities for optional progress indicators."""
+"""Utilities for optional progress indicators.
+
+Example::
+
+    for item in progress_iter(values, description="Processing"):
+        handle(item)
+"""
 
 from typing import Iterable, Iterator, TypeVar, Optional
 

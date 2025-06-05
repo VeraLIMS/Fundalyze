@@ -1,3 +1,4 @@
+"""Tests for portfolio manager CLI operations."""
 import pandas as pd
 import modules.management.portfolio_manager.portfolio_manager as pm
 

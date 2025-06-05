@@ -1,3 +1,4 @@
+"""Tests for term mapping utilities."""
 from pathlib import Path
 from modules.data.term_mapper import MAPPING_FILE, load_mapping
 

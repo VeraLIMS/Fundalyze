@@ -1,3 +1,4 @@
+"""Tests for Excel dashboard creation utilities."""
 import pandas as pd
 import pytest
 from generate_report.excel_dashboard import (

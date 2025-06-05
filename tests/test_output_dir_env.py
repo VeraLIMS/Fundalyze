@@ -1,3 +1,4 @@
+"""Validate OUTPUT_DIR environment variable handling."""
 import pandas as pd
 
 import modules.generate_report.report_generator as rg

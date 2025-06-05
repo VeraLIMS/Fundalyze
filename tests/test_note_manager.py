@@ -1,3 +1,4 @@
+"""Tests for the Markdown note management system."""
 import os
 import tempfile
 

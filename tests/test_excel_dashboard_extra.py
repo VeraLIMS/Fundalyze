@@ -1,3 +1,4 @@
+"""Extra cases for Excel dashboard helpers."""
 import pytest
 import pandas as pd
 from modules.generate_report.excel_dashboard import (

@@ -1,4 +1,4 @@
-"""Thin wrapper around the Directus REST API."""
+
 
 import os
 import logging
@@ -41,7 +41,7 @@ def reload_env() -> None:
 
 
 def _headers():
-    """Return headers including auth and Cloudflare Access credentials."""
+    """Return authentication headers for Directus requests."""
     headers = {}
     if DIRECTUS_TOKEN:
         headers["Authorization"] = f"Bearer {DIRECTUS_TOKEN}"

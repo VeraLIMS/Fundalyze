@@ -1,3 +1,4 @@
+"""Tests for interactive profile selection logic."""
 import pandas as pd
 import modules.data.compare as cmp
 

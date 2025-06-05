@@ -1,3 +1,4 @@
+"""Tests for progress indicator helper."""
 from modules.utils.progress_utils import progress_iter
 
 
