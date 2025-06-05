@@ -79,9 +79,11 @@ Provides `setup_logging()` which configures the root logger and creates
 
 ## Script Entry Points
 
-The `scripts/` directory contains small wrappers that import the modules above:
+The `scripts/` directory contains small wrappers that import the modules above and can be run directly. See [scripts_overview.md](scripts_overview.md) for a full description of each entry point.
+
 - `main.py` – interactive menu and command-line interface. It provides access to portfolio and group management, reporting utilities, the note manager, settings and Directus tools.
 - `note_cli.py` – legacy entry point equivalent to running `main.py notes`.
 - `performance_profile.py` – micro-benchmark utility.
+
 
 Running `python scripts/main.py` without arguments opens the interactive menu; see the README for command examples.

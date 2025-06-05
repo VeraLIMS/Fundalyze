@@ -84,6 +84,7 @@ Open the workbook to explore profile information, prices and statements.
 
 ## Resources
 - [User Documentation](docs/overview.md)
+- [CLI Scripts](docs/scripts_overview.md)
 - [Developer Guide](docs/DEVELOPER_GUIDE.md)
 - [Utilities Overview](docs/utils_overview.md)
 - [Issue Tracker](https://github.com/VeraLIMS/Fundalyze/issues)

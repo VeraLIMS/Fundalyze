@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
-"""Synchronize Directus field mappings with an interactive CLI."""
+# ---------------------------------------------------------------------------
+# Synchronize Directus collection/field metadata with ``directus_field_map.json``.
+# Prompts the user before adding or removing fields so accidental changes
+# can be reviewed.
+# ---------------------------------------------------------------------------
+"""Synchronize Directus field mappings with an interactive CLI.
+
+The existing JSON mapping acts as the starting point. The script queries the
+remote Directus instance, shows any additions or removals and updates field
+types when they differ. If network requests fail, the script simply prints the
+error and exits, leaving the original mapping untouched.
+"""
 from __future__ import annotations
 
 from typing import Any, Dict, List

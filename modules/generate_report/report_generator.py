@@ -74,6 +74,11 @@ def fetch_and_compile(
     obb_mod = _get_openbb()
 
     if local_output is None:
+ codex/document-scripts-folder-and-add-headers
+        # If a base_output path was provided, assume the caller expects local
+        # files regardless of DIRECTUS_URL. Otherwise default to uploading when
+        # DIRECTUS_URL is not configured.
+=======
  codex/document-logging_utils.py-usage
  codex/document-logging_utils.py-usage
 
@@ -92,6 +97,7 @@ def fetch_and_compile(
         # DIRECTUS_URL is configured.
  main
  main
+ main
         local_output = bool(base_output or os.getenv("OUTPUT_DIR")) or not bool(
             os.getenv("DIRECTUS_URL")
         )
@@ -103,6 +109,8 @@ def fetch_and_compile(
         local_output = bool(base_output or os.getenv("OUTPUT_DIR")) or not bool(os.getenv("DIRECTUS_URL"))
  main
 
+ codex/document-scripts-folder-and-add-headers
+=======
         if base_output is not None or os.getenv("OUTPUT_DIR"):
             # Explicit output folder implies local writes even when Directus is
             # configured
@@ -116,6 +124,7 @@ def fetch_and_compile(
         else:
             local_output = not bool(os.getenv("DIRECTUS_URL"))
 
+ main
     ticker_dir = rutils.ensure_output_dir(symbol, base_output) if local_output else (base_output or ".")
     metadata = {
         "ticker": symbol.upper(),
