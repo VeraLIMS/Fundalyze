@@ -1,7 +1,6 @@
 # Contributing to Fundalyze
 
-Thank you for considering a contribution! This guide explains how to get a local
-development environment running, follow the style rules and submit pull requests.
+Thank you for considering a contribution! This guide shows how to set up a local development environment, follow the style guidelines and submit pull requests.
 
 ## Getting Started
 
@@ -22,15 +21,15 @@ development environment running, follow the style rules and submit pull requests
    source .venv/bin/activate
    pip install -r requirements.txt
    ```
-   If JavaScript tooling is present, install Node.js and run `npm install` in
-   that directory.
+   If JavaScript tooling is used, install Node.js and run `npm install` in the
+   relevant directory.
 3. **Configure environment variables**. Copy the example `.env` and add your API
    keys as described in [docs/configuration.md](docs/configuration.md).
 
 ## Code Style
 
-- **Python** – follow [PEP 8](https://peps.python.org/pep-0008/). Format with
-  `black` and sort imports using `isort`.
+- **Python** – follow [PEP 8](https://peps.python.org/pep-0008/) and format with
+  `black`; sort imports using `isort`.
 - **JavaScript** – run `prettier` and `eslint` if the project contains JS files.
 
 ## Running Tests

@@ -4,12 +4,12 @@
 [![Build](https://img.shields.io/badge/build-manual-lightgrey)](#)
 [![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)](#)
 
-**Fundalyze** is an open source toolkit for retrieving fundamental market data and building Excel dashboards. It wraps [OpenBB](https://openbb.co/) and `yfinance` so you can quickly analyze companies and manage a local portfolio.
+**Fundalyze** is an open source toolkit for retrieving fundamental market data and generating Excel dashboards. It wraps [OpenBB](https://openbb.co/) and `yfinance` so you can quickly analyze companies and maintain a local portfolio.
 
 ## Features
 - Download company profiles, historical prices and financial statements
 - Maintain a spreadsheet-based portfolio and groups list
-- Generate Excel dashboards complete with charts
+- Generate Excel dashboards with charts
 - Fallback to alternate data sources when needed
 
 ## Installation
@@ -82,6 +82,6 @@ Open the workbook to explore profile information, prices and statements.
 - [User Documentation](docs/overview.md)
 - [Developer Guide](docs/DEVELOPER_GUIDE.md)
 - [Issue Tracker](https://github.com/VeraLIMS/Fundalyze/issues)
-- Community chat (TBD)
+- Community chat (coming soon)
 
 Fundalyze is licensed under the [Apache 2.0 License](LICENSE).

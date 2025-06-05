@@ -30,3 +30,9 @@ def print_invalid_choice() -> None:
 def input_or_cancel(prompt: str) -> str:
     """Return user input or an empty string if canceled."""
     return input(f"{prompt} (or press Enter to cancel): ").strip()
+
+
+def print_menu(options: list[str]) -> None:
+    """Display a numbered menu list."""
+    for idx, label in enumerate(options, start=1):
+        print(f"{idx}) {label}")
