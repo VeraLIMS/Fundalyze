@@ -54,6 +54,7 @@ Lower-level helpers used across the app (see [modules/data/README.md](../modules
 - `compare.py` – compares profile data from different providers.
 
 
+
 ### `modules.utils`
 Small helper utilities reused across the codebase:
 - `data_utils.py` – safe CSV/JSON loading helpers.
@@ -63,6 +64,12 @@ Small helper utilities reused across the codebase:
 
 See [docs/utils_overview.md](utils_overview.md) for examples and additional
 details on these helpers as well as logging setup.
+
+### `modules.analytics`
+Lightweight portfolio analysis helpers:
+- `portfolio_summary` – mean, min and max statistics for numeric columns.
+- `sector_counts` – distribution of tickers by sector.
+- `correlation_matrix` – Pearson correlation matrix for numeric data.
 
 ### `modules.analytics`
 Lightweight portfolio analysis helpers:

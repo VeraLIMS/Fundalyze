@@ -74,6 +74,11 @@ def fetch_and_compile(
     obb_mod = _get_openbb()
 
     if local_output is None:
+ codex/document-utilities-in-analytics-module
+        # If a base_output path was provided, assume the caller expects local
+        # files regardless of DIRECTUS_URL. Otherwise default to uploading when
+        # DIRECTUS_URL is configured.
+=======
  codex/document-scripts-folder-and-add-headers
         # If a base_output path was provided, assume the caller expects local
         # files regardless of DIRECTUS_URL. Otherwise default to uploading when
@@ -95,6 +100,7 @@ def fetch_and_compile(
         # If a base_output path was provided, assume the caller expects local
         # files regardless of DIRECTUS_URL. Otherwise default to uploading when
         # DIRECTUS_URL is configured.
+ main
  main
  main
  main
