@@ -17,6 +17,7 @@ from .directus_client import (
 )
 from .term_mapper import load_mapping, save_mapping, resolve_term, add_alias
 from .compare import interactive_profile, diff_dict
+from .directus_mapper import load_field_map, save_field_map, prepare_records
 
 __all__ = [
     "fetch_basic_stock_data",
@@ -34,4 +35,7 @@ __all__ = [
     "add_alias",
     "interactive_profile",
     "diff_dict",
+    "load_field_map",
+    "save_field_map",
+    "prepare_records",
 ]

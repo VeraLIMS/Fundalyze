@@ -26,8 +26,8 @@ from modules.data.term_mapper import resolve_term
 from modules.data.directus_client import (
     fetch_items,
     insert_items,
-    list_fields,
 )
+from modules.data import prepare_records
 
 PORTFOLIO_FILE = "portfolio.xlsx"
 C_DIRECTUS_COLLECTION = os.getenv("DIRECTUS_PORTFOLIO_COLLECTION", "portfolio")
@@ -83,11 +83,7 @@ def save_portfolio(df: pd.DataFrame, filepath: str):
     """
     if USE_DIRECTUS:
         try:
-            allowed = set(list_fields(C_DIRECTUS_COLLECTION))
-            records = []
-            for row in df.to_dict(orient="records"):
-                filtered = {k: v for k, v in row.items() if k in allowed}
-                records.append(filtered)
+            records = prepare_records(C_DIRECTUS_COLLECTION, df.to_dict(orient="records"))
             insert_items(C_DIRECTUS_COLLECTION, records)
             print(
                 f"→ Saved portfolio to Directus collection '{C_DIRECTUS_COLLECTION}'.\n"

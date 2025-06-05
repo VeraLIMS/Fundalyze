@@ -1,0 +1,14 @@
+{
+  "companies": {
+    "Ticker": "ticker_symbol",
+    "Name": "company_name",
+    "Sector": "sector",
+    "Industry": "industry",
+    "Country": "country",
+    "Market": "market",
+    "Logo": "logo",
+    "Website": "website",
+    "Company Information": "Company_Information",
+    "Notes": "notes"
+  }
+}

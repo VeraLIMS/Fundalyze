@@ -2,7 +2,7 @@ import json
 
 from modules.interface import print_invalid_choice, print_header
 
-from modules.data import directus_client as dc
+from modules.data import directus_client as dc, prepare_records
 
 try:
     from modules.management.settings_manager.wizards.directus_setup import (
@@ -66,7 +66,8 @@ def run_directus_wizard() -> None:
                 except Exception as exc:
                     print(f"Invalid JSON: {exc}\n")
                 else:
-                    dc.insert_items(col, [data])
+                    records = prepare_records(col, [data])
+                    dc.insert_items(col, records)
                     print("Item inserted.\n")
         elif choice == "6":
             break

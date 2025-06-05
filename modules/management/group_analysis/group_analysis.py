@@ -32,7 +32,8 @@ SETTINGS = load_settings()
 import pandas as pd
 import requests
 from modules.data.term_mapper import resolve_term
-from modules.data.directus_client import fetch_items, insert_items, list_fields
+from modules.data.directus_client import fetch_items, insert_items
+from modules.data import prepare_records
 
 PORTFOLIO_FILE = "portfolio.xlsx"
 GROUPS_FILE = "groups.xlsx"
@@ -103,10 +104,7 @@ def save_groups(df: pd.DataFrame, filepath: str):
     """
     if USE_DIRECTUS:
         try:
-            allowed = set(list_fields(GROUPS_COLLECTION))
-            records = []
-            for row in df.to_dict(orient="records"):
-                records.append({k: v for k, v in row.items() if k in allowed})
+            records = prepare_records(GROUPS_COLLECTION, df.to_dict(orient="records"))
             insert_items(GROUPS_COLLECTION, records)
             print(
                 f"→ Saved groups to Directus collection '{GROUPS_COLLECTION}'.\n"
