@@ -59,6 +59,10 @@ Small helper utilities reused across the codebase:
 - `data_utils.py` – safe CSV/JSON loading helpers.
 - `excel_utils.py` – convenience wrappers for writing Excel tables.
 - `math_utils.py` – calculations like moving averages and percentage change.
+- `progress_utils.py` – optional progress indicator wrapper.
+
+See [docs/utils_overview.md](utils_overview.md) for examples and additional
+details on these helpers as well as logging setup.
 
 ### `modules.analytics`
 Lightweight portfolio analysis helpers:
@@ -68,6 +72,10 @@ Lightweight portfolio analysis helpers:
 
 ### `modules.config_utils`
 Loads environment variables from `config/.env` and user settings from `config/settings.json`. Call `load_settings()` once during startup so other modules can access configuration values via `os.getenv()` or the returned dictionary.
+
+### `modules.logging_utils`
+Provides `setup_logging()` which configures the root logger and creates
+`fundalyze.log`. See [logging.md](logging.md) for usage details.
 
 ## Script Entry Points
 
