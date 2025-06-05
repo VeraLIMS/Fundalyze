@@ -7,6 +7,10 @@
 - **modules/data/fetching.py** – added a `provider` parameter to `fetch_basic_stock_data` for explicit data source selection and improved error messages.
 - **docs/API_REFERENCE.md** – updated to document the new function signature.
 - **tests/test_fetching.py** – expanded test coverage for the new provider option.
+- **modules/data/fetching.py** – added `fetch_basic_stock_data_batch` helper for multi-ticker retrieval.
+- **modules/analytics/__init__.py** – new `moving_average` analysis helper.
+- **modules/generate_report/report_generator.py** – accepts a `price_period` parameter for flexible price history.
+- **tests/test_output_dir_env.py** – verifies custom period forwarding.
 
 ## Key Refactors
 
@@ -34,6 +38,14 @@ for fname, storage in stmt_files:
 ## Added Feature
 
 `fetch_basic_stock_data` now accepts a `provider` argument (`"yf"`, `"fmp"`, or `"auto"`) allowing callers to force a specific data source.
+
+Additional helpers were introduced:
+
+```python
+df = fetch_basic_stock_data_batch(["AAPL", "MSFT"])
+prices = moving_average(df_prices["Close"], window=20)
+fetch_and_compile("AAPL", price_period="5d")
+```
 
 
 ### 2024-Refactor Updates

@@ -104,3 +104,34 @@ def fetch_basic_stock_data(
             raise ValueError("No valid data returned by FMP.")
 
     raise ValueError("No valid data returned by yfinance or FMP.")
+
+
+def fetch_basic_stock_data_batch(
+    tickers: list[str] | tuple[str, ...],
+    *,
+    fallback: bool = True,
+    provider: str = "auto",
+) -> pd.DataFrame:
+    """Fetch :func:`fetch_basic_stock_data` for multiple tickers.
+
+    Parameters
+    ----------
+    tickers:
+        Iterable of ticker symbols.
+    fallback:
+        Passed through to :func:`fetch_basic_stock_data`.
+    provider:
+        Data source to use: ``"auto"`` (default), ``"yf"`` or ``"fmp"``.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with one row per ticker and columns defined in
+        :data:`BASIC_FIELDS`.
+    """
+
+    rows = []
+    for tk in tickers:
+        data = fetch_basic_stock_data(tk, fallback=fallback, provider=provider)
+        rows.append(data)
+    return pd.DataFrame(rows, columns=BASIC_FIELDS)

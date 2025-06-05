@@ -21,11 +21,16 @@ from modules.config_utils import get_output_dir
 obb = None
 
 
-def fetch_and_compile(symbol: str, base_output: str | None = None):
+def fetch_and_compile(
+    symbol: str,
+    base_output: str | None = None,
+    *,
+    price_period: str = "1mo",
+):
     """
     1) Create output/<symbol>/
     2) Fetch company profile, save as profile.csv, record source & source_url
-    3) Fetch 1mo prices, save 1mo_prices.csv & 1mo_close.png, record sources/URLs
+    3) Fetch price history for ``price_period``, save 1mo_prices.csv & 1mo_close.png, record sources/URLs
     4) Fetch income/balance/cash (annual & quarterly), save CSVs, record sources/URLs
     5) Write report.md with clickable [label](url) for each source
     6) Write metadata.json containing {"source", "source_url", "fetched_at"} for each file
@@ -107,7 +112,7 @@ def fetch_and_compile(symbol: str, base_output: str | None = None):
 
     try:
         hist_obj = obb.equity.price.historical(
-            symbol=symbol, period="1mo", provider="yfinance"
+            symbol=symbol, period=price_period, provider="yfinance"
         )
         hist_df = hist_obj.to_df()
         for col in ("Dividends", "Stock Splits"):
@@ -115,12 +120,12 @@ def fetch_and_compile(symbol: str, base_output: str | None = None):
                 hist_df = hist_df.drop(columns=[col])
 
         hist_df.to_csv(price_csv_path, index=False)
-        report_lines.append("- → Saved 1 month price history to `1mo_prices.csv`\n\n")
+        report_lines.append("- → Saved 1 month price history to `1mo_prices.csv`\n\n" if price_period == "1mo" else f"- → Saved {price_period} price history to `1mo_prices.csv`\n\n")
         report_lines.append(f"**Source:** OpenBB (`equity.price.historical`, provider=`yfinance`) — [Yahoo Finance History]({yahoo_hist_url})\n\n")
 
         # Plot closing price
         plt.figure(figsize=(8, 4))
-        hist_df["Close"].plot(title=f"{symbol} Close Price (Last 1 Month)")
+        hist_df["Close"].plot(title=f"{symbol} Close Price ({price_period})")
         plt.xlabel("Date")
         plt.ylabel("Close Price (USD)")
         plt.tight_layout()

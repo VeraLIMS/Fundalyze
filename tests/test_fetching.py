@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, patch
 
-from modules.data.fetching import fetch_basic_stock_data
+from modules.data.fetching import fetch_basic_stock_data, fetch_basic_stock_data_batch
 
 
 def test_fetch_basic_stock_data_basic():
@@ -140,4 +140,41 @@ def test_fetch_basic_stock_data_provider_yf_failure(monkeypatch):
     import pytest
     with pytest.raises(ValueError):
         fetch_basic_stock_data("BAD", provider="yf")
+
+
+def test_fetch_basic_stock_data_batch(monkeypatch):
+    data = {
+        "AAA": {
+            "longName": "Alpha",
+            "sector": "Tech",
+            "industry": "Software",
+            "currentPrice": 1.0,
+            "marketCap": 10,
+            "trailingPE": 5.0,
+            "dividendYield": 0.01,
+        },
+        "BBB": {
+            "longName": "Beta",
+            "sector": "Health",
+            "industry": "Biotech",
+            "currentPrice": 2.0,
+            "marketCap": 20,
+            "trailingPE": 6.0,
+            "dividendYield": 0.02,
+        },
+    }
+
+    class FakeTicker:
+        def __init__(self, symbol):
+            self.symbol = symbol
+
+        def get_info(self):
+            return data.get(self.symbol, {})
+
+    monkeypatch.setattr("modules.data.fetching.yf.Ticker", lambda s: FakeTicker(s))
+    monkeypatch.setattr("modules.data.fetching.resolve_term", lambda x: x)
+
+    df = fetch_basic_stock_data_batch(["AAA", "BBB"])
+    assert list(df["Ticker"]) == ["AAA", "BBB"]
+    assert df.loc[0, "Market Cap"] == 10
 

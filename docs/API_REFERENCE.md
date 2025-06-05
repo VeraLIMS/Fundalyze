@@ -9,6 +9,9 @@ PACKAGE CONTENTS
 FUNCTIONS
     correlation_matrix(df: 'pd.DataFrame') -> 'pd.DataFrame'
         Return Pearson correlation matrix for numeric columns.
+
+    moving_average(series: 'pd.Series', window: 'int') -> 'pd.Series'
+        Return rolling mean over ``window`` periods.
     
     portfolio_summary(df: 'pd.DataFrame') -> 'pd.DataFrame'
         Return basic summary statistics for numeric columns.
@@ -40,6 +43,10 @@ FUNCTIONS
             ``'yf'`` to use yfinance only, ``'fmp'`` for FMP only,
             or ``'auto'`` (default) to try yfinance then FMP if ``fallback``.
 
+    fetch_basic_stock_data_batch(tickers: 'list[str] | tuple[str, ...]', *, fallback: 'bool' = True, provider: 'str' = 'auto') -> 'pandas.DataFrame'
+        Fetch :func:`fetch_basic_stock_data` for multiple tickers and
+        return a DataFrame with one row per ticker.
+
 DATA
     BASIC_FIELDS = ['Ticker', 'Name', 'Sector', 'Industry', 'Current Price...
     FMP_PROFILE_URL = 'https://financialmodelingprep.com/api/v3/profile/{s...
@@ -61,10 +68,10 @@ DESCRIPTION
         python src/report_generator.py AAPL MSFT GOOGL
 
 FUNCTIONS
-    fetch_and_compile(symbol: str, base_output: str | None = None)
+    fetch_and_compile(symbol: str, base_output: str | None = None, *, price_period: str = '1mo')
         1) Create output/<symbol>/
         2) Fetch company profile, save as profile.csv, record source & source_url
-        3) Fetch 1mo prices, save 1mo_prices.csv & 1mo_close.png, record sources/URLs
+        3) Fetch price history for ``price_period``, save 1mo_prices.csv & 1mo_close.png, record sources/URLs
         4) Fetch income/balance/cash (annual & quarterly), save CSVs, record sources/URLs
         5) Write report.md with clickable [label](url) for each source
         6) Write metadata.json containing {"source", "source_url", "fetched_at"} for each file
