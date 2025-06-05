@@ -31,7 +31,11 @@ from modules.data import prepare_records
 
 PORTFOLIO_FILE = "portfolio.xlsx"
 C_DIRECTUS_COLLECTION = os.getenv("DIRECTUS_PORTFOLIO_COLLECTION", "portfolio")
-USE_DIRECTUS = bool(os.getenv("DIRECTUS_URL"))
+# Only attempt Directus sync if both URL and authentication token are provided
+USE_DIRECTUS = bool(
+    os.getenv("DIRECTUS_URL")
+    and (os.getenv("DIRECTUS_API_TOKEN") or os.getenv("DIRECTUS_TOKEN"))
+)
 COLUMNS = [
     "Ticker",
     "Name",

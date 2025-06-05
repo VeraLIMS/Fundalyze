@@ -55,11 +55,20 @@ def fetch_and_compile(
     obb_mod = _get_openbb()
 
     if local_output is None:
+ codex/audit-and-remediate-bugs-in-codebase
+        # If a base_output path was provided, assume the caller expects local
+        # files regardless of DIRECTUS_URL. Otherwise default to uploading when
+        # DIRECTUS_URL is configured.
+        local_output = bool(base_output or os.getenv("OUTPUT_DIR")) or not bool(
+            os.getenv("DIRECTUS_URL")
+        )
+
         if base_output is not None or os.getenv("OUTPUT_DIR"):
             # Explicit output folder implies local writes even when Directus is configured
             local_output = True
         else:
             local_output = not bool(os.getenv("DIRECTUS_URL"))
+ main
 
     ticker_dir = rutils.ensure_output_dir(symbol, base_output) if local_output else (base_output or ".")
     metadata = {
