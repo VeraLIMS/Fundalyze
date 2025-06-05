@@ -1,9 +1,4 @@
- codex/create-documentation-for-tests-module
-"""Public API for the report generation package."""
-=======
-"""Convenience wrappers for generating ticker reports and dashboards."""
 
- main
 # src/generate_report/__init__.py
 """Convenience entry points for the report-generation workflow.
 

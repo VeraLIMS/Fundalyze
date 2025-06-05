@@ -1,3 +1,6 @@
+codex/create-comprehensive-documentation-for-fundalyze
+"""Interactive manager for Fundalyze configuration settings."""
+=======
 
  codex/document-cli-management-tools-and-helpers
 """Convenience import for the interactive settings manager."""

@@ -1,8 +1,13 @@
+ codex/create-comprehensive-documentation-for-fundalyze
+"""Interactive wizard for configuring Directus integration."""
+
+=======
  codex/create-documentation-for-tests-module
 """Interactive wizard for configuring Directus integration."""
 =======
 """Interactive wizard for basic Directus API operations."""
 
+ main
  main
 import json
 

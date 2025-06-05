@@ -74,6 +74,9 @@ def fetch_and_compile(
     obb_mod = _get_openbb()
 
     if local_output is None:
+ codex/create-comprehensive-documentation-for-fundalyze
+        if base_output is not None or os.getenv("OUTPUT_DIR"):
+=======
  codex/document-cli-management-tools-and-helpers
 =======
  codex/document-utilities-in-analytics-module
@@ -128,6 +131,7 @@ def fetch_and_compile(
         # Directus URL is configured. Otherwise default to uploading to
         # Directus.
         if base_output is not None or os.getenv("OUTPUT_DIR"):
+ main
  main
             local_output = True
         else:

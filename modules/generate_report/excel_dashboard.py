@@ -1,3 +1,5 @@
+"""Create Excel dashboards from ticker report data."""
+
 # src/generate_report/excel_dashboard.py
 
 import os

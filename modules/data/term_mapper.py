@@ -1,15 +1,4 @@
- codex/document-data-module-and-functionality
-"""Canonical term resolution helpers used for sectors and industries.
 
-The mapping stored in ``config/term_mapping.json`` links a canonical term
-(``Technology``) to a list of aliases (``IT``, ``Tech``).  ``resolve_term``
-normalizes an input string and attempts to find the best match. If no mapping is
-available it optionally consults OpenAI for suggestions and finally prompts the
-user. The resulting alias is persisted for future runs.
-"""
-=======
-"""Maps generic financial terms to API field names using `config/term_mapping.json`."""
- main
 
 import json
 import os

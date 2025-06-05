@@ -1,3 +1,5 @@
+"""Fallback data retrieval using only yfinance."""
+
 # src/generate_report/yf_fallback.py
 
 import yfinance as yf
