@@ -10,10 +10,8 @@ def run_wizard() -> None:
     env = load_env()
     current_id = env.get("CF_ACCESS_CLIENT_ID", "")
     current_secret = env.get("CF_ACCESS_CLIENT_SECRET", "")
-    client_id = input(f"CF-Access-Client-Id [{current_id}]: ").strip() or current_id
-    client_secret = (
-        input(f"CF-Access-Client-Secret [{current_secret}]: ").strip() or current_secret
-    )
+    client_id = input("CF-Access-Client-Id: ").strip() or current_id
+    client_secret = input("CF-Access-Client-Secret: ").strip() or current_secret
     if client_id:
         env["CF_ACCESS_CLIENT_ID"] = client_id
     if client_secret:

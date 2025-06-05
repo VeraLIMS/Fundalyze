@@ -31,7 +31,8 @@ inside the Settings Manager to store the token. The Settings Manager also
  directory**. Another wizard sets the **Output Directory** used for reports.
  A **Cloudflare Access** wizard stores the `CF_ACCESS_CLIENT_ID` and
  `CF_ACCESS_CLIENT_SECRET` variables required when your Directus instance is
- protected by Cloudflare Access.
+ protected by Cloudflare Access. These map to the `CF-Access-Client-Id` and
+ `CF-Access-Client-Secret` HTTP headers.
  Similarly, obtain a Financial Modeling Prep key from
  [fmp](https://financialmodelingprep.com/) and run the **FMP API Key** wizard
  to store it in `.env`. If you already exported these variables in your shell,
