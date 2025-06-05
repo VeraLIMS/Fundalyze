@@ -49,7 +49,7 @@ its directory.
 ### 2. Configure environment variables
 Create `config/.env` and add your API tokens:
 ```env
-OPENBB_API_KEY=your-openbb-token
+OPENBB_TOKEN=your-openbb-token
 FMP_API_KEY=your-fmp-key
 OUTPUT_DIR=output
 ```
