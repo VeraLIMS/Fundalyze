@@ -1,3 +1,5 @@
+"""Maps generic financial terms to API field names using `config/term_mapping.json`."""
+
 import json
 import os
 from pathlib import Path

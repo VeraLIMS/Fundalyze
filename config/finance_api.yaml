@@ -1,0 +1,12 @@
+# Example configuration for an optional finance API
+# base_url  - Root API endpoint
+# api_key   - Authentication token
+# endpoints - Paths for various resources
+#   profile: Path to company profile endpoint (uses {symbol})
+#   prices:  Path to historical prices endpoint
+#
+base_url: https://example.com/api
+api_key: your-api-key
+endpoints:
+  profile: /v1/profile/{symbol}
+  prices: /v1/prices/{symbol}?period={period}

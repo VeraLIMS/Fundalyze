@@ -1,3 +1,5 @@
+"""Convenience wrappers for generating ticker reports and dashboards."""
+
 # src/generate_report/__init__.py
 """Convenience entry points for the report-generation workflow.
 

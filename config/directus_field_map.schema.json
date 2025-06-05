@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Directus Field Map",
+  "type": "object",
+  "properties": {
+    "collections": {
+      "description": "Dictionary keyed by Directus collection name.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "fields": {
+            "description": "Mapping of local column names to Directus fields.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "description": "Directus data type, may be null",
+                  "type": ["string", "null"]
+                },
+                "mapped_to": {
+                  "description": "Target field name in Directus",
+                  "type": "string"
+                }
+              },
+              "required": ["mapped_to"]
+            }
+          }
+        },
+        "required": ["fields"]
+      }
+    }
+  },
+  "required": ["collections"]
+}
