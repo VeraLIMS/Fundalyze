@@ -1,3 +1,5 @@
+"""Logging configuration helpers."""
+
 import logging
 from pathlib import Path
 

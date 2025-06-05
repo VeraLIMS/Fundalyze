@@ -1,3 +1,5 @@
+"""Command line note manager with wiki-style links."""
+
 import os
 import re
 from pathlib import Path

@@ -1,3 +1,5 @@
+"""Common CLI interface helpers used across modules."""
+
 from __future__ import annotations
 
 import pandas as pd

@@ -1,3 +1,5 @@
+"""Maintain mapping of search terms to API field names."""
+
 import json
 import os
 from pathlib import Path

@@ -1,3 +1,5 @@
+"""Helpers for the Markdown note management system."""
+
 from .note_manager import (
     create_note,
     get_note_path,
