@@ -1,4 +1,15 @@
-"""Utility helpers for pandas data processing."""
+"""Utility helpers for pandas data processing.
+
+These functions provide small wrappers around common ``pandas`` operations
+so callers do not have to repeat error handling.  Typical usage::
+
+    from pathlib import Path
+    from modules.utils import read_csv_if_exists, strip_timezones
+
+    df = read_csv_if_exists(Path("prices.csv"))
+    if df is not None:
+        df = strip_timezones(df)
+"""
 
 from __future__ import annotations
 
