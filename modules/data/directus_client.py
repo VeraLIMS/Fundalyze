@@ -1,3 +1,5 @@
+"""Minimal Directus API client used for optional remote storage."""
+
 import os
 import logging
 import math

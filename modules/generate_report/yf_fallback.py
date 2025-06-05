@@ -1,4 +1,4 @@
-# src/generate_report/yf_fallback.py
+"""Standalone fallback data fetch using yfinance/FMP when primary calls fail."""
 
 import yfinance as yf
 import pandas as pd

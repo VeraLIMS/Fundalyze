@@ -45,9 +45,11 @@ Create `config/.env` and add your API tokens:
 ```env
 OPENBB_TOKEN=your-openbb-token
 FMP_API_KEY=your-fmp-key
+DIRECTUS_URL=https://your-directus.example.com
+DIRECTUS_API_TOKEN=secret-token
 OUTPUT_DIR=output
 ```
-See [docs/configuration.md](docs/configuration.md) for all options.
+The [configuration guide](docs/configuration.md) lists every supported variable.
 
 ## Quickstart
 Run the interactive menu:
@@ -84,7 +86,13 @@ Open the workbook to explore profile information, prices and statements.
 
 ## Resources
 - [User Documentation](docs/overview.md)
+- [Getting Started](docs/GETTING_STARTED.md)
 - [Developer Guide](docs/DEVELOPER_GUIDE.md)
+- [Configuration](docs/configuration.md)
+- [API Reference](docs/API_REFERENCE.md)
+- [Report Generation](docs/report_generation.md)
+- [Performance Benchmarks](docs/performance_benchmarks.md)
+- [End-to-End Tests](docs/end_to_end_tests.md)
 - [Issue Tracker](https://github.com/VeraLIMS/Fundalyze/issues)
 - Community chat (coming soon)
 

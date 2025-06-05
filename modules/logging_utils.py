@@ -1,3 +1,6 @@
+
+"""Configure consistent application logging."""
+
 import logging
 from pathlib import Path
 

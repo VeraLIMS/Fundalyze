@@ -1,3 +1,5 @@
+"""Interactive wizard for Directus integration setup and field mapping."""
+
 import json
 
 from modules.interface import (

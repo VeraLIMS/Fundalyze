@@ -2,6 +2,26 @@
 
 This document summarizes the key modules and entry points in **Fundalyze**. Use it as a quick reference when navigating or extending the project.
 
+```mermaid
+graph TD
+    Main[CLI]
+    subgraph Management
+        PM[portfolio_manager]
+        GA[group_analysis]
+        NM[note_manager]
+    end
+    subgraph Reporting
+        RG[report_generator]
+        DB[excel_dashboard]
+        MC[metadata_checker]
+    end
+    Data{{data package}}
+    Main --> Management
+    Main --> Reporting
+    Reporting --> Data
+    Management --> Data
+```
+
 ## Module Packages
 
 ### `modules.generate_report`

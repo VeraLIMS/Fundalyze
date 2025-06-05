@@ -1,3 +1,5 @@
+"""Reusable console interface helpers for CLI tools."""
+
 from __future__ import annotations
 
 import pandas as pd

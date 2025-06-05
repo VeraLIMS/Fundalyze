@@ -1,4 +1,4 @@
-# src/generate_report/excel_dashboard.py
+"""Create Excel workbooks from downloaded report data."""
 
 import os
 import subprocess

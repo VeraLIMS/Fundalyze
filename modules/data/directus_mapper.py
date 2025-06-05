@@ -1,3 +1,5 @@
+"""Helpers for mapping DataFrame columns to Directus collections."""
+
 import json
 import logging
 from pathlib import Path

@@ -1,3 +1,5 @@
+"""Map API-specific sector/industry terms to canonical names."""
+
 import json
 import os
 from pathlib import Path

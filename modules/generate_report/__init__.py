@@ -1,4 +1,4 @@
-# src/generate_report/__init__.py
+"""Public entry points for the report generation workflow."""
 
 from .report_generator import fetch_and_compile
 from .metadata_checker import run_for_tickers
