@@ -76,7 +76,7 @@ def test_load_portfolio_directus_all_na(monkeypatch):
     monkeypatch.setattr(pm, "USE_DIRECTUS", True)
     # Directus returns a blank record with all fields null
     monkeypatch.setattr(
-        pm, "fetch_items", lambda c: [{"id": 1, "ticker_symbol": None, "company_name": None}]
+        pm, "fetch_items", lambda c: [{"id": 1, "ticker": None, "name": None}]
     )
     df = pm.load_portfolio("dummy")
     assert df.empty

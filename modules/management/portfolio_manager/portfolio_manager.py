@@ -45,7 +45,9 @@ COLUMNS = [
 
 # Mapping of Directus field names to our dataframe columns when reading
 FROM_DIRECTUS = {
+    "ticker": "Ticker",
     "ticker_symbol": "Ticker",
+    "name": "Name",
     "company_name": "Name",
     "sector": "Sector",
     "industry": "Industry",
