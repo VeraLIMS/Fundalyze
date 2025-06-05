@@ -18,7 +18,12 @@ Description:
 import os
 
 from modules.analytics import portfolio_summary, sector_counts
-from modules.interface import print_table, print_invalid_choice, print_header
+from modules.interface import (
+    print_table,
+    print_invalid_choice,
+    print_header,
+    print_menu,
+)
 
 import pandas as pd
 from modules.data.term_mapper import resolve_term
@@ -334,12 +339,15 @@ def main():
 
     while True:
         print("Choose an action:")
-        print("  1) View portfolio")
-        print("  2) Add ticker(s)")
-        print("  3) Update ticker data")
-        print("  4) Remove ticker")
-        print("  5) Exit")
-        choice = input("Select an option [1-5]: ").strip()
+        options = [
+            "View portfolio",
+            "Add ticker(s)",
+            "Update ticker data",
+            "Remove ticker",
+            "Exit",
+        ]
+        print_menu(options)
+        choice = input(f"Select an option [1-{len(options)}]: ").strip()
 
         if choice == "1":
             view_portfolio(portfolio)

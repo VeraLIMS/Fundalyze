@@ -16,17 +16,20 @@ from modules.management.group_analysis.group_analysis import (
     load_groups,
     GROUPS_FILE,
 )
-from modules.interface import print_invalid_choice, print_header
+from modules.interface import print_invalid_choice, print_header, print_menu
 
 
 def _select_tickers() -> list[str]:
     """Prompt user to choose tickers manually, from portfolio or a group."""
     print_header("📑 Reports")
-    print("1) Enter ticker symbols manually")
-    print("2) Use all tickers from portfolio")
-    print("3) Choose a group")
-    print("4) Return to Main Menu")
-    choice = input("Select an option [1-4]: ").strip()
+    options = [
+        "Enter ticker symbols manually",
+        "Use all tickers from portfolio",
+        "Choose a group",
+        "Return to Main Menu",
+    ]
+    print_menu(options)
+    choice = input(f"Select an option [1-{len(options)}]: ").strip()
 
     if choice == "1":
         raw = input(
