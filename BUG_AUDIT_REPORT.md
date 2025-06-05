@@ -15,6 +15,8 @@
 - **modules/generate_report/__init__.py** – removed unused `run_metadata_checker` import.
 - **tests/test_data_utils_edge.py** – added edge case tests for data utilities.
 - **tests/test_group_analysis.py** – added input-handling tests for ticker confirmation and group selection.
+- **tests/test_excel_dashboard.py** – added empty input and index-based cases for data transposition utilities.
+- **tests/test_fetching.py** – added tests for invalid providers and empty batch requests.
 
 ## Remaining Warnings
 - `modules/management/directus_tools/__init__.py` re-exports a function causing an unused import warning. This is intentional and can be ignored.
