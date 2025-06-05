@@ -1,6 +1,10 @@
 import json
 
-from modules.interface import print_invalid_choice, print_header
+from modules.interface import (
+    print_invalid_choice,
+    print_header,
+    input_or_cancel,
+)
 
 from modules.data import directus_client as dc, prepare_records, refresh_field_map
 
@@ -43,36 +47,50 @@ def run_directus_wizard() -> None:
             for c in cols:
                 print(f"  - {c}")
         elif choice == "2":
-            col = input("Collection name: ").strip()
-            if col:
+            col = input_or_cancel("Collection name")
+            if not col:
+                print("Canceled.\n")
+            else:
                 fields = dc.list_fields(col)
                 print(f"Fields for '{col}':")
                 for f in fields:
                     print(f"  - {f}")
         elif choice == "3":
-            col = input("Collection name: ").strip()
-            field = input("New field name: ").strip()
-            ftype = input("Field type [string]: ").strip() or "string"
-            if col and field:
-                dc.create_field(col, field, ftype)
-                print("Field created.\n")
+            col = input_or_cancel("Collection name")
+            if not col:
+                print("Canceled.\n")
+            else:
+                field = input_or_cancel("New field name")
+                if not field:
+                    print("Canceled.\n")
+                else:
+                    ftype = input("Field type [string]: ").strip() or "string"
+                    dc.create_field(col, field, ftype)
+                    print("Field created.\n")
         elif choice == "4":
-            col = input("Collection name: ").strip()
-            if col:
+            col = input_or_cancel("Collection name")
+            if not col:
+                print("Canceled.\n")
+            else:
                 items = dc.fetch_items(col)
                 print(json.dumps(items, indent=2))
         elif choice == "5":
-            col = input("Collection name: ").strip()
-            raw = input("JSON for single item: ").strip()
-            if col and raw:
-                try:
-                    data = json.loads(raw)
-                except Exception as exc:
-                    print(f"Invalid JSON: {exc}\n")
+            col = input_or_cancel("Collection name")
+            if not col:
+                print("Canceled.\n")
+            else:
+                raw = input_or_cancel("JSON for single item")
+                if not raw:
+                    print("Canceled.\n")
                 else:
-                    records = prepare_records(col, [data])
-                    dc.insert_items(col, records)
-                    print("Item inserted.\n")
+                    try:
+                        data = json.loads(raw)
+                    except Exception as exc:
+                        print(f"Invalid JSON: {exc}\n")
+                    else:
+                        records = prepare_records(col, [data])
+                        dc.insert_items(col, records)
+                        print("Item inserted.\n")
         elif choice == "6":
             refresh_field_map()
             print("Field map updated.\n")

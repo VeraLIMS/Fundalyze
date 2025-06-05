@@ -91,3 +91,8 @@ These changes ensure consistent feedback across the CLI and provide clearer guid
   Enter to cancel. See `modules/generate_report/__init__.py` lines 53–63.
 - Manual ticker entry now prints "No tickers entered" when blank to clarify the
   cancellation path. See lines 31–38 of the same file.
+
+### Recent Improvements
+- Added `input_or_cancel` helper in `modules/interface.py` at lines 30-32 to standardize prompts.
+- Updated `modules/management/directus_tools/directus_wizard.py` lines 50-93 to use this helper and print "Canceled." when input is empty.
+
