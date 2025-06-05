@@ -27,7 +27,18 @@ NAME
 
 FUNCTIONS
     fetch_basic_stock_data(ticker: 'str', *, fallback: 'bool' = True, provider: 'str' = 'auto') -> 'dict'
-        Fetch key fundamental data for a ticker from yfinance or FMP.
+        Fetch key fundamental data for a ticker.
+        
+        Parameters
+        ----------
+        ticker:
+            Stock symbol to fetch.
+        fallback:
+            When ``provider='auto'`` and yfinance returns incomplete data,
+            query FMP as a secondary source.
+        provider:
+            ``'yf'`` to use yfinance only, ``'fmp'`` for FMP only,
+            or ``'auto'`` (default) to try yfinance then FMP if ``fallback``.
 
 DATA
     BASIC_FIELDS = ['Ticker', 'Name', 'Sector', 'Industry', 'Current Price...
@@ -65,6 +76,61 @@ FILE
     /workspace/Fundalyze/modules/generate_report/report_generator.py
 
 
+Help on module modules.generate_report.excel_dashboard in modules.generate_report:
+
+NAME
+    modules.generate_report.excel_dashboard - # src/generate_report/excel_dashboard.py
+
+FUNCTIONS
+    create_and_open_dashboard(output_root: str | None = None, *, tickers: Optional[Iterable[str]] = None)
+        Create an Excel dashboard (with named Tables) and open it automatically.
+    
+    create_dashboard(output_root: str | None = None, *, tickers: Optional[Iterable[str]] = None) -> pathlib.Path
+        1) Find subfolders under output_root (one per ticker).
+        2) Read these CSVs if present:
+             - profile.csv
+             - 1mo_prices.csv
+             - income_annual.csv
+             - income_quarter.csv
+             - balance_annual.csv
+             - balance_quarter.csv
+             - cash_annual.csv
+             - cash_quarter.csv
+        
+        3) Build two “normal” DataFrames:
+             df_profiles = _safe_concat_normal(profiles)
+             df_prices   = _safe_concat_normal(prices)
+        
+           And six “transposed” DataFrames (with stringified period headers):
+             df_inc_ann  = _transpose_financials(income_ann)
+             df_inc_qtr  = _transpose_financials(income_qtr)
+             df_bal_ann  = _transpose_financials(balance_ann)
+             df_bal_qtr  = _transpose_financials(balance_qtr)
+             df_cash_ann = _transpose_financials(cash_ann)
+             df_cash_qtr = _transpose_financials(cash_qtr)
+        
+        4) Write all eight DataFrames to:
+             output_root/dashboard_<TIMESTAMP>.xlsx
+           Converting each sheet into an Excel Table (so you can use structured references
+           like `[Revenue]` or `[2022-12]` in formulas).
+        
+        Returns:
+            Path to the newly created .xlsx file.
+    
+    show_dashboard_in_excel(dashboard_path: pathlib.Path)
+        Open the newly created Excel file in the OS default application.
+
+DATA
+    Iterable = typing.Iterable
+        A generic version of collections.abc.Iterable.
+    
+    Optional = typing.Optional
+        Optional[X] is equivalent to Union[X, None].
+
+FILE
+    /workspace/Fundalyze/modules/generate_report/excel_dashboard.py
+
+
 Help on module modules.management.portfolio_manager.portfolio_manager in modules.management.portfolio_manager:
 
 NAME
@@ -96,7 +162,7 @@ FUNCTIONS
         If yes, return the same string. If no, prompt for a new ticker and return it.
     
     fetch_from_yfinance(ticker: str) -> dict
-        Wrapper around :func:`modules.data.fetching.fetch_basic_stock_data` (see provider option).
+        Wrapper around :func:`modules.data.fetching.fetch_basic_stock_data`.
     
     load_portfolio(filepath: str) -> pandas.core.frame.DataFrame
         Load the portfolio either from Directus (if configured) or from a local
@@ -125,9 +191,6 @@ FUNCTIONS
 DATA
     COLUMNS = ['Ticker', 'Name', 'Sector', 'Industry', 'Current Price', 'M...
     C_DIRECTUS_COLLECTION = 'portfolio'
-    Optional = typing.Optional
-        Optional[X] is equivalent to Union[X, None].
-    
     PORTFOLIO_FILE = 'portfolio.xlsx'
     USE_DIRECTUS = False
 
@@ -176,7 +239,7 @@ FUNCTIONS
         Prompt for a group to delete entirely (all its tickers).
     
     fetch_from_yfinance(ticker: str) -> dict
-        Wrapper around :func:`modules.data.fetching.fetch_basic_stock_data` (see provider option).
+        Wrapper around :func:`modules.data.fetching.fetch_basic_stock_data`.
     
     load_groups(filepath: str) -> pandas.core.frame.DataFrame
         Load existing groups either from Directus or from Excel. If neither source
@@ -203,9 +266,6 @@ DATA
     COLUMNS = ['Group', 'Ticker', 'Name', 'Sector', 'Industry', 'Current P...
     GROUPS_COLLECTION = 'groups'
     GROUPS_FILE = 'groups.xlsx'
-    Optional = typing.Optional
-        Optional[X] is equivalent to Union[X, None].
-    
     PORTFOLIO_FILE = 'portfolio.xlsx'
     SETTINGS = {}
     USE_DIRECTUS = False
@@ -248,5 +308,47 @@ DATA
 
 FILE
     /workspace/Fundalyze/modules/config_utils.py
+
+
+Help on module modules.utils.data_utils in modules.utils:
+
+NAME
+    modules.utils.data_utils - Utility helpers for pandas data processing.
+
+FUNCTIONS
+    ensure_period_column(df: 'pd.DataFrame', column_name: 'str' = 'Period') -> 'pd.DataFrame'
+        Ensure ``df`` has a period column by resetting index if needed.
+    
+    read_csv_if_exists(path: 'Path', **kwargs) -> 'Optional[pd.DataFrame]'
+        Return DataFrame from ``path`` if the file exists else ``None``.
+    
+    strip_timezones(df: 'pd.DataFrame') -> 'pd.DataFrame'
+        Return copy of ``df`` with timezone information removed.
+
+DATA
+    Optional = typing.Optional
+        Optional[X] is equivalent to Union[X, None].
+
+FILE
+    /workspace/Fundalyze/modules/utils/data_utils.py
+
+
+Help on module modules.interface in modules:
+
+NAME
+    modules.interface
+
+FUNCTIONS
+    print_invalid_choice() -> 'None'
+        Standard message for invalid menu selections.
+    
+    print_table(df: 'pd.DataFrame', *, showindex: 'bool' = False) -> 'None'
+        Pretty-print a DataFrame using :mod:`tabulate`.
+
+DATA
+    INVALID_CHOICE_MSG = 'Invalid choice. Please select a valid option.\n'
+
+FILE
+    /workspace/Fundalyze/modules/interface.py
 
 

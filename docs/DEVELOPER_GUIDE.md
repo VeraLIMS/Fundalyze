@@ -1,65 +1,51 @@
 # Developer Guide
 
-This guide explains the internal structure of **Fundalyze** and how to contribute new modules or debugging tools.
+This guide provides a high level look at Fundalyze's architecture and tips for extending or debugging the project.
 
 ## Architecture Overview
 
 ```
 Fundalyze/
-├── modules/          # Core functionality
+├── modules/          # Core packages
 │   ├── analytics/    # Portfolio analysis helpers
 │   ├── data/         # Data retrieval utilities
 │   ├── generate_report/  # Report creation logic
-│   └── management/   # CLI tools for portfolio, groups and settings
+│   ├── management/   # CLI tools for portfolio, groups and settings
+│   └── utils/        # Small helper utilities
 ├── scripts/          # Entry points such as `main.py`
 ├── tests/            # Pytest suite
 └── docs/             # Project documentation
 ```
 
-* `modules/analytics` provides small helper functions like `portfolio_summary` and `correlation_matrix`.
-* `modules/data` contains raw data fetching utilities and the Directus client.
-* `modules/generate_report` builds dashboard reports from fetched data.
-* `modules/management` houses user facing CLI commands.
+* `modules/analytics` exposes functions like `portfolio_summary`.
+* `modules/data` and `modules/config_utils` handle data fetching and configuration.
+* `modules/generate_report` builds dashboards from downloaded CSV files.
+* `modules/management` contains interactive CLI commands.
 
 ## Debugging Environment
 
-1. Create a virtual environment using the provided scripts:
-   ```bash
-   ./bootstrap_env.sh
-   ```
-   or on Windows:
-   ```powershell
-   .\bootstrap_env.ps1
-   ```
-
-2. Open the repository in VS Code and start debugging `scripts/main.py`. You can set breakpoints anywhere inside the `modules` packages. Running the **Python: Current File** debugger automatically picks up the active virtual environment.
-
-3. Enable verbose logging by setting environment variables in `config/.env`:
-   ```env
-   LOG_LEVEL=DEBUG
-   ```
-   The CLI then prints additional details useful during development.
+1. Create the virtual environment with `bootstrap_env.sh` (or `.ps1` on Windows).
+2. Open the repository in VS Code and launch the **Python: Current File** debugger on `scripts/main.py`. Breakpoints inside `modules/` will be hit automatically.
+3. Enable verbose logs by adding `LOG_LEVEL=DEBUG` to `config/.env`.
+4. When debugging report generation you can set `OUTPUT_DIR` to a temporary folder to avoid clutter.
 
 ## Extending Fundalyze
 
-### New Analysis Modules
+### Adding Analysis Modules
 
-1. Add a new `.py` file under `modules/analytics/` implementing your analysis functions.
-2. Expose the functions in `modules/analytics/__init__.py` so they can be imported elsewhere.
-3. Add unit tests under `tests/` to cover the new functionality.
+1. Place a new `.py` file under `modules/analytics/` and implement your functions.
+2. Re-export them in `modules/analytics/__init__.py` so other packages can import them.
+3. Update `docs/API_REFERENCE.md` by running `python -m pydoc` on the new module.
 
-### New CLI Components
+### Adding CLI Components or UI Elements
 
-1. Place your implementation inside `modules/management/`.
-2. Register the new command in `scripts/main.py` so it appears in the menu.
-3. Update documentation if user facing behaviour changes.
+1. Add your implementation under `modules/management/`.
+2. Register a menu entry in `scripts/main.py` so users can access it.
+3. Document any new commands in the README or user guide.
 
 ## Writing Tests
 
-Fundalyze uses `pytest`. Place tests in the `tests/` directory and name them `test_*.py`.
-Run the full suite with:
-```bash
-pytest -q
-```
-Ensure your changes keep all tests passing and strive for good coverage when adding new code.
+- Tests live in the `tests/` directory and should be named `test_*.py`.
+- Use `pytest -q` to run the suite. Aim to cover new code paths and keep coverage high.
+- Fixtures for common setup live in `tests/conftest.py`.
 
