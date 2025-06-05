@@ -130,7 +130,8 @@ def fetch_basic_stock_data_batch(
     dedup:
         If ``True``, remove duplicate symbols before fetching.
     progress:
-        When ``True`` display a progress bar for sequential fetching.
+        When ``True`` display a progress bar while fetching. The bar works for
+        both sequential and parallel execution.
     max_workers:
         If greater than 1, fetch tickers in parallel using ``ThreadPoolExecutor``.
 
@@ -156,8 +157,12 @@ def fetch_basic_stock_data_batch(
     if max_workers and max_workers > 1:
         from concurrent.futures import ThreadPoolExecutor
 
+        iterator = enumerate(tickers, start=1)
+        if progress:
+            iterator = progress_iter(iterator, description="Tickers")
+
         with ThreadPoolExecutor(max_workers=max_workers) as ex:
-            rows = list(ex.map(_worker, enumerate(tickers, start=1)))
+            rows = list(ex.map(_worker, iterator))
     else:
         iterator = enumerate(tickers, start=1)
         if progress:
