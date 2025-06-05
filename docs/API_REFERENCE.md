@@ -26,8 +26,8 @@ NAME
     modules.data.fetching - Utility functions for retrieving financial data.
 
 FUNCTIONS
-    fetch_basic_stock_data(ticker: 'str', *, fallback: 'bool' = True) -> 'dict'
-        Fetch key fundamental data for a ticker via yfinance with optional FMP fallback.
+    fetch_basic_stock_data(ticker: 'str', *, fallback: 'bool' = True, provider: 'str' = 'auto') -> 'dict'
+        Fetch key fundamental data for a ticker from yfinance or FMP.
 
 DATA
     BASIC_FIELDS = ['Ticker', 'Name', 'Sector', 'Industry', 'Current Price...
@@ -96,7 +96,7 @@ FUNCTIONS
         If yes, return the same string. If no, prompt for a new ticker and return it.
     
     fetch_from_yfinance(ticker: str) -> dict
-        Wrapper around :func:`modules.data.fetching.fetch_basic_stock_data`.
+        Wrapper around :func:`modules.data.fetching.fetch_basic_stock_data` (see provider option).
     
     load_portfolio(filepath: str) -> pandas.core.frame.DataFrame
         Load the portfolio either from Directus (if configured) or from a local
@@ -176,7 +176,7 @@ FUNCTIONS
         Prompt for a group to delete entirely (all its tickers).
     
     fetch_from_yfinance(ticker: str) -> dict
-        Wrapper around :func:`modules.data.fetching.fetch_basic_stock_data`.
+        Wrapper around :func:`modules.data.fetching.fetch_basic_stock_data` (see provider option).
     
     load_groups(filepath: str) -> pandas.core.frame.DataFrame
         Load existing groups either from Directus or from Excel. If neither source

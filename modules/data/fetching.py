@@ -60,18 +60,47 @@ def _fetch_from_fmp(ticker: str) -> dict:
     }
 
 
-def fetch_basic_stock_data(ticker: str, *, fallback: bool = True) -> dict:
-    """Fetch key fundamental data for a ticker via yfinance with optional FMP fallback."""
-    ticker_obj = yf.Ticker(ticker)
-    try:
-        info = ticker_obj.get_info()
-    except Exception:
-        info = {}
-    if info and info.get("longName") is not None:
-        return _parse_yf_info(info, ticker)
-    if not fallback:
-        raise ValueError("No valid data returned by yfinance.")
-    fmp_data = _fetch_from_fmp(ticker)
-    if not fmp_data:
-        raise ValueError("No valid data returned by yfinance or FMP.")
-    return fmp_data
+def fetch_basic_stock_data(
+    ticker: str,
+    *,
+    fallback: bool = True,
+    provider: str = "auto",
+) -> dict:
+    """Fetch key fundamental data for a ticker.
+
+    Parameters
+    ----------
+    ticker:
+        Stock symbol to fetch.
+    fallback:
+        When ``provider='auto'`` and yfinance returns incomplete data,
+        query FMP as a secondary source.
+    provider:
+        ``'yf'`` to use yfinance only, ``'fmp'`` for FMP only,
+        or ``'auto'`` (default) to try yfinance then FMP if ``fallback``.
+    """
+
+    provider = provider.lower()
+
+    if provider not in {"auto", "yf", "fmp"}:
+        raise ValueError("provider must be 'auto', 'yf', or 'fmp'")
+
+    if provider in {"auto", "yf"}:
+        ticker_obj = yf.Ticker(ticker)
+        try:
+            info = ticker_obj.get_info()
+        except Exception:
+            info = {}
+        if info and info.get("longName") is not None:
+            return _parse_yf_info(info, ticker)
+        if provider == "yf" and not info:
+            raise ValueError("No valid data returned by yfinance.")
+
+    if provider in {"auto", "fmp"} and fallback:
+        fmp_data = _fetch_from_fmp(ticker)
+        if fmp_data:
+            return fmp_data
+        if provider == "fmp":
+            raise ValueError("No valid data returned by FMP.")
+
+    raise ValueError("No valid data returned by yfinance or FMP.")

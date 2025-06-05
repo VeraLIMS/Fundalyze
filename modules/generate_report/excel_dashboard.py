@@ -8,15 +8,15 @@ from datetime import datetime
 
 import pandas as pd
 
+from modules.utils.data_utils import (
+    strip_timezones,
+    ensure_period_column,
+    read_csv_if_exists,
+)
+
 def _strip_timezones(df: pd.DataFrame) -> pd.DataFrame:
-    """Remove timezone information from any datetime columns or index."""
-    if df is None:
-        return df
-    if isinstance(df.index, pd.DatetimeIndex) and df.index.tz is not None:
-        df.index = df.index.tz_localize(None)
-    for col in df.select_dtypes(include=["datetimetz"]).columns:
-        df[col] = df[col].dt.tz_localize(None)
-    return df
+    """Deprecated wrapper around :func:`modules.utils.data_utils.strip_timezones`."""
+    return strip_timezones(df)
 
 
 def _col_to_letter(idx: int) -> str:
@@ -47,9 +47,8 @@ def _transpose_financials(ticker_dfs: dict[str, pd.DataFrame]) -> pd.DataFrame:
         if df.empty:
             continue
 
-        # Ensure 'Period' is a column
-        if "Period" not in df.columns:
-            df = df.reset_index().rename(columns={"index": "Period"})
+        # Ensure 'Period' exists for each statement DataFrame
+        df = ensure_period_column(df)
 
         temp = df.copy().set_index("Period")
         # Now temp.index = periods, temp.columns = metrics
@@ -157,83 +156,28 @@ def create_dashboard(output_root: str | None = None, *, tickers: Optional[Iterab
     for td in ticker_dirs:
         ticker = td.name
 
-        # ── Profile ─────────────────────────────────────────────────
-        profile_path = td / "profile.csv"
-        if profile_path.exists():
-            try:
-                df = pd.read_csv(profile_path)
-                profiles[ticker] = _strip_timezones(df)
-            except Exception:
-                pass
+        df = read_csv_if_exists(td / "profile.csv")
+        if df is not None:
+            profiles[ticker] = strip_timezones(df)
 
-        # ── 1mo_prices ───────────────────────────────────────────────
-        price_path = td / "1mo_prices.csv"
-        if price_path.exists():
-            try:
-                df = pd.read_csv(price_path, parse_dates=["Date"])
-                prices[ticker] = _strip_timezones(df)
-            except Exception:
-                pass
+        df = read_csv_if_exists(td / "1mo_prices.csv", parse_dates=["Date"])
+        if df is not None:
+            prices[ticker] = strip_timezones(df)
 
-        # ── Income Annual ───────────────────────────────────────────
-        ia_path = td / "income_annual.csv"
-        if ia_path.exists():
-            try:
-                df = pd.read_csv(ia_path, index_col=0)
-                df = df.reset_index().rename(columns={"index": "Period"})
-                income_ann[ticker] = _strip_timezones(df)
-            except Exception:
-                pass
+        stmt_files = [
+            ("income_annual.csv", income_ann),
+            ("income_quarter.csv", income_qtr),
+            ("balance_annual.csv", balance_ann),
+            ("balance_quarter.csv", balance_qtr),
+            ("cash_annual.csv", cash_ann),
+            ("cash_quarter.csv", cash_qtr),
+        ]
 
-        # ── Income Quarterly ────────────────────────────────────────
-        iq_path = td / "income_quarter.csv"
-        if iq_path.exists():
-            try:
-                df = pd.read_csv(iq_path, index_col=0)
-                df = df.reset_index().rename(columns={"index": "Period"})
-                income_qtr[ticker] = _strip_timezones(df)
-            except Exception:
-                pass
-
-        # ── Balance Annual ──────────────────────────────────────────
-        ba_path = td / "balance_annual.csv"
-        if ba_path.exists():
-            try:
-                df = pd.read_csv(ba_path, index_col=0)
-                df = df.reset_index().rename(columns={"index": "Period"})
-                balance_ann[ticker] = _strip_timezones(df)
-            except Exception:
-                pass
-
-        # ── Balance Quarterly ───────────────────────────────────────
-        bq_path = td / "balance_quarter.csv"
-        if bq_path.exists():
-            try:
-                df = pd.read_csv(bq_path, index_col=0)
-                df = df.reset_index().rename(columns={"index": "Period"})
-                balance_qtr[ticker] = _strip_timezones(df)
-            except Exception:
-                pass
-
-        # ── Cash Annual ─────────────────────────────────────────────
-        ca_path = td / "cash_annual.csv"
-        if ca_path.exists():
-            try:
-                df = pd.read_csv(ca_path, index_col=0)
-                df = df.reset_index().rename(columns={"index": "Period"})
-                cash_ann[ticker] = _strip_timezones(df)
-            except Exception:
-                pass
-
-        # ── Cash Quarterly ──────────────────────────────────────────
-        cq_path = td / "cash_quarter.csv"
-        if cq_path.exists():
-            try:
-                df = pd.read_csv(cq_path, index_col=0)
-                df = df.reset_index().rename(columns={"index": "Period"})
-                cash_qtr[ticker] = _strip_timezones(df)
-            except Exception:
-                pass
+        for fname, storage in stmt_files:
+            df = read_csv_if_exists(td / fname, index_col=0)
+            if df is not None:
+                df = ensure_period_column(df)
+                storage[ticker] = strip_timezones(df)
 
     # Build “normal” tables
     df_profiles = _safe_concat_normal(profiles)
