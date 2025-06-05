@@ -1,4 +1,14 @@
+ codex/document-data-module-and-functionality
+"""Utilities for mapping DataFrame columns to Directus fields.
+
+``directus_mapper`` keeps ``config/directus_field_map.json`` in sync with your
+Directus instance and helps convert records prior to upload. It relies on
+``directus_client`` to query the server and can run interactively to prompt for
+missing mappings.
+"""
+=======
 """Helpers for mapping pandas DataFrames to Directus collections."""
+ main
 
 import json
 import logging
