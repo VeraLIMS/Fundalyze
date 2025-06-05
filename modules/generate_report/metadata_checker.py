@@ -119,7 +119,9 @@ def fetch_fin_stmt_from_yf(symbol: str, stmt_key: str) -> pd.DataFrame:
     """
     ticker = yf.Ticker(symbol)
     try:
-        df = getattr(ticker, stmt_key) or pd.DataFrame()
+        df = getattr(ticker, stmt_key)
+        if not isinstance(df, pd.DataFrame):
+            df = pd.DataFrame()
     except Exception:
         df = pd.DataFrame()
 

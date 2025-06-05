@@ -135,7 +135,9 @@ def _yf_fetch_and_save_statement(
     If non-empty, transpose if necessary and save to CSV under output_dir/<symbol>_<statement>.csv.
     """
     try:
-        df = getattr(ticker_obj, statement) or pd.DataFrame()
+        df = getattr(ticker_obj, statement)
+        if not isinstance(df, pd.DataFrame):
+            df = pd.DataFrame()
     except Exception as e:
         print(f"\n  Error fetching {label} via yfinance: {e}")
         return
@@ -328,7 +330,9 @@ def enrich_ticker_folder(ticker_dir: Path):
                     raise ValueError(f"Unknown statement type: {filename}")
 
                 # 1) Try yfinance
-                df_yf = getattr(yf.Ticker(symbol), yf_attr) or pd.DataFrame()
+                df_yf = getattr(yf.Ticker(symbol), yf_attr)
+                if not isinstance(df_yf, pd.DataFrame):
+                    df_yf = pd.DataFrame()
                 if isinstance(df_yf, pd.DataFrame) and not df_yf.empty:
                     should_transpose = any(isinstance(c, pd.Timestamp) for c in df_yf.columns)
                     df_to_save = df_yf.T if should_transpose else df_yf
