@@ -30,6 +30,7 @@ Fundalyze/
    python -m pdb modules/<package>/file.py
    ```
 6. Configure breakpoints in VS Code via `.vscode/launch.json` if you need custom args.
+7. Run `pytest -s` when debugging tests to see console output.
 
 ## Extending Fundalyze
 ### Adding Analysis Modules
