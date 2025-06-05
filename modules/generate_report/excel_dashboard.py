@@ -1,19 +1,172 @@
 # src/generate_report/excel_dashboard.py
 
 import os
-import sys
 import subprocess
-from pathlib import Path
+import sys
 from datetime import datetime
+from pathlib import Path
+from typing import Iterable, Optional
 
 import pandas as pd
 
+from modules.config_utils import get_output_dir
 from modules.utils.data_utils import (
-    strip_timezones,
     ensure_period_column,
     read_csv_if_exists,
+    strip_timezones,
 )
 from modules.utils.excel_utils import write_table
+
+
+def _load_ticker_data(td: Path) -> dict[str, pd.DataFrame]:
+    """Return a mapping of CSV name → DataFrame for ``td``."""
+    data: dict[str, pd.DataFrame] = {}
+
+    df = read_csv_if_exists(td / "profile.csv")
+    if df is not None:
+        data["profile"] = strip_timezones(df)
+
+    df = read_csv_if_exists(td / "1mo_prices.csv", parse_dates=["Date"])
+    if df is not None:
+        data["prices"] = strip_timezones(df)
+
+    stmt_files = [
+        "income_annual.csv",
+        "income_quarter.csv",
+        "balance_annual.csv",
+        "balance_quarter.csv",
+        "cash_annual.csv",
+        "cash_quarter.csv",
+    ]
+    for fname in stmt_files:
+        df = read_csv_if_exists(td / fname, index_col=0)
+        if df is not None:
+            df = ensure_period_column(df)
+            data[fname.replace(".csv", "")] = strip_timezones(df)
+
+    return data
+
+
+def _assemble_tables(data_map: dict[str, dict[str, pd.DataFrame]]):
+    """Return all dashboard DataFrames from raw ticker data."""
+    profiles = {t: d.get("profile", pd.DataFrame()) for t, d in data_map.items()}
+    prices = {t: d.get("prices", pd.DataFrame()) for t, d in data_map.items()}
+
+    income_ann = {
+        t: d.get("income_annual", pd.DataFrame()) for t, d in data_map.items()
+    }
+    income_qtr = {
+        t: d.get("income_quarter", pd.DataFrame()) for t, d in data_map.items()
+    }
+    balance_ann = {
+        t: d.get("balance_annual", pd.DataFrame()) for t, d in data_map.items()
+    }
+    balance_qtr = {
+        t: d.get("balance_quarter", pd.DataFrame()) for t, d in data_map.items()
+    }
+    cash_ann = {t: d.get("cash_annual", pd.DataFrame()) for t, d in data_map.items()}
+    cash_qtr = {t: d.get("cash_quarter", pd.DataFrame()) for t, d in data_map.items()}
+
+    df_profiles = _safe_concat_normal(profiles)
+    df_prices = _safe_concat_normal(prices)
+
+    df_inc_ann = _transpose_financials(income_ann)
+    df_inc_qtr = _transpose_financials(income_qtr)
+    df_bal_ann = _transpose_financials(balance_ann)
+    df_bal_qtr = _transpose_financials(balance_qtr)
+    df_cash_ann = _transpose_financials(cash_ann)
+    df_cash_qtr = _transpose_financials(cash_qtr)
+
+    return (
+        df_profiles,
+        df_prices,
+        df_inc_ann,
+        df_inc_qtr,
+        df_bal_ann,
+        df_bal_qtr,
+        df_cash_ann,
+        df_cash_qtr,
+    )
+
+
+def _write_dashboard(
+    dash_path: Path,
+    df_profiles: pd.DataFrame,
+    df_prices: pd.DataFrame,
+    df_inc_ann: pd.DataFrame,
+    df_inc_qtr: pd.DataFrame,
+    df_bal_ann: pd.DataFrame,
+    df_bal_qtr: pd.DataFrame,
+    df_cash_ann: pd.DataFrame,
+    df_cash_qtr: pd.DataFrame,
+) -> None:
+    """Write all tables to ``dash_path`` as an Excel workbook."""
+    with pd.ExcelWriter(dash_path, engine="xlsxwriter") as writer:
+        if not df_profiles.empty:
+            write_table(
+                writer,
+                df_profiles,
+                "Profile",
+                "Profile_Table",
+                style="Table Style Medium 2",
+            )
+        if not df_prices.empty:
+            write_table(
+                writer,
+                df_prices,
+                "PriceHistory",
+                "PriceHistory_Table",
+                style="Table Style Medium 3",
+            )
+        if not df_inc_ann.empty:
+            write_table(
+                writer,
+                df_inc_ann,
+                "Income_Annual",
+                "Income_Annual_Table",
+                style="Table Style Medium 4",
+            )
+        if not df_inc_qtr.empty:
+            write_table(
+                writer,
+                df_inc_qtr,
+                "Income_Quarter",
+                "Income_Quarter_Table",
+                style="Table Style Medium 5",
+            )
+        if not df_bal_ann.empty:
+            write_table(
+                writer,
+                df_bal_ann,
+                "Balance_Annual",
+                "Balance_Annual_Table",
+                style="Table Style Medium 6",
+            )
+        if not df_bal_qtr.empty:
+            write_table(
+                writer,
+                df_bal_qtr,
+                "Balance_Quarter",
+                "Balance_Quarter_Table",
+                style="Table Style Medium 7",
+            )
+        if not df_cash_ann.empty:
+            write_table(
+                writer,
+                df_cash_ann,
+                "Cash_Annual",
+                "Cash_Annual_Table",
+                style="Table Style Medium 8",
+            )
+        if not df_cash_qtr.empty:
+            write_table(
+                writer,
+                df_cash_qtr,
+                "Cash_Quarter",
+                "Cash_Quarter_Table",
+                style="Table Style Medium 9",
+            )
+
 
 def _strip_timezones(df: pd.DataFrame) -> pd.DataFrame:
     """Deprecated wrapper around :func:`modules.utils.data_utils.strip_timezones`."""
@@ -85,7 +238,9 @@ from typing import Iterable, Optional
 from modules.config_utils import get_output_dir
 
 
-def create_dashboard(output_root: str | None = None, *, tickers: Optional[Iterable[str]] = None) -> Path:
+def create_dashboard(
+    output_root: str | None = None, *, tickers: Optional[Iterable[str]] = None
+) -> Path:
     """
     1) Find subfolders under output_root (one per ticker).
     2) Read these CSVs if present:
@@ -128,149 +283,40 @@ def create_dashboard(output_root: str | None = None, *, tickers: Optional[Iterab
     if tickers is None:
         ticker_dirs = sorted([p for p in root.iterdir() if p.is_dir()])
     else:
-        ticker_dirs = []
-        for tk in tickers:
-            td = root / tk
-            if td.is_dir():
-                ticker_dirs.append(td)
+        ticker_dirs = [root / tk for tk in tickers if (root / tk).is_dir()]
 
-
-    profiles = {}
-    prices = {}
-    income_ann = {}
-    income_qtr = {}
-    balance_ann = {}
-    balance_qtr = {}
-    cash_ann = {}
-    cash_qtr = {}
-
+    data_map: dict[str, dict[str, pd.DataFrame]] = {}
     total = len(ticker_dirs)
     for idx, td in enumerate(ticker_dirs, start=1):
         print(f"[{idx}/{total}] Loading {td.name}...")
-        ticker = td.name
+        data_map[td.name] = _load_ticker_data(td)
 
-        df = read_csv_if_exists(td / "profile.csv")
-        if df is not None:
-            profiles[ticker] = strip_timezones(df)
+    (
+        df_profiles,
+        df_prices,
+        df_inc_ann,
+        df_inc_qtr,
+        df_bal_ann,
+        df_bal_qtr,
+        df_cash_ann,
+        df_cash_qtr,
+    ) = _assemble_tables(data_map)
 
-        df = read_csv_if_exists(td / "1mo_prices.csv", parse_dates=["Date"])
-        if df is not None:
-            prices[ticker] = strip_timezones(df)
-
-        stmt_files = [
-            ("income_annual.csv", income_ann),
-            ("income_quarter.csv", income_qtr),
-            ("balance_annual.csv", balance_ann),
-            ("balance_quarter.csv", balance_qtr),
-            ("cash_annual.csv", cash_ann),
-            ("cash_quarter.csv", cash_qtr),
-        ]
-
-        for fname, storage in stmt_files:
-            df = read_csv_if_exists(td / fname, index_col=0)
-            if df is not None:
-                df = ensure_period_column(df)
-                storage[ticker] = strip_timezones(df)
-
-    # Build “normal” tables
-    df_profiles = _safe_concat_normal(profiles)
-    df_prices   = _safe_concat_normal(prices)
-
-    # Build “transposed” tables (stringify Period headers)
-    df_inc_ann  = _transpose_financials(income_ann)
-    df_inc_qtr  = _transpose_financials(income_qtr)
-    df_bal_ann  = _transpose_financials(balance_ann)
-    df_bal_qtr  = _transpose_financials(balance_qtr)
-    df_cash_ann = _transpose_financials(cash_ann)
-    df_cash_qtr = _transpose_financials(cash_qtr)
-
-    # Create timestamped filename
     ts = datetime.now().strftime("%Y-%m-%d_%H%M%S")
     dash_name = f"dashboard_{ts}.xlsx"
     dash_path = root / dash_name
 
-    # Write to Excel, adding each sheet as a named Table
-    with pd.ExcelWriter(dash_path, engine="xlsxwriter") as writer:
-
-        # ── Sheet: Profile ───────────────────────────────────────────
-        if not df_profiles.empty:
-            write_table(
-                writer,
-                df_profiles,
-                "Profile",
-                "Profile_Table",
-                style="Table Style Medium 2",
-            )
-
-        # ── Sheet: PriceHistory ───────────────────────────────────────
-        if not df_prices.empty:
-            write_table(
-                writer,
-                df_prices,
-                "PriceHistory",
-                "PriceHistory_Table",
-                style="Table Style Medium 3",
-            )
-
-        # ── Sheet: Income_Annual ───────────────────────────────────────
-        if not df_inc_ann.empty:
-            write_table(
-                writer,
-                df_inc_ann,
-                "Income_Annual",
-                "Income_Annual_Table",
-                style="Table Style Medium 4",
-            )
-
-        # ── Sheet: Income_Quarter ─────────────────────────────────────
-        if not df_inc_qtr.empty:
-            write_table(
-                writer,
-                df_inc_qtr,
-                "Income_Quarter",
-                "Income_Quarter_Table",
-                style="Table Style Medium 5",
-            )
-
-        # ── Sheet: Balance_Annual ─────────────────────────────────────
-        if not df_bal_ann.empty:
-            write_table(
-                writer,
-                df_bal_ann,
-                "Balance_Annual",
-                "Balance_Annual_Table",
-                style="Table Style Medium 6",
-            )
-
-        # ── Sheet: Balance_Quarter ────────────────────────────────────
-        if not df_bal_qtr.empty:
-            write_table(
-                writer,
-                df_bal_qtr,
-                "Balance_Quarter",
-                "Balance_Quarter_Table",
-                style="Table Style Medium 7",
-            )
-
-        # ── Sheet: Cash_Annual ────────────────────────────────────────
-        if not df_cash_ann.empty:
-            write_table(
-                writer,
-                df_cash_ann,
-                "Cash_Annual",
-                "Cash_Annual_Table",
-                style="Table Style Medium 8",
-            )
-
-        # ── Sheet: Cash_Quarter ───────────────────────────────────────
-        if not df_cash_qtr.empty:
-            write_table(
-                writer,
-                df_cash_qtr,
-                "Cash_Quarter",
-                "Cash_Quarter_Table",
-                style="Table Style Medium 9",
-            )
+    _write_dashboard(
+        dash_path,
+        df_profiles,
+        df_prices,
+        df_inc_ann,
+        df_inc_qtr,
+        df_bal_ann,
+        df_bal_qtr,
+        df_cash_ann,
+        df_cash_qtr,
+    )
 
     return dash_path
 
@@ -290,7 +336,9 @@ def show_dashboard_in_excel(dashboard_path: Path):
         subprocess.call(["xdg-open", str(dashboard_path)])
 
 
-def create_and_open_dashboard(output_root: str | None = None, *, tickers: Optional[Iterable[str]] = None):
+def create_and_open_dashboard(
+    output_root: str | None = None, *, tickers: Optional[Iterable[str]] = None
+):
     """
     Create an Excel dashboard (with named Tables) and open it automatically.
     """
