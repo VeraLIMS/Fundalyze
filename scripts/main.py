@@ -23,7 +23,7 @@ setup_logging("logs/fundalyze.log")
 
 # Ensure environment variables from config/.env are loaded before other modules
 from modules.config_utils import load_settings  # noqa: E402
-from modules.interface import print_invalid_choice, print_header
+from modules.interface import print_invalid_choice, print_header, print_menu
 
 from modules.management.portfolio_manager.portfolio_manager import main as run_portfolio_manager
 from modules.management.group_analysis.group_analysis import main as run_group_analysis
@@ -65,19 +65,20 @@ def run_portfolio_groups() -> None:
 
     while True:
         print_header("🔁 Portfolio & Groups")
-        print("--- Portfolio ---")
-        print("1) View Portfolio")
-        print("2) Add Ticker(s)")
-        print("3) Update Ticker Data")
-        print("4) Remove Ticker")
-        print("--- Groups ---")
-        print("5) View All Groups")
-        print("6) Create New Group / Link Portfolio")
-        print("7) Add Ticker(s) to Group")
-        print("8) Remove Ticker from Group")
-        print("9) Delete Group")
-        print("10) Return to Main Menu")
-        choice = input("Select an option [1-10]: ").strip()
+        options = [
+            "View Portfolio",
+            "Add Ticker(s)",
+            "Update Ticker Data",
+            "Remove Ticker",
+            "View All Groups",
+            "Create New Group / Link Portfolio",
+            "Add Ticker(s) to Group",
+            "Remove Ticker from Group",
+            "Delete Group",
+            "Return to Main Menu",
+        ]
+        print_menu(options)
+        choice = input(f"Select an option [1-{len(options)}]: ").strip()
 
         if choice == "1":
             pm.view_portfolio(portfolio)
@@ -144,12 +145,15 @@ def run_reports_menu() -> None:
     """Sub-menu for report related utilities."""
     while True:
         print_header("\U0001F4D1 Reports")
-        print("1) Full Workflow")
-        print("2) Metadata Checker Only")
-        print("3) Fallback Data Only")
-        print("4) Excel Dashboard Only")
-        print("5) Return to Main Menu")
-        choice = input("Select an option [1-5]: ").strip()
+        options = [
+            "Full Workflow",
+            "Metadata Checker Only",
+            "Fallback Data Only",
+            "Excel Dashboard Only",
+            "Return to Main Menu",
+        ]
+        print_menu(options)
+        choice = input(f"Select an option [1-{len(options)}]: ").strip()
 
         if choice == "1":
             run_generate_report()
@@ -187,10 +191,13 @@ def run_utilities_menu() -> None:
     """Sub-menu exposing extra helper utilities."""
     while True:
         print_header("\U0001F6E0 Utilities")
-        print("1) Run Test Suite")
-        print("2) Performance Profile")
-        print("3) Return to Main Menu")
-        choice = input("Select an option [1-3]: ").strip()
+        options = [
+            "Run Test Suite",
+            "Performance Profile",
+            "Return to Main Menu",
+        ]
+        print_menu(options)
+        choice = input(f"Select an option [1-{len(options)}]: ").strip()
 
         if choice == "1":
             run_tests_cli()
@@ -249,8 +256,7 @@ def interactive_menu():
 
     while True:
         print_header("📂 Main Menu")
-        for idx, (label, _) in enumerate(actions, start=1):
-            print(f"{idx}) {label}")
+        print_menu([label for label, _ in actions])
         choice = input(f"Select an option [1-{len(actions)}]: ").strip()
 
         if choice.isdigit():
