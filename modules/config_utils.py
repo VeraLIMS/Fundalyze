@@ -9,14 +9,21 @@ from typing import Any, Dict
 
 from dotenv import load_dotenv
 
+# Project root is the parent directory of this modules package
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
 # Directory containing config files
-CONFIG_DIR = Path(__file__).resolve().parent.parent / "config"
+CONFIG_DIR = PROJECT_ROOT / "config"
 ENV_PATH = CONFIG_DIR / ".env"
+ROOT_ENV_PATH = PROJECT_ROOT / ".env"
 SETTINGS_PATH = CONFIG_DIR / "settings.json"
 
-# Load environment variables from .env if present
+# Load environment variables from config/.env if present.
+# Fall back to a project-level .env to support older setups.
 if ENV_PATH.exists():
     load_dotenv(dotenv_path=ENV_PATH)
+elif ROOT_ENV_PATH.exists():
+    load_dotenv(dotenv_path=ROOT_ENV_PATH)
 
 
 def load_settings() -> Dict[str, Any]:
