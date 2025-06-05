@@ -1,3 +1,4 @@
+"""Tests for data utility edge scenarios."""
 import pandas as pd
 from modules.utils.data_utils import (
     ensure_period_column,

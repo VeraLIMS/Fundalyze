@@ -53,4 +53,8 @@ Fundalyze/
 - Name files `test_*.py` and keep fixtures focused.
 - Run `pytest -q` before committing to ensure coverage stays high.
 - Prefer small sample data and temporary directories to keep tests fast.
+ codex/create-documentation-for-tests-module
+For a summary of current coverage see `docs/coverage_report.md`.
+=======
 
+main

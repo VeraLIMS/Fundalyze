@@ -1,3 +1,4 @@
+"""Tests for Directus schema mapping."""
 from pathlib import Path
 import json
 import modules.data.directus_mapper as dm

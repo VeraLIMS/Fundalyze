@@ -1,3 +1,4 @@
+"""Tests for stock data fetching functions."""
 from unittest.mock import MagicMock, patch
 
 from modules.data.fetching import fetch_basic_stock_data, fetch_basic_stock_data_batch

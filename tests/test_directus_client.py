@@ -1,3 +1,4 @@
+"""Tests for the Directus API client wrapper."""
 
 import modules.data.directus_client as dc
 

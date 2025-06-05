@@ -1,3 +1,4 @@
+"""High level integration tests across modules."""
 import pandas as pd
 from unittest.mock import MagicMock
 

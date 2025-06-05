@@ -1,3 +1,4 @@
+"""Tests for syncing Directus field metadata."""
 import importlib
 import json
 
