@@ -192,11 +192,33 @@ def fetch_profile_from_fmp(symbol: str) -> pd.DataFrame:
 
 
 def fetch_1mo_prices_fmp(symbol: str) -> pd.DataFrame:
-    """
-    (Optional) If you wish to fetch price history from FMP rather than Yahoo,
-    implement here. Otherwise, yfinance is primary. We return an empty DataFrame.
-    """
-    return pd.DataFrame()  # Not implemented; we rely on yfinance for pricing.
+    """Fetch 1-month daily price history from FMP."""
+    url = add_fmp_api_key(
+        f"{FMP_BASE}/historical-price-full/{symbol}?timeseries=30"
+    )
+    resp = requests.get(url)
+    resp.raise_for_status()
+    data = resp.json()
+    hist = data.get("historical") if isinstance(data, dict) else None
+    if not hist:
+        raise ValueError(f"No FMP price data for {symbol}")
+    df = pd.DataFrame(hist)
+    rename_map = {
+        "date": "Date",
+        "open": "Open",
+        "high": "High",
+        "low": "Low",
+        "close": "Close",
+        "adjClose": "Adj Close",
+        "volume": "Volume",
+    }
+    df = df.rename(columns=rename_map)
+    if "Adj Close" not in df.columns and "Close" in df.columns:
+        df["Adj Close"] = df["Close"]
+    df["Date"] = pd.to_datetime(df["Date"])
+    df = df.sort_values("Date").reset_index(drop=True)
+    cols = ["Date", "Open", "High", "Low", "Close", "Adj Close", "Volume"]
+    return df.loc[:, [c for c in cols if c in df.columns]]
 
 
 def fetch_fmp_statement(symbol: str, stmt_endpoint: str, period: str) -> pd.DataFrame:

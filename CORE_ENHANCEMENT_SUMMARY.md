@@ -97,3 +97,18 @@ def fetch_and_compile(...):
     rutils.fetch_financial_statements(...)
     rutils.write_report_and_metadata(...)
 ```
+
+### 2025 Math utilities and fallback improvements
+
+- **modules/utils/math_utils.py** – new helper module providing `moving_average` and `percentage_change`.
+- **modules/analytics/__init__.py** – now re-exports these math helpers.
+- **modules/generate_report/fallback_data.py** – implemented `fetch_1mo_prices_fmp` for FMP-based price retrieval.
+- **modules/generate_report/excel_dashboard.py** – `_write_dashboard` simplified using a loop over table specs.
+- **docs/overview.md** and **docs/API_REFERENCE.md** – updated to document the new math utilities.
+- **tests** – added coverage for `percentage_change` and the FMP price fetch.
+
+```python
+from modules.utils.math_utils import percentage_change
+s = pd.Series([1, 2, 4])
+pct = percentage_change(s)
+```

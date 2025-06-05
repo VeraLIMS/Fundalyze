@@ -45,6 +45,49 @@ def test_fetch_fmp_statement(monkeypatch):
     assert df.loc["2023", "Revenue"] == 5
 
 
+def test_fetch_1mo_prices_fmp(monkeypatch):
+    resp = MagicMock()
+    resp.json.return_value = {
+        "historical": [
+            {
+                "date": "2023-01-02",
+                "open": 1,
+                "high": 2,
+                "low": 0.5,
+                "close": 1.5,
+                "adjClose": 1.5,
+                "volume": 100,
+            }
+        ]
+    }
+    resp.raise_for_status.return_value = None
+    monkeypatch.setattr(fb.requests, "get", lambda url: resp)
+
+    df = fb.fetch_1mo_prices_fmp("AAA")
+    assert list(df.columns) == [
+        "Date",
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Adj Close",
+        "Volume",
+    ]
+    assert len(df) == 1
+
+
+def test_fetch_1mo_prices_fmp_no_data(monkeypatch):
+    resp = MagicMock()
+    resp.json.return_value = {"historical": []}
+    resp.raise_for_status.return_value = None
+    monkeypatch.setattr(fb.requests, "get", lambda url: resp)
+
+    import pytest
+
+    with pytest.raises(ValueError):
+        fb.fetch_1mo_prices_fmp("AAA")
+
+
 def test_enrich_ticker_folder_updates_files(tmp_path, monkeypatch):
     ticker_dir = tmp_path / "AAA"
     ticker_dir.mkdir()

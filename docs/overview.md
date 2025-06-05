@@ -29,6 +29,12 @@ Lower-level helpers used across the app:
 - `directus_client.py` – optional Directus integration for remote storage.
 - `term_mapper.py` – maps common financial terms to API field names and stores the mapping in `config/term_mapping.json`.
 
+### `modules.utils`
+Small helper utilities reused across the codebase:
+- `data_utils.py` – safe CSV/JSON loading helpers.
+- `excel_utils.py` – convenience wrappers for writing Excel tables.
+- `math_utils.py` – calculations like moving averages and percentage change.
+
 ### `modules.config_utils`
 Loads environment variables from `config/.env` and user settings from `config/settings.json`. Call `load_settings()` once during startup so other modules can access configuration values via `os.getenv()` or the returned dictionary.
 
