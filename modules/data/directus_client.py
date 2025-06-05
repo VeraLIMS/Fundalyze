@@ -7,8 +7,9 @@ from modules.config_utils import load_settings  # noqa: E402
 
 load_settings()  # ensure .env is read when this module is imported
 
-DIRECTUS_URL = os.getenv("DIRECTUS_URL")
-DIRECTUS_TOKEN = os.getenv("DIRECTUS_TOKEN")
+DIRECTUS_URL = os.getenv("DIRECTUS_URL", "http://localhost:8055")
+# Support legacy DIRECTUS_TOKEN as well as DIRECTUS_API_TOKEN
+DIRECTUS_TOKEN = os.getenv("DIRECTUS_API_TOKEN") or os.getenv("DIRECTUS_TOKEN")
 
 logger = logging.getLogger(__name__)
 
@@ -17,18 +18,19 @@ def reload_env() -> None:
     """Reload Directus environment variables from ``config/.env``."""
     load_settings()  # ensures .env is loaded
     global DIRECTUS_URL, DIRECTUS_TOKEN
-    DIRECTUS_URL = os.getenv("DIRECTUS_URL")
-    DIRECTUS_TOKEN = os.getenv("DIRECTUS_TOKEN")
+    DIRECTUS_URL = os.getenv("DIRECTUS_URL", "http://localhost:8055")
+    DIRECTUS_TOKEN = os.getenv("DIRECTUS_API_TOKEN") or os.getenv("DIRECTUS_TOKEN")
 
 
 def _headers():
+    """Return authorization header dict if a token is configured."""
     if DIRECTUS_TOKEN:
         return {"Authorization": f"Bearer {DIRECTUS_TOKEN}"}
     return {}
 
 
-def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any]:
-    """Send an authenticated request to the Directus API with error handling."""
+def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any] | None:
+    """Send a request to the Directus API and return the JSON response."""
     if not DIRECTUS_URL:
         raise RuntimeError("DIRECTUS_URL not configured")
 
@@ -38,15 +40,28 @@ def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any]:
         logger.debug("Directus request %s %s payload=%s", method, url, payload)
     else:
         logger.debug("Directus request %s %s", method, url)
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+    }
+    headers.update(_headers())
     try:
-        resp = requests.request(method, url, headers=_headers(), timeout=30, **kwargs)
+        resp = requests.request(method, url, headers=headers, timeout=30, **kwargs)
         resp.raise_for_status()
-    except requests.RequestException as exc:
-        status = getattr(exc.response, "status_code", "?")
-        body = getattr(exc.response, "text", "")
-        logger.error("Directus error %s %s: %s", status, url, body)
-        raise RuntimeError(f"Directus request failed: {method} {url} -> {status} {body}") from exc
-    return resp.json()
+        return resp.json()
+    except requests.exceptions.HTTPError as errh:
+        status = getattr(resp, "status_code", "?")
+        body = getattr(resp, "text", "")
+        logger.error(
+            "HTTP error: %s | URL: %s | Status: %s | Content: %s",
+            errh,
+            url,
+            status,
+            body,
+        )
+    except requests.exceptions.RequestException as err:
+        logger.error("Request error: %s | URL: %s", err, url)
+    return None
 
 def list_collections() -> list[str]:
     """Return available collection names."""
@@ -69,24 +84,31 @@ def list_fields_with_types(collection: str) -> list[Dict[str, Any]]:
     return fields
 
 
-def fetch_items(collection: str):
-    """Fetch all items from a Directus collection."""
-    data = directus_request("GET", f"items/{collection}").get("data", [])
-    return data
+def fetch_items(collection: str, limit: int | None = None) -> list[Dict[str, Any]]:
+    """Fetch items from a Directus collection."""
+    endpoint = f"items/{collection}"
+    if limit is not None:
+        endpoint += f"?limit={limit}"
+    result = directus_request("GET", endpoint)
+    return result.get("data", []) if result else []
 
 
 def fetch_items_filtered(collection: str, params: Dict[str, Any]) -> list[Dict[str, Any]]:
     """Fetch items from ``collection`` applying Directus filter parameters."""
     payload = {"filter": params}
-    data = directus_request("GET", f"items/{collection}", params=payload).get("data", [])
-    return data
+    result = directus_request("GET", f"items/{collection}", params=payload)
+    return result.get("data", []) if result else []
 
 
 def insert_items(collection: str, items):
     """Insert one or more items into a Directus collection."""
+    if not items:
+        logger.warning("No records to insert.")
+        return []
+
     payload = {"data": items}
-    data = directus_request("POST", f"items/{collection}", json=payload).get("data")
-    return data
+    result = directus_request("POST", f"items/{collection}", json=payload)
+    return result.get("data") if result else []
 
 
 def create_field(collection: str, field: str, field_type: str = "string", **kwargs):
@@ -95,4 +117,16 @@ def create_field(collection: str, field: str, field_type: str = "string", **kwar
     payload.update(kwargs)
     data = directus_request("POST", f"fields/{collection}", json=payload).get("data")
     return data
+
+
+def update_item(collection: str, item_id: Any, updates: Dict[str, Any]):
+    """Update a single item by ``item_id`` in ``collection``."""
+    result = directus_request("PATCH", f"items/{collection}/{item_id}", json=updates)
+    return result.get("data") if result else None
+
+
+def delete_item(collection: str, item_id: Any) -> bool:
+    """Delete an item by ``item_id`` from ``collection``."""
+    result = directus_request("DELETE", f"items/{collection}/{item_id}")
+    return result is not None
 
