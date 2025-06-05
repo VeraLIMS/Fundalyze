@@ -1,6 +1,6 @@
 # Developer Guide
 
-This guide provides a high level look at Fundalyze's architecture and tips for extending or debugging the project.
+This guide provides a high level look at Fundalyze's architecture and practical tips for extending or debugging the project.
 
 ## Architecture Overview
 
@@ -25,7 +25,8 @@ Fundalyze/
 ## Debugging Environment
 
 1. Create the virtual environment with `bootstrap_env.sh` (or `.ps1` on Windows).
-2. Open the repository in VS Code and launch the **Python: Current File** debugger on `scripts/main.py`. Breakpoints inside `modules/` will be hit automatically.
+2. Open the repository in VS Code and start the **Python: Current File** debugger on `scripts/main.py`.
+   Breakpoints inside `modules/` will be hit automatically.
 3. Enable verbose logs by adding `LOG_LEVEL=DEBUG` to `config/.env`.
 4. When debugging report generation you can set `OUTPUT_DIR` to a temporary folder to avoid clutter.
 
@@ -35,7 +36,7 @@ Fundalyze/
 
 1. Place a new `.py` file under `modules/analytics/` and implement your functions.
 2. Re-export them in `modules/analytics/__init__.py` so other packages can import them.
-3. Update `docs/API_REFERENCE.md` by running `python -m pydoc` on the new module.
+3. Regenerate `docs/API_REFERENCE.md` by running `python -m pydoc` on the new module.
 
 ### Adding CLI Components or UI Elements
 
@@ -47,5 +48,5 @@ Fundalyze/
 
 - Tests live in the `tests/` directory and should be named `test_*.py`.
 - Use `pytest -q` to run the suite. Aim to cover new code paths and keep coverage high.
-- Fixtures for common setup live in `tests/conftest.py`.
-
+- Fixtures for common setup reside in `tests/conftest.py`.
+- Prefer temporary directories and small sample data to keep tests fast.

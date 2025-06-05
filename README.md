@@ -4,18 +4,18 @@
 [![Build](https://img.shields.io/badge/build-manual-lightgrey)](#)
 [![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)](#)
 
-**Fundalyze** is a lightweight toolkit for fetching financial data, analysing portfolios and producing Excel dashboards. It leverages [OpenBB](https://openbb.co/) and `yfinance` with optional fallbacks to Financial Modeling Prep.
+**Fundalyze** is a small Python toolkit for downloading fundamental data, analysing your stock portfolio and exporting Excel dashboards. It builds on [OpenBB](https://openbb.co/) and `yfinance` with optional fallbacks to Financial Modeling Prep.
 
 ## Features
 
-- Fetch company profiles, price history and statements
+- Fetch company profiles, price history and financial statements
 - Manage a local portfolio and custom groups
-- Generate Excel dashboards with charts
-- Fallback data enrichment when primary sources fail
+- Create Excel dashboards complete with charts
+- Optional fallback downloads when primary sources fail
 
 ## Installation
 
-### 1. Clone and set up a virtual environment
+### 1. Clone and create a virtual environment
 ```bash
 git clone https://github.com/VeraLIMS/Fundalyze.git
 cd Fundalyze
@@ -26,13 +26,13 @@ cd Fundalyze
 ./bootstrap_env.ps1
 ```
 
-**macOS/Linux**
+**macOS / Linux**
 ```bash
 ./bootstrap_env.sh
 ```
-Both scripts create `.venv`, activate it and install Python packages from `requirements.txt`.
+Both scripts create `.venv`, activate it and install requirements from `requirements.txt`.
 
-If you prefer manual setup:
+Manual setup works as well:
 ```bash
 python -m venv .venv
 source .venv/bin/activate
@@ -46,28 +46,36 @@ OPENBB_API_KEY=your-openbb-token
 FMP_API_KEY=your-fmp-key
 OUTPUT_DIR=output
 ```
-See [docs/configuration.md](docs/configuration.md) for all options.
+See [docs/configuration.md](docs/configuration.md) for all available settings.
 
 ## Quickstart
 
-1. Launch the CLI and select **Generate Reports**:
-   ```bash
-   python scripts/main.py report
-   ```
-2. Enter a list of tickers (e.g. `AAPL MSFT TSLA`).
-3. Once complete, open the Excel file created in `output/` to view the dashboard.
+Generate a report from the command line:
+```bash
+python scripts/main.py report
+```
+Enter one or more tickers (e.g. `AAPL MSFT`) and an Excel dashboard appears in the `output/` folder.
+
+You can also call the modules directly:
+```python
+from modules.generate_report import fetch_and_compile
+from modules.generate_report import excel_dashboard
+
+fetch_and_compile("AAPL")
+excel_dashboard.create_and_open_dashboard(tickers=["AAPL"])
+```
 
 ## Folder Structure
 
-- `modules/` - application modules and CLI helpers
-- `scripts/` - entry points such as `main.py`
-- `tests/` - pytest suite
-- `docs/` - additional documentation
+- `modules/` – source code packages
+- `scripts/` – entry points including `main.py`
+- `tests/` – pytest suite
+- `docs/` – extended documentation
 
 ## Resources
 
-- [Documentation](docs/overview.md)
+- [User Documentation](docs/overview.md)
 - [Developer Guide](docs/DEVELOPER_GUIDE.md)
 - [Issue Tracker](https://github.com/VeraLIMS/Fundalyze/issues)
 
-Fundalyze is licensed under the [Apache 2.0 License](LICENSE).
+Fundalyze is licensed under the [Apache 2.0 License](LICENSE).
