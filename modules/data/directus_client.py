@@ -1,5 +1,6 @@
 import os
 import logging
+import math
 import requests
 from typing import Any, Dict
 
@@ -14,6 +15,17 @@ CF_ACCESS_CLIENT_ID = os.getenv("CF_ACCESS_CLIENT_ID")
 CF_ACCESS_CLIENT_SECRET = os.getenv("CF_ACCESS_CLIENT_SECRET")
 
 logger = logging.getLogger(__name__)
+
+
+def clean_record(record: Dict[str, Any]) -> Dict[str, Any]:
+    """Return a copy of ``record`` with NaN/inf values converted to ``None``."""
+    cleaned = {}
+    for key, value in record.items():
+        if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
+            cleaned[key] = None
+        else:
+            cleaned[key] = value
+    return cleaned
 
 
 def reload_env() -> None:
@@ -128,7 +140,14 @@ def insert_items(collection: str, items):
         logger.warning("No records to insert.")
         return []
 
-    payload = {"data": items}
+    cleaned = []
+    for item in items:
+        if isinstance(item, dict):
+            cleaned.append(clean_record(item))
+        else:
+            cleaned.append(item)
+
+    payload = {"data": cleaned}
     result = directus_request("POST", f"items/{collection}", json=payload)
     return result.get("data") if result else []
 
@@ -143,6 +162,7 @@ def create_field(collection: str, field: str, field_type: str = "string", **kwar
 
 def update_item(collection: str, item_id: Any, updates: Dict[str, Any]):
     """Update a single item by ``item_id`` in ``collection``."""
+    updates = clean_record(updates)
     result = directus_request("PATCH", f"items/{collection}/{item_id}", json=updates)
     return result.get("data") if result else None
 
