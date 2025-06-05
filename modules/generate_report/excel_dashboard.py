@@ -282,8 +282,8 @@ def show_dashboard_in_excel(dashboard_path: Path):
     if not dashboard_path.exists():
         raise FileNotFoundError(f"Dashboard file not found: {dashboard_path}")
 
-    if sys.platform.startswith("win"):
-        os.startfile(str(dashboard_path))
+    if sys.platform.startswith("win") and hasattr(os, "startfile"):
+        getattr(os, "startfile")(str(dashboard_path))  # pylint: disable=no-member
     elif sys.platform.startswith("darwin"):
         subprocess.call(["open", str(dashboard_path)])
     else:
