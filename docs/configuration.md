@@ -25,11 +25,12 @@ To obtain an OpenBB API token visit the
 [OpenBB documentation](https://docs.openbb.co/platform/getting_started/api_requests)
 and sign up for an account. Once acquired, run the **OpenBB API Token** wizard
 inside the Settings Manager to store the token. The Settings Manager also
-provides wizards for configuring your **Directus connection** and **Notes
-directory**. Another wizard sets the **Output Directory** used for reports.
-Similarly, obtain a Financial Modeling Prep key from
-[fmp](https://financialmodelingprep.com/) and run the **FMP API Key** wizard
-to store it in `.env`.
+ provides wizards for configuring your **Directus connection** and **Notes
+ directory**. Another wizard sets the **Output Directory** used for reports.
+ Similarly, obtain a Financial Modeling Prep key from
+ [fmp](https://financialmodelingprep.com/) and run the **FMP API Key** wizard
+ to store it in `.env`. If you already exported these variables in your shell,
+ the **Quick Setup** wizard can write them all to `.env` in one go.
 `modules.config_utils` automatically loads this file using [python-dotenv](https://github.com/theskumar/python-dotenv) whenever `load_settings()` is called.
 
 ## Creating `config/settings.json`
