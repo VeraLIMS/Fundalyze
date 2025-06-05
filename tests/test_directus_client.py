@@ -4,12 +4,37 @@ import modules.data.directus_client as dc
 
 def test_headers_with_token(monkeypatch):
     monkeypatch.setattr(dc, "DIRECTUS_TOKEN", "abc")
+    monkeypatch.setattr(dc, "CF_ACCESS_CLIENT_ID", None)
+    monkeypatch.setattr(dc, "CF_ACCESS_CLIENT_SECRET", None)
     assert dc._headers() == {"Authorization": "Bearer abc"}
 
 
 def test_headers_no_token(monkeypatch):
     monkeypatch.setattr(dc, "DIRECTUS_TOKEN", None)
+    monkeypatch.setattr(dc, "CF_ACCESS_CLIENT_ID", None)
+    monkeypatch.setattr(dc, "CF_ACCESS_CLIENT_SECRET", None)
     assert dc._headers() == {}
+
+
+def test_headers_cf_only(monkeypatch):
+    monkeypatch.setattr(dc, "DIRECTUS_TOKEN", None)
+    monkeypatch.setattr(dc, "CF_ACCESS_CLIENT_ID", "id")
+    monkeypatch.setattr(dc, "CF_ACCESS_CLIENT_SECRET", "secret")
+    assert dc._headers() == {
+        "CF-Access-Client-Id": "id",
+        "CF-Access-Client-Secret": "secret",
+    }
+
+
+def test_headers_token_and_cf(monkeypatch):
+    monkeypatch.setattr(dc, "DIRECTUS_TOKEN", "abc")
+    monkeypatch.setattr(dc, "CF_ACCESS_CLIENT_ID", "id")
+    monkeypatch.setattr(dc, "CF_ACCESS_CLIENT_SECRET", "secret")
+    assert dc._headers() == {
+        "Authorization": "Bearer abc",
+        "CF-Access-Client-Id": "id",
+        "CF-Access-Client-Secret": "secret",
+    }
 
 
 def test_list_fields(monkeypatch):

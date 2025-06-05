@@ -21,11 +21,11 @@ from modules.analytics import portfolio_summary, sector_counts
 from modules.interface import print_table, print_invalid_choice, print_header
 
 import pandas as pd
-import requests
 from modules.data.term_mapper import resolve_term
 from modules.data.directus_client import (
     fetch_items,
     insert_items,
+    directus_request,
 )
 from modules.data import prepare_records
 
@@ -125,18 +125,15 @@ def save_portfolio(df: pd.DataFrame, filepath: str):
     token = os.getenv("DIRECTUS_TOKEN")
     if api_url and token:
         try:
-            url = f"{api_url.rstrip('/')}/items/portfolio"
-            headers = {"Authorization": f"Bearer {token}"}
             records = df.to_dict(orient="records")
-            resp = requests.post(
-                url,
+            resp = directus_request(
+                "POST",
+                "items/portfolio",
                 json=records,
-                headers=headers,
                 params={"upsert": "Ticker"},
-                timeout=10,
             )
-            if resp.status_code >= 300:
-                print(f"Warning syncing portfolio to Directus: {resp.status_code} {resp.text}")
+            if resp is None:
+                print("Warning syncing portfolio to Directus: request failed")
             else:
                 print("→ Synced portfolio to Directus.\n")
         except Exception as e:

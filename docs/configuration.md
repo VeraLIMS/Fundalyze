@@ -15,6 +15,8 @@ OPENBB_TOKEN=your-openbb-key
 FMP_API_KEY=your-fmp-key
 DIRECTUS_URL=https://your-directus.example.com
 DIRECTUS_TOKEN=secret-token
+CF_ACCESS_CLIENT_ID=your-client-id
+CF_ACCESS_CLIENT_SECRET=your-client-secret
 
 # Optional collection names
 DIRECTUS_PORTFOLIO_COLLECTION=portfolio
@@ -27,6 +29,9 @@ and sign up for an account. Once acquired, run the **OpenBB API Token** wizard
 inside the Settings Manager to store the token. The Settings Manager also
  provides wizards for configuring your **Directus connection** and **Notes
  directory**. Another wizard sets the **Output Directory** used for reports.
+ A **Cloudflare Access** wizard stores the `CF_ACCESS_CLIENT_ID` and
+ `CF_ACCESS_CLIENT_SECRET` variables required when your Directus instance is
+ protected by Cloudflare Access.
  Similarly, obtain a Financial Modeling Prep key from
  [fmp](https://financialmodelingprep.com/) and run the **FMP API Key** wizard
  to store it in `.env`. If you already exported these variables in your shell,

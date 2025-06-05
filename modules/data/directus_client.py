@@ -10,6 +10,8 @@ load_settings()  # ensure .env is read when this module is imported
 DIRECTUS_URL = os.getenv("DIRECTUS_URL", "http://localhost:8055")
 # Support legacy DIRECTUS_TOKEN as well as DIRECTUS_API_TOKEN
 DIRECTUS_TOKEN = os.getenv("DIRECTUS_API_TOKEN") or os.getenv("DIRECTUS_TOKEN")
+CF_ACCESS_CLIENT_ID = os.getenv("CF_ACCESS_CLIENT_ID")
+CF_ACCESS_CLIENT_SECRET = os.getenv("CF_ACCESS_CLIENT_SECRET")
 
 logger = logging.getLogger(__name__)
 
@@ -17,16 +19,23 @@ logger = logging.getLogger(__name__)
 def reload_env() -> None:
     """Reload Directus environment variables from ``config/.env``."""
     load_settings()  # ensures .env is loaded
-    global DIRECTUS_URL, DIRECTUS_TOKEN
+    global DIRECTUS_URL, DIRECTUS_TOKEN, CF_ACCESS_CLIENT_ID, CF_ACCESS_CLIENT_SECRET
     DIRECTUS_URL = os.getenv("DIRECTUS_URL", "http://localhost:8055")
     DIRECTUS_TOKEN = os.getenv("DIRECTUS_API_TOKEN") or os.getenv("DIRECTUS_TOKEN")
+    CF_ACCESS_CLIENT_ID = os.getenv("CF_ACCESS_CLIENT_ID")
+    CF_ACCESS_CLIENT_SECRET = os.getenv("CF_ACCESS_CLIENT_SECRET")
 
 
 def _headers():
-    """Return authorization header dict if a token is configured."""
+    """Return headers including auth and Cloudflare Access credentials."""
+    headers = {}
     if DIRECTUS_TOKEN:
-        return {"Authorization": f"Bearer {DIRECTUS_TOKEN}"}
-    return {}
+        headers["Authorization"] = f"Bearer {DIRECTUS_TOKEN}"
+    if CF_ACCESS_CLIENT_ID:
+        headers["CF-Access-Client-Id"] = CF_ACCESS_CLIENT_ID
+    if CF_ACCESS_CLIENT_SECRET:
+        headers["CF-Access-Client-Secret"] = CF_ACCESS_CLIENT_SECRET
+    return headers
 
 
 def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any] | None:

@@ -30,9 +30,8 @@ from modules.interface import print_table, print_invalid_choice, print_header
 SETTINGS = load_settings()
 
 import pandas as pd
-import requests
 from modules.data.term_mapper import resolve_term
-from modules.data.directus_client import fetch_items, insert_items
+from modules.data.directus_client import fetch_items, insert_items, directus_request
 from modules.data import prepare_records
 
 PORTFOLIO_FILE = "portfolio.xlsx"
@@ -147,18 +146,15 @@ def save_groups(df: pd.DataFrame, filepath: str):
     token = os.getenv("DIRECTUS_TOKEN")
     if api_url and token:
         try:
-            url = f"{api_url.rstrip('/')}/items/groups"
-            headers = {"Authorization": f"Bearer {token}"}
             records = df.to_dict(orient="records")
-            resp = requests.post(
-                url,
+            resp = directus_request(
+                "POST",
+                "items/groups",
                 json=records,
-                headers=headers,
                 params={"upsert": "Ticker"},
-                timeout=10,
             )
-            if resp.status_code >= 300:
-                print(f"Warning syncing groups to Directus: {resp.status_code} {resp.text}")
+            if resp is None:
+                print("Warning syncing groups to Directus: request failed")
             else:
                 print("→ Synced groups to Directus.\n")
         except Exception as e:

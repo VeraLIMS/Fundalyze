@@ -21,6 +21,8 @@ def run_wizard() -> None:
         "DIRECTUS_TOKEN",
         "DIRECTUS_PORTFOLIO_COLLECTION",
         "DIRECTUS_GROUPS_COLLECTION",
+        "CF_ACCESS_CLIENT_ID",
+        "CF_ACCESS_CLIENT_SECRET",
     ]
 
     found = False
