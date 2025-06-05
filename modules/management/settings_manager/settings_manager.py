@@ -199,7 +199,7 @@ def _wizards_menu() -> None:
 
 
 def run_settings_manager() -> None:
-    """Interactive menu to edit configuration and run setup wizards."""
+    """Launch the interactive settings manager CLI."""
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
 
     while True:
