@@ -27,7 +27,13 @@ def ensure_output_dir(symbol: str, base_output: str | None = None) -> str:
 
 def upload_dataframe(df: pd.DataFrame, collection: str) -> None:
     """Insert DataFrame rows into a Directus collection if configured."""
-    if not bool(os.getenv("DIRECTUS_URL")) or df.empty:
+    if (
+        not os.getenv("DIRECTUS_URL")
+        or not (
+            os.getenv("DIRECTUS_API_TOKEN") or os.getenv("DIRECTUS_TOKEN")
+        )
+        or df.empty
+    ):
         return
     records = prepare_records(collection, df.to_dict(orient="records"))
     try:
