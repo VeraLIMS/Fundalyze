@@ -1,11 +1,13 @@
-"""Helpers to map local data fields to Directus collection fields."""
+"""Helpers for mapping local data fields to Directus collection fields."""
+
+from __future__ import annotations
 
 import json
 import logging
 from pathlib import Path
-from typing import Iterable, Dict, Any, List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Set
 
-from .directus_client import list_fields_with_types, list_collections, list_fields
+from .directus_client import list_collections, list_fields, list_fields_with_types
 
 if TYPE_CHECKING:  # pragma: no cover - for type hints only
     import pandas as pd
@@ -17,19 +19,19 @@ MAP_FILE = PROJECT_ROOT / "config" / "directus_field_map.json"
 
 
 def load_field_map() -> Dict[str, Any]:
-    """Return mapping dictionary loaded from ``config/directus_field_map.json``."""
-    if MAP_FILE.is_file():
-        with open(MAP_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        if "collections" not in data:
-            return _convert_legacy_format(data)
-        return data
-    return {"collections": {}}
+    """Return field mapping from ``config/directus_field_map.json``."""
+    if not MAP_FILE.is_file():
+        return {"collections": {}}
+
+    data = json.loads(MAP_FILE.read_text(encoding="utf-8"))
+    if "collections" not in data:
+        data = _convert_legacy_format(data)
+    return data
 
 
 def _convert_legacy_format(data: Dict[str, Any]) -> Dict[str, Any]:
-    """Return mapping converted from legacy ``collection -> field`` format."""
-    converted = {"collections": {}}
+    """Convert legacy ``collection -> field`` mapping to the new schema."""
+    converted: Dict[str, Any] = {"collections": {}}
     for col, fields in data.items():
         converted["collections"][col] = {
             "fields": {
@@ -41,53 +43,90 @@ def _convert_legacy_format(data: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def save_field_map(mapping: Dict[str, Any]) -> None:
-    """Save mapping dictionary to ``config/directus_field_map.json``."""
+    """Persist mapping dictionary to ``config/directus_field_map.json``."""
     MAP_FILE.parent.mkdir(parents=True, exist_ok=True)
-    with open(MAP_FILE, "w", encoding="utf-8") as f:
-        json.dump(mapping, f, indent=2)
+    MAP_FILE.write_text(json.dumps(mapping, indent=2), encoding="utf-8")
+
+
+def _get_allowed_fields(collection: str) -> Set[str]:
+    """Return available Directus fields for ``collection``.
+
+    Returns:
+        Set of field names. Empty set if retrieval fails.
+    """
+    try:
+        return set(list_fields(collection))
+    except Exception:  # pragma: no cover - network/Directus unavailable
+        return set()
+
+
+def _map_row(
+    row: Dict[str, Any], field_map: Dict[str, Any], allowed: Set[str]
+) -> Dict[str, Any]:
+    """Return ``row`` with keys renamed according to ``field_map``.
+
+    Args:
+        row: Record to map.
+        field_map: Mapping configuration for the collection.
+        allowed: Allowed Directus field names. Empty to allow all.
+
+    Returns:
+        Mapped record ready for Directus insertion.
+    """
+    mapped: Dict[str, Any] = {}
+    for key, value in row.items():
+        entry = field_map.get(key)
+        new_key = entry.get("mapped_to") if entry else key
+        if not allowed or new_key in allowed:
+            mapped[new_key] = value
+    logger.debug("Mapped record: %s", mapped)
+    return mapped
 
 
 def prepare_records(collection: str, records: Iterable[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Rename and filter record fields for Directus insertion."""
+    """Rename and filter record fields for Directus insertion.
+
+    Args:
+        collection: Target Directus collection.
+        records: Iterable of raw record dictionaries.
+
+    Returns:
+        List of records with mapped field names.
+    """
     field_map = (
         load_field_map().get("collections", {})
         .get(collection, {})
         .get("fields", {})
     )
-    try:
-        allowed = set(list_fields(collection))
-    except Exception:
-        allowed = set()
+    allowed = _get_allowed_fields(collection)
 
     prepared: List[Dict[str, Any]] = []
     for row in records:
         logger.debug("Original record: %s", row)
-        mapped = {}
-        for key, value in row.items():
-            entry = field_map.get(key)
-            new_key = entry.get("mapped_to") if entry else key
-            if not allowed or new_key in allowed:
-                mapped[new_key] = value
-        logger.debug("Mapped record: %s", mapped)
-        prepared.append(mapped)
+        prepared.append(_map_row(row, field_map, allowed))
     return prepared
 
 
 def interactive_prepare_records(
     collection: str, records: Iterable[Dict[str, Any]]
 ) -> List[Dict[str, Any]]:
-    """Like :func:`prepare_records` but prompt for unmapped fields.
+    """Interactive version of :func:`prepare_records`.
 
-    Any newly mapped fields are saved back to ``directus_field_map.json``.
+    Unmapped fields trigger a user prompt to specify the target Directus
+    field. New mappings are persisted to ``directus_field_map.json``.
+
+    Args:
+        collection: Target Directus collection.
+        records: Iterable of raw record dictionaries.
+
+    Returns:
+        List of records with mapped field names.
     """
     mapping = load_field_map()
     col_entry = mapping.setdefault("collections", {}).setdefault(collection, {"fields": {}})
     field_map = col_entry.setdefault("fields", {})
 
-    try:
-        allowed = set(list_fields(collection))
-    except Exception:
-        allowed = set()
+    allowed = _get_allowed_fields(collection)
 
     updated = False
     prepared: List[Dict[str, Any]] = []
@@ -116,7 +155,11 @@ def interactive_prepare_records(
 
 
 def refresh_field_map() -> Dict[str, Any]:
-    """Update mapping with fields from Directus collections."""
+    """Update mapping with fields from Directus collections.
+
+    Returns:
+        Updated mapping dictionary.
+    """
     mapping = load_field_map()
     collections_dict = mapping.setdefault("collections", {})
     try:
@@ -142,11 +185,14 @@ def refresh_field_map() -> Dict[str, Any]:
 
 
 def ensure_field_mapping(collection: str, df: "pd.DataFrame") -> Dict[str, Any]:
-    """Interactive mapping helper for DataFrame columns.
+    """Interactively ensure DataFrame columns are mapped to Directus fields.
 
-    For each column in ``df`` that is unmapped or mapped to a non-existent
-    Directus field, prompt the user for the target field name. The mapping file
-    is updated and returned.
+    Args:
+        collection: Target Directus collection.
+        df: Source DataFrame.
+
+    Returns:
+        Updated mapping dictionary.
     """
 
     import pandas as pd  # local import to avoid heavy dependency at startup
@@ -159,10 +205,7 @@ def ensure_field_mapping(collection: str, df: "pd.DataFrame") -> Dict[str, Any]:
     col_entry = collections.setdefault(collection, {"fields": {}})
     fields_map = col_entry.setdefault("fields", {})
 
-    try:
-        allowed = list_fields(collection)
-    except Exception:  # pragma: no cover - network/Directus unavailable
-        allowed = []
+    allowed = list(_get_allowed_fields(collection))
 
     changed = False
     for column in df.columns:
