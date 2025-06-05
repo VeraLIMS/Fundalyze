@@ -41,6 +41,9 @@ Tools for maintaining local data files:
 - `group_analysis` – manage related tickers in `groups.xlsx`.
 - `note_manager` – simple Markdown note system supporting `[[wikilinks]]`.
 
+For a walkthrough of each CLI and a diagram of the management package layout see
+[Management Tools](management_tools.md).
+
 Importing `modules.management` exposes convenience functions such as
 `run_portfolio_manager()` and `run_group_analysis()` for launching each tool
 directly.

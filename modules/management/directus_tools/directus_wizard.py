@@ -1,3 +1,5 @@
+"""Interactive wizard for basic Directus API operations."""
+
 import json
 
 from modules.interface import (
