@@ -11,6 +11,9 @@
 - **modules/analytics/__init__.py** – new `moving_average` analysis helper.
 - **modules/generate_report/report_generator.py** – accepts a `price_period` parameter for flexible price history.
 - **tests/test_output_dir_env.py** – verifies custom period forwarding.
+- **modules/generate_report/report_utils.py** – new helper module with reusable functions for profile, price and statement downloads.
+- **modules/generate_report/report_generator.py** – refactored to use `report_utils` and now supports a `statements` parameter to choose which financial statements to fetch.
+- **docs/API_REFERENCE.md** – signature updated again with the new `statements` option.
 
 ## Key Refactors
 
@@ -69,4 +72,20 @@ worksheet.add_table(
 
 # New helper usage
 write_table(writer, df_prices, "PriceHistory", "PriceHistory_Table", style="Table Style Medium 3")
+```
+
+### 2025 Modular report generator
+
+```python
+# Old monolithic function
+def fetch_and_compile(...):
+    # hundreds of lines handling profile, prices and statements
+
+# New approach
+def fetch_and_compile(...):
+    obb = _get_openbb()
+    rutils.fetch_profile(...)
+    rutils.fetch_price_history(...)
+    rutils.fetch_financial_statements(...)
+    rutils.write_report_and_metadata(...)
 ```

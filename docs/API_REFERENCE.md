@@ -68,11 +68,11 @@ DESCRIPTION
         python src/report_generator.py AAPL MSFT GOOGL
 
 FUNCTIONS
-    fetch_and_compile(symbol: str, base_output: str | None = None, *, price_period: str = '1mo')
+    fetch_and_compile(symbol: str, base_output: str | None = None, *, price_period: str = '1mo', statements: list[str] | None = None)
         1) Create output/<symbol>/
         2) Fetch company profile, save as profile.csv, record source & source_url
         3) Fetch price history for ``price_period``, save 1mo_prices.csv & 1mo_close.png, record sources/URLs
-        4) Fetch income/balance/cash (annual & quarterly), save CSVs, record sources/URLs
+        4) Fetch income/balance/cash (annual & quarterly), save CSVs, record sources/URLs. The ``statements`` parameter controls which of these are downloaded.
         5) Write report.md with clickable [label](url) for each source
         6) Write metadata.json containing {"source", "source_url", "fetched_at"} for each file
 
