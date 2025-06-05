@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# ---------------------------------------------------------------------------
+# Launch the standalone note manager from the command line.
+# Equivalent to running ``main.py notes``.
+# ---------------------------------------------------------------------------
 """Standalone launcher for the note manager utility."""
 
 import argparse

@@ -1,10 +1,21 @@
 #!/usr/bin/env python3
+# ---------------------------------------------------------------------------
+# Quick check that the Directus API configured in ``config/.env`` is reachable
+# and responding. Useful for verifying tokens and network setup.
+# ---------------------------------------------------------------------------
 """Check connectivity to the Directus API configured in ``config/.env``.
 
 The script loads environment variables via ``modules.config_utils.load_settings``
 and then attempts a GET request to ``DIRECTUS_URL/server/health``.
 It prints the HTTP status and a short snippet of the response so you can
-inspect whether authentication or network issues are present.
+inspect whether authentication or network issues are present. A healthy
+instance typically returns ``{"status":"ok"}``. Any HTTP error or network
+exception will cause the script to exit with status ``1``.
+Common failure modes:
+
+* Invalid ``DIRECTUS_URL`` or missing network connectivity.
+* Authentication token missing or invalid, returning ``401``.
+* Self-signed certificates when using HTTPS without proper trust store.
 """
 
 from __future__ import annotations
