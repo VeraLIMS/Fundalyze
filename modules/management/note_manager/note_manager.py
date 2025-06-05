@@ -3,7 +3,7 @@ import re
 from pathlib import Path
 from typing import List, Optional
 
-from modules.interface import print_invalid_choice, print_header
+from modules.interface import print_invalid_choice, print_header, print_menu
 
 
 def get_notes_dir() -> Path:
@@ -61,11 +61,14 @@ def run_note_manager() -> None:
     """Interactive menu for creating and viewing notes."""
     while True:
         print_header("📝 Notes")
-        print("1) List Notes")
-        print("2) View Note")
-        print("3) Create Note")
-        print("4) Return to Main Menu")
-        choice = input("Select an option [1-4]: ").strip()
+        options = [
+            "List Notes",
+            "View Note",
+            "Create Note",
+            "Return to Main Menu",
+        ]
+        print_menu(options)
+        choice = input(f"Select an option [1-{len(options)}]: ").strip()
 
         if choice == "1":
             notes = list_notes()

@@ -25,7 +25,12 @@ import os
 
 from modules.config_utils import load_settings  # noqa: E402
 from modules.analytics import portfolio_summary
-from modules.interface import print_table, print_invalid_choice, print_header
+from modules.interface import (
+    print_table,
+    print_invalid_choice,
+    print_header,
+    print_menu,
+)
 
 SETTINGS = load_settings()
 
@@ -401,13 +406,16 @@ def main():
 
     while True:
         print("Choose an action:")
-        print("  1) View all groups")
-        print("  2) Create a new group (or link to portfolio)")
-        print("  3) Add ticker(s) to an existing group")
-        print("  4) Remove ticker from a group")
-        print("  5) Delete an entire group")
-        print("  6) Exit")
-        choice = input("Select an option [1-6]: ").strip()
+        options = [
+            "View all groups",
+            "Create a new group (or link to portfolio)",
+            "Add ticker(s) to an existing group",
+            "Remove ticker from a group",
+            "Delete an entire group",
+            "Exit",
+        ]
+        print_menu(options)
+        choice = input(f"Select an option [1-{len(options)}]: ").strip()
 
         if choice == "1":
             view_groups(groups)
