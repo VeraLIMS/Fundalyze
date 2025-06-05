@@ -3,7 +3,9 @@ from __future__ import annotations
 import pandas as pd
 from tabulate import tabulate
 
-INVALID_CHOICE_MSG = "Invalid choice. Please select a valid option.\n"
+INVALID_CHOICE_MSG = (
+    "Invalid choice. Enter a number from the menu or press Ctrl+C to exit.\n"
+)
 
 
 def print_table(df: pd.DataFrame, *, showindex: bool = False) -> None:

@@ -310,7 +310,7 @@ def main():
         print("  3) Update ticker data")
         print("  4) Remove ticker")
         print("  5) Exit")
-        choice = input("Enter 1/2/3/4/5: ").strip()
+        choice = input("Select an option [1-5]: ").strip()
 
         if choice == "1":
             view_portfolio(portfolio)

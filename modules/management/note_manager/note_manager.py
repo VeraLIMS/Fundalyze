@@ -65,7 +65,7 @@ def run_note_manager() -> None:
         print("2) View Note")
         print("3) Create Note")
         print("4) Return to Main Menu")
-        choice = input("Enter 1-4: ").strip()
+        choice = input("Select an option [1-4]: ").strip()
 
         if choice == "1":
             notes = list_notes()

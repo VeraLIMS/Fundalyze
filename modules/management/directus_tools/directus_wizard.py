@@ -31,7 +31,7 @@ def run_directus_wizard() -> None:
         print("4) Fetch Items from Collection")
         print("5) Insert Item into Collection")
         print("6) Return to Main Menu")
-        choice = input("Enter 1-6: ").strip()
+        choice = input("Select an option [1-6]: ").strip()
 
         if choice == "1":
             cols = dc.list_collections()

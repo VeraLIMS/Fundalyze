@@ -366,7 +366,7 @@ def main():
         print("  4) Remove ticker from a group")
         print("  5) Delete an entire group")
         print("  6) Exit")
-        choice = input("Enter 1/2/3/4/5/6: ").strip()
+        choice = input("Select an option [1-6]: ").strip()
 
         if choice == "1":
             view_groups(groups)
