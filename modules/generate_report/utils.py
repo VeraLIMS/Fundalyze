@@ -1,12 +1,16 @@
 """Small helper utilities for report generation."""
 
 from __future__ import annotations
-"""Miscellaneous helper functions used by report generators."""
 
-import time
+from datetime import datetime, timezone
 
 
 def iso_timestamp_utc() -> str:
-    """Return current UTC timestamp in ISO 8601 format."""
-    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    """Return the current UTC timestamp in ISO 8601 format."""
+    return (
+        datetime.now(tz=timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
