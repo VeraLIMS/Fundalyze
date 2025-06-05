@@ -59,3 +59,11 @@ def test_choose_group_empty(monkeypatch):
     monkeypatch.setattr("builtins.input", lambda *_: next(inputs))
     assert ga.choose_group(df) == "GroupX"
 
+
+def test_load_groups_directus_all_na(monkeypatch):
+    monkeypatch.setattr(ga, "USE_DIRECTUS", True)
+    monkeypatch.setattr(ga, "fetch_items", lambda c: [{"id": 1, "group": None, "ticker": None}])
+    df = ga.load_groups("dummy.xlsx")
+    assert df.empty
+    assert list(df.columns) == ga.COLUMNS
+
