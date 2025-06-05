@@ -39,6 +39,20 @@ def test_fetch_items(monkeypatch):
     assert items == [{"x": 1}]
 
 
+def test_fetch_items_filtered(monkeypatch):
+    monkeypatch.setattr(dc, "DIRECTUS_URL", "http://api")
+    captured = {}
+
+    def fake_request(method, path, **kw):
+        captured["params"] = kw.get("params")
+        return {"data": [{"x": 2}]}
+
+    monkeypatch.setattr(dc, "directus_request", fake_request)
+    items = dc.fetch_items_filtered("col", {"company_id": {"_eq": 1}})
+    assert captured["params"] == {"filter": {"company_id": {"_eq": 1}}}
+    assert items == [{"x": 2}]
+
+
 def test_insert_items(monkeypatch):
     monkeypatch.setattr(dc, "DIRECTUS_URL", "http://api")
     called = {}

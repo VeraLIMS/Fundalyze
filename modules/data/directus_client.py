@@ -75,6 +75,13 @@ def fetch_items(collection: str):
     return data
 
 
+def fetch_items_filtered(collection: str, params: Dict[str, Any]) -> list[Dict[str, Any]]:
+    """Fetch items from ``collection`` applying Directus filter parameters."""
+    payload = {"filter": params}
+    data = directus_request("GET", f"items/{collection}", params=payload).get("data", [])
+    return data
+
+
 def insert_items(collection: str, items):
     """Insert one or more items into a Directus collection."""
     payload = {"data": items}
