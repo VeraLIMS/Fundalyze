@@ -15,7 +15,10 @@ Description:
     - Data is persisted in an Excel file ("portfolio.xlsx") in the same directory.
 """
 
+from __future__ import annotations
+
 import os
+from pathlib import Path
 
 from modules.analytics import portfolio_summary, sector_counts
 from modules.interface import (
@@ -34,7 +37,7 @@ from modules.data.directus_client import (
 )
 from modules.data import prepare_records
 
-PORTFOLIO_FILE = "portfolio.xlsx"
+PORTFOLIO_FILE = Path("portfolio.xlsx")
 C_DIRECTUS_COLLECTION = os.getenv("DIRECTUS_PORTFOLIO_COLLECTION", "portfolio")
 # Only attempt Directus sync if both URL and authentication token are provided
 USE_DIRECTUS = bool(
@@ -67,7 +70,26 @@ FROM_DIRECTUS = {
 }
 
 
-def load_portfolio(filepath: str) -> pd.DataFrame:
+def _clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    """Ensure DataFrame has expected columns and no completely empty rows."""
+    for col in COLUMNS:
+        if col not in df.columns:
+            df[col] = pd.NA
+    df = df.dropna(how="all")
+    if "Ticker" in df.columns:
+        df = df[df["Ticker"].notna()]
+    return df[COLUMNS]
+
+
+def _append_row(df: pd.DataFrame, data: dict) -> pd.DataFrame:
+    """Return ``df`` with ``data`` appended as a new row."""
+    new_row = pd.DataFrame([data], columns=COLUMNS)
+    if df.empty:
+        return new_row
+    return pd.concat([df, new_row], ignore_index=True)
+
+
+def load_portfolio(filepath: str | Path) -> pd.DataFrame:
     """
     Load the portfolio either from Directus (if configured) or from a local
     Excel file. If loading fails, an empty DataFrame with the expected columns
@@ -80,33 +102,22 @@ def load_portfolio(filepath: str) -> pd.DataFrame:
                 return pd.DataFrame(columns=COLUMNS)
             df = pd.DataFrame(records)
             df = df.rename(columns=FROM_DIRECTUS)
-            for col in COLUMNS:
-                if col not in df.columns:
-                    df[col] = pd.NA
-            df = df.dropna(how="all")
-            if "Ticker" in df.columns:
-                df = df[df["Ticker"].notna()]
-            return df[COLUMNS]
+            return _clean_dataframe(df)
         except Exception as exc:
             print(f"Error loading portfolio from Directus: {exc}")
             print("Falling back to local Excel file.")
 
+    path = Path(filepath)
     if os.path.isfile(filepath):
         try:
-            df = pd.read_excel(filepath, engine="openpyxl")
-            for col in COLUMNS:
-                if col not in df.columns:
-                    df[col] = pd.NA
-            df = df.dropna(how="all")
-            if "Ticker" in df.columns:
-                df = df[df["Ticker"].notna()]
-            return df[COLUMNS]
+            df = pd.read_excel(path, engine="openpyxl")
+            return _clean_dataframe(df)
         except Exception as e:
-            print(f"Error reading {filepath}: {e}")
+            print(f"Error reading {path}: {e}")
     return pd.DataFrame(columns=COLUMNS)
 
 
-def save_portfolio(df: pd.DataFrame, filepath: str):
+def save_portfolio(df: pd.DataFrame, filepath: str | Path) -> None:
     """
     Save the portfolio either to Directus (if configured) or to a local Excel
     file as fallback.
@@ -122,9 +133,10 @@ def save_portfolio(df: pd.DataFrame, filepath: str):
             print(f"Error saving portfolio to Directus: {exc}")
             print("Falling back to local Excel file.")
 
+    path = Path(filepath)
     try:
-        df.to_excel(filepath, index=False, engine="openpyxl")
-        print(f"→ Saved portfolio to '{filepath}'.\n")
+        df.to_excel(path, index=False, engine="openpyxl")
+        print(f"→ Saved portfolio to '{path}'.\n")
     except Exception as e:
         print(f"Error saving portfolio: {e}")
 
@@ -265,12 +277,7 @@ def add_tickers(portfolio: pd.DataFrame) -> pd.DataFrame:
         if override in ("n", "no"):
             data = prompt_manual_entry(tk)
 
-        # Append to portfolio DataFrame using pd.concat
-        new_row = pd.DataFrame([data], columns=COLUMNS)
-        if portfolio.empty:
-            portfolio = new_row
-        else:
-            portfolio = pd.concat([portfolio, new_row], ignore_index=True)
+        portfolio = _append_row(portfolio, data)
         print(f"  ✓ Added '{tk}' to portfolio.\n")
 
     return portfolio
