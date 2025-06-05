@@ -2,6 +2,28 @@
 
 This document summarizes the key modules and entry points in **Fundalyze**. Use it as a quick reference when navigating or extending the project.
 
+```mermaid
+flowchart TD
+    subgraph CLI
+        A["scripts/main.py"]
+        B["portfolio_manager"]
+        C["group_analysis"]
+        D["note_manager"]
+    end
+    subgraph Core
+        E["data.fetching"]
+        F["generate_report.report_generator"]
+        G["generate_report.excel_dashboard"]
+    end
+    A --> B
+    A --> C
+    A --> D
+    B --> E
+    C --> E
+    E --> F
+    F --> G
+```
+
 ## Module Packages
 
 ### `modules.generate_report`
