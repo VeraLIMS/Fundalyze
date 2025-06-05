@@ -1,3 +1,4 @@
+ codex/document-logs-and-logging-policy
 """Shared logging helpers used across Fundalyze utilities.
 
 The :func:`setup_logging` function configures the root ``logging`` package to
@@ -9,6 +10,9 @@ immediately through Python's standard logging handlers.
 No rotation is currently configured; the log file will grow until manually
 deleted or rotated by external tooling.
 """
+=======
+"""Utility for configuring a consistent logging setup."""
+ main
 
 import logging
 from pathlib import Path
