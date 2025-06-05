@@ -5,7 +5,12 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Dict
 
-from modules.interface import print_invalid_choice, print_header
+from modules.interface import (
+    print_invalid_choice,
+    print_header,
+    input_or_cancel,
+    print_menu,
+)
 
 import importlib
 
@@ -67,7 +72,10 @@ def _set_setting() -> None:
 
 
 def _del_setting() -> None:
-    key = input("Key to delete: ").strip()
+    key = input_or_cancel("Key to delete")
+    if not key:
+        print("Canceled.\n")
+        return
     data = load_settings()
     if key in data:
         data.pop(key)
@@ -89,7 +97,10 @@ def _set_env_var() -> None:
 
 
 def _del_env_var() -> None:
-    key = input("Variable to delete: ").strip()
+    key = input_or_cancel("Variable to delete")
+    if not key:
+        print("Canceled.\n")
+        return
     env = load_env()
     if key in env:
         env.pop(key)
@@ -101,11 +112,14 @@ def _del_env_var() -> None:
 def _general_settings_menu() -> None:
     while True:
         print_header("\u2699\ufe0f General Settings")
-        print("1) View settings.json")
-        print("2) Set Setting")
-        print("3) Delete Setting")
-        print("4) Return to Settings Menu")
-        choice = input("Select an option [1-4]: ").strip()
+        options = [
+            "View settings.json",
+            "Set Setting",
+            "Delete Setting",
+            "Return to Settings Menu",
+        ]
+        print_menu(options)
+        choice = input(f"Select an option [1-{len(options)}]: ").strip()
         if choice == "1":
             _show_dict(load_settings())
         elif choice == "2":
@@ -121,11 +135,14 @@ def _general_settings_menu() -> None:
 def _env_menu() -> None:
     while True:
         print_header("\u2699\ufe0f Environment (.env)")
-        print("1) View .env")
-        print("2) Set .env Variable")
-        print("3) Delete .env Variable")
-        print("4) Return to Settings Menu")
-        choice = input("Select an option [1-4]: ").strip()
+        options = [
+            "View .env",
+            "Set .env Variable",
+            "Delete .env Variable",
+            "Return to Settings Menu",
+        ]
+        print_menu(options)
+        choice = input(f"Select an option [1-{len(options)}]: ").strip()
         if choice == "1":
             _show_dict(load_env())
         elif choice == "2":
@@ -154,15 +171,15 @@ def _wizards_menu() -> None:
     order.extend([lbl for lbl in wiz_map if lbl not in order])
     while True:
         print_header("\u2699\ufe0f Setup Wizards")
-        for idx, lbl in enumerate(order, start=1):
-            print(f"{idx}) Setup {lbl}")
-        print(f"{len(order)+1}) Return to Settings Menu")
-        choice = input(f"Select an option [1-{len(order)+1}]: ").strip()
+        options = [f"Setup {lbl}" for lbl in order]
+        options.append("Return to Settings Menu")
+        print_menu(options)
+        choice = input(f"Select an option [1-{len(options)}]: ").strip()
         if not choice.isdigit() or not (1 <= int(choice) <= len(order)+1):
             print_invalid_choice()
             continue
         idx = int(choice)
-        if idx == len(order)+1:
+        if idx == len(options):
             break
         label = order[idx-1]
         func = wiz_map.get(label)
@@ -185,9 +202,8 @@ def run_settings_manager() -> None:
             ("API Keys", _show_api_keys),
             ("Return to Main Menu", None),
         ]
-        for idx, (lbl, _) in enumerate(options, start=1):
-            print(f"{idx}) {lbl}")
-        choice = input("Select an option [1-5]: ").strip()
+        print_menu([lbl for lbl, _ in options])
+        choice = input(f"Select an option [1-{len(options)}]: ").strip()
         if not choice.isdigit() or not (1 <= int(choice) <= len(options)):
             print_invalid_choice()
             continue
