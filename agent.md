@@ -28,3 +28,11 @@ Provide concise commit messages and include PR summaries referencing relevant li
 101 passed in 4.93s
 ```
 
+
+## Recent Findings
+
+```
+........................................................................ [ 67%]
+..................................                                       [100%]
+106 passed in 2.56s
+```
