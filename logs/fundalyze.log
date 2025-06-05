@@ -742,3 +742,558 @@
 2025-06-05 14:13:27 [DEBUG] matplotlib: platform is win32
 2025-06-05 14:13:27 [DEBUG] matplotlib: CACHEDIR=C:\Users\Daan Smit\.matplotlib
 2025-06-05 14:13:27 [DEBUG] matplotlib.font_manager: Using fontManager instance from C:\Users\Daan Smit\.matplotlib\fontlist-v390.json
+2025-06-05 14:15:21 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/items/portfolio
+2025-06-05 14:15:21 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:15:21 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /items/portfolio HTTP/1.1" 200 601
+2025-06-05 14:15:21 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/items/groups
+2025-06-05 14:15:21 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:15:21 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /items/groups HTTP/1.1" 200 11
+2025-06-05 14:15:26 [DEBUG] yfinance: get_raw_json(): https://query2.finance.yahoo.com/v10/finance/quoteSummary/HON
+2025-06-05 14:15:26 [DEBUG] yfinance: Entering get()
+2025-06-05 14:15:26 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:15:26 [DEBUG] yfinance: url=https://query2.finance.yahoo.com/v10/finance/quoteSummary/HON
+2025-06-05 14:15:26 [DEBUG] yfinance: params={'modules': 'financialData,quoteType,defaultKeyStatistics,assetProfile,summaryDetail', 'corsDomain': 'finance.yahoo.com', 'formatted': 'false', 'symbol': 'HON'}
+2025-06-05 14:15:26 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:15:26 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:15:26 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:      Entering _load_cookie_curlCffi()
+2025-06-05 14:15:26 [DEBUG] peewee: ('CREATE TABLE IF NOT EXISTS "_cookieschema" ("strategy" VARCHAR(255) NOT NULL PRIMARY KEY, "fetch_date" DATETIME NOT NULL, "cookie_bytes" BLOB NOT NULL) WITHOUT ROWID', [])
+2025-06-05 14:15:26 [DEBUG] peewee: ('SELECT "t1"."strategy", "t1"."fetch_date", "t1"."cookie_bytes" FROM "_cookieschema" AS "t1" WHERE ("t1"."strategy" = ?) LIMIT ? OFFSET ?', ['curlCffi', 1, 0])
+2025-06-05 14:15:26 [DEBUG] yfinance:      Exiting _load_cookie_curlCffi()
+2025-06-05 14:15:26 [DEBUG] yfinance: reusing persistent cookie
+2025-06-05 14:15:26 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:      Entering _get_cookie_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:15:26 [DEBUG] yfinance:      Exiting _get_cookie_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance: crumb = '1qXzTE61aXL'
+2025-06-05 14:15:26 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:15:26 [DEBUG] yfinance: response code=200
+2025-06-05 14:15:26 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:15:26 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:15:26 [DEBUG] yfinance: get_raw_json(): https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 14:15:26 [DEBUG] yfinance: Entering get()
+2025-06-05 14:15:26 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:15:26 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 14:15:26 [DEBUG] yfinance: params={'symbols': 'HON', 'formatted': 'false'}
+2025-06-05 14:15:26 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:15:26 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:15:26 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:15:26 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance: reusing crumb
+2025-06-05 14:15:26 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:15:26 [DEBUG] yfinance: response code=200
+2025-06-05 14:15:26 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:15:26 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:15:26 [DEBUG] yfinance: Entering get()
+2025-06-05 14:15:26 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:15:26 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/HON?symbol=HON&type=trailingPegRatio&period1=1733356800&period2=1749168000
+2025-06-05 14:15:26 [DEBUG] yfinance: params=None
+2025-06-05 14:15:26 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:15:26 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:15:26 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:15:26 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance: reusing crumb
+2025-06-05 14:15:26 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:15:26 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:15:26 [DEBUG] yfinance: response code=200
+2025-06-05 14:15:26 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:15:26 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:15:29 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 14:15:29 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:15:29 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 14:15:29 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.45, 'Market Cap': 146308808704, 'PE Ratio': 26.113663, 'Dividend Yield': 1.99}
+2025-06-05 14:15:29 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}
+2025-06-05 14:15:29 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}]}
+2025-06-05 14:15:29 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:15:29 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 205
+2025-06-05 14:16:13 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 14:16:13 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:16:13 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 14:16:13 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.45, 'Market Cap': 146308808704, 'PE Ratio': 26.113663, 'Dividend Yield': 1.99}
+2025-06-05 14:16:13 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}
+2025-06-05 14:16:13 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}]}
+2025-06-05 14:16:13 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:16:13 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 205
+2025-06-05 14:29:17 [INFO] numexpr.utils: NumExpr defaulting to 16 threads.
+2025-06-05 14:29:18 [DEBUG] matplotlib: matplotlib data path: C:\Users\Daan Smit\Documents\Fundalyze\.venv\lib\site-packages\matplotlib\mpl-data
+2025-06-05 14:29:18 [DEBUG] matplotlib: CONFIGDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 14:29:18 [DEBUG] matplotlib: interactive is False
+2025-06-05 14:29:18 [DEBUG] matplotlib: platform is win32
+2025-06-05 14:29:18 [DEBUG] matplotlib: CACHEDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 14:29:18 [DEBUG] matplotlib.font_manager: Using fontManager instance from C:\Users\Daan Smit\.matplotlib\fontlist-v390.json
+2025-06-05 14:29:30 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/items/portfolio
+2025-06-05 14:29:30 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:29:30 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /items/portfolio HTTP/1.1" 200 207
+2025-06-05 14:29:30 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/items/groups
+2025-06-05 14:29:30 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:29:30 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /items/groups HTTP/1.1" 200 11
+2025-06-05 14:30:01 [DEBUG] yfinance: get_raw_json(): https://query2.finance.yahoo.com/v10/finance/quoteSummary/HON
+2025-06-05 14:30:01 [DEBUG] yfinance: Entering get()
+2025-06-05 14:30:01 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:30:01 [DEBUG] yfinance: url=https://query2.finance.yahoo.com/v10/finance/quoteSummary/HON
+2025-06-05 14:30:01 [DEBUG] yfinance: params={'modules': 'financialData,quoteType,defaultKeyStatistics,assetProfile,summaryDetail', 'corsDomain': 'finance.yahoo.com', 'formatted': 'false', 'symbol': 'HON'}
+2025-06-05 14:30:01 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:30:01 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:30:01 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:      Entering _load_cookie_curlCffi()
+2025-06-05 14:30:01 [DEBUG] peewee: ('CREATE TABLE IF NOT EXISTS "_cookieschema" ("strategy" VARCHAR(255) NOT NULL PRIMARY KEY, "fetch_date" DATETIME NOT NULL, "cookie_bytes" BLOB NOT NULL) WITHOUT ROWID', [])
+2025-06-05 14:30:01 [DEBUG] peewee: ('SELECT "t1"."strategy", "t1"."fetch_date", "t1"."cookie_bytes" FROM "_cookieschema" AS "t1" WHERE ("t1"."strategy" = ?) LIMIT ? OFFSET ?', ['curlCffi', 1, 0])
+2025-06-05 14:30:01 [DEBUG] yfinance:      Exiting _load_cookie_curlCffi()
+2025-06-05 14:30:01 [DEBUG] yfinance: reusing persistent cookie
+2025-06-05 14:30:01 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:      Entering _get_cookie_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:30:01 [DEBUG] yfinance:      Exiting _get_cookie_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance: crumb = '1qXzTE61aXL'
+2025-06-05 14:30:01 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:30:01 [DEBUG] yfinance: response code=200
+2025-06-05 14:30:01 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:30:01 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:30:01 [DEBUG] yfinance: get_raw_json(): https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 14:30:01 [DEBUG] yfinance: Entering get()
+2025-06-05 14:30:01 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:30:01 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 14:30:01 [DEBUG] yfinance: params={'symbols': 'HON', 'formatted': 'false'}
+2025-06-05 14:30:01 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:30:01 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:30:01 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:30:01 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance: reusing crumb
+2025-06-05 14:30:01 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:30:01 [DEBUG] yfinance: response code=200
+2025-06-05 14:30:01 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:30:01 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:30:01 [DEBUG] yfinance: Entering get()
+2025-06-05 14:30:01 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:30:01 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/HON?symbol=HON&type=trailingPegRatio&period1=1733356800&period2=1749168000
+2025-06-05 14:30:01 [DEBUG] yfinance: params=None
+2025-06-05 14:30:01 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:30:01 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:30:01 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:30:01 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance: reusing crumb
+2025-06-05 14:30:01 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:30:01 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:30:01 [DEBUG] yfinance: response code=200
+2025-06-05 14:30:01 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:30:01 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:30:06 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 14:30:06 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:30:06 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 14:30:06 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.45, 'Market Cap': 146308808704, 'PE Ratio': 26.113663, 'Dividend Yield': 1.99}
+2025-06-05 14:30:06 [DEBUG] modules.data.directus_mapper: Mapped record: {'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}
+2025-06-05 14:30:06 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}]}
+2025-06-05 14:30:06 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:30:06 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 205
+2025-06-05 14:35:20 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 14:35:20 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:35:20 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 14:35:20 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.45, 'Market Cap': 146308808704, 'PE Ratio': 26.113663, 'Dividend Yield': 1.99}
+2025-06-05 14:35:20 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}
+2025-06-05 14:35:20 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}]}
+2025-06-05 14:35:20 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:35:20 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 205
+2025-06-05 14:38:18 [INFO] numexpr.utils: NumExpr defaulting to 16 threads.
+2025-06-05 14:38:19 [DEBUG] matplotlib: matplotlib data path: C:\Users\Daan Smit\Documents\Fundalyze\.venv\lib\site-packages\matplotlib\mpl-data
+2025-06-05 14:38:19 [DEBUG] matplotlib: CONFIGDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 14:38:19 [DEBUG] matplotlib: interactive is False
+2025-06-05 14:38:19 [DEBUG] matplotlib: platform is win32
+2025-06-05 14:38:19 [DEBUG] matplotlib: CACHEDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 14:38:19 [DEBUG] matplotlib.font_manager: Using fontManager instance from C:\Users\Daan Smit\.matplotlib\fontlist-v390.json
+2025-06-05 14:38:22 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/items/portfolio
+2025-06-05 14:38:22 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:38:22 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /items/portfolio HTTP/1.1" 200 11
+2025-06-05 14:38:22 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/items/groups
+2025-06-05 14:38:22 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:38:22 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /items/groups HTTP/1.1" 200 11
+2025-06-05 14:38:25 [DEBUG] yfinance: get_raw_json(): https://query2.finance.yahoo.com/v10/finance/quoteSummary/HON
+2025-06-05 14:38:25 [DEBUG] yfinance: Entering get()
+2025-06-05 14:38:25 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:38:25 [DEBUG] yfinance: url=https://query2.finance.yahoo.com/v10/finance/quoteSummary/HON
+2025-06-05 14:38:25 [DEBUG] yfinance: params={'modules': 'financialData,quoteType,defaultKeyStatistics,assetProfile,summaryDetail', 'corsDomain': 'finance.yahoo.com', 'formatted': 'false', 'symbol': 'HON'}
+2025-06-05 14:38:25 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:38:25 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:38:25 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:      Entering _load_cookie_curlCffi()
+2025-06-05 14:38:25 [DEBUG] peewee: ('CREATE TABLE IF NOT EXISTS "_cookieschema" ("strategy" VARCHAR(255) NOT NULL PRIMARY KEY, "fetch_date" DATETIME NOT NULL, "cookie_bytes" BLOB NOT NULL) WITHOUT ROWID', [])
+2025-06-05 14:38:25 [DEBUG] peewee: ('SELECT "t1"."strategy", "t1"."fetch_date", "t1"."cookie_bytes" FROM "_cookieschema" AS "t1" WHERE ("t1"."strategy" = ?) LIMIT ? OFFSET ?', ['curlCffi', 1, 0])
+2025-06-05 14:38:25 [DEBUG] yfinance:      Exiting _load_cookie_curlCffi()
+2025-06-05 14:38:25 [DEBUG] yfinance: reusing persistent cookie
+2025-06-05 14:38:25 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:      Entering _get_cookie_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:38:25 [DEBUG] yfinance:      Exiting _get_cookie_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance: crumb = '1qXzTE61aXL'
+2025-06-05 14:38:25 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:38:25 [DEBUG] yfinance: response code=200
+2025-06-05 14:38:25 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:38:25 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:38:25 [DEBUG] yfinance: get_raw_json(): https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 14:38:25 [DEBUG] yfinance: Entering get()
+2025-06-05 14:38:25 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:38:25 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 14:38:25 [DEBUG] yfinance: params={'symbols': 'HON', 'formatted': 'false'}
+2025-06-05 14:38:25 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:38:25 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:38:25 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:38:25 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance: reusing crumb
+2025-06-05 14:38:25 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:38:25 [DEBUG] yfinance: response code=200
+2025-06-05 14:38:25 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:38:25 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:38:25 [DEBUG] yfinance: Entering get()
+2025-06-05 14:38:25 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:38:25 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/HON?symbol=HON&type=trailingPegRatio&period1=1733356800&period2=1749168000
+2025-06-05 14:38:25 [DEBUG] yfinance: params=None
+2025-06-05 14:38:25 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:38:25 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:38:25 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:38:25 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance: reusing crumb
+2025-06-05 14:38:25 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:38:25 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:38:25 [DEBUG] yfinance: response code=200
+2025-06-05 14:38:25 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:38:25 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:38:27 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 14:38:27 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:38:27 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 14:38:27 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.45, 'Market Cap': 146308808704, 'PE Ratio': 26.113663, 'Dividend Yield': 1.99}
+2025-06-05 14:38:27 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}
+2025-06-05 14:38:27 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}]}
+2025-06-05 14:38:27 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:38:27 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 205
+2025-06-05 14:42:22 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:42:22 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio?upsert=Ticker HTTP/1.1" 200 207
+2025-06-05 14:43:10 [DEBUG] yfinance: get_raw_json(): https://query2.finance.yahoo.com/v10/finance/quoteSummary/GEV
+2025-06-05 14:43:10 [DEBUG] yfinance: Entering get()
+2025-06-05 14:43:10 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:43:10 [DEBUG] yfinance: url=https://query2.finance.yahoo.com/v10/finance/quoteSummary/GEV
+2025-06-05 14:43:10 [DEBUG] yfinance: params={'modules': 'financialData,quoteType,defaultKeyStatistics,assetProfile,summaryDetail', 'corsDomain': 'finance.yahoo.com', 'formatted': 'false', 'symbol': 'GEV'}
+2025-06-05 14:43:10 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:43:10 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:43:10 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:43:10 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance: reusing crumb
+2025-06-05 14:43:10 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:43:10 [DEBUG] yfinance: response code=200
+2025-06-05 14:43:10 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:43:10 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:43:10 [DEBUG] yfinance: get_raw_json(): https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 14:43:10 [DEBUG] yfinance: Entering get()
+2025-06-05 14:43:10 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:43:10 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 14:43:10 [DEBUG] yfinance: params={'symbols': 'GEV', 'formatted': 'false'}
+2025-06-05 14:43:10 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:43:10 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:43:10 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:43:10 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance: reusing crumb
+2025-06-05 14:43:10 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:43:10 [DEBUG] yfinance: response code=200
+2025-06-05 14:43:10 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:43:10 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:43:10 [DEBUG] yfinance: Entering get()
+2025-06-05 14:43:10 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:43:10 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/GEV?symbol=GEV&type=trailingPegRatio&period1=1733356800&period2=1749168000
+2025-06-05 14:43:10 [DEBUG] yfinance: params=None
+2025-06-05 14:43:10 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:43:10 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:43:10 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:43:10 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance: reusing crumb
+2025-06-05 14:43:10 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:43:10 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:43:10 [DEBUG] yfinance: response code=200
+2025-06-05 14:43:10 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:43:10 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:43:12 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 14:43:12 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:43:12 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 14:43:12 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.45, 'Market Cap': 146308808704, 'PE Ratio': 26.113663, 'Dividend Yield': 1.99}
+2025-06-05 14:43:12 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}
+2025-06-05 14:43:12 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'GEV', 'Name': 'GE Vernova Inc.', 'Sector': 'Industrials', 'Industry': 'Industrials', 'Current Price': 488.13, 'Market Cap': 133227765760, 'PE Ratio': 69.93266, 'Dividend Yield': 0.2}
+2025-06-05 14:43:12 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'GEV', 'company_name': 'GE Vernova Inc.', 'sector': 'Industrials', 'industry': 'Industrials', 'current_price': 488.13, 'market_cap': 133227765760, 'pe_ratio': 69.93266, 'dividend_yield': 0.2}
+2025-06-05 14:43:12 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}, {'ticker_symbol': 'GEV', 'company_name': 'GE Vernova Inc.', 'sector': 'Industrials', 'industry': 'Industrials', 'current_price': 488.13, 'market_cap': 133227765760, 'pe_ratio': 69.93266, 'dividend_yield': 0.2}]}
+2025-06-05 14:43:12 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:43:13 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 205
+2025-06-05 15:06:21 [INFO] numexpr.utils: NumExpr defaulting to 16 threads.
+2025-06-05 15:06:23 [DEBUG] matplotlib: matplotlib data path: C:\Users\Daan Smit\Documents\Fundalyze\.venv\lib\site-packages\matplotlib\mpl-data
+2025-06-05 15:06:23 [DEBUG] matplotlib: CONFIGDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 15:06:23 [DEBUG] matplotlib: interactive is False
+2025-06-05 15:06:23 [DEBUG] matplotlib: platform is win32
+2025-06-05 15:06:23 [DEBUG] matplotlib: CACHEDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 15:06:23 [DEBUG] matplotlib.font_manager: Using fontManager instance from C:\Users\Daan Smit\.matplotlib\fontlist-v390.json
+2025-06-05 15:06:27 [DEBUG] modules.data.directus_client: Directus request GET http://api.veralims.com/collections
+2025-06-05 15:06:27 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): api.veralims.com:80
+2025-06-05 15:06:27 [DEBUG] urllib3.connectionpool: http://api.veralims.com:80 "GET /collections HTTP/1.1" 301 167
+2025-06-05 15:06:28 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 15:06:28 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "GET /collections HTTP/1.1" 302 143
+2025-06-05 15:06:28 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 15:06:29 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Fcollections&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEyODc4Nywic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiODAwMzc0ZWIyNzkxNjdhMzM3YjYwOGZlNGU4YjZkNmJhODNiOTNjZDA2MDIzYjY5ZWY1Y2JlY2QxYTAxOGY2OSIsIm5iZiI6MTc0OTEyODc4NywiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvY29sbGVjdGlvbnMiLCJtdGxzX2F1dGgiOnsiY2VydF9pc3N1ZXJfc2tpIjoiIiwiY2VydF9wcmVzZW50ZWQiOmZhbHNlLCJjZXJ0X3NlcmlhbCI6IiIsImNlcnRfaXNzdWVyX2RuIjoiIiwiYXV0aF9zdGF0dXMiOiJOT05FIn0sImF1dGhfc3RhdHVzIjoiTk9ORSJ9.LnRysvbnh5WnuA8vqKAWckw4MSM8ADYjmR2qz2Lz9G_b7LdV-_xwfGnN9jgO8XYGYC6zzTykP_MeNrpmZQKTS5J9HR4qTZT6DcCENexlFAeo777C9CiCFumwMIdQkfEz93j0AQKhUeZk9E7I6LQBx-03pJg_PU3_EGiSj0JRCvQbA3GjNaPkrMAvVgKQ8cRs5ZJgIgN-g7eb15lOwvBN73QQB7UIWpAEXcBj2qKr0_ulo_KVmU54fRKvaD0_nzwKJSEvoZ7AqQF8ABhi21gm7kYDBxTBu-6ZxGpDXe4wHixBKwSvHc1-ki_CNF87Pciiv5aa3R84EOUElrufI68_ZA HTTP/1.1" 200 None
+2025-06-05 15:06:29 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: http://api.veralims.com/collections
+2025-06-05 15:26:54 [DEBUG] modules.data.directus_client: Directus request GET http://api.veralims.com/collections
+2025-06-05 15:26:54 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): api.veralims.com:80
+2025-06-05 15:26:54 [DEBUG] urllib3.connectionpool: http://api.veralims.com:80 "GET /collections HTTP/1.1" 301 167
+2025-06-05 15:26:54 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 15:26:54 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "GET /collections HTTP/1.1" 302 143
+2025-06-05 15:26:54 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 15:26:55 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Fcollections&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEzMDAxNCwic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiOWU4YTc3YzlhM2EyMmMwNTdmOGQzZDE0YTI4OThmNWE3MzU2MGZkZTU5NDNmMDk0YzlkZmIwMGQ5ZGI2YTQ3NSIsIm5iZiI6MTc0OTEzMDAxNCwiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvY29sbGVjdGlvbnMiLCJtdGxzX2F1dGgiOnsiY2VydF9pc3N1ZXJfc2tpIjoiIiwiY2VydF9wcmVzZW50ZWQiOmZhbHNlLCJjZXJ0X3NlcmlhbCI6IiIsImNlcnRfaXNzdWVyX2RuIjoiIiwiYXV0aF9zdGF0dXMiOiJOT05FIn0sImF1dGhfc3RhdHVzIjoiTk9ORSJ9.gOL18CJVEoLspOipQmNttt4bxDu6eyydAwVOdQNtQDn-eE3FbAl4dfU7QfNwgSuVUwB4hyHKajZ5DqbQZi8U2LDtoF9lH-iSa-LjACvWBRVjp9E4MnT7H3HkcM9O6kftwZNdRULHlLaH6a1ZyKWqCXP4DL7Sk9h1H-J8CKCShdfdKRN2-6P_MvbjXqQL1CAQWxP50u5QHEfDmXDv4md4yUjGtGq4819JN_739HjDQNiFof0abSfWWKbdc7_k8e3nASoFFSUvyBVXa2QiFW3Gj0yn8PQpfBm-B-KYypfXU5CV244XUVeWD4_gimjk3eVwA7lV5yUboAiFfKsrNwP_ew HTTP/1.1" 200 None
+2025-06-05 15:26:55 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: http://api.veralims.com/collections
+2025-06-05 15:32:16 [DEBUG] modules.data.directus_client: Directus request GET http://api.veralims.com/collections
+2025-06-05 15:32:16 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): api.veralims.com:80
+2025-06-05 15:32:16 [DEBUG] urllib3.connectionpool: http://api.veralims.com:80 "GET /collections HTTP/1.1" 301 167
+2025-06-05 15:32:16 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 15:32:16 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "GET /collections HTTP/1.1" 302 143
+2025-06-05 15:32:16 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 15:32:17 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Fcollections&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEzMDMzNiwic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiZjQ0MjRjMzAwOTg1NDcwMTNmNzAzNmI1NzdjZGQ0M2MzZWExNzA4YzhhYWE5MDBlOThiOGVkYjAzYTc2ZGEzZiIsIm5iZiI6MTc0OTEzMDMzNiwiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvY29sbGVjdGlvbnMiLCJtdGxzX2F1dGgiOnsiY2VydF9pc3N1ZXJfc2tpIjoiIiwiY2VydF9wcmVzZW50ZWQiOmZhbHNlLCJjZXJ0X3NlcmlhbCI6IiIsImNlcnRfaXNzdWVyX2RuIjoiIiwiYXV0aF9zdGF0dXMiOiJOT05FIn0sImF1dGhfc3RhdHVzIjoiTk9ORSJ9.h08ACYjimswZuOVS0Pu6LBwAJ734szip8Y5J0Mt_Lsfjo9sgkAf8_ayjsjIyxNZXIbOByNQl70KWkKXWkg4IwdZSrtWYmLIDknl4_5KidNXI1i7nDiMXlyqE8ZCP2wcMa435M2VmGb_gWOv5EXjj7c_nNetYvKd_Z1lBCYmXkSsUAyBAtZRz3tHHkOlp2S89Lbchw6BmuFdQ23P63IPRALhHflISQqAhtAnxh8bPRRv6xVaNIRTpoT0lrurQ3KH--kCv2eE18OSisfEZXf8xIrxI2_3BirtCnKPeCBXMSQA8BJ3-zgIxhK1nAMhoL6KuBg94GETX3ZhFbg3PnAvWpQ HTTP/1.1" 200 None
+2025-06-05 15:32:17 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: http://api.veralims.com/collections
+2025-06-05 15:32:43 [INFO] numexpr.utils: NumExpr defaulting to 16 threads.
+2025-06-05 15:32:44 [DEBUG] matplotlib: matplotlib data path: C:\Users\Daan Smit\Documents\Fundalyze\.venv\lib\site-packages\matplotlib\mpl-data
+2025-06-05 15:32:44 [DEBUG] matplotlib: CONFIGDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 15:32:44 [DEBUG] matplotlib: interactive is False
+2025-06-05 15:32:44 [DEBUG] matplotlib: platform is win32
+2025-06-05 15:32:44 [DEBUG] matplotlib: CACHEDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 15:32:44 [DEBUG] matplotlib.font_manager: Using fontManager instance from C:\Users\Daan Smit\.matplotlib\fontlist-v390.json
+2025-06-05 15:32:47 [DEBUG] modules.data.directus_client: Directus request GET https://api.veralims.com/collections
+2025-06-05 15:32:47 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 15:32:47 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "GET /collections HTTP/1.1" 302 143
+2025-06-05 15:32:47 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 15:32:47 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Fcollections&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEzMDM2Niwic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiOTAzMjViODIzNDQxYzQ4ZWI4NWZjYzQ5NTVlYjhlZjViN2VjODNlNjI2YmZlNmMxZmRkNjM3OWM3Y2VhNDY1YSIsIm5iZiI6MTc0OTEzMDM2NiwiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvY29sbGVjdGlvbnMiLCJtdGxzX2F1dGgiOnsiY2VydF9pc3N1ZXJfc2tpIjoiIiwiY2VydF9wcmVzZW50ZWQiOmZhbHNlLCJjZXJ0X3NlcmlhbCI6IiIsImNlcnRfaXNzdWVyX2RuIjoiIiwiYXV0aF9zdGF0dXMiOiJOT05FIn0sImF1dGhfc3RhdHVzIjoiTk9ORSJ9.o-TXrs_dKZzRZCwiswQesbhXozN6PytuWgHqdSRRgP92cTPa23b_jEFUtd0auMbon_yVFtgw9JLDRWTYvGhB6_8uPQi9POWK-_Z0XZdF9OPby33F1bgyuMv4ok08ajswf-7heHe--sYcnF7x5bPxmtQX-h_U-VEcvbArvaPy5th9lC3lvERnKqd5YI2TWyer0kiLIPmW4jUs4qDeh_irEKTUTWxDGQjkHkGzZv2bZ0fjU2a0_y2XeF99oDr-GwtuIHhIXOolP6Xy4Fh5upMW5kW_PjIPuq1MJOxlBqfVCkQpfE7pys_TGDm6xLYFwZZsveigoZVABvKO5ZM1lPfC2Q HTTP/1.1" 200 None
+2025-06-05 15:32:47 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: https://api.veralims.com/collections
+2025-06-05 15:46:07 [DEBUG] modules.data.directus_client: Directus request GET https://api.veralims.com/collections
+2025-06-05 15:46:07 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 15:46:07 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "GET /collections HTTP/1.1" 302 143
+2025-06-05 15:46:07 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 15:46:08 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Fcollections&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEzMTE2Niwic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiNTljNjk0NDc1OWVlYjNhZmZjODE0OTFiYjUwODg3NWUzODE1MTJjNzczNTE3NWI2NTYxZDlmZTY3Nzk2YjRhZiIsIm5iZiI6MTc0OTEzMTE2NiwiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvY29sbGVjdGlvbnMiLCJtdGxzX2F1dGgiOnsiY2VydF9pc3N1ZXJfc2tpIjoiIiwiY2VydF9wcmVzZW50ZWQiOmZhbHNlLCJjZXJ0X3NlcmlhbCI6IiIsImNlcnRfaXNzdWVyX2RuIjoiIiwiYXV0aF9zdGF0dXMiOiJOT05FIn0sImF1dGhfc3RhdHVzIjoiTk9ORSJ9.mqaSmfezJalEQ61IfKFQarniS99hgauOIUi9D_9aSeqoLv53PdNfiUxgXdEbM1i9gInHJAe5faoPxKkRDzFMQkCQMVlZ4-OEgxcYLNJcEotRarEpLzojtsPWH6PhEptf0ElNrqXh000xYW4f6FedGZIMl4asLo9QZeh95lsILW-pdVkYxHfI6MQtRnKiJJW1abKl7qstzaoqQRl2BbWfN3Pp-AUaXEBBhbPeKi8-UN9h1NxW-m_xKHSb_TuIyukp7PeYRraz_xrCJ6coYBYU8blCZ-Wm-XjswT1QAViARfyvgXmUmzf2ZQWBSqPkZfXDUl0BI1ZeQ-msK0WTwsioMg HTTP/1.1" 200 None
+2025-06-05 15:46:08 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: https://api.veralims.com/collections
+2025-06-05 15:49:27 [DEBUG] modules.data.directus_client: Directus request GET https://api.veralims.com/collections
+2025-06-05 15:49:27 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 15:49:27 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "GET /collections HTTP/1.1" 302 143
+2025-06-05 15:49:27 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 15:49:28 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Fcollections&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEzMTM2Niwic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiZmM0NzlkNTU2ZGZiMzVkMTQ3Y2FkY2RiM2IzZWMxOTk4MGUxOTZjMDM0ZTA2MDBhN2IxNDVlODg2MmM2ZTMwMSIsIm5iZiI6MTc0OTEzMTM2NiwiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvY29sbGVjdGlvbnMiLCJtdGxzX2F1dGgiOnsiY2VydF9pc3N1ZXJfc2tpIjoiIiwiY2VydF9wcmVzZW50ZWQiOmZhbHNlLCJjZXJ0X3NlcmlhbCI6IiIsImNlcnRfaXNzdWVyX2RuIjoiIiwiYXV0aF9zdGF0dXMiOiJOT05FIn0sImF1dGhfc3RhdHVzIjoiTk9ORSJ9.UXw89NNtaKZq1SIsxOW9C1svG6F2WxwhDHVg5gvv7lRg0Apu40PNIDZ_Zim-sewFGKMq9leN76UCyIayvVLBrW0xjQ34Vs4eEWxg5z0W2AuTmZfhiWvZwzB9udYFW9nRxHH3TX1PN5lRclt_G9GQ6puJ7CoKsYZn4zqbIgm8JOD2Z6snf4pPojju_dbOB8hJNOVEAu2liIsOdRDFW3fZ_edzsJ50GogsBHHjNl-ksh7WwlpxIxjg5WBh8oG7nWTeLuzt67z6_cANhp1n5sfBbyWwtpQ3zae8c5JIEVUfsUHfXH5D_MVDJYs-d2aCzwiA8nLnagzF8HhINvCYh5TCXA HTTP/1.1" 200 None
+2025-06-05 15:49:28 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: https://api.veralims.com/collections
+2025-06-05 15:52:37 [DEBUG] modules.data.directus_client: Directus request GET https://api.veralims.com/items/portfolio
+2025-06-05 15:52:37 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 15:52:37 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "GET /items/portfolio HTTP/1.1" 302 143
+2025-06-05 15:52:37 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 15:52:37 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Fitems%2Fportfolio&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEzMTU1Niwic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiOTYxMGMwYmY1NzU0YWU1MDZmMmRkNDVhODc1ZGE5ODI1MmQ5MzMzMDZkYjlmZjMyMzI2YzViNWY2ZmI1MTgwYSIsIm5iZiI6MTc0OTEzMTU1NiwiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvaXRlbXNcL3BvcnRmb2xpbyIsIm10bHNfYXV0aCI6eyJjZXJ0X2lzc3Vlcl9za2kiOiIiLCJjZXJ0X3ByZXNlbnRlZCI6ZmFsc2UsImNlcnRfc2VyaWFsIjoiIiwiY2VydF9pc3N1ZXJfZG4iOiIiLCJhdXRoX3N0YXR1cyI6Ik5PTkUifSwiYXV0aF9zdGF0dXMiOiJOT05FIn0.PJ9wsKFUrw2p3Tfdiwf-X9omLeWfEdW0tUEexYj37JCOx4urGAPDLNIH83XMlT3cA5nsM5ar69xgmNAvpnyhXxenKUVdsf1Hg3uz0je4Pp6evdLRGb5SkrWpbz0aGI-05VzJgB7NsKnbxik6AnAPKP4TGaI_hQztXLTckkIXktWkPIvXVKR6erkYp_HFIuQu0T-9aCDr8mDP0rl7t-XDBfUzBJNyDCCKz8NUWiY8Hx-PzZf6ts1G8tjMVca3CKOw6ZUPICNUNI_EIUrPVVR80tul6nrPC6kmyRMtIUA5PHRyjBvYLrRz2YPDR6xzVTwYq8W1JGzn0kFjSxSxFM49qA HTTP/1.1" 200 None
+2025-06-05 15:52:37 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: https://api.veralims.com/items/portfolio
+2025-06-05 15:52:37 [DEBUG] modules.data.directus_client: Directus request GET https://api.veralims.com/items/groups
+2025-06-05 15:52:37 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 15:52:37 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "GET /items/groups HTTP/1.1" 302 143
+2025-06-05 15:52:37 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 15:52:38 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Fitems%2Fgroups&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEzMTU1Nywic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiZGQ3MTg3MjJhMjIyMDVmMmVjNmJjYjMyNTAxMWZiMmI4N2M1YjQzOGFiMzQwN2ViYjBjOTY3N2JkM2EwYzRiOCIsIm5iZiI6MTc0OTEzMTU1NywiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvaXRlbXNcL2dyb3VwcyIsIm10bHNfYXV0aCI6eyJjZXJ0X2lzc3Vlcl9za2kiOiIiLCJjZXJ0X3ByZXNlbnRlZCI6ZmFsc2UsImNlcnRfc2VyaWFsIjoiIiwiY2VydF9pc3N1ZXJfZG4iOiIiLCJhdXRoX3N0YXR1cyI6Ik5PTkUifSwiYXV0aF9zdGF0dXMiOiJOT05FIn0.i3Xrj8kcy9QoCFXSsfMzpYiFAGCRGaV1cKIMI7OKmFStYCmIv_cQWJgAPhpvpYZQ33hiEUBgQgNh-cdO_38_ofUM9wZFJzbsvkYK0R-ZNjqtQI_ARbLiMjP9GzqT-viAgujUEurf7bmAPsWgYP2RDS_8tnuKkotCMmbtTn3Wdzgi8d7McDNvKmoB0P1jOwpFygWWIZGVHaCTFu5QgzDCzYNCF8jkjmiBtRFjuOjojn3OcUq_Oha22Yh8X2IwPYBfwgyX-CdqjUQZXm8PFduL4tDBZG75VfjxpkOXF9vrZvVNCtw38oUnZkpnLEvYpQv_TnKsDpt2f70985I4rKMzLQ HTTP/1.1" 200 None
+2025-06-05 15:52:38 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: https://api.veralims.com/items/groups
+2025-06-05 15:52:49 [DEBUG] yfinance: get_raw_json(): https://query2.finance.yahoo.com/v10/finance/quoteSummary/RHM
+2025-06-05 15:52:49 [DEBUG] yfinance: Entering get()
+2025-06-05 15:52:49 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 15:52:49 [DEBUG] yfinance: url=https://query2.finance.yahoo.com/v10/finance/quoteSummary/RHM
+2025-06-05 15:52:49 [DEBUG] yfinance: params={'modules': 'financialData,quoteType,defaultKeyStatistics,assetProfile,summaryDetail', 'corsDomain': 'finance.yahoo.com', 'formatted': 'false', 'symbol': 'RHM'}
+2025-06-05 15:52:49 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 15:52:49 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 15:52:49 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:      Entering _load_cookie_curlCffi()
+2025-06-05 15:52:49 [DEBUG] peewee: ('CREATE TABLE IF NOT EXISTS "_cookieschema" ("strategy" VARCHAR(255) NOT NULL PRIMARY KEY, "fetch_date" DATETIME NOT NULL, "cookie_bytes" BLOB NOT NULL) WITHOUT ROWID', [])
+2025-06-05 15:52:49 [DEBUG] peewee: ('SELECT "t1"."strategy", "t1"."fetch_date", "t1"."cookie_bytes" FROM "_cookieschema" AS "t1" WHERE ("t1"."strategy" = ?) LIMIT ? OFFSET ?', ['curlCffi', 1, 0])
+2025-06-05 15:52:49 [DEBUG] yfinance:      Exiting _load_cookie_curlCffi()
+2025-06-05 15:52:49 [DEBUG] yfinance: reusing persistent cookie
+2025-06-05 15:52:49 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:      Entering _get_cookie_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance: reusing cookie
+2025-06-05 15:52:49 [DEBUG] yfinance:      Exiting _get_cookie_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance: crumb = '1qXzTE61aXL'
+2025-06-05 15:52:49 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 15:52:49 [DEBUG] yfinance: response code=200
+2025-06-05 15:52:49 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 15:52:49 [DEBUG] yfinance: Exiting get()
+2025-06-05 15:52:49 [DEBUG] yfinance: get_raw_json(): https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 15:52:49 [DEBUG] yfinance: Entering get()
+2025-06-05 15:52:49 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 15:52:49 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 15:52:49 [DEBUG] yfinance: params={'symbols': 'RHM', 'formatted': 'false'}
+2025-06-05 15:52:49 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 15:52:49 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 15:52:49 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance: reusing cookie
+2025-06-05 15:52:49 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance: reusing crumb
+2025-06-05 15:52:49 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 15:52:49 [DEBUG] yfinance: response code=200
+2025-06-05 15:52:49 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 15:52:49 [DEBUG] yfinance: Exiting get()
+2025-06-05 15:52:49 [DEBUG] yfinance: Entering get()
+2025-06-05 15:52:49 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 15:52:49 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/RHM?symbol=RHM&type=trailingPegRatio&period1=1733356800&period2=1749168000
+2025-06-05 15:52:49 [DEBUG] yfinance: params=None
+2025-06-05 15:52:49 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 15:52:49 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 15:52:49 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance: reusing cookie
+2025-06-05 15:52:49 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance: reusing crumb
+2025-06-05 15:52:49 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 15:52:49 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 15:52:49 [DEBUG] yfinance: response code=200
+2025-06-05 15:52:49 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 15:52:49 [DEBUG] yfinance: Exiting get()
+2025-06-05 15:53:05 [DEBUG] modules.data.directus_client: Directus request GET https://api.veralims.com/fields/portfolio
+2025-06-05 15:53:05 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 15:53:05 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "GET /fields/portfolio HTTP/1.1" 302 143
+2025-06-05 15:53:05 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 15:53:06 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Ffields%2Fportfolio&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEzMTU4NSwic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiNWIxMDA1ZGNhYWYxY2JlYTUxZDFkMDBiNzExNDRjMzA2ZTI1NTZhZDc0ZmRjMTY1YzNlOGY4OTUwZDlhODIzYiIsIm5iZiI6MTc0OTEzMTU4NSwiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvZmllbGRzXC9wb3J0Zm9saW8iLCJtdGxzX2F1dGgiOnsiY2VydF9pc3N1ZXJfc2tpIjoiIiwiY2VydF9wcmVzZW50ZWQiOmZhbHNlLCJjZXJ0X3NlcmlhbCI6IiIsImNlcnRfaXNzdWVyX2RuIjoiIiwiYXV0aF9zdGF0dXMiOiJOT05FIn0sImF1dGhfc3RhdHVzIjoiTk9ORSJ9.Cg0f3v1MxhxEkIZcmddWdJBcD-LqFTXF_Rf3jAfSsufShix3lsJnijwComSYHz4ilbKAKjLzWGpnxndr_MqUay_fAqFQF5ew6_XvcoNmvWY5hQ-EZH-YzWtRMzL8iGi-i9n5zXoStiT8YDH2Q2zWcZf06lfWi6_k8iysbM5SfWzsmUzPyJcOZlWxmXjX8LO1l_rZgR--wEGNE8aDIaXT0JKkRuFupH3BKACnmyK-Cnf1ZjvuBwJUxf4obPQ5yrL9OGkpqxlwgZ203ebVUIiPj3lSFmctBtwpHnwZM304s5rywDQiXUVLosR4NmKOYCGjX3zB10uPTh6YYX1sX7KUjw HTTP/1.1" 200 None
+2025-06-05 15:53:06 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: https://api.veralims.com/fields/portfolio
+2025-06-05 15:53:06 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'RHM', 'Name': '', 'Sector': '', 'Industry': '', 'Current Price': None, 'Market Cap': None, 'PE Ratio': None, 'Dividend Yield': None}
+2025-06-05 15:53:06 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'RHM', 'company_name': '', 'sector': '', 'industry': '', 'current_price': None, 'market_cap': None, 'pe_ratio': None, 'dividend_yield': None}
+2025-06-05 15:53:06 [DEBUG] modules.data.directus_client: Directus request POST https://api.veralims.com/items/portfolio payload={'data': [{'ticker_symbol': 'RHM', 'company_name': '', 'sector': '', 'industry': '', 'current_price': None, 'market_cap': None, 'pe_ratio': None, 'dividend_yield': None}]}
+2025-06-05 15:53:06 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 15:53:06 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "POST /items/portfolio HTTP/1.1" 302 143
+2025-06-05 15:53:06 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 15:53:06 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Fitems%2Fportfolio&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEzMTU4NSwic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiN2FiYTg5MDc0MWM4Y2RkZWVkNjI0YTQzYzEzYjU2Njc5NzQ1MzJlYjNkYTZlN2FlNzVjYmYzYjQwYTI2MDFlNSIsIm5iZiI6MTc0OTEzMTU4NSwiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvaXRlbXNcL3BvcnRmb2xpbyIsIm10bHNfYXV0aCI6eyJjZXJ0X2lzc3Vlcl9za2kiOiIiLCJjZXJ0X3ByZXNlbnRlZCI6ZmFsc2UsImNlcnRfc2VyaWFsIjoiIiwiY2VydF9pc3N1ZXJfZG4iOiIiLCJhdXRoX3N0YXR1cyI6Ik5PTkUifSwiYXV0aF9zdGF0dXMiOiJOT05FIn0.C_KQS8FOC-dG5b9fAsUDL5jkiysAfOSQmMbDWWTOATGokfZGIPb5DJxBdOjfvgrLuWaELMVl7Uf7Z1qX3_v6GkUL8HCMU_tfonLa8oi_SL7TbXu2docm5WvdlgzkuJ56LQJcOSEaQSgkfp-wGLrvuX4Msd55z9Ja-_xMWlvrwoLh27aUOrV6bis52ICZeg8NAGPZpt2KpKiZwMXSCzJ_2vj8p5BTXlTakCbBHP48nQDQcj0S_Ic9rlNLnNhvdQQdpswsoUtgzDdgbJJ5BwD3wpNnWX2TwpYlZkYLBMMnHTCCV_HAo1dLVbRi53aXdQGAD18HnhteqiyLqPw-lkudvA HTTP/1.1" 200 None
+2025-06-05 15:53:06 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: https://api.veralims.com/items/portfolio
+2025-06-05 15:53:12 [DEBUG] yfinance: get_raw_json(): https://query2.finance.yahoo.com/v10/finance/quoteSummary/HON
+2025-06-05 15:53:12 [DEBUG] yfinance: Entering get()
+2025-06-05 15:53:12 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 15:53:12 [DEBUG] yfinance: url=https://query2.finance.yahoo.com/v10/finance/quoteSummary/HON
+2025-06-05 15:53:12 [DEBUG] yfinance: params={'modules': 'financialData,quoteType,defaultKeyStatistics,assetProfile,summaryDetail', 'corsDomain': 'finance.yahoo.com', 'formatted': 'false', 'symbol': 'HON'}
+2025-06-05 15:53:12 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 15:53:12 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 15:53:12 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance: reusing cookie
+2025-06-05 15:53:12 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance: reusing crumb
+2025-06-05 15:53:12 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 15:53:12 [DEBUG] yfinance: response code=200
+2025-06-05 15:53:12 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 15:53:12 [DEBUG] yfinance: Exiting get()
+2025-06-05 15:53:12 [DEBUG] yfinance: get_raw_json(): https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 15:53:12 [DEBUG] yfinance: Entering get()
+2025-06-05 15:53:12 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 15:53:12 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 15:53:12 [DEBUG] yfinance: params={'symbols': 'HON', 'formatted': 'false'}
+2025-06-05 15:53:12 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 15:53:12 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 15:53:12 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance: reusing cookie
+2025-06-05 15:53:12 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance: reusing crumb
+2025-06-05 15:53:12 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 15:53:12 [DEBUG] yfinance: response code=200
+2025-06-05 15:53:12 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 15:53:12 [DEBUG] yfinance: Exiting get()
+2025-06-05 15:53:12 [DEBUG] yfinance: Entering get()
+2025-06-05 15:53:12 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 15:53:12 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/HON?symbol=HON&type=trailingPegRatio&period1=1733356800&period2=1749168000
+2025-06-05 15:53:12 [DEBUG] yfinance: params=None
+2025-06-05 15:53:12 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 15:53:12 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 15:53:12 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance: reusing cookie
+2025-06-05 15:53:12 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance: reusing crumb
+2025-06-05 15:53:12 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 15:53:12 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 15:53:12 [DEBUG] yfinance: response code=200
+2025-06-05 15:53:12 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 15:53:12 [DEBUG] yfinance: Exiting get()
+2025-06-05 15:53:14 [DEBUG] modules.data.directus_client: Directus request GET https://api.veralims.com/fields/portfolio
+2025-06-05 15:53:14 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 15:53:14 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "GET /fields/portfolio HTTP/1.1" 302 143
+2025-06-05 15:53:14 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 15:53:14 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Ffields%2Fportfolio&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEzMTU5NCwic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiMDkyMjQ5NzQ1MGZlOWExMGRiM2E1YTczZjEwM2M5MThiNWFhOTkwMWNhMTU3YzhmMjA2NDJlZTYxZWJhNTBkNiIsIm5iZiI6MTc0OTEzMTU5NCwiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvZmllbGRzXC9wb3J0Zm9saW8iLCJtdGxzX2F1dGgiOnsiY2VydF9pc3N1ZXJfc2tpIjoiIiwiY2VydF9wcmVzZW50ZWQiOmZhbHNlLCJjZXJ0X3NlcmlhbCI6IiIsImNlcnRfaXNzdWVyX2RuIjoiIiwiYXV0aF9zdGF0dXMiOiJOT05FIn0sImF1dGhfc3RhdHVzIjoiTk9ORSJ9.o1mMHg4T5pf2S2QorRAgMj-TlIUQQ8BGFJXnzBsws0j9RPUEqI6MG6yOlY2IUUJkeWRTEy5sdybTnO0hjTwzZS9Hybwg6mcc9pY_CatkvsTuJj5SrrEqVa37Lwdm_iXnz0CGe6VMuSj0UUpeCmtfO6K6o7X2k706s3VWrWol-M-u3EQYFhtbrO9ZfuQk8v0pGLwZzVEDZVw1czNUWO1h657nYx615JGOqGHXHqW3_5r-5GV9w3kEnt8GmUkJ3_MLZrcswZLDzYPI8Swh5s5CxG1l96sJkNdfSYH1hLiqu94zTfwXg1hfwJwnvbR3xl7g2ekkNiJzKhHqXQ1tq7ibEg HTTP/1.1" 200 None
+2025-06-05 15:53:14 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: https://api.veralims.com/fields/portfolio
+2025-06-05 15:53:14 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'RHM', 'Name': '', 'Sector': '', 'Industry': '', 'Current Price': nan, 'Market Cap': None, 'PE Ratio': nan, 'Dividend Yield': nan}
+2025-06-05 15:53:14 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'RHM', 'company_name': '', 'sector': '', 'industry': '', 'current_price': nan, 'market_cap': None, 'pe_ratio': nan, 'dividend_yield': nan}
+2025-06-05 15:53:14 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.3, 'Market Cap': 146212323328, 'PE Ratio': 26.096441, 'Dividend Yield': 1.99}
+2025-06-05 15:53:14 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.3, 'market_cap': 146212323328, 'pe_ratio': 26.096441, 'dividend_yield': 1.99}
+2025-06-05 15:53:14 [DEBUG] modules.data.directus_client: Directus request POST https://api.veralims.com/items/portfolio payload={'data': [{'ticker_symbol': 'RHM', 'company_name': '', 'sector': '', 'industry': '', 'current_price': nan, 'market_cap': None, 'pe_ratio': nan, 'dividend_yield': nan}, {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.3, 'market_cap': 146212323328, 'pe_ratio': 26.096441, 'dividend_yield': 1.99}]}
+2025-06-05 15:53:14 [ERROR] modules.data.directus_client: Request error: Out of range float values are not JSON compliant | URL: https://api.veralims.com/items/portfolio
+2025-06-05 16:00:45 [DEBUG] modules.data.directus_client: Directus request GET https://api.veralims.com/items/portfolio
+2025-06-05 16:00:45 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 16:00:45 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "GET /items/portfolio HTTP/1.1" 302 143
+2025-06-05 16:00:45 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 16:00:46 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Fitems%2Fportfolio&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEzMjA0NCwic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiZTA5MDA5NWQ4NzA3NzRkM2FjZWY0MGU0ODkzMGEwNzUyZDIxZGQ4NzM4NzU4YTNmNzZmM2U2ZmU0MDI3YWQxNyIsIm5iZiI6MTc0OTEzMjA0NCwiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvaXRlbXNcL3BvcnRmb2xpbyIsIm10bHNfYXV0aCI6eyJjZXJ0X2lzc3Vlcl9za2kiOiIiLCJjZXJ0X3ByZXNlbnRlZCI6ZmFsc2UsImNlcnRfc2VyaWFsIjoiIiwiY2VydF9pc3N1ZXJfZG4iOiIiLCJhdXRoX3N0YXR1cyI6Ik5PTkUifSwiYXV0aF9zdGF0dXMiOiJOT05FIn0.OqT6PdNbrSseXCybKarNEH7b2YqLMvBWtmc5X6rFblnLhM63kikmE41V5xuPdQYsDeCFOGM2fNgNDt4JMsHWwTLo4vaWm4Bpyu9dkNDgx4TP9mDLa2LXhaFQO0DXjYVT7TBLwYFhr2i46rC13YxNVXKlGyQzeCmPojl8NRWl7uNtiFU8R-5S4TF38lNlgMXjNbbrsUmUJ-UGhomun-tml4cclKK2wHbVVxZYcx9Pm13e3KNOMQTXdEzzV2k8u5N60xB5txPujE2HlwbHh6vMSJU2_NjirV2cddp9mn8bRM5OV2EWQ7rRqLQwVC5rURkUEow12DzTbHhE1VnmeGsaTA HTTP/1.1" 200 None
+2025-06-05 16:00:46 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: https://api.veralims.com/items/portfolio
+2025-06-05 16:00:46 [DEBUG] modules.data.directus_client: Directus request GET https://api.veralims.com/items/groups
+2025-06-05 16:00:46 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): api.veralims.com:443
+2025-06-05 16:00:46 [DEBUG] urllib3.connectionpool: https://api.veralims.com:443 "GET /items/groups HTTP/1.1" 302 143
+2025-06-05 16:00:46 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): veralims.cloudflareaccess.com:443
+2025-06-05 16:00:46 [DEBUG] urllib3.connectionpool: https://veralims.cloudflareaccess.com:443 "GET /cdn-cgi/access/login/api.veralims.com?kid=fefe244e3c92716724beeef678dd8c81ac97a20c050904c0e023434de4b5adce&redirect_url=%2Fitems%2Fgroups&meta=eyJraWQiOiJiMzRhMzlhMzBjMjEzY2MxYWUzODhmYTFhNWZlMDRhNzgxNmViYzZiYWQ3NjVkZWIzZTEzOGVkYjRmZjQwYzY3IiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzZXJ2aWNlX3Rva2VuX3N0YXR1cyI6ZmFsc2UsImlhdCI6MTc0OTEzMjA0NSwic2VydmljZV90b2tlbl9pZCI6IiIsImF1ZCI6ImZlZmUyNDRlM2M5MjcxNjcyNGJlZWVmNjc4ZGQ4YzgxYWM5N2EyMGMwNTA5MDRjMGUwMjM0MzRkZTRiNWFkY2UiLCJob3N0bmFtZSI6ImFwaS52ZXJhbGltcy5jb20iLCJhcHBfc2Vzc2lvbl9oYXNoIjoiMzhlMjA1Mjk0ZDg2NDM0MjI0NGVlOWJmNDM2ZTQ2ZmFmYjg0NmQ5NTlhMWQ1MTY0NDA3MGQ0YjE5YTliZTVlYiIsIm5iZiI6MTc0OTEzMjA0NSwiaXNfd2FycCI6ZmFsc2UsImlzX2dhdGV3YXkiOmZhbHNlLCJ0eXBlIjoibWV0YSIsInJlZGlyZWN0X3VybCI6IlwvaXRlbXNcL2dyb3VwcyIsIm10bHNfYXV0aCI6eyJjZXJ0X2lzc3Vlcl9za2kiOiIiLCJjZXJ0X3ByZXNlbnRlZCI6ZmFsc2UsImNlcnRfc2VyaWFsIjoiIiwiY2VydF9pc3N1ZXJfZG4iOiIiLCJhdXRoX3N0YXR1cyI6Ik5PTkUifSwiYXV0aF9zdGF0dXMiOiJOT05FIn0.rtB3pS6mD9NvE1agiNfpJvW9lAV2C3zxr1Q5jlHg_g1STkgMZie6DhRqMMlQxdUyvFzvwdbf86xmgnb0RQAgEfRCw_Amf409GvaCp1kErRUklMbKNYwGb6Q4uZVr-cFHH5Uv_AaBkhcLNyKeZJrbtG6Wfht_67OhXvI3PhhzAt4mT0ufWjmdbKJiPnYt_TAEJwKdiU_uG1C99EHWygSaBJpGszg3NlwKi36aroSjvmVFHDr16qCCOCaF8_Qu6o73Jtu1PzC1kUrtyJ95B-XrRcU6NfMtS61IlaZyxGlwKgHONY4grH7lObn5BNPpDitPIU8ZYT2ai3vgu8I5bF1nAw HTTP/1.1" 200 None
+2025-06-05 16:00:46 [ERROR] modules.data.directus_client: Request error: Expecting value: line 1 column 1 (char 0) | URL: https://api.veralims.com/items/groups
+2025-06-05 16:49:16 [INFO] numexpr.utils: NumExpr defaulting to 16 threads.
