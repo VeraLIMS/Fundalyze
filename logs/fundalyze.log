@@ -1,0 +1,744 @@
+2025-06-05 12:47:50 [INFO] numexpr.utils: NumExpr defaulting to 16 threads.
+2025-06-05 12:47:51 [DEBUG] matplotlib: matplotlib data path: C:\Users\Daan Smit\Documents\Fundalyze\.venv\lib\site-packages\matplotlib\mpl-data
+2025-06-05 12:47:51 [DEBUG] matplotlib: CONFIGDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 12:47:51 [DEBUG] matplotlib: interactive is False
+2025-06-05 12:47:51 [DEBUG] matplotlib: platform is win32
+2025-06-05 12:47:51 [DEBUG] matplotlib: CACHEDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 12:47:51 [DEBUG] matplotlib.font_manager: Using fontManager instance from C:\Users\Daan Smit\.matplotlib\fontlist-v390.json
+2025-06-05 12:48:24 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 12:48:24 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): finviz.com:443
+2025-06-05 12:48:25 [DEBUG] urllib3.connectionpool: https://finviz.com:443 "GET /quote.ashx?t=HON HTTP/1.1" 200 None
+2025-06-05 12:48:25 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/companies
+2025-06-05 12:48:25 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:48:25 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/companies HTTP/1.1" 200 9575
+2025-06-05 12:48:25 [DEBUG] modules.data.directus_mapper: Original record: {'symbol': 'HON', 'name': 'Honeywell International Inc', 'stock_exchange': 'NASD', 'long_description': 'Honeywell International, Inc. is a software industrial company, which offers industry specific solutions to aerospace and automotive products and services. It operates through the following business segments: Aerospace Technologies, Industrial Automation, Building Automation, Energy and Sustainability Solutions, and Corporate and All Other. The company was founded by Albert M. Butz in 1906 and is headquartered in Charlotte, NC.', 'hq_country': 'USA', 'employees': 102000, 'sector': 'Industrials', 'industry_category': 'Conglomerates', 'index': 'DJIA, NDX, S&P 500', 'shares_outstanding': '642.68M', 'shares_float': '641.89M', 'short_interest': '7.58M', 'institutional_ownership': 0.8008, 'market_cap': '146.18B', 'earnings_date': 'Apr 29 BMO', 'beta': 1.07}
+2025-06-05 12:48:25 [DEBUG] modules.data.directus_mapper: Mapped record: {'sector': 'Industrials'}
+2025-06-05 12:48:25 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/companies payload={'data': [{'sector': 'Industrials'}]}
+2025-06-05 12:48:25 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:48:25 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/companies HTTP/1.1" 200 203
+2025-06-05 12:48:25 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 12:48:25 [DEBUG] yfinance: Entering download()
+2025-06-05 12:48:25 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 12:48:25 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): us.i.posthog.com:443
+2025-06-05 12:48:25 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 12:48:25 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 12:48:25 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 12:48:25 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 12:48:25 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 12:48:26 [DEBUG] urllib3.connectionpool: https://us.i.posthog.com:443 "POST /batch/ HTTP/1.1" 200 15
+2025-06-05 12:48:26 [DEBUG] urllib3.connectionpool: https://us.i.posthog.com:443 "POST /batch/ HTTP/1.1" 200 15
+2025-06-05 12:49:32 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/items/portfolio
+2025-06-05 12:49:32 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:49:32 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /items/portfolio HTTP/1.1" 200 11
+2025-06-05 12:49:32 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/items/groups
+2025-06-05 12:49:32 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:49:33 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /items/groups HTTP/1.1" 200 11
+2025-06-05 12:49:37 [DEBUG] yfinance: get_raw_json(): https://query2.finance.yahoo.com/v10/finance/quoteSummary/GE
+2025-06-05 12:49:37 [DEBUG] yfinance: Entering get()
+2025-06-05 12:49:37 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 12:49:37 [DEBUG] yfinance: url=https://query2.finance.yahoo.com/v10/finance/quoteSummary/GE
+2025-06-05 12:49:37 [DEBUG] yfinance: params={'modules': 'financialData,quoteType,defaultKeyStatistics,assetProfile,summaryDetail', 'corsDomain': 'finance.yahoo.com', 'formatted': 'false', 'symbol': 'GE'}
+2025-06-05 12:49:37 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 12:49:37 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 12:49:37 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:      Entering _load_cookie_curlCffi()
+2025-06-05 12:49:37 [DEBUG] peewee: ('CREATE TABLE IF NOT EXISTS "_cookieschema" ("strategy" VARCHAR(255) NOT NULL PRIMARY KEY, "fetch_date" DATETIME NOT NULL, "cookie_bytes" BLOB NOT NULL) WITHOUT ROWID', [])
+2025-06-05 12:49:37 [DEBUG] peewee: ('SELECT "t1"."strategy", "t1"."fetch_date", "t1"."cookie_bytes" FROM "_cookieschema" AS "t1" WHERE ("t1"."strategy" = ?) LIMIT ? OFFSET ?', ['curlCffi', 1, 0])
+2025-06-05 12:49:37 [DEBUG] yfinance:      Exiting _load_cookie_curlCffi()
+2025-06-05 12:49:37 [DEBUG] yfinance: reusing persistent cookie
+2025-06-05 12:49:37 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:      Entering _get_cookie_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance: reusing cookie
+2025-06-05 12:49:37 [DEBUG] yfinance:      Exiting _get_cookie_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance: crumb = '1qXzTE61aXL'
+2025-06-05 12:49:37 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 12:49:37 [DEBUG] yfinance: response code=200
+2025-06-05 12:49:37 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 12:49:37 [DEBUG] yfinance: Exiting get()
+2025-06-05 12:49:37 [DEBUG] yfinance: get_raw_json(): https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 12:49:37 [DEBUG] yfinance: Entering get()
+2025-06-05 12:49:37 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 12:49:37 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 12:49:37 [DEBUG] yfinance: params={'symbols': 'GE', 'formatted': 'false'}
+2025-06-05 12:49:37 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 12:49:37 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 12:49:37 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance: reusing cookie
+2025-06-05 12:49:37 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance: reusing crumb
+2025-06-05 12:49:37 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 12:49:37 [DEBUG] yfinance: response code=200
+2025-06-05 12:49:37 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 12:49:37 [DEBUG] yfinance: Exiting get()
+2025-06-05 12:49:37 [DEBUG] yfinance: Entering get()
+2025-06-05 12:49:37 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 12:49:37 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/GE?symbol=GE&type=trailingPegRatio&period1=1733356800&period2=1749168000
+2025-06-05 12:49:37 [DEBUG] yfinance: params=None
+2025-06-05 12:49:37 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 12:49:37 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 12:49:37 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance: reusing cookie
+2025-06-05 12:49:37 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance: reusing crumb
+2025-06-05 12:49:37 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 12:49:37 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 12:49:37 [DEBUG] yfinance: response code=200
+2025-06-05 12:49:37 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 12:49:37 [DEBUG] yfinance: Exiting get()
+2025-06-05 12:49:43 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 12:49:43 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:49:43 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8103
+2025-06-05 12:49:43 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'GE', 'Name': 'GE Aerospace', 'Sector': 'Industrials', 'Industry': 'Aerospace & Defense', 'Current Price': 250.88, 'Market Cap': 267535925248, 'PE Ratio': 39.508663, 'Dividend Yield': 0.57}
+2025-06-05 12:49:43 [DEBUG] modules.data.directus_mapper: Mapped record: {}
+2025-06-05 12:49:43 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{}]}
+2025-06-05 12:49:43 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:49:43 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 188
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/collections
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /collections HTTP/1.1" 200 12456
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/balance_sheet
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/balance_sheet HTTP/1.1" 200 90683
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/cash_flow
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/cash_flow HTTP/1.1" 200 63371
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/companies
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/companies HTTP/1.1" 200 9575
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/financials
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/financials HTTP/1.1" 200 285091
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/groups
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/groups HTTP/1.1" 200 803
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/income_statement
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/income_statement HTTP/1.1" 200 58334
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8103
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_access
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_access HTTP/1.1" 200 3845
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_activity
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_activity HTTP/1.1" 200 8195
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_collections
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_collections HTTP/1.1" 200 22115
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_comments
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_comments HTTP/1.1" 200 6440
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_fields
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_fields HTTP/1.1" 200 14828
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_files
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_files HTTP/1.1" 200 21905
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_folders
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_folders HTTP/1.1" 200 2323
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_migrations
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_migrations HTTP/1.1" 200 2403
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_permissions
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_permissions HTTP/1.1" 200 6392
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_policies
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_policies HTTP/1.1" 200 8360
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_presets
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_presets HTTP/1.1" 200 10272
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_relations
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_relations HTTP/1.1" 200 8102
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_revisions
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_revisions HTTP/1.1" 200 6313
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_roles
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_roles HTTP/1.1" 200 6455
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_sessions
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_sessions HTTP/1.1" 200 6261
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_settings
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_settings HTTP/1.1" 200 41736
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_users
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_users HTTP/1.1" 200 23509
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_webhooks
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_webhooks HTTP/1.1" 200 11142
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_dashboards
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_dashboards HTTP/1.1" 200 5956
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_panels
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_panels HTTP/1.1" 200 11690
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_notifications
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_notifications HTTP/1.1" 200 7274
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_shares
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_shares HTTP/1.1" 200 9888
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_flows
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_flows HTTP/1.1" 200 9734
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_operations
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_operations HTTP/1.1" 200 9513
+2025-06-05 12:58:42 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_translations
+2025-06-05 12:58:42 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:43 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_translations HTTP/1.1" 200 3260
+2025-06-05 12:58:43 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_versions
+2025-06-05 12:58:43 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:43 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_versions HTTP/1.1" 200 8794
+2025-06-05 12:58:43 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_extensions
+2025-06-05 12:58:43 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:43 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_extensions HTTP/1.1" 200 3918
+2025-06-05 12:58:52 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/collections
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /collections HTTP/1.1" 200 12456
+2025-06-05 12:58:52 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/balance_sheet
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/balance_sheet HTTP/1.1" 200 90683
+2025-06-05 12:58:52 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/cash_flow
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/cash_flow HTTP/1.1" 200 63371
+2025-06-05 12:58:52 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/companies
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/companies HTTP/1.1" 200 9575
+2025-06-05 12:58:52 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/financials
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/financials HTTP/1.1" 200 285091
+2025-06-05 12:58:52 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/groups
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/groups HTTP/1.1" 200 803
+2025-06-05 12:58:52 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/income_statement
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/income_statement HTTP/1.1" 200 58334
+2025-06-05 12:58:52 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 12:58:52 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8103
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_access
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_access HTTP/1.1" 200 3845
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_activity
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_activity HTTP/1.1" 200 8195
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_collections
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_collections HTTP/1.1" 200 22115
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_comments
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_comments HTTP/1.1" 200 6440
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_fields
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_fields HTTP/1.1" 200 14828
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_files
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_files HTTP/1.1" 200 21905
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_folders
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_folders HTTP/1.1" 200 2323
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_migrations
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_migrations HTTP/1.1" 200 2403
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_permissions
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_permissions HTTP/1.1" 200 6392
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_policies
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_policies HTTP/1.1" 200 8360
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_presets
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_presets HTTP/1.1" 200 10272
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_relations
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_relations HTTP/1.1" 200 8102
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_revisions
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_revisions HTTP/1.1" 200 6313
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_roles
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_roles HTTP/1.1" 200 6455
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_sessions
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_sessions HTTP/1.1" 200 6261
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_settings
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_settings HTTP/1.1" 200 41736
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_users
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_users HTTP/1.1" 200 23509
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_webhooks
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_webhooks HTTP/1.1" 200 11142
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_dashboards
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_dashboards HTTP/1.1" 200 5956
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_panels
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_panels HTTP/1.1" 200 11690
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_notifications
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_notifications HTTP/1.1" 200 7274
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_shares
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_shares HTTP/1.1" 200 9888
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_flows
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_flows HTTP/1.1" 200 9734
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_operations
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_operations HTTP/1.1" 200 9513
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_translations
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_translations HTTP/1.1" 200 3260
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_versions
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_versions HTTP/1.1" 200 8794
+2025-06-05 12:58:53 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_extensions
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:58:53 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_extensions HTTP/1.1" 200 3918
+2025-06-05 12:59:11 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 12:59:11 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:59:11 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8103
+2025-06-05 12:59:27 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/items/portfolio
+2025-06-05 12:59:27 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:59:27 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /items/portfolio HTTP/1.1" 200 190
+2025-06-05 12:59:27 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/items/groups
+2025-06-05 12:59:27 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:59:27 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /items/groups HTTP/1.1" 200 11
+2025-06-05 12:59:36 [DEBUG] yfinance: get_raw_json(): https://query2.finance.yahoo.com/v10/finance/quoteSummary/HON
+2025-06-05 12:59:36 [DEBUG] yfinance: Entering get()
+2025-06-05 12:59:36 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 12:59:36 [DEBUG] yfinance: url=https://query2.finance.yahoo.com/v10/finance/quoteSummary/HON
+2025-06-05 12:59:36 [DEBUG] yfinance: params={'modules': 'financialData,quoteType,defaultKeyStatistics,assetProfile,summaryDetail', 'corsDomain': 'finance.yahoo.com', 'formatted': 'false', 'symbol': 'HON'}
+2025-06-05 12:59:36 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 12:59:36 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 12:59:36 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 12:59:36 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 12:59:36 [DEBUG] yfinance: reusing cookie
+2025-06-05 12:59:36 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 12:59:36 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 12:59:36 [DEBUG] yfinance: reusing crumb
+2025-06-05 12:59:36 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 12:59:36 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 12:59:36 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 12:59:36 [DEBUG] yfinance: response code=200
+2025-06-05 12:59:36 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 12:59:36 [DEBUG] yfinance: Exiting get()
+2025-06-05 12:59:36 [DEBUG] yfinance: get_raw_json(): https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 12:59:36 [DEBUG] yfinance: Entering get()
+2025-06-05 12:59:36 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 12:59:36 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 12:59:36 [DEBUG] yfinance: params={'symbols': 'HON', 'formatted': 'false'}
+2025-06-05 12:59:36 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 12:59:36 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 12:59:36 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 12:59:36 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 12:59:36 [DEBUG] yfinance: reusing cookie
+2025-06-05 12:59:36 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 12:59:36 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 12:59:36 [DEBUG] yfinance: reusing crumb
+2025-06-05 12:59:36 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 12:59:36 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 12:59:36 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 12:59:37 [DEBUG] yfinance: response code=200
+2025-06-05 12:59:37 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 12:59:37 [DEBUG] yfinance: Exiting get()
+2025-06-05 12:59:37 [DEBUG] yfinance: Entering get()
+2025-06-05 12:59:37 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 12:59:37 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/HON?symbol=HON&type=trailingPegRatio&period1=1733356800&period2=1749168000
+2025-06-05 12:59:37 [DEBUG] yfinance: params=None
+2025-06-05 12:59:37 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 12:59:37 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 12:59:37 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 12:59:37 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 12:59:37 [DEBUG] yfinance: reusing cookie
+2025-06-05 12:59:37 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 12:59:37 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 12:59:37 [DEBUG] yfinance: reusing crumb
+2025-06-05 12:59:37 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 12:59:37 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 12:59:37 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 12:59:37 [DEBUG] yfinance: response code=200
+2025-06-05 12:59:37 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 12:59:37 [DEBUG] yfinance: Exiting get()
+2025-06-05 12:59:50 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 12:59:50 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:59:50 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8103
+2025-06-05 12:59:50 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.45, 'Market Cap': 146308808704, 'PE Ratio': 26.113663, 'Dividend Yield': 1.99}
+2025-06-05 12:59:50 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}
+2025-06-05 12:59:50 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}]}
+2025-06-05 12:59:50 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 12:59:50 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 188
+2025-06-05 13:04:11 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 13:04:11 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 13:04:11 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 13:04:11 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.45, 'Market Cap': 146308808704, 'PE Ratio': 26.113663, 'Dividend Yield': 1.99}
+2025-06-05 13:04:11 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}
+2025-06-05 13:04:11 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}]}
+2025-06-05 13:04:11 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 13:04:11 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 205
+2025-06-05 13:07:29 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 13:07:29 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 13:07:29 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 13:07:29 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.45, 'Market Cap': 146308808704, 'PE Ratio': 26.113663, 'Dividend Yield': 1.99}
+2025-06-05 13:07:29 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}
+2025-06-05 13:07:29 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}]}
+2025-06-05 13:07:29 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 13:07:29 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 205
+2025-06-05 14:02:35 [INFO] numexpr.utils: NumExpr defaulting to 16 threads.
+2025-06-05 14:02:36 [DEBUG] matplotlib: matplotlib data path: C:\Users\Daan Smit\Documents\Fundalyze\.venv\lib\site-packages\matplotlib\mpl-data
+2025-06-05 14:02:36 [DEBUG] matplotlib: CONFIGDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 14:02:36 [DEBUG] matplotlib: interactive is False
+2025-06-05 14:02:36 [DEBUG] matplotlib: platform is win32
+2025-06-05 14:02:36 [DEBUG] matplotlib: CACHEDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 14:02:36 [DEBUG] matplotlib.font_manager: Using fontManager instance from C:\Users\Daan Smit\.matplotlib\fontlist-v390.json
+2025-06-05 14:02:45 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/items/portfolio
+2025-06-05 14:02:45 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:02:45 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /items/portfolio HTTP/1.1" 200 207
+2025-06-05 14:02:45 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/items/groups
+2025-06-05 14:02:45 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:02:45 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /items/groups HTTP/1.1" 200 11
+2025-06-05 14:03:01 [DEBUG] yfinance: get_raw_json(): https://query2.finance.yahoo.com/v10/finance/quoteSummary/HON
+2025-06-05 14:03:01 [DEBUG] yfinance: Entering get()
+2025-06-05 14:03:01 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:03:01 [DEBUG] yfinance: url=https://query2.finance.yahoo.com/v10/finance/quoteSummary/HON
+2025-06-05 14:03:01 [DEBUG] yfinance: params={'modules': 'financialData,quoteType,defaultKeyStatistics,assetProfile,summaryDetail', 'corsDomain': 'finance.yahoo.com', 'formatted': 'false', 'symbol': 'HON'}
+2025-06-05 14:03:01 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:03:01 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:03:01 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:03:01 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:03:01 [DEBUG] yfinance:      Entering _load_cookie_curlCffi()
+2025-06-05 14:03:01 [DEBUG] peewee: ('CREATE TABLE IF NOT EXISTS "_cookieschema" ("strategy" VARCHAR(255) NOT NULL PRIMARY KEY, "fetch_date" DATETIME NOT NULL, "cookie_bytes" BLOB NOT NULL) WITHOUT ROWID', [])
+2025-06-05 14:03:01 [DEBUG] peewee: ('SELECT "t1"."strategy", "t1"."fetch_date", "t1"."cookie_bytes" FROM "_cookieschema" AS "t1" WHERE ("t1"."strategy" = ?) LIMIT ? OFFSET ?', ['curlCffi', 1, 0])
+2025-06-05 14:03:01 [DEBUG] yfinance:      Exiting _load_cookie_curlCffi()
+2025-06-05 14:03:01 [DEBUG] yfinance: reusing persistent cookie
+2025-06-05 14:03:01 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:03:01 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:03:01 [DEBUG] yfinance:      Entering _get_cookie_basic()
+2025-06-05 14:03:01 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:03:01 [DEBUG] yfinance:      Exiting _get_cookie_basic()
+2025-06-05 14:03:01 [DEBUG] yfinance: crumb = '1qXzTE61aXL'
+2025-06-05 14:03:01 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:03:01 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:03:01 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:03:04 [DEBUG] yfinance: response code=200
+2025-06-05 14:03:04 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:03:04 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:03:04 [DEBUG] yfinance: get_raw_json(): https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 14:03:04 [DEBUG] yfinance: Entering get()
+2025-06-05 14:03:04 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:03:04 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/v7/finance/quote?
+2025-06-05 14:03:04 [DEBUG] yfinance: params={'symbols': 'HON', 'formatted': 'false'}
+2025-06-05 14:03:04 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:03:04 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:03:04 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:03:04 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:03:04 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:03:04 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:03:04 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:03:04 [DEBUG] yfinance: reusing crumb
+2025-06-05 14:03:04 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:03:04 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:03:04 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:03:04 [DEBUG] yfinance: response code=200
+2025-06-05 14:03:04 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:03:04 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:03:04 [DEBUG] yfinance: Entering get()
+2025-06-05 14:03:04 [DEBUG] yfinance:  Entering _make_request()
+2025-06-05 14:03:04 [DEBUG] yfinance: url=https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/HON?symbol=HON&type=trailingPegRatio&period1=1733356800&period2=1749168000
+2025-06-05 14:03:04 [DEBUG] yfinance: params=None
+2025-06-05 14:03:04 [DEBUG] yfinance:   Entering _get_cookie_and_crumb()
+2025-06-05 14:03:04 [DEBUG] yfinance: cookie_mode = 'basic'
+2025-06-05 14:03:04 [DEBUG] yfinance:    Entering _get_cookie_and_crumb_basic()
+2025-06-05 14:03:04 [DEBUG] yfinance:     Entering _get_cookie_basic()
+2025-06-05 14:03:04 [DEBUG] yfinance: reusing cookie
+2025-06-05 14:03:04 [DEBUG] yfinance:     Exiting _get_cookie_basic()
+2025-06-05 14:03:04 [DEBUG] yfinance:     Entering _get_crumb_basic()
+2025-06-05 14:03:04 [DEBUG] yfinance: reusing crumb
+2025-06-05 14:03:04 [DEBUG] yfinance:     Exiting _get_crumb_basic()
+2025-06-05 14:03:04 [DEBUG] yfinance:    Exiting _get_cookie_and_crumb_basic()
+2025-06-05 14:03:04 [DEBUG] yfinance:   Exiting _get_cookie_and_crumb()
+2025-06-05 14:03:04 [DEBUG] yfinance: response code=200
+2025-06-05 14:03:04 [DEBUG] yfinance:  Exiting _make_request()
+2025-06-05 14:03:04 [DEBUG] yfinance: Exiting get()
+2025-06-05 14:03:06 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 14:03:06 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:03:07 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 14:03:07 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.45, 'Market Cap': 146308808704, 'PE Ratio': 26.113663, 'Dividend Yield': 1.99}
+2025-06-05 14:03:07 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}
+2025-06-05 14:03:07 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}]}
+2025-06-05 14:03:07 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:03:07 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 205
+2025-06-05 14:03:23 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 14:03:23 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:03:23 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 14:03:23 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.45, 'Market Cap': 146308808704, 'PE Ratio': 26.113663, 'Dividend Yield': 1.99}
+2025-06-05 14:03:23 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}
+2025-06-05 14:03:23 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}]}
+2025-06-05 14:03:23 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:03:23 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 205
+2025-06-05 14:03:28 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 14:03:28 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:03:28 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 14:03:28 [DEBUG] modules.data.directus_mapper: Original record: {'Ticker': 'HON', 'Name': 'Honeywell International Inc.', 'Sector': 'Industrials', 'Industry': 'Technology', 'Current Price': 227.45, 'Market Cap': 146308808704, 'PE Ratio': 26.113663, 'Dividend Yield': 1.99}
+2025-06-05 14:03:28 [DEBUG] modules.data.directus_mapper: Mapped record: {'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}
+2025-06-05 14:03:28 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/portfolio payload={'data': [{'ticker_symbol': 'HON', 'company_name': 'Honeywell International Inc.', 'sector': 'Industrials', 'industry': 'Technology', 'current_price': 227.45, 'market_cap': 146308808704, 'pe_ratio': 26.113663, 'dividend_yield': 1.99}]}
+2025-06-05 14:03:28 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:03:28 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/portfolio HTTP/1.1" 200 205
+2025-06-05 14:05:02 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/collections
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /collections HTTP/1.1" 200 12456
+2025-06-05 14:05:02 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/balance_sheet
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/balance_sheet HTTP/1.1" 200 90683
+2025-06-05 14:05:02 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/cash_flow
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/cash_flow HTTP/1.1" 200 63371
+2025-06-05 14:05:02 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/companies
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/companies HTTP/1.1" 200 9575
+2025-06-05 14:05:02 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/financials
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/financials HTTP/1.1" 200 285091
+2025-06-05 14:05:02 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/groups
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/groups HTTP/1.1" 200 803
+2025-06-05 14:05:02 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/income_statement
+2025-06-05 14:05:02 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/income_statement HTTP/1.1" 200 58334
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_access
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_access HTTP/1.1" 200 3845
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_activity
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_activity HTTP/1.1" 200 8195
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_collections
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_collections HTTP/1.1" 200 22115
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_comments
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_comments HTTP/1.1" 200 6440
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_fields
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_fields HTTP/1.1" 200 14828
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_files
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_files HTTP/1.1" 200 21905
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_folders
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_folders HTTP/1.1" 200 2323
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_migrations
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_migrations HTTP/1.1" 200 2403
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_permissions
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_permissions HTTP/1.1" 200 6392
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_policies
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_policies HTTP/1.1" 200 8360
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_presets
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_presets HTTP/1.1" 200 10272
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_relations
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_relations HTTP/1.1" 200 8102
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_revisions
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_revisions HTTP/1.1" 200 6313
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_roles
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_roles HTTP/1.1" 200 6455
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_sessions
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_sessions HTTP/1.1" 200 6261
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_settings
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_settings HTTP/1.1" 200 41736
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_users
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_users HTTP/1.1" 200 23509
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_webhooks
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_webhooks HTTP/1.1" 200 11142
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_dashboards
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_dashboards HTTP/1.1" 200 5956
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_panels
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_panels HTTP/1.1" 200 11690
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_notifications
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_notifications HTTP/1.1" 200 7274
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_shares
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_shares HTTP/1.1" 200 9888
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_flows
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_flows HTTP/1.1" 200 9734
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_operations
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_operations HTTP/1.1" 200 9513
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_translations
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_translations HTTP/1.1" 200 3260
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_versions
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_versions HTTP/1.1" 200 8794
+2025-06-05 14:05:03 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_extensions
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:03 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_extensions HTTP/1.1" 200 3918
+2025-06-05 14:05:21 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 14:05:21 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): finviz.com:443
+2025-06-05 14:05:21 [DEBUG] urllib3.connectionpool: https://finviz.com:443 "GET /quote.ashx?t=HON HTTP/1.1" 200 None
+2025-06-05 14:05:21 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/companies
+2025-06-05 14:05:21 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:21 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): us.i.posthog.com:443
+2025-06-05 14:05:21 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/companies HTTP/1.1" 200 9575
+2025-06-05 14:05:21 [DEBUG] modules.data.directus_mapper: Original record: {'symbol': 'HON', 'name': 'Honeywell International Inc', 'stock_exchange': 'NASD', 'long_description': 'Honeywell International, Inc. is a software industrial company, which offers industry specific solutions to aerospace and automotive products and services. It operates through the following business segments: Aerospace Technologies, Industrial Automation, Building Automation, Energy and Sustainability Solutions, and Corporate and All Other. The company was founded by Albert M. Butz in 1906 and is headquartered in Charlotte, NC.', 'hq_country': 'USA', 'employees': 102000, 'sector': 'Industrials', 'industry_category': 'Conglomerates', 'index': 'DJIA, NDX, S&P 500', 'shares_outstanding': '642.68M', 'shares_float': '641.89M', 'short_interest': '7.58M', 'institutional_ownership': 0.8008, 'market_cap': '146.18B', 'earnings_date': 'Apr 29 BMO', 'beta': 1.07}
+2025-06-05 14:05:21 [DEBUG] modules.data.directus_mapper: Mapped record: {'sector': 'Industrials'}
+2025-06-05 14:05:21 [DEBUG] modules.data.directus_client: Directus request POST http://localhost:32768/items/companies payload={'data': [{'sector': 'Industrials'}]}
+2025-06-05 14:05:21 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:05:21 [DEBUG] urllib3.connectionpool: http://localhost:32768 "POST /items/companies HTTP/1.1" 200 203
+2025-06-05 14:05:21 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 14:05:21 [DEBUG] yfinance: Entering download()
+2025-06-05 14:05:21 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 14:05:21 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 14:05:21 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 14:05:21 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 14:05:22 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 14:05:22 [DEBUG] asyncio: Using proactor: IocpProactor
+2025-06-05 14:05:22 [DEBUG] urllib3.connectionpool: https://us.i.posthog.com:443 "POST /batch/ HTTP/1.1" 200 15
+2025-06-05 14:05:22 [DEBUG] urllib3.connectionpool: https://us.i.posthog.com:443 "POST /batch/ HTTP/1.1" 200 15
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/collections
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /collections HTTP/1.1" 200 12456
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/balance_sheet
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/balance_sheet HTTP/1.1" 200 90683
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/cash_flow
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/cash_flow HTTP/1.1" 200 63371
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/companies
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/companies HTTP/1.1" 200 9575
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/financials
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/financials HTTP/1.1" 200 285091
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/groups
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/groups HTTP/1.1" 200 803
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/income_statement
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/income_statement HTTP/1.1" 200 58334
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/portfolio
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/portfolio HTTP/1.1" 200 8131
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_access
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_access HTTP/1.1" 200 3845
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_activity
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_activity HTTP/1.1" 200 8195
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_collections
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_collections HTTP/1.1" 200 22115
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_comments
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_comments HTTP/1.1" 200 6440
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_fields
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_fields HTTP/1.1" 200 14828
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_files
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_files HTTP/1.1" 200 21905
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_folders
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_folders HTTP/1.1" 200 2323
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_migrations
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_migrations HTTP/1.1" 200 2403
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_permissions
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_permissions HTTP/1.1" 200 6392
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_policies
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_policies HTTP/1.1" 200 8360
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_presets
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_presets HTTP/1.1" 200 10272
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_relations
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_relations HTTP/1.1" 200 8102
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_revisions
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_revisions HTTP/1.1" 200 6313
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_roles
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_roles HTTP/1.1" 200 6455
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_sessions
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_sessions HTTP/1.1" 200 6261
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_settings
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_settings HTTP/1.1" 200 41736
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_users
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_users HTTP/1.1" 200 23509
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_webhooks
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_webhooks HTTP/1.1" 200 11142
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_dashboards
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_dashboards HTTP/1.1" 200 5956
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_panels
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_panels HTTP/1.1" 200 11690
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_notifications
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_notifications HTTP/1.1" 200 7274
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_shares
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_shares HTTP/1.1" 200 9888
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_flows
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_flows HTTP/1.1" 200 9734
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_operations
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_operations HTTP/1.1" 200 9513
+2025-06-05 14:11:24 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_translations
+2025-06-05 14:11:24 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:25 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_translations HTTP/1.1" 200 3260
+2025-06-05 14:11:25 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_versions
+2025-06-05 14:11:25 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:25 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_versions HTTP/1.1" 200 8794
+2025-06-05 14:11:25 [DEBUG] modules.data.directus_client: Directus request GET http://localhost:32768/fields/directus_extensions
+2025-06-05 14:11:25 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): localhost:32768
+2025-06-05 14:11:25 [DEBUG] urllib3.connectionpool: http://localhost:32768 "GET /fields/directus_extensions HTTP/1.1" 200 3918
+2025-06-05 14:13:26 [INFO] numexpr.utils: NumExpr defaulting to 16 threads.
+2025-06-05 14:13:27 [DEBUG] matplotlib: matplotlib data path: C:\Users\Daan Smit\Documents\Fundalyze\.venv\lib\site-packages\matplotlib\mpl-data
+2025-06-05 14:13:27 [DEBUG] matplotlib: CONFIGDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 14:13:27 [DEBUG] matplotlib: interactive is False
+2025-06-05 14:13:27 [DEBUG] matplotlib: platform is win32
+2025-06-05 14:13:27 [DEBUG] matplotlib: CACHEDIR=C:\Users\Daan Smit\.matplotlib
+2025-06-05 14:13:27 [DEBUG] matplotlib.font_manager: Using fontManager instance from C:\Users\Daan Smit\.matplotlib\fontlist-v390.json
