@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from typing import Iterable, Dict, Any, List
 
-from .directus_client import list_fields
+from .directus_client import list_fields, list_collections
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 MAP_FILE = PROJECT_ROOT / "config" / "directus_field_map.json"
@@ -40,3 +40,24 @@ def prepare_records(collection: str, records: Iterable[Dict[str, Any]]) -> List[
                 mapped[new_key] = value
         prepared.append(mapped)
     return prepared
+
+
+def refresh_field_map() -> Dict[str, Dict[str, str]]:
+    """Update mapping with fields from Directus collections."""
+    mapping = load_field_map()
+    try:
+        collections = list_collections()
+    except Exception:
+        collections = []
+
+    for col in collections:
+        try:
+            fields = list_fields(col)
+        except Exception:
+            continue
+        col_map = mapping.setdefault(col, {})
+        for field in fields:
+            col_map.setdefault(field, field)
+
+    save_field_map(mapping)
+    return mapping
