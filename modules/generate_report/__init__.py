@@ -68,7 +68,9 @@ def run_generate_report():
     if not tickers:
         print("No tickers selected. Returning to main menu.\n")
         return
-    for tk in tickers:
+    total = len(tickers)
+    for idx, tk in enumerate(tickers, start=1):
+        print(f"\n[{idx}/{total}] Generating report for {tk}...")
         try:
             fetch_and_compile(tk)
         except Exception as e:

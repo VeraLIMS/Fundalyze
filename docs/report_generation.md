@@ -8,7 +8,7 @@ The report workflow is orchestrated by `run_generate_report()` in `modules.gener
 It performs the following steps:
 
 1. Prompt for ticker symbols.
-2. Call `fetch_and_compile()` for each ticker to download profile data, price history and financial statements.  Data is saved under `output/<TICKER>/`.
+2. Call `fetch_and_compile()` for each ticker to download profile data, price history and financial statements.  Progress is printed for each ticker while data is saved under `output/<TICKER>/`.
 3. Run `metadata_checker` to re-fetch any files that failed during the initial download.
 4. Run `fallback_data` which attempts additional yfinance/FMP downloads if information is still missing.
 5. Build an Excel dashboard using `excel_dashboard.create_and_open_dashboard()` and open it automatically.
