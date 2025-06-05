@@ -1,3 +1,4 @@
+"""Public API for the report generation package."""
 # src/generate_report/__init__.py
 
 from .report_generator import fetch_and_compile

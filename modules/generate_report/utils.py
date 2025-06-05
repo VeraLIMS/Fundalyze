@@ -1,4 +1,5 @@
 from __future__ import annotations
+"""Miscellaneous helper functions used by report generators."""
 
 import time
 

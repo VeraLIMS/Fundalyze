@@ -1,3 +1,4 @@
+"""Unit tests for group analysis CLI tool."""
 import pandas as pd
 import modules.management.group_analysis.group_analysis as ga
 

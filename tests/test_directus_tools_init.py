@@ -1,3 +1,4 @@
+"""Ensure directus_tools exposes run_directus_wizard."""
 import inspect
 
 from modules.management.directus_tools import run_directus_wizard

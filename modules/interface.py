@@ -1,4 +1,5 @@
 from __future__ import annotations
+"""User interface helper functions for CLI menus and tables."""
 
 import pandas as pd
 from tabulate import tabulate

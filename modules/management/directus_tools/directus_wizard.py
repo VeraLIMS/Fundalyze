@@ -1,3 +1,4 @@
+"""Interactive wizard for configuring Directus integration."""
 import json
 
 from modules.interface import (

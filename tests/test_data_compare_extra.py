@@ -1,3 +1,4 @@
+"""Edge-case tests for data.compare helpers."""
 import pandas as pd
 from data.compare import is_complete
 

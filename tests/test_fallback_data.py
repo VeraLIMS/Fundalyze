@@ -1,3 +1,4 @@
+"""Tests for yfinance fallback data retrieval."""
 import json
 import pandas as pd
 from unittest.mock import MagicMock

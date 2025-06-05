@@ -1,3 +1,4 @@
+"""Verify management package exports CLI entry points."""
 from modules.management import (
     run_portfolio_manager,
     run_group_analysis,

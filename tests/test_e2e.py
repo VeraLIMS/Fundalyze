@@ -1,3 +1,4 @@
+"""End-to-end integration tests for report generation."""
 import pandas as pd
 from openpyxl import load_workbook
 

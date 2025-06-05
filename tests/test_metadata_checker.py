@@ -1,3 +1,4 @@
+"""Tests for metadata_checker re-fetch workflow."""
 import pandas as pd
 from unittest.mock import MagicMock
 import pytest

@@ -1,3 +1,4 @@
+"""Regression tests for diff_dict helper."""
 from data.compare import diff_dict
 
 
