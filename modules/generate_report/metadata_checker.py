@@ -13,7 +13,7 @@ entries are later handled by :mod:`fallback_data`.
 
 import json
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Any, Iterable, Optional, Tuple
 
 from modules.config_utils import get_output_dir, add_fmp_api_key
 
@@ -189,32 +189,37 @@ def _re_fetch_prices(symbol: str, csv_path: Path) -> Tuple[str, str]:
     )
 
 
+def _yahoo_financial_url(symbol: str, stmt: str) -> str:
+    """Return the Yahoo Finance page URL for ``stmt``."""
+    paths = {
+        "income": "financials",
+        "balance": "balance-sheet",
+        "cash": "cash-flow",
+    }
+    return f"https://finance.yahoo.com/quote/{symbol}/{paths.get(stmt, 'financials')}"
+
+
 def _re_fetch_statement(symbol: str, stmt: str, period: str, csv_path: Path) -> Tuple[str, str]:
-    """Fetch financial statement via yfinance or FMP and save to ``csv_path``."""
-    yf_attr = STATEMENT_MAP[stmt][0] if period == "annual" else STATEMENT_MAP[stmt][1]
-    endpoint = STATEMENT_MAP[stmt][2]
+    """Fetch a financial statement and save to ``csv_path``."""
+    yf_attr, endpoint = (
+        STATEMENT_MAP[stmt][0] if period == "annual" else STATEMENT_MAP[stmt][1],
+        STATEMENT_MAP[stmt][2],
+    )
+
     df_yf = fetch_fin_stmt_from_yf(symbol, yf_attr)
     if not df_yf.empty:
         should_transpose = any(isinstance(col, pd.Timestamp) for col in df_yf.columns)
         df_to_save = df_yf.T if should_transpose else df_yf
         df_to_save.to_csv(csv_path, index=True)
         print(f"    • {stmt.title()} ({period}) re-fetched via yfinance.")
-        url = f"https://finance.yahoo.com/quote/{symbol}/financials"
-        if stmt == "balance":
-            url = f"https://finance.yahoo.com/quote/{symbol}/balance-sheet"
-        elif stmt == "cash":
-            url = f"https://finance.yahoo.com/quote/{symbol}/cash-flow"
-        return f"yfinance.{yf_attr}", url
+        return f"yfinance.{yf_attr}", _yahoo_financial_url(symbol, stmt)
 
     df_fmp = fetch_fmp_statement(symbol, endpoint, period)
     if df_fmp.empty:
         raise ValueError(f"No FMP data for {csv_path.name}")
     df_fmp.to_csv(csv_path, index=True)
     print(f"    • {stmt.title()} ({period}) re-fetched via FMP.")
-    return (
-        f"FMP ({endpoint}, {period})",
-        f"{FMP_BASE}/{endpoint}/{symbol}",
-    )
+    return f"FMP ({endpoint}, {period})", f"{FMP_BASE}/{endpoint}/{symbol}"
 
 
 def _process_file(symbol: str, filename: str, csv_path: Path) -> Optional[Tuple[str, str]]:
@@ -236,6 +241,18 @@ def _process_file(symbol: str, filename: str, csv_path: Path) -> Optional[Tuple[
     return None
 
 
+def _load_metadata(meta_path: Path) -> dict[str, Any]:
+    """Return metadata dictionary from ``meta_path``."""
+    with open(meta_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _write_metadata(meta_path: Path, metadata: dict) -> None:
+    """Write ``metadata`` to ``meta_path``."""
+    with open(meta_path, "w", encoding="utf-8") as f:
+        json.dump(metadata, f, indent=2)
+
+
 def enrich_ticker_folder(ticker_dir: Path):
     """
     Examine metadata.json in ticker_dir, find any file entries whose 'source'
@@ -247,8 +264,7 @@ def enrich_ticker_folder(ticker_dir: Path):
         print(f"  [WARN] No metadata.json in {ticker_dir.name}, skipping.")
         return
 
-    with open(meta_path, "r", encoding="utf-8") as f:
-        metadata = json.load(f)
+    metadata = _load_metadata(meta_path)
 
     files_meta = metadata.get("files", {})
     updated = False
@@ -277,19 +293,20 @@ def enrich_ticker_folder(ticker_dir: Path):
     if updated:
         # Write back metadata.json
         metadata["files"] = files_meta
-        with open(meta_path, "w", encoding="utf-8") as f:
-            json.dump(metadata, f, indent=2)
+        _write_metadata(meta_path, metadata)
         print(f"\n  ✓ Updated metadata.json for {ticker_dir.name}")
     else:
         print(f"\n  • No updates made for {ticker_dir.name} (no ERROR entries found).")
 
 
-def run_for_tickers(tickers, output_root: str | None = None):
-    """Run metadata enrichment only for the specified ticker list."""
+def run_for_tickers(tickers: Iterable[str], output_root: str | None = None) -> None:
+    """Run metadata enrichment only for the specified tickers."""
     project_root = Path(__file__).resolve().parents[2]
     if output_root is None:
         output_root = str(get_output_dir())
-    out_root = project_root / output_root if not Path(output_root).is_absolute() else Path(output_root)
+    out_root = Path(output_root)
+    if not out_root.is_absolute():
+        out_root = project_root / out_root
 
     if not out_root.exists() or not out_root.is_dir():
         print(f"[ERROR] '{out_root}' does not exist or is not a directory.")
@@ -310,11 +327,14 @@ def run_for_tickers(tickers, output_root: str | None = None):
     print("\n[Metadata Enricher] Done.\n")
 
 
-def main(output_root: str | None = None):
+def main(output_root: str | None = None) -> None:
+    """Entry point for command line execution."""
     project_root = Path(__file__).resolve().parents[2]
     if output_root is None:
         output_root = str(get_output_dir())
-    output_root = project_root / output_root if not Path(output_root).is_absolute() else Path(output_root)
+    output_root = Path(output_root)
+    if not output_root.is_absolute():
+        output_root = project_root / output_root
 
     if not output_root.exists() or not output_root.is_dir():
         print(f"[ERROR] '{output_root}' does not exist or is not a directory.")
