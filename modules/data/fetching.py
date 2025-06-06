@@ -10,6 +10,7 @@ import yfinance as yf
 
 from modules.config_utils import add_fmp_api_key
 from modules.utils.progress_utils import progress_iter
+from modules.utils import parse_number
 
 from .term_mapper import resolve_term
 
@@ -38,10 +39,10 @@ def _parse_yf_info(info: Mapping[str, Any], ticker: str) -> dict[str, Any]:
         "Name": info.get("longName", ""),
         "Sector": resolve_term(info.get("sector", "")),
         "Industry": resolve_term(info.get("industry", "")),
-        "Current Price": info.get("currentPrice", pd.NA),
-        "Market Cap": info.get("marketCap", pd.NA),
-        "PE Ratio": info.get("trailingPE", pd.NA),
-        "Dividend Yield": info.get("dividendYield", pd.NA),
+        "Current Price": parse_number(info.get("currentPrice", pd.NA)),
+        "Market Cap": parse_number(info.get("marketCap", pd.NA)),
+        "PE Ratio": parse_number(info.get("trailingPE", pd.NA)),
+        "Dividend Yield": parse_number(info.get("dividendYield", pd.NA)),
     }
 
 
@@ -59,10 +60,10 @@ def _fetch_from_fmp(ticker: str) -> dict[str, Any]:
         "Name": row.get("companyName", ""),
         "Sector": resolve_term(row.get("sector", "")),
         "Industry": resolve_term(row.get("industry", "")),
-        "Current Price": row.get("price", pd.NA),
-        "Market Cap": row.get("mktCap", pd.NA),
-        "PE Ratio": row.get("pe", pd.NA),
-        "Dividend Yield": row.get("lastDiv", pd.NA),
+        "Current Price": parse_number(row.get("price", pd.NA)),
+        "Market Cap": parse_number(row.get("mktCap", pd.NA)),
+        "PE Ratio": parse_number(row.get("pe", pd.NA)),
+        "Dividend Yield": parse_number(row.get("lastDiv", pd.NA)),
     }
 
 
