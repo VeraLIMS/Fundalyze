@@ -25,6 +25,7 @@ __all__ = [
     "portfolio_summary",
     "sector_counts",
     "correlation_matrix",
+    "missing_field_counts",
     "moving_average",
     "percentage_change",
 ]
@@ -93,5 +94,31 @@ def correlation_matrix(df: pd.DataFrame) -> pd.DataFrame:
     if len(numeric_cols) < 2:
         return pd.DataFrame()
     return df[numeric_cols].corr()
+
+
+def missing_field_counts(df: pd.DataFrame) -> pd.DataFrame:
+    """Return count of missing values per column.
+
+    Parameters
+    ----------
+    df:
+        DataFrame to analyze.
+
+    Returns
+    -------
+    pd.DataFrame
+        Two-column DataFrame ``["Field", "Missing"]`` sorted by count.
+        An empty DataFrame is returned if ``df`` is empty or has no
+        missing values.
+    """
+    if df is None or df.empty:
+        return pd.DataFrame()
+    counts = df.isna().sum()
+    counts = counts[counts > 0]
+    if counts.empty:
+        return pd.DataFrame()
+    result = counts.sort_values(ascending=False).reset_index()
+    result.columns = ["Field", "Missing"]
+    return result
 
 

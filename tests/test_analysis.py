@@ -2,7 +2,12 @@
 import pandas as pd
 from analytics import portfolio_summary, sector_counts
 import pytest
-from analytics import correlation_matrix, moving_average, percentage_change
+from analytics import (
+    correlation_matrix,
+    moving_average,
+    percentage_change,
+    missing_field_counts,
+)
 
 
 def test_portfolio_summary_numeric_columns():
@@ -69,3 +74,18 @@ def test_percentage_change_empty():
     empty = pd.Series(dtype=float)
     result = percentage_change(empty)
     assert result.empty
+
+
+def test_missing_field_counts_basic():
+    df = pd.DataFrame({
+        "A": [1, None, 2],
+        "B": [None, None, 3],
+    })
+    result = missing_field_counts(df)
+    assert result.iloc[0].tolist() == ["B", 2]
+    assert result.iloc[1].tolist() == ["A", 1]
+
+
+def test_missing_field_counts_no_missing():
+    df = pd.DataFrame({"A": [1, 2]})
+    assert missing_field_counts(df).empty
