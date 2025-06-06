@@ -1,7 +1,7 @@
 # Utility Modules
 
 This page describes the small helper modules under `modules/utils`. They are
-used across the codebase for data loading, Excel formatting and simple
+used across the codebase for data loading, optional JSON helpers and simple
 calculations.
 
 ```text
