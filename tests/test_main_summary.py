@@ -1,27 +1,10 @@
 import os
 import sys
-import types
 import pandas as pd
 import importlib.util
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-# Patch missing modules expected by scripts.main
-sys.modules.setdefault(
-    "modules.generate_report.metadata_checker",
-    types.ModuleType("metadata_checker"),
-)
-sys.modules["modules.generate_report.metadata_checker"].run_for_tickers = lambda *a, **k: None
-sys.modules.setdefault(
-    "modules.generate_report.fallback_data",
-    types.ModuleType("fallback_data"),
-)
-sys.modules["modules.generate_report.fallback_data"].run_fallback_data = lambda *a, **k: None
-sys.modules.setdefault(
-    "modules.generate_report.excel_dashboard",
-    types.ModuleType("excel_dashboard"),
-)
-sys.modules["modules.generate_report.excel_dashboard"].create_and_open_dashboard = lambda *a, **k: None
 
 import modules.management.portfolio_manager.portfolio_manager as pm
 pm.PORTFOLIO_FILE = "dummy"

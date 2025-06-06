@@ -13,7 +13,7 @@ companies and manage a portfolio entirely through the Directus API.
 ## Features
 - Download company profiles, historical prices and financial statements
 - Manage your portfolio and ticker groups directly in Directus
-- Fallback to alternate data sources when needed
+- Automatic fallback from OpenBB to yfinance and FMP when data is missing
 
 ## Installation
 
