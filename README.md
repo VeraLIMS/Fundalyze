@@ -70,6 +70,16 @@ record = fetch_and_store("AAPL")
 ```
 The returned dictionary contains normalized company data.
 
+### Run with Docker
+Build the image and launch the CLI inside a container:
+```bash
+docker build -t fundalyze .
+docker run -it --rm -p 8501:8501 fundalyze
+```
+The container installs dependencies from `requirements.txt`, runs
+`python scripts/main.py`, and exposes port **8501** for Streamlit apps
+or other tools that may use it.
+
 ## Directus Field Mapping
 `scripts/sync_directus_fields.py` syncs your Directus instance to `directus_field_map.json`.
 1. Ensure `DIRECTUS_API_URL` and `DIRECTUS_TOKEN` are set.
