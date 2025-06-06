@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 """Field mapping diagnostic helper for Fundalyze."""
+import argparse
 from modules.management.portfolio_manager import portfolio_manager as pm
 from modules.management.group_analysis import group_analysis as ga
-from modules.data.directus_mapper import load_field_map, prepare_records, add_missing_mappings
+from modules.data.directus_mapper import (
+    load_field_map,
+    prepare_records,
+    add_missing_mappings,
+)
 from modules.data.directus_client import insert_items, fetch_items
 
 COLLECTIONS = {
@@ -37,8 +42,27 @@ def test_insert(ticker: str = "MSFT") -> None:
         print("Fetched back:", fetched)
 
 
-if __name__ == "__main__":
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Field mapping diagnostics")
+    parser.add_argument(
+        "--insert",
+        action="store_true",
+        help="Test inserting a record after displaying mapping",
+    )
+    parser.add_argument(
+        "--ticker",
+        default="MSFT",
+        help="Ticker symbol to use with --insert",
+    )
+    args = parser.parse_args()
+
     for col, expected in COLLECTIONS.items():
         show_mapping(col, expected)
-    print("\nRunning test insert with ticker MSFT...")
-    test_insert()
+
+    if args.insert:
+        print(f"\nRunning test insert with ticker {args.ticker}...")
+        test_insert(args.ticker)
+
+
+if __name__ == "__main__":
+    main()

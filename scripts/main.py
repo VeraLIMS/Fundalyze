@@ -230,6 +230,20 @@ def debug_mapped_record() -> None:
     print("Mapped record:\n", mapped)
 
 
+def run_mapping_test() -> None:
+    """Display current field mapping for portfolio and groups."""
+    subprocess.run([sys.executable, os.path.join(SCRIPT_DIR, "mapping_diagnostic.py")])
+
+
+def run_insert_test() -> None:
+    """Insert a test record for ticker MSFT and show the result."""
+    subprocess.run([
+        sys.executable,
+        os.path.join(SCRIPT_DIR, "mapping_diagnostic.py"),
+        "--insert",
+    ])
+
+
 def portfolio_summary_cli() -> None:
     """Display portfolio summary statistics and missing-field counts."""
     from modules.management.portfolio_manager.portfolio_manager import load_portfolio
@@ -263,6 +277,8 @@ def run_utilities_menu() -> None:
         options = [
             "Run Test Suite",
             "Performance Profile",
+            "Test Mapping",
+            "Test Insert",
             "Return to Main Menu",
         ]
         print_menu(options)
@@ -273,6 +289,10 @@ def run_utilities_menu() -> None:
         elif choice == "2":
             run_profile_cli()
         elif choice == "3":
+            run_mapping_test()
+        elif choice == "4":
+            run_insert_test()
+        elif choice == "5":
             break
         else:
             invalid_choice()
@@ -299,6 +319,8 @@ COMMAND_MAP: dict[str, Callable[[], None]] = {
     "view-profiles": view_directus_profiles,
     "map-record": debug_mapped_record,
     "diag": lambda: subprocess.run(["python", "scripts/mapping_diagnostic.py"]),
+    "test-mapping": run_mapping_test,
+    "test-insert": run_insert_test,
     "summary": portfolio_summary_cli,
 }
 
@@ -314,6 +336,8 @@ COMMAND_HELP = {
     "view-profiles": "View company profiles from Directus",
     "map-record": "Fetch and display mapped portfolio record",
     "diag": "Run mapping diagnostic script",
+    "test-mapping": "Display current field mapping",
+    "test-insert": "Insert a test record into Directus",
     "summary": "Display portfolio summary statistics",
 }
 

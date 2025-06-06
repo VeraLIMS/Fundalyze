@@ -84,6 +84,8 @@ or other tools that may use it.
 `scripts/sync_directus_fields.py` syncs your Directus instance to `directus_field_map.json`.
 1. Ensure `DIRECTUS_API_URL` and `DIRECTUS_TOKEN` are set.
 2. Run `python scripts/sync_directus_fields.py` and follow the prompts.
+You can verify your mapping at any time with `python scripts/main.py test-mapping`
+or insert a sample record using `python scripts/main.py test-insert`.
 
 ## Folder Structure
 - `modules/` – source packages
