@@ -86,6 +86,8 @@ or other tools that may use it.
 2. Run `python scripts/sync_directus_fields.py` and follow the prompts.
 You can verify your mapping at any time with `python scripts/main.py test-mapping`
 or insert a sample record using `python scripts/main.py test-insert`.
+To automatically append any new fields in a dataset run
+`python scripts/main.py add-missing` and follow the prompts.
 
 ## Folder Structure
 - `modules/` – source packages
