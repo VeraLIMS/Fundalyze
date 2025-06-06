@@ -3,7 +3,7 @@ from __future__ import annotations
 """Unified data fetching with prioritized fallbacks."""
 
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, Iterable
 
 import pandas as pd
 
@@ -22,9 +22,10 @@ def _from_openbb(ticker: str) -> Dict[str, Any] | None:
         obb = get_openbb()
         df = obb.equity.profile(symbol=ticker).to_df()
         if df.empty:
+            logger.info("OpenBB returned no data for %s", ticker)
             return None
         row = df.iloc[0]
-        return {
+        data = {
             "Ticker": ticker.upper(),
             "Name": row.get("name") or row.get("legal_name") or "",
             "Sector": row.get("sector") or "",
@@ -36,14 +37,33 @@ def _from_openbb(ticker: str) -> Dict[str, Any] | None:
             "PE Ratio": pd.NA,
             "Dividend Yield": row.get("dividend_yield", pd.NA),
         }
+        logger.info("Fetched data for %s from OpenBB", ticker)
+        return data
     except Exception as exc:  # pragma: no cover - network failure
         logger.warning("OpenBB fetch failed for %s: %s", ticker, exc)
         return None
 
 
-def fetch_company_data(ticker: str) -> Dict[str, Any] | None:
+DEFAULT_USE_OPENBB = True
+
+
+def _log_missing(data: Dict[str, Any], fields: Iterable[str], ticker: str) -> None:
+    missing = []
+    for f in fields:
+        val = data.get(f)
+        if val is pd.NA or val is None or val == "":
+            missing.append(f)
+    if missing:
+        logger.warning("%s missing fields: %s", ticker, ", ".join(missing))
+
+
+def fetch_company_data(ticker: str, *, use_openbb: bool | None = None) -> Dict[str, Any] | None:
     """Return normalized company data using prioritized sources."""
-    data = _from_openbb(ticker)
+    if use_openbb is None:
+        use_openbb = DEFAULT_USE_OPENBB
+
+    data = _from_openbb(ticker) if use_openbb else None
+    source = "OpenBB" if data else "yfinance/FMP"
     if not data:
         try:
             data = fetch_basic_stock_data(ticker)
@@ -54,9 +74,16 @@ def fetch_company_data(ticker: str) -> Dict[str, Any] | None:
         # fill missing fields with yfinance/FMP fallback
         try:
             yf_data = fetch_basic_stock_data(ticker)
-            data = {**yf_data, **{k: v for k, v in data.items() if v not in ("", pd.NA)}}
-        except Exception:
-            pass
+            cleaned = {}
+            for k, v in data.items():
+                if v is pd.NA or v is None or v == "":
+                    continue
+                cleaned[k] = v
+            merged = yf_data | cleaned
+            _log_missing(merged, yf_data.keys(), ticker)
+            data = merged
+        except Exception as exc:
+            logger.info("Fallback fetch failed for %s: %s", ticker, exc)
 
     # Normalize sector/industry
     if data:
@@ -64,12 +91,18 @@ def fetch_company_data(ticker: str) -> Dict[str, Any] | None:
             data["Sector"] = resolve_term(str(data.get("Sector", "")))
         if "Industry" in data:
             data["Industry"] = resolve_term(str(data.get("Industry", "")))
+    logger.info("Fetched %s using %s", ticker, source)
     return data
 
 
-def fetch_and_store(ticker: str, collection: str = "company_profiles") -> Dict[str, Any] | None:
+def fetch_and_store(
+    ticker: str,
+    collection: str = "company_profiles",
+    *,
+    use_openbb: bool | None = None,
+) -> Dict[str, Any] | None:
     """Fetch data for ``ticker`` and insert into Directus."""
-    record = fetch_company_data(ticker)
+    record = fetch_company_data(ticker, use_openbb=use_openbb)
     if not record:
         return None
     prepared = prepare_records(collection, [record])

@@ -15,7 +15,7 @@ Fundalyze/scripts
 ```
 
 ## main.py
-The primary entry point. Running without arguments launches an interactive menu. You may also supply a subcommand such as `report` or `portfolio` to jump directly to a tool.
+The primary entry point. Running without arguments launches an interactive menu. You may also supply a subcommand such as `report` or `portfolio` to jump directly to a tool. A global `--no-openbb` flag disables OpenBB data fetching for troubleshooting.
 
 **Menu map**
 
@@ -26,7 +26,9 @@ The primary entry point. Running without arguments launches an interactive menu.
 4. Directus Tools      -> Directus helpers
 5. Settings            -> edit configuration
 6. Utilities           -> test runner and profiler
-7. Exit                -> quit
+7. View Portfolio      -> fetch portfolio from Directus
+8. View Profiles       -> show company profiles from Directus
+9. Exit                -> quit
 ```
 
 **Flow chart**

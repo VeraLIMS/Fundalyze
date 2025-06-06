@@ -130,3 +130,34 @@ def test_requires_url(monkeypatch):
         assert True
     else:
         assert False
+
+def test_create_collection_if_missing_skips(monkeypatch):
+    monkeypatch.setattr(dc, "DIRECTUS_URL", "http://api")
+    monkeypatch.setattr(dc, "list_collections", lambda: ["col"])
+    called = {}
+    monkeypatch.setattr(dc, "directus_request", lambda *a, **k: called.setdefault("called", True))
+    assert dc.create_collection_if_missing("col") is False
+    assert "called" not in called
+
+
+def test_create_collection_if_missing_creates(monkeypatch):
+    monkeypatch.setattr(dc, "DIRECTUS_URL", "http://api")
+    monkeypatch.setattr(dc, "list_collections", lambda: [])
+    req = {}
+    monkeypatch.setattr(dc, "directus_request", lambda m, p, **kw: req.update({"method": m, "path": p}) or {"data": {}})
+    fields = []
+    monkeypatch.setattr(dc, "create_field", lambda c, f: fields.append(f))
+    created = dc.create_collection_if_missing("col", ["a", "b"])
+    assert created is True
+    assert req["path"] == "collections"
+    assert set(fields) == {"a", "b"}
+
+
+def test_insert_items_auto_creates(monkeypatch):
+    monkeypatch.setattr(dc, "DIRECTUS_URL", "http://api")
+    called = {}
+    monkeypatch.setattr(dc, "create_collection_if_missing", lambda c, f=None: called.setdefault("called", True))
+    monkeypatch.setattr(dc, "directus_request", lambda *a, **k: {"data": [1]})
+    res = dc.insert_items("col", [{"x": 1}])
+    assert "called" in called
+    assert res == [1]

@@ -13,6 +13,7 @@ from .directus_client import (
     fetch_items_filtered,
     insert_items,
     create_field,
+    create_collection_if_missing,
     directus_request,
     reload_env,
 )
@@ -37,6 +38,7 @@ __all__ = [
     "fetch_items_filtered",
     "insert_items",
     "create_field",
+    "create_collection_if_missing",
     "directus_request",
     "reload_env",
     "load_mapping",

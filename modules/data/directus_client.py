@@ -11,7 +11,7 @@ from __future__ import annotations
 import logging
 import math
 import os
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Iterable
 
 import requests
 
@@ -232,6 +232,9 @@ def insert_items(collection: str, items):
         else:
             cleaned.append(item)
 
+    fields = cleaned[0].keys() if isinstance(cleaned[0], dict) else None
+    create_collection_if_missing(collection, fields)
+
     payload = {"data": cleaned}
     result = directus_request("POST", f"items/{collection}", json=payload)
     return _extract_data(result)
@@ -244,6 +247,30 @@ def create_field(collection: str, field: str, field_type: str = "string", **kwar
     result = directus_request("POST", f"fields/{collection}", json=payload)
     data = _extract_data(result)
     return data if data else None
+
+
+def create_collection_if_missing(collection: str, fields: Iterable[str] | None = None) -> bool:
+    """Create ``collection`` and optional ``fields`` if it doesn't exist."""
+    try:
+        existing = list_collections()
+    except Exception:
+        return False
+    if collection in existing:
+        return False
+
+    payload = {"collection": collection}
+    res = directus_request("POST", "collections", json=payload)
+    if res is None:
+        logger.error("Failed to create collection %s", collection)
+        return False
+
+    if fields:
+        for f in fields:
+            try:
+                create_field(collection, str(f))
+            except Exception:
+                logger.warning("Could not create field %s in %s", f, collection)
+    return True
 
 
 def update_item(collection: str, item_id: Any, updates: Dict[str, Any]):
