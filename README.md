@@ -51,8 +51,9 @@ whenever data is requested. See [docs/configuration.md](docs/configuration.md) f
 ## Quick Start
 Run the interactive menu:
 ```bash
-python scripts/main.py
+python -m modules
 ```
+The legacy entry point `python scripts/main.py` continues to work as well.
 Manage your portfolio:
 ```bash
 python scripts/main.py portfolio
