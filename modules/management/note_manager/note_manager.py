@@ -60,7 +60,7 @@ def parse_links(content: str) -> List[str]:
 
 
 def run_note_manager() -> None:
-    """Interactive menu for creating and viewing notes."""
+    """Run the interactive notes manager CLI."""
     while True:
         print_header("📝 Notes")
         options = [

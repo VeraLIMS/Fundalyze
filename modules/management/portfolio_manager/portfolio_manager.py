@@ -52,8 +52,15 @@ COLUMNS = [
     "Current Price",
     "Market Cap",
     "PE Ratio",
-    "Dividend Yield"
+    "Dividend Yield",
 ]
+
+NUMERIC_FIELDS = {
+    "Current Price",
+    "Market Cap",
+    "PE Ratio",
+    "Dividend Yield",
+}
 
 # Mapping of Directus field names to our dataframe columns when reading
 FROM_DIRECTUS = {
@@ -89,6 +96,34 @@ def _append_row(df: pd.DataFrame, data: dict) -> pd.DataFrame:
     return pd.concat([df, new_row], ignore_index=True)
 
 
+def _load_from_directus() -> pd.DataFrame:
+    """Return portfolio data loaded from Directus."""
+    records = fetch_items(C_DIRECTUS_COLLECTION)
+    if not records:
+        return pd.DataFrame(columns=COLUMNS)
+    df = pd.DataFrame(records).rename(columns=FROM_DIRECTUS)
+    return _clean_dataframe(df)
+
+
+def _load_from_excel(path: Path) -> pd.DataFrame:
+    """Return portfolio data loaded from a local Excel file."""
+    df = pd.read_excel(path, engine="openpyxl")
+    return _clean_dataframe(df)
+
+
+def _save_to_directus(df: pd.DataFrame) -> None:
+    """Persist portfolio data to Directus."""
+    records = prepare_records(C_DIRECTUS_COLLECTION, df.to_dict(orient="records"))
+    insert_items(C_DIRECTUS_COLLECTION, records)
+    print(f"→ Saved portfolio to Directus collection '{C_DIRECTUS_COLLECTION}'.\n")
+
+
+def _save_to_excel(df: pd.DataFrame, path: Path) -> None:
+    """Persist portfolio data to a local Excel file."""
+    df.to_excel(path, index=False, engine="openpyxl")
+    print(f"→ Saved portfolio to '{path}'.\n")
+
+
 def load_portfolio(filepath: str | Path) -> pd.DataFrame:
     """
     Load the portfolio either from Directus (if configured) or from a local
@@ -97,21 +132,15 @@ def load_portfolio(filepath: str | Path) -> pd.DataFrame:
     """
     if USE_DIRECTUS:
         try:
-            records = fetch_items(C_DIRECTUS_COLLECTION)
-            if not records:
-                return pd.DataFrame(columns=COLUMNS)
-            df = pd.DataFrame(records)
-            df = df.rename(columns=FROM_DIRECTUS)
-            return _clean_dataframe(df)
+            return _load_from_directus()
         except Exception as exc:
             print(f"Error loading portfolio from Directus: {exc}")
             print("Falling back to local Excel file.")
 
     path = Path(filepath)
-    if os.path.isfile(filepath):
+    if path.is_file():
         try:
-            df = pd.read_excel(path, engine="openpyxl")
-            return _clean_dataframe(df)
+            return _load_from_excel(path)
         except Exception as e:
             print(f"Error reading {path}: {e}")
     return pd.DataFrame(columns=COLUMNS)
@@ -124,19 +153,14 @@ def save_portfolio(df: pd.DataFrame, filepath: str | Path) -> None:
     """
     if USE_DIRECTUS:
         try:
-            records = prepare_records(C_DIRECTUS_COLLECTION, df.to_dict(orient="records"))
-            insert_items(C_DIRECTUS_COLLECTION, records)
-            print(
-                f"→ Saved portfolio to Directus collection '{C_DIRECTUS_COLLECTION}'.\n"
-            )
+            _save_to_directus(df)
         except Exception as exc:
             print(f"Error saving portfolio to Directus: {exc}")
             print("Falling back to local Excel file.")
 
     path = Path(filepath)
     try:
-        df.to_excel(path, index=False, engine="openpyxl")
-        print(f"→ Saved portfolio to '{path}'.\n")
+        _save_to_excel(df, path)
     except Exception as e:
         print(f"Error saving portfolio: {e}")
 
@@ -169,10 +193,8 @@ def prompt_manual_entry(ticker: str) -> dict:
     data = {"Ticker": ticker.upper()}
     for field in COLUMNS[1:]:
         val = input(f"  {field}: ").strip()
-        # Attempt to convert numeric fields to float if possible
-        if field in ("Current Price", "Market Cap", "PE Ratio", "Dividend Yield"):
+        if field in NUMERIC_FIELDS:
             try:
-                # allow blank (treat as NaN) or numeric
                 data[field] = float(val) if val else pd.NA
             except ValueError:
                 data[field] = pd.NA

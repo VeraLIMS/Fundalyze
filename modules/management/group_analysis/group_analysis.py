@@ -57,6 +57,13 @@ COLUMNS = [
     "Dividend Yield",
 ]
 
+NUMERIC_FIELDS = {
+    "Current Price",
+    "Market Cap",
+    "PE Ratio",
+    "Dividend Yield",
+}
+
 # Possible mapping of Directus field names to our expected columns
 FROM_DIRECTUS = {
     "group": "Group",
@@ -71,6 +78,45 @@ FROM_DIRECTUS = {
     "pe_ratio": "PE Ratio",
     "dividend_yield": "Dividend Yield",
 }
+
+
+def _clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    """Ensure ``df`` contains the expected columns and remove empty rows."""
+    for col in COLUMNS:
+        if col not in df.columns:
+            df[col] = pd.NA
+    df = df.dropna(how="all")
+    if "Group" in df.columns:
+        df = df[df["Group"].notna()]
+    return df[COLUMNS]
+
+
+def _load_from_directus() -> pd.DataFrame:
+    """Return group data fetched from Directus."""
+    records = fetch_items(GROUPS_COLLECTION)
+    if not records:
+        return pd.DataFrame(columns=COLUMNS)
+    df = pd.DataFrame(records).rename(columns=FROM_DIRECTUS)
+    return _clean_dataframe(df)
+
+
+def _load_from_excel(path: str) -> pd.DataFrame:
+    """Return group data loaded from a local Excel file."""
+    df = pd.read_excel(path, engine="openpyxl")
+    return _clean_dataframe(df)
+
+
+def _save_to_directus(df: pd.DataFrame) -> None:
+    """Persist group data to Directus."""
+    records = prepare_records(GROUPS_COLLECTION, df.to_dict(orient="records"))
+    insert_items(GROUPS_COLLECTION, records)
+    print(f"→ Saved groups to Directus collection '{GROUPS_COLLECTION}'.\n")
+
+
+def _save_to_excel(df: pd.DataFrame, path: str) -> None:
+    """Persist group data to a local Excel file."""
+    df.to_excel(path, index=False, engine="openpyxl")
+    print(f"→ Saved groups to '{path}'.\n")
 
 
 def load_portfolio(filepath: str) -> pd.DataFrame:
@@ -93,32 +139,14 @@ def load_groups(filepath: str) -> pd.DataFrame:
     """
     if USE_DIRECTUS:
         try:
-            records = fetch_items(GROUPS_COLLECTION)
-            if not records:
-                return pd.DataFrame(columns=COLUMNS)
-            df = pd.DataFrame(records)
-            df = df.rename(columns=FROM_DIRECTUS)
-            for col in COLUMNS:
-                if col not in df.columns:
-                    df[col] = pd.NA
-            df = df.dropna(how="all")
-            if "Group" in df.columns:
-                df = df[df["Group"].notna()]
-            return df[COLUMNS]
+            return _load_from_directus()
         except Exception as exc:
             print(f"Error loading groups from Directus: {exc}")
             print("Falling back to local Excel file.")
 
     if os.path.isfile(filepath):
         try:
-            df = pd.read_excel(filepath, engine="openpyxl")
-            for col in COLUMNS:
-                if col not in df.columns:
-                    df[col] = pd.NA
-            df = df.dropna(how="all")
-            if "Group" in df.columns:
-                df = df[df["Group"].notna()]
-            return df[COLUMNS]
+            return _load_from_excel(filepath)
         except Exception as e:
             print(f"Error reading {filepath}: {e}\nStarting with empty groups.")
     return pd.DataFrame(columns=COLUMNS)
@@ -130,19 +158,14 @@ def save_groups(df: pd.DataFrame, filepath: str):
     """
     if USE_DIRECTUS:
         try:
-            records = prepare_records(GROUPS_COLLECTION, df.to_dict(orient="records"))
-            insert_items(GROUPS_COLLECTION, records)
-            print(
-                f"→ Saved groups to Directus collection '{GROUPS_COLLECTION}'.\n"
-            )
+            _save_to_directus(df)
             return
         except Exception as exc:
             print(f"Error saving groups to Directus: {exc}")
             print("Falling back to local Excel file.")
 
     try:
-        df.to_excel(filepath, index=False, engine="openpyxl")
-        print(f"→ Saved groups to '{filepath}'.\n")
+        _save_to_excel(df, filepath)
     except Exception as e:
         print(f"Error saving groups: {e}")
 
@@ -181,7 +204,7 @@ def prompt_manual_entry(ticker: str) -> dict:
     data = {"Ticker": ticker.upper()}
     for field in COLUMNS[2:]:  # skip "Group" and "Ticker"
         val = input(f"  {field}: ").strip()
-        if field in ("Current Price", "Market Cap", "PE Ratio", "Dividend Yield"):
+        if field in NUMERIC_FIELDS:
             try:
                 data[field] = float(val) if val else pd.NA
             except ValueError:
