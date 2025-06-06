@@ -57,6 +57,10 @@ Manage your portfolio:
 ```bash
 python scripts/main.py portfolio
 ```
+Debug how a ticker is mapped before insertion:
+```bash
+python scripts/main.py map-record
+```
 
 Programmatic use:
 ```python

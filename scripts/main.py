@@ -202,6 +202,34 @@ def view_directus_profiles() -> None:
     print_table(df)
 
 
+def debug_mapped_record() -> None:
+    """Fetch and display a single mapped portfolio record without inserting."""
+    from modules.management.portfolio_manager.portfolio_manager import (
+        fetch_from_unified,
+        C_DIRECTUS_COLLECTION,
+    )
+    from modules.data.directus_mapper import prepare_records
+
+    ticker = input("Ticker to map: ").strip().upper()
+    if not ticker:
+        print("No ticker provided.\n")
+        return
+    try:
+        record = fetch_from_unified(ticker)
+    except Exception as exc:  # pragma: no cover - user input/network
+        print(f"Error fetching data: {exc}\n")
+        return
+
+    print("Original record:\n", record)
+    try:
+        mapped = prepare_records(C_DIRECTUS_COLLECTION, [record])[0]
+    except Exception as exc:
+        print(f"Mapping failed: {exc}\n")
+        return
+
+    print("Mapped record:\n", mapped)
+
+
 def portfolio_summary_cli() -> None:
     """Display portfolio summary statistics and missing-field counts."""
     from modules.management.portfolio_manager.portfolio_manager import load_portfolio
@@ -269,6 +297,7 @@ COMMAND_MAP: dict[str, Callable[[], None]] = {
     "profile": run_profile_cli,
     "view-portfolio": view_directus_portfolio,
     "view-profiles": view_directus_profiles,
+    "map-record": debug_mapped_record,
     "summary": portfolio_summary_cli,
 }
 
@@ -282,6 +311,7 @@ COMMAND_HELP = {
     "profile": "Run performance profiler",
     "view-portfolio": "View portfolio from Directus",
     "view-profiles": "View company profiles from Directus",
+    "map-record": "Fetch and display mapped portfolio record",
     "summary": "Display portfolio summary statistics",
 }
 
