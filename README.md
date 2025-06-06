@@ -94,8 +94,9 @@ or other tools that may use it.
 ## Contributor Onboarding
 1. Fork the repository and clone your fork.
 2. Run `./bootstrap_env.sh` (or `.ps1` on Windows) to create `.venv` and install dependencies.
-3. Copy `config/.env` from the example and add your tokens.
-4. Execute `pytest -q` to ensure everything works before making changes.
+3. Copy `config.yaml.example` to `config.yaml` and `config/.env` from the example, then add your tokens.
+4. Run `python scripts/main.py -m onboarding` to launch the setup wizard.
+5. Execute `pytest -q` to ensure everything works before making changes.
 See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 
