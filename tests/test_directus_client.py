@@ -87,14 +87,14 @@ def test_insert_items(monkeypatch):
         called["method"] = method
         called["path"] = path
         called["payload"] = kw.get("json")
-        return {"data": [1]}
+        return {"data": 1}
 
     monkeypatch.setattr(dc, "directus_request", fake_request)
     res = dc.insert_items("col", [1])
     assert called["method"] == "POST"
     assert called["path"] == "items/col"
-    assert called["payload"] == {"data": [1]}
-    assert res == [1]
+    assert called["payload"] == {"data": 1}
+    assert res == 1
 
 
 def test_list_collections(monkeypatch):
@@ -157,7 +157,7 @@ def test_insert_items_auto_creates(monkeypatch):
     monkeypatch.setattr(dc, "DIRECTUS_URL", "http://api")
     called = {}
     monkeypatch.setattr(dc, "create_collection_if_missing", lambda c, f=None: called.setdefault("called", True))
-    monkeypatch.setattr(dc, "directus_request", lambda *a, **k: {"data": [1]})
+    monkeypatch.setattr(dc, "directus_request", lambda *a, **k: {"data": {"id": 1}})
     res = dc.insert_items("col", [{"x": 1}])
     assert "called" in called
-    assert res == [1]
+    assert res == {"id": 1}

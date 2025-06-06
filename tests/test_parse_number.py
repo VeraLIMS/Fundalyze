@@ -1,5 +1,5 @@
 import pandas as pd
-from modules.utils import parse_number
+from modules.utils import parse_number, parse_human_number
 
 
 def test_parse_number_numeric():
@@ -17,3 +17,7 @@ def test_parse_number_invalid():
     assert parse_number("N/A") == "N/A"
     assert parse_number(None) is None
     assert parse_number(pd.NA) is pd.NA
+
+
+def test_parse_human_number_alias():
+    assert parse_human_number("1M") == 1_000_000
