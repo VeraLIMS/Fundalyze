@@ -62,3 +62,8 @@ Compares collections and fields in your Directus instance against `directus_fiel
 Prints the expected -> mapped field names for key collections and can optionally
 insert a test record. Use the new CLI commands `test-mapping` and `test-insert`
 to invoke this functionality from `main.py`.
+
+## add_missing_mappings.py
+Appends any new keys found in a JSON dataset to `directus_field_map.json`.
+Run with a collection name and path to a JSON file containing one or more
+records. This is also available via `python scripts/main.py add-missing`.

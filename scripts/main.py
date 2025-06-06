@@ -37,6 +37,8 @@ import os
 import argparse
 import textwrap
 import subprocess
+import json
+from pathlib import Path
 from typing import Callable
 
 # Add the repository root to sys.path so 'modules' can be imported when this
@@ -244,6 +246,34 @@ def run_insert_test() -> None:
     ])
 
 
+def run_add_missing_cli() -> None:
+    """Update field map using a JSON file of records."""
+    collection = input("Collection name: ").strip()
+    if not collection:
+        print("No collection provided.\n")
+        return
+    path = input("Path to JSON file: ").strip()
+    if not path:
+        print("No file provided.\n")
+        return
+    try:
+        data = json.loads(Path(path).read_text())
+    except Exception as exc:  # pragma: no cover - user input
+        print(f"Error reading file: {exc}\n")
+        return
+    if isinstance(data, dict):
+        records = [data]
+    elif isinstance(data, list):
+        records = data
+    else:
+        print("JSON must be an object or list of objects.\n")
+        return
+    from modules.data.directus_mapper import add_missing_mappings
+
+    add_missing_mappings(collection, records)
+    print("Mapping updated.\n")
+
+
 def portfolio_summary_cli() -> None:
     """Display portfolio summary statistics and missing-field counts."""
     from modules.management.portfolio_manager.portfolio_manager import load_portfolio
@@ -321,6 +351,7 @@ COMMAND_MAP: dict[str, Callable[[], None]] = {
     "diag": lambda: subprocess.run(["python", "scripts/mapping_diagnostic.py"]),
     "test-mapping": run_mapping_test,
     "test-insert": run_insert_test,
+    "add-missing": run_add_missing_cli,
     "summary": portfolio_summary_cli,
 }
 
@@ -338,6 +369,7 @@ COMMAND_HELP = {
     "diag": "Run mapping diagnostic script",
     "test-mapping": "Display current field mapping",
     "test-insert": "Insert a test record into Directus",
+    "add-missing": "Add unmapped fields to directus_field_map.json",
     "summary": "Display portfolio summary statistics",
 }
 
