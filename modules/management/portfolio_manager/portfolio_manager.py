@@ -16,7 +16,11 @@ import pandas as pd
 from modules.data.term_mapper import resolve_term
 from modules.data.directus_client import fetch_items, insert_items
 from modules.data import prepare_records
-C_DIRECTUS_COLLECTION = os.getenv("DIRECTUS_PORTFOLIO_COLLECTION", "portfolio")
+
+
+def get_portfolio_collection() -> str:
+    """Return the Directus collection used for the portfolio."""
+    return os.getenv("DIRECTUS_PORTFOLIO_COLLECTION", "portfolio")
 COLUMNS = [
     "Ticker",
     "Name",
@@ -71,7 +75,8 @@ def _append_row(df: pd.DataFrame, data: dict) -> pd.DataFrame:
 
 def _load_from_directus() -> pd.DataFrame:
     """Return portfolio data loaded from Directus."""
-    records = fetch_items(C_DIRECTUS_COLLECTION)
+    collection = get_portfolio_collection()
+    records = fetch_items(collection)
     if not records:
         return pd.DataFrame(columns=COLUMNS)
     df = pd.DataFrame(records).rename(columns=FROM_DIRECTUS)
@@ -80,8 +85,9 @@ def _load_from_directus() -> pd.DataFrame:
 
 def _save_to_directus(df: pd.DataFrame) -> None:
     """Persist portfolio data to Directus."""
-    records = prepare_records(C_DIRECTUS_COLLECTION, df.to_dict(orient="records"))
-    insert_items(C_DIRECTUS_COLLECTION, records)
+    collection = get_portfolio_collection()
+    records = prepare_records(collection, df.to_dict(orient="records"))
+    insert_items(collection, records)
 
 
 def load_portfolio() -> pd.DataFrame:

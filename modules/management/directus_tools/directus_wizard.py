@@ -16,7 +16,8 @@ from modules.data import (
     add_missing_mappings,
     load_field_map,
 )
-from modules.management import portfolio_manager as pm, group_analysis as ga
+from modules.management.portfolio_manager import portfolio_manager as pm
+from modules.management.group_analysis import group_analysis as ga
 
 try:
     from modules.management.settings_manager.wizards.directus_setup import (
@@ -111,7 +112,7 @@ def run_directus_wizard() -> None:
                         print("Item inserted.\n")
         elif choice == "6":
             for col, cols in (
-                (pm.C_DIRECTUS_COLLECTION, pm.COLUMNS),
+                (pm.get_portfolio_collection(), pm.COLUMNS),
                 (ga.GROUPS_COLLECTION, ga.COLUMNS),
             ):
                 mapping = load_field_map().get("collections", {}).get(col, {}).get("fields", {})
@@ -120,12 +121,16 @@ def run_directus_wizard() -> None:
                     tgt = mapping.get(c, {}).get("mapped_to")
                     print(f"  {c} -> {tgt}")
         elif choice == "7":
-            from modules.management.portfolio_manager.portfolio_manager import fetch_from_unified, C_DIRECTUS_COLLECTION
+            from modules.management.portfolio_manager.portfolio_manager import (
+                fetch_from_unified,
+                get_portfolio_collection,
+            )
 
             record = fetch_from_unified("MSFT")
-            add_missing_mappings(C_DIRECTUS_COLLECTION, [record])
-            prepared = prepare_records(C_DIRECTUS_COLLECTION, [record], verbose=True)[0]
-            dc.insert_items(C_DIRECTUS_COLLECTION, [prepared])
+            collection = get_portfolio_collection()
+            add_missing_mappings(collection, [record])
+            prepared = prepare_records(collection, [record], verbose=True)[0]
+            dc.insert_items(collection, [prepared])
             print("Insert attempted. Check logs for details.\n")
         elif choice == "8":
             refresh_field_map()

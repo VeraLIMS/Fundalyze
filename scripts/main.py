@@ -208,7 +208,7 @@ def debug_mapped_record() -> None:
     """Fetch and display a single mapped portfolio record without inserting."""
     from modules.management.portfolio_manager.portfolio_manager import (
         fetch_from_unified,
-        C_DIRECTUS_COLLECTION,
+        get_portfolio_collection,
     )
     from modules.data.directus_mapper import prepare_records
 
@@ -224,7 +224,8 @@ def debug_mapped_record() -> None:
 
     print("Original record:\n", record)
     try:
-        mapped = prepare_records(C_DIRECTUS_COLLECTION, [record])[0]
+        collection = get_portfolio_collection()
+        mapped = prepare_records(collection, [record])[0]
     except Exception as exc:
         print(f"Mapping failed: {exc}\n")
         return
