@@ -16,14 +16,24 @@ logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 MAP_FILE = PROJECT_ROOT / "config" / "directus_field_map.json"
+EXAMPLE_MAP_FILE = PROJECT_ROOT / "directus_field_map_example.json"
 
 
 def load_field_map() -> Dict[str, Any]:
-    """Return field mapping from ``config/directus_field_map.json``."""
-    if not MAP_FILE.is_file():
+    """Return field mapping from ``config/directus_field_map.json``.
+
+    If the file does not exist, fall back to ``directus_field_map_example.json``
+    shipped with the repository. This helps new contributors run the project
+    without first generating a custom mapping file.
+    """
+    if MAP_FILE.is_file():
+        path = MAP_FILE
+    elif MAP_FILE == PROJECT_ROOT / "config" / "directus_field_map.json" and EXAMPLE_MAP_FILE.is_file():
+        path = EXAMPLE_MAP_FILE
+    else:
         return {"collections": {}}
 
-    data = json.loads(MAP_FILE.read_text(encoding="utf-8"))
+    data = json.loads(path.read_text(encoding="utf-8"))
     if "collections" not in data:
         data = _convert_legacy_format(data)
     return data
@@ -80,6 +90,9 @@ def _map_row(
         if not allowed or new_key in allowed:
             mapped[new_key] = value
     logger.debug("Mapped record: %s", mapped)
+    if row and not mapped:
+        logger.error("Mapping produced empty record. original=%s map=%s", row, field_map)
+        raise ValueError("Mapped record is empty. Check field mapping configuration")
     return mapped
 
 

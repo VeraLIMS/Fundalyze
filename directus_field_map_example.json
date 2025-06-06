@@ -2,18 +2,14 @@
   "collections": {
     "portfolio": {
       "fields": {
-        "id": {
-          "type": "integer",
-          "mapped_to": "portfolio_id"
-        },
-        "ticker": {
-          "type": "string",
-          "mapped_to": "symbol"
-        },
-        "note": {
-          "type": "text",
-          "mapped_to": null
-        }
+        "Ticker": {"type": "string", "mapped_to": "ticker"},
+        "Name": {"type": "string", "mapped_to": "name"},
+        "Sector": {"type": "string", "mapped_to": "sector"},
+        "Industry": {"type": "string", "mapped_to": "industry"},
+        "Current Price": {"type": "float", "mapped_to": "current_price"},
+        "Market Cap": {"type": "float", "mapped_to": "market_cap"},
+        "PE Ratio": {"type": "float", "mapped_to": "pe_ratio"},
+        "Dividend Yield": {"type": "float", "mapped_to": "dividend_yield"}
       }
     }
   }

@@ -1,6 +1,7 @@
 """Tests for Directus schema mapping."""
 from pathlib import Path
 import json
+import pytest
 import modules.data.directus_mapper as dm
 
 
@@ -81,3 +82,14 @@ def test_refresh_field_map(monkeypatch, tmp_path):
     )
     mapping2 = dm.refresh_field_map()
     assert "c" in mapping2["collections"]["foo"]["fields"]
+
+
+def test_prepare_records_empty(monkeypatch, tmp_path):
+    mapping = {"collections": {"portfolio": {"fields": {}}}}
+    file = tmp_path / "directus_field_map.json"
+    file.write_text(json.dumps(mapping))
+    monkeypatch.setattr(dm, "MAP_FILE", file)
+    monkeypatch.setattr(dm, "list_fields", lambda c: ["ticker"])
+
+    with pytest.raises(ValueError):
+        dm.prepare_records("portfolio", [{"Ticker": "AAPL"}])
