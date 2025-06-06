@@ -443,6 +443,7 @@ def main() -> None:
     if action:
         action()
     else:
+        print(f"Unknown command: {cmd}\n")
         interactive_menu()
 
 
