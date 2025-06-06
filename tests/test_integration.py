@@ -83,7 +83,7 @@ def test_portfolio_manager_add_tickers(monkeypatch):
     monkeypatch.setattr(fetching, "resolve_term", lambda x: x)
 
     # ensure portfolio manager uses the real fetch_basic_stock_data
-    monkeypatch.setattr(pm, "fetch_from_yfinance", fetching.fetch_basic_stock_data)
+    monkeypatch.setattr(pm, "fetch_from_unified", fetching.fetch_basic_stock_data)
 
     inputs = iter([
         "AAA,BBB",  # ticker list

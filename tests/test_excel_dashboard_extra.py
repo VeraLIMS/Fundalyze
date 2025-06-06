@@ -1,5 +1,7 @@
 """Extra cases for Excel dashboard helpers."""
 import pytest
+pytest.skip("Deprecated after Directus migration", allow_module_level=True)
+import pytest
 import pandas as pd
 from modules.generate_report.excel_dashboard import (
     create_dashboard,

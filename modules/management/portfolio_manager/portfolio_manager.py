@@ -1,24 +1,8 @@
-"""
-script: portfolio_manager.py
-
-Dependencies:
-    pip install yfinance pandas openpyxl
-
-Usage:
-    python portfolio_manager.py
-
-Description:
-    A simple CLI tool to manage a stock portfolio. You can:
-    - Add tickers (automatically fetch key data via yfinance; if fetch fails, confirm/adjust ticker or enter data manually).
-    - Remove tickers.
-    - View current portfolio.
-    - Data is persisted in an Excel file ("portfolio.xlsx") in the same directory.
-"""
+"""Simple CLI portfolio manager backed by Directus."""
 
 from __future__ import annotations
 
 import os
-from pathlib import Path
 
 from modules.analytics import portfolio_summary, sector_counts
 from modules.interface import (
@@ -30,20 +14,9 @@ from modules.interface import (
 
 import pandas as pd
 from modules.data.term_mapper import resolve_term
-from modules.data.directus_client import (
-    fetch_items,
-    insert_items,
-    directus_request,
-)
+from modules.data.directus_client import fetch_items, insert_items
 from modules.data import prepare_records
-
-PORTFOLIO_FILE = Path("portfolio.xlsx")
 C_DIRECTUS_COLLECTION = os.getenv("DIRECTUS_PORTFOLIO_COLLECTION", "portfolio")
-# Only attempt Directus sync if both URL and authentication token are provided
-USE_DIRECTUS = bool(
-    os.getenv("DIRECTUS_URL")
-    and (os.getenv("DIRECTUS_API_TOKEN") or os.getenv("DIRECTUS_TOKEN"))
-)
 COLUMNS = [
     "Ticker",
     "Name",
@@ -105,83 +78,27 @@ def _load_from_directus() -> pd.DataFrame:
     return _clean_dataframe(df)
 
 
-def _load_from_excel(path: Path) -> pd.DataFrame:
-    """Return portfolio data loaded from a local Excel file."""
-    df = pd.read_excel(path, engine="openpyxl")
-    return _clean_dataframe(df)
-
-
 def _save_to_directus(df: pd.DataFrame) -> None:
     """Persist portfolio data to Directus."""
     records = prepare_records(C_DIRECTUS_COLLECTION, df.to_dict(orient="records"))
     insert_items(C_DIRECTUS_COLLECTION, records)
-    print(f"→ Saved portfolio to Directus collection '{C_DIRECTUS_COLLECTION}'.\n")
 
 
-def _save_to_excel(df: pd.DataFrame, path: Path) -> None:
-    """Persist portfolio data to a local Excel file."""
-    df.to_excel(path, index=False, engine="openpyxl")
-    print(f"→ Saved portfolio to '{path}'.\n")
-
-
-def load_portfolio(filepath: str | Path) -> pd.DataFrame:
-    """
-    Load the portfolio either from Directus (if configured) or from a local
-    Excel file. If loading fails, an empty DataFrame with the expected columns
-    is returned.
-    """
-    if USE_DIRECTUS:
-        try:
-            return _load_from_directus()
-        except Exception as exc:
-            print(f"Error loading portfolio from Directus: {exc}")
-            print("Falling back to local Excel file.")
-
-    path = Path(filepath)
-    if path.is_file():
-        try:
-            return _load_from_excel(path)
-        except Exception as e:
-            print(f"Error reading {path}: {e}")
-    return pd.DataFrame(columns=COLUMNS)
-
-
-def save_portfolio(df: pd.DataFrame, filepath: str | Path) -> None:
-    """
-    Save the portfolio either to Directus (if configured) or to a local Excel
-    file as fallback.
-    """
-    if USE_DIRECTUS:
-        try:
-            _save_to_directus(df)
-        except Exception as exc:
-            print(f"Error saving portfolio to Directus: {exc}")
-            print("Falling back to local Excel file.")
-
-    path = Path(filepath)
+def load_portfolio() -> pd.DataFrame:
+    """Return portfolio data from Directus or an empty DataFrame."""
     try:
-        _save_to_excel(df, path)
-    except Exception as e:
-        print(f"Error saving portfolio: {e}")
+        return _load_from_directus()
+    except Exception as exc:  # pragma: no cover - network failure
+        print(f"Error loading portfolio from Directus: {exc}")
+        return pd.DataFrame(columns=COLUMNS)
 
-    # Also sync with Directus if environment variables are configured
-    api_url = os.getenv("DIRECTUS_URL")
-    token = os.getenv("DIRECTUS_TOKEN")
-    if api_url and token:
-        try:
-            records = df.to_dict(orient="records")
-            resp = directus_request(
-                "POST",
-                "items/portfolio",
-                json=records,
-                params={"upsert": "Ticker"},
-            )
-            if resp is None:
-                print("Warning syncing portfolio to Directus: request failed")
-            else:
-                print("→ Synced portfolio to Directus.\n")
-        except Exception as e:
-            print(f"Error syncing portfolio to Directus: {e}")
+
+def save_portfolio(df: pd.DataFrame) -> None:
+    """Persist the portfolio DataFrame to Directus."""
+    try:
+        _save_to_directus(df)
+    except Exception as exc:  # pragma: no cover - network failure
+        print(f"Error saving portfolio to Directus: {exc}")
 
 
 def prompt_manual_entry(ticker: str) -> dict:
@@ -209,17 +126,20 @@ def prompt_manual_entry(ticker: str) -> dict:
     return data
 
 
-def fetch_from_yfinance(ticker: str) -> dict:
-    """Wrapper around :func:`modules.data.fetching.fetch_basic_stock_data`."""
-    from modules.data.fetching import fetch_basic_stock_data
+def fetch_from_unified(ticker: str) -> dict:
+    """Return company data via the unified fetcher."""
+    from modules.data.unified_fetcher import fetch_company_data
 
-    return fetch_basic_stock_data(ticker)
+    data = fetch_company_data(ticker)
+    if data is None:
+        raise ValueError("Data not found")
+    return data
 
 
 def confirm_or_adjust_ticker(original: str) -> str:
     """
-    If yfinance fetch fails, ask the user: "Is this the correct ticker?"
-    If yes, return the same string. If no, prompt for a new ticker and return it.
+    If automated fetching fails, ask the user to confirm the ticker symbol.
+    If confirmed incorrect, prompt for a replacement.
     """
     while True:
         resp = input(
@@ -247,7 +167,7 @@ def ticker_exists(df: pd.DataFrame, tk: str) -> bool:
 def add_tickers(portfolio: pd.DataFrame) -> pd.DataFrame:
     """
     Prompt the user to enter one or more tickers to add. For each ticker:
-    - Attempt to fetch data via yfinance.
+    - Attempt to fetch data via :mod:`modules.data.unified_fetcher`.
     - If fetch fails or missing, confirm/adjust ticker or allow manual fill.
     - Append a new row to the portfolio DataFrame.
     """
@@ -267,7 +187,7 @@ def add_tickers(portfolio: pd.DataFrame) -> pd.DataFrame:
 
         while True:
             try:
-                data = fetch_from_yfinance(tk)
+                data = fetch_from_unified(tk)
                 print(f"  → Fetched data for {tk}:")
                 print(f"      Name         : {data['Name']}")
                 print(f"      Sector       : {data['Sector']}")
@@ -323,7 +243,7 @@ def remove_ticker(portfolio: pd.DataFrame) -> pd.DataFrame:
 
 
 def update_tickers(portfolio: pd.DataFrame) -> pd.DataFrame:
-    """Refresh data for each ticker via yfinance."""
+    """Refresh data for each ticker via the unified fetcher."""
     if portfolio.empty:
         print("Portfolio is empty.\n")
         return portfolio
@@ -331,7 +251,7 @@ def update_tickers(portfolio: pd.DataFrame) -> pd.DataFrame:
     for idx, row in portfolio.iterrows():
         tk = row["Ticker"]
         try:
-            data = fetch_from_yfinance(tk)
+            data = fetch_from_unified(tk)
             for col in COLUMNS[1:]:
                 portfolio.at[idx, col] = data.get(col, portfolio.at[idx, col])
             print(f"  ✓ Updated {tk}")
@@ -364,7 +284,7 @@ def view_portfolio(portfolio: pd.DataFrame):
 
 def main():
     print_header("\U0001F4C8 Portfolio Manager")
-    portfolio = load_portfolio(PORTFOLIO_FILE)
+    portfolio = load_portfolio()
 
     while True:
         print("Choose an action:")
@@ -383,15 +303,15 @@ def main():
 
         elif choice == "2":
             portfolio = add_tickers(portfolio)
-            save_portfolio(portfolio, PORTFOLIO_FILE)
+            save_portfolio(portfolio)
 
         elif choice == "3":
             portfolio = update_tickers(portfolio)
-            save_portfolio(portfolio, PORTFOLIO_FILE)
+            save_portfolio(portfolio)
 
         elif choice == "4":
             portfolio = remove_ticker(portfolio)
-            save_portfolio(portfolio, PORTFOLIO_FILE)
+            save_portfolio(portfolio)
 
         elif choice == "5":
             print("Exiting Portfolio Manager.")
