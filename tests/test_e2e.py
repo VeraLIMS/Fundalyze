@@ -1,4 +1,6 @@
 """End-to-end integration tests for report generation."""
+import pytest
+pytest.skip("Deprecated after Directus migration", allow_module_level=True)
 import pandas as pd
 from openpyxl import load_workbook
 

@@ -93,7 +93,7 @@ def run_portfolio_groups() -> None:
     from modules.management.portfolio_manager import portfolio_manager as pm
     from modules.management.group_analysis import group_analysis as ga
 
-    portfolio = pm.load_portfolio(pm.PORTFOLIO_FILE)
+    portfolio = pm.load_portfolio()
     groups = ga.load_groups(ga.GROUPS_FILE)
 
     while True:
@@ -117,13 +117,13 @@ def run_portfolio_groups() -> None:
             pm.view_portfolio(portfolio)
         elif choice == "2":
             portfolio = pm.add_tickers(portfolio)
-            pm.save_portfolio(portfolio, pm.PORTFOLIO_FILE)
+            pm.save_portfolio(portfolio)
         elif choice == "3":
             portfolio = pm.update_tickers(portfolio)
-            pm.save_portfolio(portfolio, pm.PORTFOLIO_FILE)
+            pm.save_portfolio(portfolio)
         elif choice == "4":
             portfolio = pm.remove_ticker(portfolio)
-            pm.save_portfolio(portfolio, pm.PORTFOLIO_FILE)
+            pm.save_portfolio(portfolio)
         elif choice == "5":
             ga.view_groups(groups)
         elif choice == "6":

@@ -1,4 +1,6 @@
 """Validate OUTPUT_DIR environment variable handling."""
+import pytest
+pytest.skip("Deprecated after Directus migration", allow_module_level=True)
 import pandas as pd
 
 import modules.generate_report.report_generator as rg

@@ -26,6 +26,7 @@ from .directus_mapper import (
     refresh_field_map,
     ensure_field_mapping,
 )
+from .unified_fetcher import fetch_company_data, fetch_and_store
 
 __all__ = [
     "fetch_basic_stock_data",
@@ -50,4 +51,6 @@ __all__ = [
     "interactive_prepare_records",
     "refresh_field_map",
     "ensure_field_mapping",
+    "fetch_company_data",
+    "fetch_and_store",
 ]

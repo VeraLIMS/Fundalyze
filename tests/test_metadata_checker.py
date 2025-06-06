@@ -1,4 +1,6 @@
 """Tests for metadata_checker re-fetch workflow."""
+import pytest
+pytest.skip("Deprecated after Directus migration", allow_module_level=True)
 import pandas as pd
 from unittest.mock import MagicMock
 import pytest

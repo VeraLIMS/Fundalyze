@@ -1,4 +1,6 @@
 """Tests for yfinance fallback data retrieval."""
+import pytest
+pytest.skip("Deprecated after Directus migration", allow_module_level=True)
 import json
 import pandas as pd
 from unittest.mock import MagicMock

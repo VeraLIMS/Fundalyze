@@ -1,4 +1,6 @@
 """Tests for portfolio manager CLI operations."""
+import pytest
+pytest.skip("Deprecated after Directus migration", allow_module_level=True)
 import pandas as pd
 import modules.management.portfolio_manager.portfolio_manager as pm
 

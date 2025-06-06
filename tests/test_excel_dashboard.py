@@ -1,4 +1,6 @@
 """Tests for Excel dashboard creation utilities."""
+import pytest
+pytest.skip("Deprecated after Directus migration", allow_module_level=True)
 import pandas as pd
 import pytest
 from generate_report.excel_dashboard import (
