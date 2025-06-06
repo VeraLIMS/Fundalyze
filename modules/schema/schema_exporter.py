@@ -46,7 +46,7 @@ def export_schema(client: DirectusClient, output: str | Path) -> None:
                     "type": f.get("type"),
                     "precision": f.get("precision"),
                     "scale": f.get("scale"),
-                    "required": not f.get("schema", {}).get("is_nullable", True),
+                    "required": not (f.get("schema") or {}).get("is_nullable", True),
                     "default": f.get("default_value"),
                 }
             )
