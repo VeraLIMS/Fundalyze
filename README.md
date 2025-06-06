@@ -66,6 +66,14 @@ Run a full mapping diagnostic:
 ```bash
 python scripts/main.py diag
 ```
+Export your Directus schema:
+```bash
+python scripts/main.py schema-export
+```
+Sync the schema from a CSV definition:
+```bash
+python scripts/main.py schema-sync
+```
 
 Programmatic use:
 ```python
