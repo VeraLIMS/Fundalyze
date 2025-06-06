@@ -318,6 +318,50 @@ def portfolio_summary_cli() -> None:
         print_table(missing)
 
 
+def schema_export_cli() -> None:
+    """Export Directus schema definitions to a CSV file."""
+    from modules.schema import export_schema
+    from modules.api import DirectusClient
+
+    path = input(
+        "Output CSV path [config/schema_definitions_export.csv]: ").strip()
+    if not path:
+        path = "config/schema_definitions_export.csv"
+    export_schema(DirectusClient(), path)
+
+
+def schema_sync_cli() -> None:
+    """Synchronize CSV schema definitions with Directus."""
+    from modules.schema import sync_schema
+    from modules.api import DirectusClient
+
+    csv_path = input(
+        "Schema CSV path [config/schema_definitions.csv]: ").strip()
+    if not csv_path:
+        csv_path = "config/schema_definitions.csv"
+    resp = input("Delete fields not in CSV? (y/N): ").strip().lower()
+    remove = resp in ("y", "yes")
+    sync_schema(csv_path, DirectusClient(), remove_extra=remove)
+
+
+def run_schema_menu() -> None:
+    """Interactive menu for Directus schema utilities."""
+    while True:
+        print_header("\U0001F4C1 Schema Tools")
+        options = ["Export Schema", "Sync Schema", "Return to Main Menu"]
+        print_menu(options)
+        choice = input(f"Select an option [1-{len(options)}]: ").strip()
+
+        if choice == "1":
+            schema_export_cli()
+        elif choice == "2":
+            schema_sync_cli()
+        elif choice == "3":
+            break
+        else:
+            invalid_choice()
+
+
 def run_utilities_menu() -> None:
     """Sub-menu exposing extra helper utilities."""
     while True:
@@ -354,6 +398,7 @@ ACTION_ITEMS: list[tuple[str, Callable[[], None]]] = [
     ("Notes", run_note_manager),
     ("Directus Tools", run_directus_wizard),
     ("Settings", run_settings_manager),
+    ("Schema Tools", run_schema_menu),
     ("Utilities", run_utilities_menu),
     ("Exit", exit_program),
 ]
@@ -364,6 +409,9 @@ COMMAND_MAP: dict[str, Callable[[], None]] = {
     "notes": run_note_manager,
     "settings": run_settings_manager,
     "directus": run_directus_wizard,
+    "schema-menu": run_schema_menu,
+    "schema-export": schema_export_cli,
+    "schema-sync": schema_sync_cli,
     "tests": run_tests_cli,
     "profile": run_profile_cli,
     "view-portfolio": view_directus_portfolio,
@@ -383,6 +431,9 @@ COMMAND_HELP = {
     "notes": "Launch note manager",
     "settings": "Edit configuration",
     "directus": "Launch Directus wizard",
+    "schema-menu": "Interactive schema utilities",
+    "schema-export": "Export Directus schema to CSV",
+    "schema-sync": "Sync CSV schema to Directus",
     "tests": "Run unit tests",
     "profile": "Run performance profiler",
     "view-portfolio": "View portfolio from Directus",
