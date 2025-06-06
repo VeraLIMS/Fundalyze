@@ -9,16 +9,16 @@ This document outlines the automated end-to-end tests for Fundalyze.
    OpenBB API responses and verifies that `fetch_and_compile()` writes the
    expected CSV files and metadata in a temporary output folder.
 2. **Dashboard Creation** – Using the generated CSV files the test invokes
-   `create_dashboard()` which combines the data into an Excel workbook. The
-   workbook is inspected to ensure the basic sheets (e.g. `Profile`,
-   `PriceHistory`) exist.
+   `create_dashboard()` which assembles a summary JSON report. The file is
+   inspected to ensure the expected keys (e.g. `profile`, `history`) exist.
 
 ## Portfolio Manager Workflow
 
 1. **Interactive CLI** – The test drives the `portfolio_manager` CLI by
    supplying a sequence of user inputs. It adds a ticker and then exits.
-2. **Persistence** – After the CLI terminates, the portfolio Excel file in the
-   temporary directory is read and validated to contain the added ticker.
+2. **Persistence** – After the CLI terminates, the in-memory portfolio is
+   validated to contain the added ticker and that the Directus collection was
+   updated.
 
 These tests exercise the main user journeys without relying on network access
 and run automatically as part of the test suite.

@@ -52,7 +52,7 @@ NAME
 
 DESCRIPTION
     Dependencies:
-        pip install yfinance pandas openpyxl
+        pip install yfinance pandas
     
     Usage:
         python portfolio_manager.py
@@ -61,8 +61,7 @@ DESCRIPTION
         A simple CLI tool to manage a stock portfolio. You can:
         - Add tickers (automatically fetch key data via yfinance; if fetch fails, confirm/adjust ticker or enter data manually).
         - Remove tickers.
-        - View current portfolio.
-        - Data is persisted in an Excel file ("portfolio.xlsx") in the same directory.
+        - View current portfolio stored in Directus.
 
 FUNCTIONS
     add_tickers(portfolio: pandas.core.frame.DataFrame) -> pandas.core.frame.DataFrame
@@ -78,10 +77,9 @@ FUNCTIONS
     fetch_from_yfinance(ticker: str) -> dict
         Wrapper around :func:`modules.data.fetching.fetch_basic_stock_data`.
     
-    load_portfolio(filepath: str) -> pandas.core.frame.DataFrame
-        Load the portfolio either from Directus (if configured) or from a local
-        Excel file. If loading fails, an empty DataFrame with the expected columns
-        is returned.
+    load_portfolio() -> pandas.core.frame.DataFrame
+        Load the portfolio from the configured Directus collection. If loading
+        fails, an empty DataFrame with the expected columns is returned.
     
     main()
     
@@ -92,9 +90,8 @@ FUNCTIONS
     remove_ticker(portfolio: pandas.core.frame.DataFrame) -> pandas.core.frame.DataFrame
         Prompt the user for a ticker to remove from the portfolio.
     
-    save_portfolio(df: pandas.core.frame.DataFrame, filepath: str)
-        Save the portfolio either to Directus (if configured) or to a local Excel
-        file as fallback.
+    save_portfolio(df: pandas.core.frame.DataFrame)
+        Persist the portfolio to the Directus collection.
     
     ticker_exists(df: pandas.core.frame.DataFrame, tk: str) -> bool
         Return True if the ticker already exists in the portfolio.
@@ -109,8 +106,7 @@ DATA
     COLUMNS = ['Ticker', 'Name', 'Sector', 'Industry', 'Current Price', 'M...
     C_DIRECTUS_COLLECTION = 'portfolio'
     FROM_DIRECTUS = {'company_name': 'Name', 'current_price': 'Current Pri...
-    PORTFOLIO_FILE = 'portfolio.xlsx'
-    USE_DIRECTUS = False
+    DIRECTUS_PORTFOLIO_COLLECTION = 'portfolio'
 
 FILE
     /workspace/Fundalyze/modules/management/portfolio_manager/portfolio_manager.py
