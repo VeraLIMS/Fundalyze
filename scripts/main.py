@@ -314,8 +314,7 @@ def parse_args() -> argparse.Namespace:
         """
         Examples:
           python scripts/main.py portfolio  # open portfolio manager
-          python scripts/main.py report     # generate reports
-          python scripts/main.py metadata   # run metadata checker
+          python scripts/main.py summary    # show portfolio statistics
           python scripts/main.py tests      # execute test suite
         """
     )

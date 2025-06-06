@@ -26,10 +26,7 @@ REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, os.pardir))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
-from modules.generate_report.excel_dashboard import (
-    _safe_concat_normal,
-    _transpose_financials,
-)
+from modules.analytics import portfolio_summary, correlation_matrix
 
 
 def parse_args() -> argparse.Namespace:
@@ -41,18 +38,14 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def _make_financial_df(periods: int, metrics: int) -> pd.DataFrame:
-    """Return a dummy financial DataFrame with *periods* rows."""
-    dates = pd.date_range("2020-01-01", periods=periods, freq="ME")
-    data = np.random.rand(periods, metrics)
+def _sample_portfolio_df(num_tickers: int, rows: int, metrics: int) -> pd.DataFrame:
+    """Return a synthetic portfolio DataFrame with numeric columns."""
+    data = np.random.rand(rows, metrics)
     df = pd.DataFrame(data, columns=[f"M{i}" for i in range(metrics)])
-    df.insert(0, "Period", dates)
+    df.insert(0, "Ticker", [f"T{i % num_tickers}" for i in range(rows)])
+    sectors = ["Tech", "Finance", "Health"]
+    df.insert(1, "Sector", np.random.choice(sectors, size=rows))
     return df
-
-
-def _sample_data(num_tickers: int, periods: int, metrics: int) -> dict[str, pd.DataFrame]:
-    """Return a mapping of ticker symbol to synthetic financial data."""
-    return {f"T{i}": _make_financial_df(periods, metrics) for i in range(num_tickers)}
 
 
 def profile_function(func, *args, **kwargs) -> float:
@@ -69,13 +62,13 @@ def profile_function(func, *args, **kwargs) -> float:
 
 
 def run_profile(args: argparse.Namespace) -> None:
-    ticker_dfs = _sample_data(args.tickers, args.periods, args.metrics)
+    df = _sample_portfolio_df(args.tickers, args.periods, args.metrics)
 
-    scn_time = profile_function(_safe_concat_normal, ticker_dfs)
-    tf_time = profile_function(_transpose_financials, ticker_dfs)
+    summary_time = profile_function(portfolio_summary, df)
+    corr_time = profile_function(correlation_matrix, df)
 
-    print(f"_safe_concat_normal: {scn_time:.4f}s")
-    print(f"_transpose_financials: {tf_time:.4f}s")
+    print(f"portfolio_summary: {summary_time:.4f}s")
+    print(f"correlation_matrix: {corr_time:.4f}s")
 
 
 def main() -> None:

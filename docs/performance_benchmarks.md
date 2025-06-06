@@ -5,9 +5,9 @@ Run `python scripts/performance_profile.py` to reproduce these numbers.
 
 ```
 $ python scripts/performance_profile.py
-_safe_concat_normal: 0.00xxs
-_transpose_financials: 0.00xxs
+portfolio_summary: 0.00xxs
+correlation_matrix: 0.00xxs
 ```
 
-The `_transpose_financials` loop was optimized to use a list comprehension for
-renaming columns, providing a small speedup visible in the profiling output.
+These numbers provide a rough baseline for the analysis helpers. Large
+deviations may indicate a regression after refactoring.

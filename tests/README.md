@@ -20,12 +20,6 @@ cases.  Tests are grouped by the package they exercise:
 - `test_data_compare_extra.py` – additional compare logic
 - `test_diff.py` – regression tests for `diff_dict`
 
-## Generate Report
-- `test_excel_dashboard.py` – build Excel workbooks
-- `test_excel_dashboard_extra.py` – additional dashboard tests
-- `test_fallback_data.py` – yfinance fallback paths
-- `test_metadata_checker.py` – metadata repair utility
-
 ## Management Tools
 - `test_portfolio_manager.py` – portfolio CLI
 - `test_group_analysis.py` – group management CLI
