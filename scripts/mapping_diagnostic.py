@@ -11,7 +11,7 @@ from modules.data.directus_mapper import (
 from modules.data.directus_client import insert_items, fetch_items
 
 COLLECTIONS = {
-    pm.C_DIRECTUS_COLLECTION: pm.COLUMNS,
+    pm.get_portfolio_collection(): pm.COLUMNS,
     ga.GROUPS_COLLECTION: ga.COLUMNS,
 }
 
@@ -25,20 +25,24 @@ def show_mapping(collection: str, expected: list[str]) -> None:
 
 
 def test_insert(ticker: str = "MSFT") -> None:
-    from modules.management.portfolio_manager.portfolio_manager import fetch_from_unified, C_DIRECTUS_COLLECTION
+    from modules.management.portfolio_manager.portfolio_manager import (
+        fetch_from_unified,
+        get_portfolio_collection,
+    )
 
     record = fetch_from_unified(ticker)
     if not record:
         print("Fetch failed")
         return
     print("Original:", record)
-    add_missing_mappings(C_DIRECTUS_COLLECTION, [record])
-    prepared = prepare_records(C_DIRECTUS_COLLECTION, [record], verbose=True)[0]
+    collection = get_portfolio_collection()
+    add_missing_mappings(collection, [record])
+    prepared = prepare_records(collection, [record], verbose=True)[0]
     print("Prepared:", prepared)
-    res = insert_items(C_DIRECTUS_COLLECTION, [prepared])
+    res = insert_items(collection, [prepared])
     print("Insert result:", res)
     if res:
-        fetched = fetch_items(C_DIRECTUS_COLLECTION, limit=1)
+        fetched = fetch_items(collection, limit=1)
         print("Fetched back:", fetched)
 
 
