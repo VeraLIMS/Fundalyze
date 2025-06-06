@@ -26,10 +26,11 @@ The primary entry point. Running without arguments launches an interactive menu.
 4. Directus Tools      -> Directus helpers
 5. Settings            -> edit configuration
 6. Utilities           -> test runner and profiler
-7. View Portfolio      -> fetch portfolio from Directus
-8. View Profiles       -> show company profiles from Directus
-9. Exit                -> quit
+7. Exit                -> quit
 ```
+
+Additional subcommands are available without entering the menu:
+`summary`, `view-portfolio` and `view-profiles`.
 
 **Flow chart**
 

@@ -54,7 +54,12 @@ setup_logging("logs/fundalyze.log")
 
 # Ensure environment variables from config/.env are loaded before other modules
 from modules.config_utils import load_settings  # noqa: E402
-from modules.interface import print_invalid_choice, print_header, print_menu
+from modules.interface import (
+    print_invalid_choice,
+    print_header,
+    print_menu,
+    print_table,
+)
 
 from modules.management.portfolio_manager.portfolio_manager import (
     main as run_portfolio_manager,
@@ -244,6 +249,32 @@ def view_directus_profiles() -> None:
     print_table(df)
 
 
+def portfolio_summary_cli() -> None:
+    """Display portfolio summary statistics and missing-field counts."""
+    from modules.management.portfolio_manager.portfolio_manager import load_portfolio
+    from modules.analytics import portfolio_summary, sector_counts, missing_field_counts
+
+    df = load_portfolio()
+    if df.empty:
+        print("Portfolio is empty.\n")
+        return
+
+    print_header("\U0001F4CA Portfolio Summary")
+    summary = portfolio_summary(df)
+    if not summary.empty:
+        print_table(summary, showindex=True)
+
+    counts = sector_counts(df)
+    if not counts.empty:
+        print("\nSectors:")
+        print_table(counts)
+
+    missing = missing_field_counts(df)
+    if not missing.empty:
+        print("\nMissing Fields:")
+        print_table(missing)
+
+
 def run_utilities_menu() -> None:
     """Sub-menu exposing extra helper utilities."""
     while True:
@@ -290,6 +321,7 @@ COMMAND_MAP: dict[str, Callable[[], None]] = {
     "profile": run_profile_cli,
     "view-portfolio": view_directus_portfolio,
     "view-profiles": view_directus_profiles,
+    "summary": portfolio_summary_cli,
 }
 
 COMMAND_HELP = {
@@ -306,6 +338,7 @@ COMMAND_HELP = {
     "profile": "Run performance profiler",
     "view-portfolio": "View portfolio from Directus",
     "view-profiles": "View company profiles from Directus",
+    "summary": "Display portfolio summary statistics",
 }
 
 
