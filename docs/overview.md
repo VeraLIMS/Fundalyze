@@ -2,6 +2,10 @@
 
 This document summarizes the key modules and entry points in **Fundalyze**. Use it as a quick reference when navigating or extending the project.
 
+
+## Quick Start
+Run `python scripts/main.py` to open the interactive menu. Use the `portfolio` subcommand to manage your holdings directly from the command line.
+
 ```mermaid
 flowchart TD
     subgraph CLI
@@ -30,9 +34,9 @@ flowchart TD
 
 
 ### `modules.management`
-Tools for maintaining local data files:
-- `portfolio_manager` – CLI for creating and editing `portfolio.xlsx`.
-- `group_analysis` – manage related tickers in `groups.xlsx`.
+CLI helpers built around Directus collections:
+- `portfolio_manager` – manage your portfolio stored in Directus.
+- `group_analysis` – organize related tickers into groups.
 - `note_manager` – simple Markdown note system supporting `[[wikilinks]]`.
 
 For a walkthrough of each CLI and a diagram of the management package layout see
@@ -90,3 +94,9 @@ The `scripts/` directory contains small wrappers that import the modules above a
 
 
 Running `python scripts/main.py` without arguments opens the interactive menu; see the README for command examples.
+
+## Contributor Onboarding
+1. Fork the repository and clone your fork.
+2. Execute `./bootstrap_env.sh` to set up the virtual environment.
+3. Add API tokens to `config/.env` then run `pytest -q`.
+You're now ready to start hacking on Fundalyze!

@@ -7,7 +7,12 @@ LABEL = "OpenBB API Token"
 
 def run_wizard() -> None:
     print("\n=== OpenBB API Token Setup ===")
-    print("Obtain a free API token at https://docs.openbb.co/platform/getting_started/api_requests\n")
+    print(
+        "More information about API requests: "
+        "https://docs.openbb.co/platform/getting_started/api_requests"
+    )
+    print("First login or register: https://my.openbb.co/login")
+    print("Obtain an API code here: https://my.openbb.co/app/platform/pat\n")
     token = input("Enter OpenBB API token: ").strip()
     if not token:
         print("No token provided.\n")

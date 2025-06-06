@@ -48,7 +48,7 @@ FMP_API_KEY=your-fmp-key
 The token is used by `modules.utils.get_openbb()` to authenticate with the OpenBB Hub
 whenever data is requested. See [docs/configuration.md](docs/configuration.md) for all options.
 
-## Quickstart
+## Quick Start
 Run the interactive menu:
 ```bash
 python scripts/main.py
@@ -76,6 +76,13 @@ The returned dictionary contains normalized company data.
 - `scripts/` – CLI entry points
 - `tests/` – pytest suite
 - `docs/` – extended documentation
+
+## Contributor Onboarding
+1. Fork the repository and clone your fork.
+2. Run `./bootstrap_env.sh` (or `.ps1` on Windows) to create `.venv` and install dependencies.
+3. Copy `config/.env` from the example and add your tokens.
+4. Execute `pytest -q` to ensure everything works before making changes.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 
 ## Resources
