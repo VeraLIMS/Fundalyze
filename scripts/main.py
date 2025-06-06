@@ -2,7 +2,7 @@
 # ---------------------------------------------------------------------------
 # Fundalyze CLI main entry point.
 # Provides an interactive menu as well as direct command execution for
-# portfolio management, reporting utilities and other helpers.
+# portfolio management and other helpers.
 # ---------------------------------------------------------------------------
 """Command line entry point for the Fundalyze utilities.
 
@@ -12,25 +12,23 @@ to the various management tools bundled with Fundalyze.
 Menu map::
 
     1. Portfolio & Groups  -> portfolio and group management
-    2. Reports             -> reporting tools
-    3. Notes               -> note manager
-    4. Directus Tools      -> Directus wizard utilities
-    5. Settings            -> edit configuration
-    6. Utilities           -> run tests & profiler
-    7. Exit                -> quit the application
+    2. Notes               -> note manager
+    3. Directus Tools      -> Directus wizard utilities
+    4. Settings            -> edit configuration
+    5. Utilities           -> run tests & profiler
+    6. Exit                -> quit the application
 
 Flow chart::
 
     interactive_menu()
         ├─ run_portfolio_groups()
-        ├─ run_reports_menu()
         ├─ run_note_manager()
         ├─ run_directus_wizard()
         ├─ run_settings_manager()
         ├─ run_utilities_menu()
         └─ exit_program()
 
-You can also call this script with a subcommand such as ``report`` to skip
+You can also call this script with a subcommand such as ``portfolio`` to skip
 the menu entirely.
 """
 
@@ -65,12 +63,6 @@ from modules.management.portfolio_manager.portfolio_manager import (
     main as run_portfolio_manager,
 )
 from modules.management.group_analysis.group_analysis import main as run_group_analysis
-from modules.generate_report import (
-    run_generate_report,
-    run_metadata_checker,
-    run_fallback_data,
-    create_and_open_dashboard,
-)
 from modules.management.note_manager import run_note_manager
 from modules.management.settings_manager.settings_manager import (
     run_settings_manager,
@@ -172,45 +164,6 @@ def run_portfolio_groups() -> None:
             invalid_choice()
 
 
-def _choose_tickers() -> list[str]:
-    """Prompt for tickers using the report helper."""
-    from modules.generate_report import _select_tickers
-
-    return _select_tickers()
-
-
-def run_reports_menu() -> None:
-    """Sub-menu for report related utilities."""
-    while True:
-        print_header("\U0001f4d1 Reports")
-        options = [
-            "Full Workflow",
-            "Metadata Checker Only",
-            "Fallback Data Only",
-            "Excel Dashboard Only",
-            "Return to Main Menu",
-        ]
-        print_menu(options)
-        choice = input(f"Select an option [1-{len(options)}]: ").strip()
-
-        if choice == "1":
-            run_generate_report()
-        elif choice == "2":
-            tickers = _choose_tickers()
-            if tickers:
-                run_metadata_checker(tickers)
-        elif choice == "3":
-            tickers = _choose_tickers()
-            if tickers:
-                run_fallback_data(tickers)
-        elif choice == "4":
-            tickers = _choose_tickers()
-            if tickers:
-                create_and_open_dashboard(tickers=tickers)
-        elif choice == "5":
-            break
-        else:
-            invalid_choice()
 
 
 def run_tests_cli() -> None:
@@ -299,7 +252,6 @@ def run_utilities_menu() -> None:
 
 ACTION_ITEMS: list[tuple[str, Callable[[], None]]] = [
     ("Portfolio & Groups", run_portfolio_groups),
-    ("Reports", run_reports_menu),
     ("Notes", run_note_manager),
     ("Directus Tools", run_directus_wizard),
     ("Settings", run_settings_manager),
@@ -310,12 +262,8 @@ ACTION_ITEMS: list[tuple[str, Callable[[], None]]] = [
 COMMAND_MAP: dict[str, Callable[[], None]] = {
     "portfolio": run_portfolio_manager,
     "groups": run_group_analysis,
-    "report": run_generate_report,
     "notes": run_note_manager,
     "settings": run_settings_manager,
-    "metadata": run_metadata_checker,
-    "fallback": run_fallback_data,
-    "dashboard": create_and_open_dashboard,
     "directus": run_directus_wizard,
     "tests": run_tests_cli,
     "profile": run_profile_cli,
@@ -327,12 +275,8 @@ COMMAND_MAP: dict[str, Callable[[], None]] = {
 COMMAND_HELP = {
     "portfolio": "Launch portfolio manager",
     "groups": "Launch group manager",
-    "report": "Generate reports",
     "notes": "Launch note manager",
     "settings": "Edit configuration",
-    "metadata": "Run metadata checker",
-    "fallback": "Run fallback data fetch",
-    "dashboard": "Create Excel dashboard",
     "directus": "Launch Directus wizard",
     "tests": "Run unit tests",
     "profile": "Run performance profiler",

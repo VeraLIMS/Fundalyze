@@ -10,7 +10,6 @@ modules/
 ├── logging_utils.py
 └── utils/
     ├── data_utils.py
-    ├── excel_utils.py
     ├── math_utils.py
     └── progress_utils.py
 ```
@@ -28,18 +27,6 @@ if df is not None:
     df = strip_timezones(df)
 ```
 
-## `excel_utils`
-Convenience helpers for writing styled Excel tables using
-`pandas.ExcelWriter`.
-
-### Example
-```python
-import pandas as pd
-from modules.utils import write_table
-
-with pd.ExcelWriter("report.xlsx", engine="xlsxwriter") as writer:
-    write_table(writer, df, "Summary", "SummaryTable")
-```
 
 ## `math_utils`
 Small mathematical helpers used in analytics modules.

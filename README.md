@@ -6,14 +6,13 @@
 
 ## What is Fundalyze?
 Fundalyze is an open source toolkit for retrieving market fundamentals and
-building Excel dashboards. It wraps [OpenBB](https://openbb.co/) and
-`yfinance` so you can quickly analyze companies and maintain a local
-portfolio.
+storing them in [Directus](https://directus.io/). It wraps
+[OpenBB](https://openbb.co/) and `yfinance` so you can quickly analyze
+companies and manage a portfolio entirely through the Directus API.
 
 ## Features
 - Download company profiles, historical prices and financial statements
-- Maintain a spreadsheet-based portfolio and groups list
-- Generate Excel dashboards with charts
+- Manage your portfolio and ticker groups directly in Directus
 - Fallback to alternate data sources when needed
 
 ## Installation
@@ -45,7 +44,6 @@ Create `config/.env` and add your API tokens:
 ```env
 OPENBB_TOKEN=your-openbb-token
 FMP_API_KEY=your-fmp-key
-OUTPUT_DIR=output
 ```
 The token is used by `modules.utils.get_openbb()` to authenticate with the OpenBB Hub
 whenever data is requested. See [docs/configuration.md](docs/configuration.md) for all options.
@@ -55,20 +53,18 @@ Run the interactive menu:
 ```bash
 python scripts/main.py
 ```
-Generate a report directly:
+Manage your portfolio:
 ```bash
-python scripts/main.py report
+python scripts/main.py portfolio
 ```
-Enter tickers such as `AAPL MSFT` and a dashboard will appear in `output/`.
 
 Programmatic use:
 ```python
-from modules.generate_report import fetch_and_compile, excel_dashboard
+from modules.data.unified_fetcher import fetch_and_store
 
-fetch_and_compile("AAPL", write_json=True)
-excel_dashboard.create_and_open_dashboard(tickers=["AAPL"])
+record = fetch_and_store("AAPL")
 ```
-Open the workbook to explore profile information, prices and statements.
+The returned dictionary contains normalized company data.
 
 ## Directus Field Mapping
 `scripts/sync_directus_fields.py` syncs your Directus instance to `directus_field_map.json`.
@@ -81,7 +77,6 @@ Open the workbook to explore profile information, prices and statements.
 - `tests/` – pytest suite
 - `docs/` – extended documentation
 
-`output/` holds generated CSVs and dashboards.
 
 ## Resources
 - [User Documentation](docs/overview.md)

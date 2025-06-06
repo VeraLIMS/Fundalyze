@@ -16,7 +16,6 @@ def run_wizard() -> None:
         "FMP_API_KEY",
         "OPENAI_API_KEY",
         "NOTES_DIR",
-        "OUTPUT_DIR",
         "DIRECTUS_URL",
         "DIRECTUS_TOKEN",
         "DIRECTUS_PORTFOLIO_COLLECTION",
