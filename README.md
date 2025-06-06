@@ -61,6 +61,10 @@ Debug how a ticker is mapped before insertion:
 ```bash
 python scripts/main.py map-record
 ```
+Run a full mapping diagnostic:
+```bash
+python scripts/main.py diag
+```
 
 Programmatic use:
 ```python
@@ -84,7 +88,8 @@ or other tools that may use it.
 `scripts/sync_directus_fields.py` syncs your Directus instance to `directus_field_map.json`.
 1. Ensure `DIRECTUS_API_URL` and `DIRECTUS_TOKEN` are set.
 2. Run `python scripts/sync_directus_fields.py` and follow the prompts.
-You can verify your mapping at any time with `python scripts/main.py test-mapping`
+You can verify your mapping at any time with `python scripts/main.py test-mapping`,
+run a detailed diagnostic with `python scripts/main.py diag`,
 or insert a sample record using `python scripts/main.py test-insert`.
 To automatically append any new fields in a dataset run
 `python scripts/main.py add-missing` and follow the prompts.
