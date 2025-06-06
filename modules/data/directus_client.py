@@ -70,6 +70,13 @@ def _make_request(method: str, url: str, **kwargs) -> Dict[str, Any] | None:
             **kwargs,
         )
         resp.raise_for_status()
+        logger.info(
+            "Directus response %s %s status=%s content=%.200s",
+            method,
+            url,
+            resp.status_code,
+            resp.text,
+        )
     except requests.exceptions.HTTPError as http_err:
         status = getattr(resp, "status_code", "?")
         body = getattr(resp, "text", "")
@@ -238,6 +245,7 @@ def insert_items(collection: str, items):
     payload = {"data": cleaned}
     logger.info("Inserting into %s: %s", collection, payload)
     result = directus_request("POST", f"items/{collection}", json=payload)
+    logger.info("Insert result raw: %s", result)
     data = _extract_data(result)
     if not data:
         logger.warning(

@@ -106,6 +106,7 @@ def _map_row(
         logger.error(
             "Mapping produced empty record. original=%s map=%s", row, field_map
         )
+        logger.error("Dropped keys: %s", ", ".join(dropped))
         raise ValueError(
             "Mapped record is empty. Check field mapping configuration"
         )

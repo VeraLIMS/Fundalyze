@@ -57,3 +57,8 @@ Loads configuration from `config/.env` and performs a `GET <DIRECTUS_URL>/server
 
 ## sync_directus_fields.py
 Compares collections and fields in your Directus instance against `directus_field_map.json`. New collections/fields are presented for confirmation and deleted entries can be removed. If any API request fails, the script aborts and your existing mapping file remains unchanged.
+
+## mapping_diagnostic.py
+Prints the expected -> mapped field names for key collections and can optionally
+insert a test record. Use the new CLI commands `test-mapping` and `test-insert`
+to invoke this functionality from `main.py`.
