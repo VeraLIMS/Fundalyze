@@ -126,11 +126,11 @@ def prompt_manual_entry(ticker: str) -> dict:
     return data
 
 
-def fetch_from_unified(ticker: str) -> dict:
+def fetch_from_unified(ticker: str, *, use_openbb: bool | None = None) -> dict:
     """Return company data via the unified fetcher."""
     from modules.data.unified_fetcher import fetch_company_data
 
-    data = fetch_company_data(ticker)
+    data = fetch_company_data(ticker, use_openbb=use_openbb)
     if data is None:
         raise ValueError("Data not found")
     return data

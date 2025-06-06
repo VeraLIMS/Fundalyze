@@ -220,6 +220,30 @@ def run_profile_cli() -> None:
     subprocess.run([sys.executable, script])
 
 
+def view_directus_portfolio() -> None:
+    """Display portfolio items stored in Directus."""
+    from modules.management.portfolio_manager.portfolio_manager import load_portfolio
+
+    df = load_portfolio()
+    if df.empty:
+        print("Portfolio is empty.\n")
+    else:
+        print_table(df)
+
+
+def view_directus_profiles() -> None:
+    """Display company profiles stored in Directus."""
+    from modules.data.directus_client import fetch_items
+    import pandas as pd
+
+    records = fetch_items("company_profiles")
+    if not records:
+        print("No profiles found.\n")
+        return
+    df = pd.DataFrame(records)
+    print_table(df)
+
+
 def run_utilities_menu() -> None:
     """Sub-menu exposing extra helper utilities."""
     while True:
@@ -264,6 +288,8 @@ COMMAND_MAP: dict[str, Callable[[], None]] = {
     "directus": run_directus_wizard,
     "tests": run_tests_cli,
     "profile": run_profile_cli,
+    "view-portfolio": view_directus_portfolio,
+    "view-profiles": view_directus_profiles,
 }
 
 COMMAND_HELP = {
@@ -278,6 +304,8 @@ COMMAND_HELP = {
     "directus": "Launch Directus wizard",
     "tests": "Run unit tests",
     "profile": "Run performance profiler",
+    "view-portfolio": "View portfolio from Directus",
+    "view-profiles": "View company profiles from Directus",
 }
 
 
@@ -328,11 +356,20 @@ def parse_args() -> argparse.Namespace:
         )
     sub.add_parser("menu", help="Interactive menu (default)")
     parser.add_argument("--version", action="version", version="Fundalyze 1.0")
+    parser.add_argument(
+        "--no-openbb",
+        action="store_true",
+        help="Disable OpenBB when fetching company data",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+    if args.no_openbb:
+        from modules.data import unified_fetcher
+
+        unified_fetcher.DEFAULT_USE_OPENBB = False
     cmd = args.command or "menu"
     if cmd == "menu":
         interactive_menu()
