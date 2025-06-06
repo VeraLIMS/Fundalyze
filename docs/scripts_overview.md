@@ -67,3 +67,6 @@ use the `test-mapping` and `test-insert` subcommands directly from `main.py`.
 Appends any new keys found in a JSON dataset to `directus_field_map.json`.
 Run with a collection name and path to a JSON file containing one or more
 records. This is also available via `python scripts/main.py add-missing`.
+
+## mapping_validator.py
+Checks a JSON dataset against `directus_field_map.json` and warns about missing or invalid field mappings. Optionally inserts the mapped records into Directus. Run with a collection name and path to a JSON file. Use `--insert` to perform the upload.

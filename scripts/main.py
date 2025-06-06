@@ -274,6 +274,23 @@ def run_add_missing_cli() -> None:
     print("Mapping updated.\n")
 
 
+def run_mapping_validator_cli() -> None:
+    """Validate field mapping against a JSON file and optionally insert."""
+    collection = input("Collection name: ").strip()
+    if not collection:
+        print("No collection provided.\n")
+        return
+    path = input("Path to JSON file: ").strip()
+    if not path:
+        print("No file provided.\n")
+        return
+    cmd = [sys.executable, os.path.join(SCRIPT_DIR, "mapping_validator.py"), collection, path]
+    resp = input("Insert into Directus after validation? (y/N): ").strip().lower()
+    if resp in ("y", "yes"):
+        cmd.append("--insert")
+    subprocess.run(cmd)
+
+
 def portfolio_summary_cli() -> None:
     """Display portfolio summary statistics and missing-field counts."""
     from modules.management.portfolio_manager.portfolio_manager import load_portfolio
@@ -309,6 +326,7 @@ def run_utilities_menu() -> None:
             "Performance Profile",
             "Test Mapping",
             "Test Insert",
+            "Validate Mapping",
             "Return to Main Menu",
         ]
         print_menu(options)
@@ -323,6 +341,8 @@ def run_utilities_menu() -> None:
         elif choice == "4":
             run_insert_test()
         elif choice == "5":
+            run_mapping_validator_cli()
+        elif choice == "6":
             break
         else:
             invalid_choice()
@@ -352,6 +372,7 @@ COMMAND_MAP: dict[str, Callable[[], None]] = {
     "test-mapping": run_mapping_test,
     "test-insert": run_insert_test,
     "add-missing": run_add_missing_cli,
+    "validate-mapping": run_mapping_validator_cli,
     "summary": portfolio_summary_cli,
 }
 
@@ -370,6 +391,7 @@ COMMAND_HELP = {
     "test-mapping": "Display current field mapping",
     "test-insert": "Insert a test record into Directus",
     "add-missing": "Add unmapped fields to directus_field_map.json",
+    "validate-mapping": "Validate and optionally insert a JSON dataset",
     "summary": "Display portfolio summary statistics",
 }
 
