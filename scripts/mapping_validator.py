@@ -13,8 +13,15 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
+import sys
 from pathlib import Path
 from typing import Any, Dict, Iterable, List
+
+SCRIPT_DIR = os.path.dirname(__file__)
+REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, os.pardir))
+if REPO_ROOT not in sys.path:
+    sys.path.insert(0, REPO_ROOT)
 
 from modules.data import directus_mapper as dm
 from modules.data.directus_client import insert_items, list_fields
