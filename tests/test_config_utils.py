@@ -34,3 +34,23 @@ def test_env_roundtrip(tmp_path, monkeypatch):
     config_utils.save_env(env)
     loaded = config_utils.load_env()
     assert loaded == env
+
+
+def test_add_fmp_api_key_with_env(monkeypatch):
+    monkeypatch.setenv("FMP_API_KEY", "abc123")
+    url = "https://example.com/profile"
+    result = config_utils.add_fmp_api_key(url)
+    assert result == url + "?apikey=abc123"
+
+
+def test_add_fmp_api_key_with_query(monkeypatch):
+    monkeypatch.setenv("FMP_API_KEY", "key")
+    url = "https://example.com/profile?x=1"
+    result = config_utils.add_fmp_api_key(url)
+    assert result == url + "&apikey=key"
+
+
+def test_add_fmp_api_key_no_env(monkeypatch):
+    monkeypatch.delenv("FMP_API_KEY", raising=False)
+    url = "https://example.com/profile"
+    assert config_utils.add_fmp_api_key(url) == url
