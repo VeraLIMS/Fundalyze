@@ -107,3 +107,8 @@ def parse_number(val: Any) -> Any:
         except ValueError:
             return val
     return val
+
+
+def parse_human_number(val: Any) -> Any:
+    """Return numeric value parsed from ``val`` if possible."""
+    return parse_number(val)

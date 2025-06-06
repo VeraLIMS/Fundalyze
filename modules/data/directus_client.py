@@ -234,6 +234,10 @@ def insert_items(collection: str, items):
         logger.warning("No records to insert.")
         return []
 
+    # Allow single dictionaries in addition to iterables
+    if isinstance(items, dict):
+        items = [items]
+
     cleaned = []
     for item in items:
         if isinstance(item, dict):
@@ -244,7 +248,10 @@ def insert_items(collection: str, items):
     fields = cleaned[0].keys() if isinstance(cleaned[0], dict) else None
     create_collection_if_missing(collection, fields)
 
-    payload = {"data": cleaned}
+    if len(cleaned) == 1:
+        payload = {"data": cleaned[0]}
+    else:
+        payload = {"data": cleaned}
     logger.info("Inserting into %s: %s", collection, payload)
     result = directus_request("POST", f"items/{collection}", json=payload)
     logger.info("Insert result raw: %s", result)
