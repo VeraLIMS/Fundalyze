@@ -1,0 +1,4 @@
+table_name,field_name,type,precision,scale,required,default
+balance_sheet,total_assets,decimal,1000,10,TRUE,
+cash_flow,free_cash_flow,decimal,1000,10,FALSE,0
+portfolio,current_price,decimal,10,5,TRUE,
