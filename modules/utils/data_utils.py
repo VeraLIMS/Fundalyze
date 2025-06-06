@@ -74,3 +74,36 @@ def write_dataframe(
     if write_json:
         json_path = csv_path.with_suffix(".json")
         df.to_json(json_path, orient="records", indent=2, date_format="iso")
+
+
+def parse_number(val: Any) -> Any:
+    """Return numeric value parsed from ``val`` if possible.
+
+    Strings with suffixes ``B``, ``M``, or ``K`` are converted to their
+    numeric equivalents.  Unparseable values are returned unchanged.
+    """
+    if isinstance(val, (int, float)):
+        return val
+    if val is None or val is pd.NA:
+        return val
+    if isinstance(val, str):
+        s = val.strip().replace(",", "")
+        multipliers = {
+            "T": 1_000_000_000_000,
+            "B": 1_000_000_000,
+            "M": 1_000_000,
+            "K": 1_000,
+        }
+        if s:
+            last = s[-1].upper()
+            mult = multipliers.get(last)
+            if mult:
+                try:
+                    return float(s[:-1]) * mult
+                except ValueError:
+                    return val
+        try:
+            return float(s)
+        except ValueError:
+            return val
+    return val

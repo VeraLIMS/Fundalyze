@@ -12,6 +12,7 @@ from .data_utils import (
     ensure_period_column,
     read_csv_if_exists,
     read_json_if_exists,
+    parse_number,
 )
 from .math_utils import moving_average, percentage_change
 from .progress_utils import progress_iter
@@ -22,6 +23,7 @@ __all__ = [
     "ensure_period_column",
     "read_csv_if_exists",
     "read_json_if_exists",
+    "parse_number",
     "moving_average",
     "percentage_change",
     "progress_iter",

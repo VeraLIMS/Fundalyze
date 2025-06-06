@@ -32,6 +32,7 @@ from modules.interface import (
 SETTINGS = load_settings()
 
 import pandas as pd
+from modules.utils import parse_number
 from modules.data.term_mapper import resolve_term
 from modules.data.directus_client import fetch_items, insert_items
 from modules.data import prepare_records
@@ -140,8 +141,10 @@ def prompt_manual_entry(ticker: str) -> dict:
         val = input(f"  {field}: ").strip()
         if field in NUMERIC_FIELDS:
             try:
-                data[field] = float(val) if val else pd.NA
-            except ValueError:
+                data[field] = parse_number(val) if val else pd.NA
+                if isinstance(data[field], str):
+                    data[field] = pd.NA
+            except Exception:
                 data[field] = pd.NA
         else:
             data[field] = val if val else ""
@@ -256,7 +259,8 @@ def add_tickers_to_group(groups: pd.DataFrame, group_name: str) -> pd.DataFrame:
 
         # Prepend group name to the row data
         row_data = {"Group": group_name}
-        row_data.update(fetched)
+        for k, v in fetched.items():
+            row_data[k] = parse_number(v) if k in NUMERIC_FIELDS else v
 
         # Append via loc to avoid FutureWarning
         groups.loc[len(groups)] = row_data

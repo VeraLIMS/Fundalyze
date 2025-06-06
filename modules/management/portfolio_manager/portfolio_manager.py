@@ -13,6 +13,7 @@ from modules.interface import (
 )
 
 import pandas as pd
+from modules.utils import parse_number
 from modules.data.term_mapper import resolve_term
 from modules.data.directus_client import fetch_items, insert_items
 from modules.data import prepare_records
@@ -67,6 +68,9 @@ def _clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
 def _append_row(df: pd.DataFrame, data: dict) -> pd.DataFrame:
     """Return ``df`` with ``data`` appended as a new row."""
+    for field in NUMERIC_FIELDS:
+        if field in data:
+            data[field] = parse_number(data[field])
     new_row = pd.DataFrame([data], columns=COLUMNS)
     if df.empty:
         return new_row

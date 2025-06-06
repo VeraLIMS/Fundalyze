@@ -14,6 +14,7 @@ import os
 from typing import Any, Dict, List, Iterable
 
 import requests
+from modules.utils import parse_number
 
 from modules.config_utils import load_settings  # noqa: E402
 
@@ -130,10 +131,11 @@ def clean_record(record: Dict[str, Any]) -> Dict[str, Any]:
     """
     cleaned = {}
     for key, value in record.items():
-        if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
+        val = parse_number(value)
+        if isinstance(val, float) and (math.isnan(val) or math.isinf(val)):
             cleaned[key] = None
         else:
-            cleaned[key] = value
+            cleaned[key] = val
     return cleaned
 
 
