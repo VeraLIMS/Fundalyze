@@ -1,4 +1,10 @@
-"""Lightweight Directus REST client used across the project."""
+"""Lightweight Directus REST client used across the project.
+
+This module provides minimal wrappers around the Directus REST API so other
+modules can interact with Directus without carrying additional dependencies or
+boilerplate. Functions in this file are intentionally thin and return parsed
+JSON dictionaries to keep them simple to test.
+"""
 
 from __future__ import annotations
 
@@ -42,6 +48,44 @@ def _log_request(method: str, url: str, payload: Any) -> None:
         logger.debug("Directus request %s %s payload=%s", method, url, payload)
     else:
         logger.debug("Directus request %s %s", method, url)
+
+
+def _make_request(method: str, url: str, **kwargs) -> Dict[str, Any] | None:
+    """Return parsed JSON from a HTTP request or ``None`` on error."""
+    payload = kwargs.get("json") or kwargs.get("data") or kwargs.get("params")
+    _log_request(method, url, payload)
+
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        **_headers(),
+    }
+
+    try:
+        resp = requests.request(
+            method,
+            url,
+            headers=headers,
+            timeout=DEFAULT_TIMEOUT,
+            **kwargs,
+        )
+        resp.raise_for_status()
+    except requests.exceptions.HTTPError as http_err:
+        status = getattr(resp, "status_code", "?")
+        body = getattr(resp, "text", "")
+        logger.error(
+            "HTTP error: %s | URL: %s | Status: %s | Content: %s",
+            http_err,
+            url,
+            status,
+            body,
+        )
+        return None
+    except requests.exceptions.RequestException as err:
+        logger.error("Request error: %s | URL: %s", err, url)
+        return None
+
+    return _parse_response(resp, url)
 
 
 def _parse_response(resp: requests.Response, url: str) -> Dict[str, Any] | None:
@@ -133,36 +177,7 @@ def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any] | None:
         raise RuntimeError("DIRECTUS_URL not configured")
 
     url = _build_url(path)
-    payload = kwargs.get("json") or kwargs.get("data") or kwargs.get("params")
-    _log_request(method, url, payload)
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        **_headers(),
-    }
-    try:
-        resp = requests.request(
-            method,
-            url,
-            headers=headers,
-            timeout=DEFAULT_TIMEOUT,
-            **kwargs,
-        )
-        resp.raise_for_status()
-        return _parse_response(resp, url)
-    except requests.exceptions.HTTPError as errh:
-        status = getattr(resp, "status_code", "?")
-        body = getattr(resp, "text", "")
-        logger.error(
-            "HTTP error: %s | URL: %s | Status: %s | Content: %s",
-            errh,
-            url,
-            status,
-            body,
-        )
-    except requests.exceptions.RequestException as err:
-        logger.error("Request error: %s | URL: %s", err, url)
-    return None
+    return _make_request(method, url, **kwargs)
 
 def list_collections() -> list[str]:
     """Return available collection names."""
