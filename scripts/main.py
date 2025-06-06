@@ -32,12 +32,12 @@ You can also call this script with a subcommand such as ``portfolio`` to skip
 the menu entirely.
 """
 
-import sys
-import os
 import argparse
-import textwrap
-import subprocess
 import json
+import os
+import subprocess
+import sys
+import textwrap
 from pathlib import Path
 from typing import Callable
 
@@ -55,23 +55,18 @@ setup_logging("logs/fundalyze.log")
 # Ensure environment variables from config/.env are loaded before other modules
 from modules.config_utils import load_settings  # noqa: E402
 from modules.interface import (
-    print_invalid_choice,
     print_header,
+    print_invalid_choice,
     print_menu,
     print_table,
 )
-
+from modules.management.directus_tools.directus_wizard import run_directus_wizard
+from modules.management.group_analysis.group_analysis import main as run_group_analysis
+from modules.management.note_manager import run_note_manager
 from modules.management.portfolio_manager.portfolio_manager import (
     main as run_portfolio_manager,
 )
-from modules.management.group_analysis.group_analysis import main as run_group_analysis
-from modules.management.note_manager import run_note_manager
-from modules.management.settings_manager.settings_manager import (
-    run_settings_manager,
-)
-from modules.management.directus_tools.directus_wizard import (
-    run_directus_wizard,
-)
+from modules.management.settings_manager.settings_manager import run_settings_manager
 
 SETTINGS = load_settings()
 
@@ -89,8 +84,8 @@ def invalid_choice():
 
 def run_portfolio_groups() -> None:
     """Combined menu for portfolio and group management."""
-    from modules.management.portfolio_manager import portfolio_manager as pm
     from modules.management.group_analysis import group_analysis as ga
+    from modules.management.portfolio_manager import portfolio_manager as pm
 
     portfolio = pm.load_portfolio()
     groups = ga.load_groups()
@@ -166,8 +161,6 @@ def run_portfolio_groups() -> None:
             invalid_choice()
 
 
-
-
 def run_tests_cli() -> None:
     """Run the test suite via the bundled helper script."""
     script = os.path.join(SCRIPT_DIR, "run_tests.py")
@@ -193,8 +186,9 @@ def view_directus_portfolio() -> None:
 
 def view_directus_profiles() -> None:
     """Display company profiles stored in Directus."""
-    from modules.data.directus_client import fetch_items
     import pandas as pd
+
+    from modules.data.directus_client import fetch_items
 
     records = fetch_items("company_profiles")
     if not records:
@@ -206,11 +200,11 @@ def view_directus_profiles() -> None:
 
 def debug_mapped_record() -> None:
     """Fetch and display a single mapped portfolio record without inserting."""
+    from modules.data.directus_mapper import prepare_records
     from modules.management.portfolio_manager.portfolio_manager import (
         fetch_from_unified,
         get_portfolio_collection,
     )
-    from modules.data.directus_mapper import prepare_records
 
     ticker = input("Ticker to map: ").strip().upper()
     if not ticker:
@@ -240,11 +234,13 @@ def run_mapping_test() -> None:
 
 def run_insert_test() -> None:
     """Insert a test record for ticker MSFT and show the result."""
-    subprocess.run([
-        sys.executable,
-        os.path.join(SCRIPT_DIR, "mapping_diagnostic.py"),
-        "--insert",
-    ])
+    subprocess.run(
+        [
+            sys.executable,
+            os.path.join(SCRIPT_DIR, "mapping_diagnostic.py"),
+            "--insert",
+        ]
+    )
 
 
 def run_add_missing_cli() -> None:
@@ -285,24 +281,68 @@ def run_mapping_validator_cli() -> None:
     if not path:
         print("No file provided.\n")
         return
-    cmd = [sys.executable, os.path.join(SCRIPT_DIR, "mapping_validator.py"), collection, path]
+    cmd = [
+        sys.executable,
+        os.path.join(SCRIPT_DIR, "mapping_validator.py"),
+        collection,
+        path,
+    ]
     resp = input("Insert into Directus after validation? (y/N): ").strip().lower()
     if resp in ("y", "yes"):
         cmd.append("--insert")
     subprocess.run(cmd)
 
 
+def run_connectivity_test_cli() -> None:
+    """Run the Directus connectivity check helper."""
+    script = os.path.join(SCRIPT_DIR, "connectivity_test.py")
+    subprocess.run([sys.executable, script])
+
+
+def run_sync_fields_cli() -> None:
+    """Launch the Directus field mapping synchronizer."""
+    script = os.path.join(SCRIPT_DIR, "sync_directus_fields.py")
+    subprocess.run([sys.executable, script])
+
+
+def run_fetch_statements_cli() -> None:
+    """Fetch and store financial statements for a ticker."""
+    from modules.data.financials import fetch_and_store_statements
+
+    ticker = input("Ticker symbol: ").strip().upper()
+    if not ticker:
+        print("No ticker provided.\n")
+        return
+    fetch_and_store_statements(ticker)
+    print("Statements fetched and stored.\n")
+
+
+def run_compare_profile_cli() -> None:
+    """Compare profiles from OpenBB and yfinance interactively."""
+    from modules.data.compare import interactive_profile
+
+    ticker = input("Ticker symbol: ").strip().upper()
+    if not ticker:
+        print("No ticker provided.\n")
+        return
+    df = interactive_profile(ticker)
+    if df.empty:
+        print("No data available.\n")
+    else:
+        print_table(df)
+
+
 def portfolio_summary_cli() -> None:
     """Display portfolio summary statistics and missing-field counts."""
+    from modules.analytics import missing_field_counts, portfolio_summary, sector_counts
     from modules.management.portfolio_manager.portfolio_manager import load_portfolio
-    from modules.analytics import portfolio_summary, sector_counts, missing_field_counts
 
     df = load_portfolio()
     if df.empty:
         print("Portfolio is empty.\n")
         return
 
-    print_header("\U0001F4CA Portfolio Summary")
+    print_header("\U0001f4ca Portfolio Summary")
     summary = portfolio_summary(df)
     if not summary.empty:
         print_table(summary, showindex=True)
@@ -320,11 +360,10 @@ def portfolio_summary_cli() -> None:
 
 def schema_export_cli() -> None:
     """Export Directus schema definitions to a CSV file."""
-    from modules.schema import export_schema
     from modules.api import DirectusClient
+    from modules.schema import export_schema
 
-    path = input(
-        "Output CSV path [config/schema_definitions_export.csv]: ").strip()
+    path = input("Output CSV path [config/schema_definitions_export.csv]: ").strip()
     if not path:
         path = "config/schema_definitions_export.csv"
     export_schema(DirectusClient(), path)
@@ -332,11 +371,10 @@ def schema_export_cli() -> None:
 
 def schema_sync_cli() -> None:
     """Synchronize CSV schema definitions with Directus."""
-    from modules.schema import sync_schema
     from modules.api import DirectusClient
+    from modules.schema import sync_schema
 
-    csv_path = input(
-        "Schema CSV path [config/schema_definitions.csv]: ").strip()
+    csv_path = input("Schema CSV path [config/schema_definitions.csv]: ").strip()
     if not csv_path:
         csv_path = "config/schema_definitions.csv"
     resp = input("Delete fields not in CSV? (y/N): ").strip().lower()
@@ -347,7 +385,7 @@ def schema_sync_cli() -> None:
 def run_schema_menu() -> None:
     """Interactive menu for Directus schema utilities."""
     while True:
-        print_header("\U0001F4C1 Schema Tools")
+        print_header("\U0001f4c1 Schema Tools")
         options = ["Export Schema", "Sync Schema", "Return to Main Menu"]
         print_menu(options)
         choice = input(f"Select an option [1-{len(options)}]: ").strip()
@@ -372,6 +410,10 @@ def run_utilities_menu() -> None:
             "Test Mapping",
             "Test Insert",
             "Validate Mapping",
+            "Connectivity Test",
+            "Sync Field Map",
+            "Fetch Statements",
+            "Compare Profiles",
             "Return to Main Menu",
         ]
         print_menu(options)
@@ -388,6 +430,14 @@ def run_utilities_menu() -> None:
         elif choice == "5":
             run_mapping_validator_cli()
         elif choice == "6":
+            run_connectivity_test_cli()
+        elif choice == "7":
+            run_sync_fields_cli()
+        elif choice == "8":
+            run_fetch_statements_cli()
+        elif choice == "9":
+            run_compare_profile_cli()
+        elif choice == "10":
             break
         else:
             invalid_choice()
@@ -423,6 +473,10 @@ COMMAND_MAP: dict[str, Callable[[], None]] = {
     "add-missing": run_add_missing_cli,
     "validate-mapping": run_mapping_validator_cli,
     "summary": portfolio_summary_cli,
+    "connect-test": run_connectivity_test_cli,
+    "sync-fields": run_sync_fields_cli,
+    "fetch-statements": run_fetch_statements_cli,
+    "compare-profile": run_compare_profile_cli,
 }
 
 COMMAND_HELP = {
@@ -445,6 +499,10 @@ COMMAND_HELP = {
     "add-missing": "Add unmapped fields to directus_field_map.json",
     "validate-mapping": "Validate and optionally insert a JSON dataset",
     "summary": "Display portfolio summary statistics",
+    "connect-test": "Check Directus connectivity",
+    "sync-fields": "Synchronize field map with Directus",
+    "fetch-statements": "Fetch and store financial statements",
+    "compare-profile": "Compare profiles from OpenBB and yfinance",
 }
 
 

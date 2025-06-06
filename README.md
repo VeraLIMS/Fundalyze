@@ -74,6 +74,22 @@ Sync the schema from a CSV definition:
 ```bash
 python scripts/main.py schema-sync
 ```
+Check Directus connectivity:
+```bash
+python scripts/main.py connect-test
+```
+Synchronize the field mapping JSON:
+```bash
+python scripts/main.py sync-fields
+```
+Fetch financial statements for a ticker:
+```bash
+python scripts/main.py fetch-statements
+```
+Interactively compare OpenBB and yfinance profiles:
+```bash
+python scripts/main.py compare-profile
+```
 
 Programmatic use:
 ```python
