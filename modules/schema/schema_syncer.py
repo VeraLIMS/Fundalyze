@@ -26,7 +26,7 @@ def _fields_equal(csv_def: Dict[str, Any], directus_def: Dict[str, Any]) -> bool
         and norm(csv_def.get("precision")) == norm(directus_def.get("precision"))
         and norm(csv_def.get("scale")) == norm(directus_def.get("scale"))
         and bool(csv_def.get("required"))
-        == (not directus_def.get("schema", {}).get("is_nullable", True))
+        == (not (directus_def.get("schema") or {}).get("is_nullable", True))
         and norm(csv_def.get("default")) == norm(directus_def.get("default_value"))
     )
 
