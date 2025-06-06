@@ -6,31 +6,35 @@
     "collections": {
       "description": "Dictionary keyed by Directus collection name.",
       "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "properties": {
-          "fields": {
-            "description": "Mapping of local column names to Directus fields.",
-            "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "description": "Directus data type, may be null",
-                  "type": ["string", "null"]
-                },
-                "mapped_to": {
-                  "description": "Target field name in Directus",
-                  "type": "string"
-                }
-              },
-              "required": ["mapped_to"]
-            }
-          }
-        },
-        "required": ["fields"]
-      }
+      "additionalProperties": { "$ref": "#/$defs/collection" }
     }
   },
-  "required": ["collections"]
+  "required": ["collections"],
+  "$defs": {
+    "collection": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "description": "Mapping of local column names to Directus fields.",
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/field" }
+        }
+      },
+      "required": ["fields"]
+    },
+    "field": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "Directus data type, may be null",
+          "type": ["string", "null"]
+        },
+        "mapped_to": {
+          "description": "Target field name in Directus",
+          "type": "string"
+        }
+      },
+      "required": ["mapped_to"]
+    }
+  }
 }

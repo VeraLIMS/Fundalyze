@@ -1,10 +1,19 @@
+"""Lightweight Directus REST client used across the project.
 
+This module provides minimal wrappers around the Directus REST API so other
+modules can interact with Directus without carrying additional dependencies or
+boilerplate. Functions in this file are intentionally thin and return parsed
+JSON dictionaries to keep them simple to test.
+"""
 
-import os
+from __future__ import annotations
+
 import logging
 import math
+import os
+from typing import Any, Dict, List
+
 import requests
-from typing import Any, Dict
 
 from modules.config_utils import load_settings  # noqa: E402
 
@@ -25,9 +34,93 @@ CF_ACCESS_CLIENT_SECRET = os.getenv("CF_ACCESS_CLIENT_SECRET") or os.getenv(
 
 logger = logging.getLogger(__name__)
 
+DEFAULT_TIMEOUT = 30  # seconds
+
+
+def _build_url(path: str) -> str:
+    """Return full API URL for the given path."""
+    return f"{DIRECTUS_URL.rstrip('/')}/{path.lstrip('/')}"
+
+
+def _log_request(method: str, url: str, payload: Any) -> None:
+    """Log an outgoing request with optional payload."""
+    if payload:
+        logger.debug("Directus request %s %s payload=%s", method, url, payload)
+    else:
+        logger.debug("Directus request %s %s", method, url)
+
+
+def _make_request(method: str, url: str, **kwargs) -> Dict[str, Any] | None:
+    """Return parsed JSON from a HTTP request or ``None`` on error."""
+    payload = kwargs.get("json") or kwargs.get("data") or kwargs.get("params")
+    _log_request(method, url, payload)
+
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        **_headers(),
+    }
+
+    try:
+        resp = requests.request(
+            method,
+            url,
+            headers=headers,
+            timeout=DEFAULT_TIMEOUT,
+            **kwargs,
+        )
+        resp.raise_for_status()
+    except requests.exceptions.HTTPError as http_err:
+        status = getattr(resp, "status_code", "?")
+        body = getattr(resp, "text", "")
+        logger.error(
+            "HTTP error: %s | URL: %s | Status: %s | Content: %s",
+            http_err,
+            url,
+            status,
+            body,
+        )
+        return None
+    except requests.exceptions.RequestException as err:
+        logger.error("Request error: %s | URL: %s", err, url)
+        return None
+
+    return _parse_response(resp, url)
+
+
+def _parse_response(resp: requests.Response, url: str) -> Dict[str, Any] | None:
+    """Return parsed JSON from ``resp`` or ``None`` on error."""
+    if "text/html" in resp.headers.get("content-type", ""):
+        logger.error(
+            "Directus responded with HTML content. This usually indicates a login page or Cloudflare Access protection. URL: %s | Content: %.100s",
+            url,
+            resp.text,
+        )
+        return None
+    try:
+        return resp.json()
+    except ValueError as exc:
+        logger.error(
+            "Invalid JSON response: %s | URL: %s | Content: %.100s",
+            exc,
+            url,
+            resp.text,
+        )
+    return None
+
 
 def clean_record(record: Dict[str, Any]) -> Dict[str, Any]:
-    """Return a copy of ``record`` with NaN/inf values converted to ``None``."""
+    """Return a sanitized copy of ``record``.
+
+    Numeric ``NaN`` or infinite values are replaced with ``None`` to avoid
+    serialization issues.
+
+    Args:
+        record: Original record dictionary.
+
+    Returns:
+        A copy of ``record`` with problematic floats replaced by ``None``.
+    """
     cleaned = {}
     for key, value in record.items():
         if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
@@ -38,7 +131,7 @@ def clean_record(record: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def reload_env() -> None:
-    """Reload Directus environment variables from ``config/.env``."""
+    """Reload environment variables used for Directus communication."""
     load_settings()  # ensures .env is loaded
     global DIRECTUS_URL, DIRECTUS_TOKEN, CF_ACCESS_CLIENT_ID, CF_ACCESS_CLIENT_SECRET
     # Do not fall back to localhost automatically when reloading
@@ -52,9 +145,9 @@ def reload_env() -> None:
     )
 
 
-def _headers():
+def _headers() -> Dict[str, str]:
     """Return authentication headers for Directus requests."""
-    headers = {}
+    headers: Dict[str, str] = {}
     if DIRECTUS_TOKEN:
         headers["Authorization"] = f"Bearer {DIRECTUS_TOKEN}"
     if CF_ACCESS_CLIENT_ID:
@@ -64,79 +157,47 @@ def _headers():
     return headers
 
 
+def _extract_data(result: Dict[str, Any] | None) -> List[Any]:
+    """Return ``result['data']`` if present else an empty list."""
+    return result.get("data", []) if result else []
+
+
 def directus_request(method: str, path: str, **kwargs) -> Dict[str, Any] | None:
-    """Send a request to the Directus API and return the JSON response."""
+    """Send a request to the Directus API.
+
+    Args:
+        method: HTTP verb such as ``"GET"`` or ``"POST"``.
+        path: API path relative to the Directus base URL.
+        **kwargs: Additional options forwarded to ``requests.request``.
+
+    Returns:
+        Parsed JSON from the response or ``None`` if an error occurred.
+    """
     if not DIRECTUS_URL:
         raise RuntimeError("DIRECTUS_URL not configured")
 
-    url = f"{DIRECTUS_URL.rstrip('/')}/{path.lstrip('/')}"
-    payload = kwargs.get("json") or kwargs.get("data") or kwargs.get("params")
-    if payload:
-        logger.debug("Directus request %s %s payload=%s", method, url, payload)
-    else:
-        logger.debug("Directus request %s %s", method, url)
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-    }
-    headers.update(_headers())
-    try:
-        resp = requests.request(method, url, headers=headers, timeout=30, **kwargs)
-        resp.raise_for_status()
-        # If Cloudflare Access blocks the request we get HTML instead of JSON.
-        if "text/html" in resp.headers.get("content-type", ""):
-            logger.error(
-                "Directus responded with HTML content. This usually indicates a login page or Cloudflare Access protection. URL: %s | Content: %.100s",
-                url,
-                resp.text,
-            )
-            return None
-        try:
-            return resp.json()
-        except ValueError as exc:
-            logger.error(
-                "Invalid JSON response: %s | URL: %s | Content: %.100s",
-                exc,
-                url,
-                resp.text,
-            )
-            return None
-    except requests.exceptions.HTTPError as errh:
-        status = getattr(resp, "status_code", "?")
-        body = getattr(resp, "text", "")
-        logger.error(
-            "HTTP error: %s | URL: %s | Status: %s | Content: %s",
-            errh,
-            url,
-            status,
-            body,
-        )
-    except requests.exceptions.RequestException as err:
-        logger.error("Request error: %s | URL: %s", err, url)
-    return None
+    url = _build_url(path)
+    return _make_request(method, url, **kwargs)
 
 def list_collections() -> list[str]:
     """Return available collection names."""
     result = directus_request("GET", "collections")
-    data = result.get("data", []) if result else []
-    return [c.get("collection") for c in data]
+    return [c.get("collection") for c in _extract_data(result)]
 
 
 def list_fields(collection: str) -> list[str]:
     """Return list of field names for the given Directus collection."""
     result = directus_request("GET", f"fields/{collection}")
-    data = result.get("data", []) if result else []
-    return [f.get("field") for f in data]
+    return [f.get("field") for f in _extract_data(result)]
 
 
 def list_fields_with_types(collection: str) -> list[Dict[str, Any]]:
     """Return field metadata including name and type for a collection."""
     result = directus_request("GET", f"fields/{collection}")
-    data = result.get("data", []) if result else []
-    fields = []
-    for f in data:
-        fields.append({"field": f.get("field"), "type": f.get("type")})
-    return fields
+    return [
+        {"field": f.get("field"), "type": f.get("type")}
+        for f in _extract_data(result)
+    ]
 
 
 def fetch_items(collection: str, limit: int | None = None) -> list[Dict[str, Any]]:
@@ -145,18 +206,21 @@ def fetch_items(collection: str, limit: int | None = None) -> list[Dict[str, Any
     if limit is not None:
         endpoint += f"?limit={limit}"
     result = directus_request("GET", endpoint)
-    return result.get("data", []) if result else []
+    return _extract_data(result)
 
 
 def fetch_items_filtered(collection: str, params: Dict[str, Any]) -> list[Dict[str, Any]]:
     """Fetch items from ``collection`` applying Directus filter parameters."""
     payload = {"filter": params}
     result = directus_request("GET", f"items/{collection}", params=payload)
-    return result.get("data", []) if result else []
+    return _extract_data(result)
 
 
 def insert_items(collection: str, items):
-    """Insert one or more items into a Directus collection."""
+    """Insert one or more items into a Directus collection.
+
+    Any numeric NaN/inf values are converted to ``None`` before submission.
+    """
     if not items:
         logger.warning("No records to insert.")
         return []
@@ -170,7 +234,7 @@ def insert_items(collection: str, items):
 
     payload = {"data": cleaned}
     result = directus_request("POST", f"items/{collection}", json=payload)
-    return result.get("data") if result else []
+    return _extract_data(result)
 
 
 def create_field(collection: str, field: str, field_type: str = "string", **kwargs):
@@ -178,14 +242,16 @@ def create_field(collection: str, field: str, field_type: str = "string", **kwar
     payload = {"field": field, "type": field_type}
     payload.update(kwargs)
     result = directus_request("POST", f"fields/{collection}", json=payload)
-    return result.get("data") if result else None
+    data = _extract_data(result)
+    return data if data else None
 
 
 def update_item(collection: str, item_id: Any, updates: Dict[str, Any]):
     """Update a single item by ``item_id`` in ``collection``."""
     updates = clean_record(updates)
     result = directus_request("PATCH", f"items/{collection}/{item_id}", json=updates)
-    return result.get("data") if result else None
+    data = _extract_data(result)
+    return data if data else None
 
 
 def delete_item(collection: str, item_id: Any) -> bool:

@@ -18,11 +18,10 @@ from .utils import iso_timestamp_utc
 
 def ensure_output_dir(symbol: str, base_output: str | None = None) -> str:
     """Return ticker directory path creating it if needed."""
-    if base_output is None:
-        base_output = str(get_output_dir())
-    ticker_dir = os.path.join(base_output, symbol.upper())
-    os.makedirs(ticker_dir, exist_ok=True)
-    return ticker_dir
+    root = Path(base_output or get_output_dir())
+    ticker_dir = root / symbol.upper()
+    ticker_dir.mkdir(parents=True, exist_ok=True)
+    return str(ticker_dir)
 
 
 def upload_dataframe(df: pd.DataFrame, collection: str) -> None:
@@ -44,7 +43,7 @@ def upload_dataframe(df: pd.DataFrame, collection: str) -> None:
 
 def write_report_and_metadata(ticker_dir: str, lines: Iterable[str], metadata: dict) -> None:
     """Write Markdown report and metadata.json in ``ticker_dir``."""
-    report_path = os.path.join(ticker_dir, "report.md")
+    report_path = Path(ticker_dir) / "report.md"
     with open(report_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
 
@@ -54,7 +53,7 @@ def write_report_and_metadata(ticker_dir: str, lines: Iterable[str], metadata: d
         "created_at": iso_timestamp_utc(),
     }
 
-    with open(os.path.join(ticker_dir, "metadata.json"), "w", encoding="utf-8") as f:
+    with open(Path(ticker_dir) / "metadata.json", "w", encoding="utf-8") as f:
         json.dump(metadata, f, indent=2)
 
 
@@ -92,13 +91,13 @@ def fetch_profile(
     write_json:
         Additionally write a JSON version alongside the CSV.
     """
-    profile_path = os.path.join(ticker_dir, "profile.csv")
+    profile_path = Path(ticker_dir) / "profile.csv"
     fmp_profile_url = f"https://financialmodelingprep.com/api/v3/profile/{symbol}"
 
     try:
         profile_df = obb.equity.profile(symbol=symbol).to_df()
         if write_files:
-            write_dataframe(profile_df, Path(profile_path), write_json=write_json)
+            write_dataframe(profile_df, profile_path, write_json=write_json)
         upload_dataframe(profile_df, os.getenv("DIRECTUS_COMPANIES_COLLECTION", "companies"))
         lines.append("- → Saved full profile to `profile.csv`\n\n")
         lines.append(
@@ -186,8 +185,9 @@ def fetch_price_history(
     write_json:
         Additionally write JSON alongside the CSV file.
     """
-    price_csv_path = os.path.join(ticker_dir, "1mo_prices.csv")
-    price_chart_path = os.path.join(ticker_dir, "1mo_close.png")
+    ticker_path = Path(ticker_dir)
+    price_csv_path = ticker_path / "1mo_prices.csv"
+    price_chart_path = ticker_path / "1mo_close.png"
     yahoo_hist_url = f"https://finance.yahoo.com/quote/{symbol}/history?p={symbol}"
 
     try:
@@ -201,7 +201,7 @@ def fetch_price_history(
                 hist_df = hist_df.drop(columns=[col])
 
         if write_files:
-            write_dataframe(hist_df, Path(price_csv_path), write_json=write_json)
+            write_dataframe(hist_df, price_csv_path, write_json=write_json)
         upload_dataframe(hist_df, os.getenv("DIRECTUS_PRICES_COLLECTION", "price_history"))
         msg = (
             "- → Saved 1 month price history to `1mo_prices.csv`\n\n"
@@ -306,13 +306,13 @@ def fetch_financial_statements(
         if stmt not in statements:
             continue
         lines.append(f"### {label} ({period.title()})\n")
-        fin_path = os.path.join(ticker_dir, filename)
+        fin_path = Path(ticker_dir) / filename
         try:
             fn = getattr(obb.equity.fundamental, stmt)
             fin_df = fn(symbol=symbol, period=period).to_df()
             if isinstance(fin_df, pd.DataFrame) and not fin_df.empty:
                 if write_files:
-                    write_dataframe(fin_df, Path(fin_path), write_json=write_json)
+                    write_dataframe(fin_df, fin_path, write_json=write_json)
                 collection = f"{stmt}_statement" if stmt != "cash" else "cash_flow"
                 upload_dataframe(fin_df.reset_index(), os.getenv(f"DIRECTUS_{collection.upper()}_COLLECTION", collection))
                 lines.append(f"- → Saved to `{filename}`\n\n")
@@ -336,13 +336,13 @@ def fetch_financial_statements(
                 }
                 if write_files:
                     empty_df = pd.DataFrame()
-                    write_dataframe(empty_df, Path(fin_path), write_json=write_json)
+                    write_dataframe(empty_df, fin_path, write_json=write_json)
         except Exception as exc:
             lines.append(f"> {label} error for {symbol}: {exc}\n\n")
             lines.append("**Source:** ERROR occurred; see metadata.json\n\n")
             if write_files:
                 empty_df = pd.DataFrame()
-                write_dataframe(empty_df, Path(fin_path), write_json=write_json)
+                write_dataframe(empty_df, fin_path, write_json=write_json)
             metadata["files"][filename] = {
                 "source": f"ERROR: {exc}",
                 "source_url": source_url,
