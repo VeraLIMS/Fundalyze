@@ -2,7 +2,7 @@
 script: group_analysis.py
 
 Dependencies:
-    pip install yfinance pandas openpyxl
+    pip install yfinance pandas
 
 Usage:
     python src/group_analysis.py
@@ -15,10 +15,7 @@ Description:
       - Add tickers to a group (fetching key data via yfinance; manual override if necessary)
       - Remove tickers from a group
       - Delete an entire group
-      - Link a group to a stock in your existing portfolio.xlsx
-
-    Data is persisted in "groups.xlsx" alongside your portfolio.xlsx to allow
-    later cross‐company comparison.
+      - Link a group to a stock in your existing portfolio collection.
 """
 
 import os
@@ -36,13 +33,10 @@ SETTINGS = load_settings()
 
 import pandas as pd
 from modules.data.term_mapper import resolve_term
-from modules.data.directus_client import fetch_items, insert_items, directus_request
+from modules.data.directus_client import fetch_items, insert_items
 from modules.data import prepare_records
 
-PORTFOLIO_FILE = "portfolio.xlsx"
-GROUPS_FILE = "groups.xlsx"
 GROUPS_COLLECTION = os.getenv("DIRECTUS_GROUPS_COLLECTION", "groups")
-USE_DIRECTUS = bool(os.getenv("DIRECTUS_URL"))
 
 # Columns used for each group entry (plus a "Group" column)
 COLUMNS = [
@@ -100,11 +94,6 @@ def _load_from_directus() -> pd.DataFrame:
     return _clean_dataframe(df)
 
 
-def _load_from_excel(path: str) -> pd.DataFrame:
-    """Return group data loaded from a local Excel file."""
-    df = pd.read_excel(path, engine="openpyxl")
-    return _clean_dataframe(df)
-
 
 def _save_to_directus(df: pd.DataFrame) -> None:
     """Persist group data to Directus."""
@@ -113,80 +102,33 @@ def _save_to_directus(df: pd.DataFrame) -> None:
     print(f"→ Saved groups to Directus collection '{GROUPS_COLLECTION}'.\n")
 
 
-def _save_to_excel(df: pd.DataFrame, path: str) -> None:
-    """Persist group data to a local Excel file."""
-    df.to_excel(path, index=False, engine="openpyxl")
-    print(f"→ Saved groups to '{path}'.\n")
-
-
-def load_portfolio(filepath: str) -> pd.DataFrame:
-    """
-    Load the user’s portfolio from Excel. If missing, return empty DataFrame.
-    """
-    if os.path.isfile(filepath):
-        try:
-            df = pd.read_excel(filepath, engine="openpyxl")
-            return df
-        except Exception as e:
-            print(f"Error reading {filepath}: {e}\nStarting with empty portfolio.")
-    return pd.DataFrame()  # columns not strictly needed here
-
-
-def load_groups(filepath: str) -> pd.DataFrame:
-    """
-    Load existing groups either from Directus or from Excel. If neither source
-    is available, return an empty DataFrame with the expected columns.
-    """
-    if USE_DIRECTUS:
-        try:
-            return _load_from_directus()
-        except Exception as exc:
-            print(f"Error loading groups from Directus: {exc}")
-            print("Falling back to local Excel file.")
-
-    if os.path.isfile(filepath):
-        try:
-            return _load_from_excel(filepath)
-        except Exception as e:
-            print(f"Error reading {filepath}: {e}\nStarting with empty groups.")
-    return pd.DataFrame(columns=COLUMNS)
-
-
-def save_groups(df: pd.DataFrame, filepath: str):
-    """
-    Persist groups DataFrame either to Directus or to Excel as fallback.
-    """
-    if USE_DIRECTUS:
-        try:
-            _save_to_directus(df)
-            return
-        except Exception as exc:
-            print(f"Error saving groups to Directus: {exc}")
-            print("Falling back to local Excel file.")
+def load_portfolio() -> pd.DataFrame:
+    """Return portfolio data from Directus."""
+    from modules.management.portfolio_manager.portfolio_manager import load_portfolio as lp
 
     try:
-        _save_to_excel(df, filepath)
-    except Exception as e:
-        print(f"Error saving groups: {e}")
+        return lp()
+    except Exception as exc:
+        print(f"Error loading portfolio from Directus: {exc}")
+        return pd.DataFrame()
 
-    # Sync with Directus if configured
-    api_url = os.getenv("DIRECTUS_URL")
-    token = os.getenv("DIRECTUS_TOKEN")
-    if api_url and token:
-        try:
-            records = df.to_dict(orient="records")
-            resp = directus_request(
-                "POST",
-                "items/groups",
-                json=records,
-                params={"upsert": "Ticker"},
-            )
-            if resp is None:
-                print("Warning syncing groups to Directus: request failed")
-            else:
-                print("→ Synced groups to Directus.\n")
-        except Exception as e:
-            print(f"Error syncing groups to Directus: {e}")
+
+def load_groups() -> pd.DataFrame:
+    """Return existing groups from Directus."""
+    try:
+        return _load_from_directus()
+    except Exception as exc:
+        print(f"Error loading groups from Directus: {exc}")
+        return pd.DataFrame(columns=COLUMNS)
+
+
+def save_groups(df: pd.DataFrame) -> None:
+    """Persist groups to Directus."""
+    records = prepare_records(GROUPS_COLLECTION, df.to_dict(orient="records"))
+    try:
+        insert_items(GROUPS_COLLECTION, records)
+    except Exception as exc:
+        print(f"Error saving groups to Directus: {exc}")
 
 
 def fetch_from_yfinance(ticker: str) -> dict:
@@ -424,8 +366,8 @@ def view_groups(groups: pd.DataFrame):
 
 def main():
     print_header("\U0001F4CA Group Analysis Manager")
-    portfolio = load_portfolio(PORTFOLIO_FILE)
-    groups = load_groups(GROUPS_FILE)
+    portfolio = load_portfolio()
+    groups = load_groups()
 
     while True:
         print("Choose an action:")
@@ -459,7 +401,7 @@ def main():
                     placeholder["Ticker"] = ""
                     groups.loc[len(groups)] = placeholder
                     print(f"  ✓ Created new group '{grp_name}'.\n")
-                save_groups(groups, GROUPS_FILE)
+                save_groups(groups)
 
         elif choice == "3":
             if groups.empty:
@@ -477,17 +419,17 @@ def main():
                 elif sel.isdigit() and 1 <= int(sel) <= len(unique_groups):
                     grp_name = unique_groups[int(sel) - 1]
                     groups = add_tickers_to_group(groups, grp_name)
-                    save_groups(groups, GROUPS_FILE)
+                    save_groups(groups)
                 else:
                     print_invalid_choice()
 
         elif choice == "4":
             groups = remove_ticker_from_group(groups)
-            save_groups(groups, GROUPS_FILE)
+            save_groups(groups)
 
         elif choice == "5":
             groups = delete_group(groups)
-            save_groups(groups, GROUPS_FILE)
+            save_groups(groups)
 
         elif choice == "6":
             print("Exiting Group Analysis Manager.")

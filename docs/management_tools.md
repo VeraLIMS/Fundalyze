@@ -31,10 +31,10 @@ Launch with `run_portfolio_manager()` or directly:
 ```bash
 python modules/management/portfolio_manager/portfolio_manager.py
 ```
-The menu allows you to view your portfolio, add or update tickers, and remove entries. Data is stored in `portfolio.xlsx` and optionally synced with Directus if the related environment variables are configured. When adding tickers the script attempts to fetch data from yfinance and prompts for confirmation or manual entry if anything is missing.
+The menu allows you to view your portfolio, add or update tickers, and remove entries. Data is stored directly in your configured Directus collection. When adding tickers the script attempts to fetch data from yfinance and prompts for confirmation or manual entry if anything is missing.
 
 ## Group Analysis
-Run via `run_group_analysis()`. Groups are stored in `groups.xlsx` and can be linked to portfolio tickers or given a custom name. You can create groups, add or remove tickers, and delete entire groups. The workflow mirrors the portfolio manager but operates on a "Group" column in the spreadsheet.
+Run via `run_group_analysis()`. Groups are saved in a Directus collection and can be linked to portfolio tickers or given a custom name. You can create groups, add or remove tickers, and delete entire groups. The workflow mirrors the portfolio manager but operates on a "Group" column in the database.
 
 ## Note Manager
 `run_note_manager()` provides a minimal Markdown note system. Each note is stored as a `.md` file under the directory specified by `NOTES_DIR` (defaults to `notes/`). The CLI lets you list notes, view contents (showing any `[[wikilink]]` references) and create new notes interactively. Enter an empty title or choose "Return" to cancel an action.

@@ -15,18 +15,17 @@ Fundalyze/scripts
 ```
 
 ## main.py
-The primary entry point. Running without arguments launches an interactive menu. You may also supply a subcommand such as `report` or `portfolio` to jump directly to a tool. A global `--no-openbb` flag disables OpenBB data fetching for troubleshooting.
+The primary entry point. Running without arguments launches an interactive menu. You may also supply a subcommand such as `portfolio` to jump directly to a tool. A global `--no-openbb` flag disables OpenBB data fetching for troubleshooting.
 
 **Menu map**
 
 ```
 1. Portfolio & Groups  -> portfolio/group CLI
-2. Reports             -> reporting utilities
-3. Notes               -> note manager
-4. Directus Tools      -> Directus helpers
-5. Settings            -> edit configuration
-6. Utilities           -> test runner and profiler
-7. Exit                -> quit
+2. Notes               -> note manager
+3. Directus Tools      -> Directus helpers
+4. Settings            -> edit configuration
+5. Utilities           -> test runner and profiler
+6. Exit                -> quit
 ```
 
 Additional subcommands are available without entering the menu:
@@ -37,7 +36,6 @@ Additional subcommands are available without entering the menu:
 ```
 interactive_menu()
 ├─ run_portfolio_groups()
-├─ run_reports_menu()
 ├─ run_note_manager()
 ├─ run_directus_wizard()
 ├─ run_settings_manager()

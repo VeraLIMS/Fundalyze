@@ -9,4 +9,5 @@ All notable changes to this project will be documented in this file.
 - Expanded `docs/DEVELOPER_GUIDE.md` with debugging tips and extension steps.
 - Regenerated `docs/API_REFERENCE.md` for all modules.
 - Polished `docs/overview.md` for clarity.
+- Removed legacy report generation modules and file-based workflows in favor of Directus-first data storage.
 

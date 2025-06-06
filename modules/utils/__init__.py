@@ -13,7 +13,6 @@ from .data_utils import (
     read_csv_if_exists,
     read_json_if_exists,
 )
-from .excel_utils import col_to_letter, write_table
 from .math_utils import moving_average, percentage_change
 from .progress_utils import progress_iter
 from .openbb_utils import get_openbb
@@ -23,8 +22,6 @@ __all__ = [
     "ensure_period_column",
     "read_csv_if_exists",
     "read_json_if_exists",
-    "col_to_letter",
-    "write_table",
     "moving_average",
     "percentage_change",
     "progress_iter",

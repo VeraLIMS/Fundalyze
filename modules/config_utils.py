@@ -64,10 +64,6 @@ def save_env(env: Dict[str, str]) -> None:
             f.write(f"{key}={val}\n")
 
 
-def get_output_dir() -> Path:
-    """Return output directory path from ``OUTPUT_DIR`` env variable."""
-    return Path(os.getenv("OUTPUT_DIR", "output"))
-
 
 def add_fmp_api_key(url: str) -> str:
     """Append the FMP API key as a query parameter if configured."""

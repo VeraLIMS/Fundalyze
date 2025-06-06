@@ -24,7 +24,21 @@ Thank you for considering a contribution! This guide shows how to set up a local
    If JavaScript tooling is used, install Node.js and run `npm install` in the
    relevant directory.
 3. **Configure environment variables**. Copy the example `.env` and add your API
-   keys as described in [docs/configuration.md](docs/configuration.md).
+ keys as described in [docs/configuration.md](docs/configuration.md).
+
+### Repository Layout
+
+The codebase is organized into a few top-level packages:
+
+```
+modules/analytics      # DataFrame analysis helpers
+modules/data           # Data fetching and Directus utilities
+modules/management     # CLI tools
+modules/utils          # Shared helper functions
+scripts/               # Entry points (main menu, helpers)
+tests/                 # Pytest suite
+```
+All persistent data is stored in Directus collections.
 
 ## Code Style
 

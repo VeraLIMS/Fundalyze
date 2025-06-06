@@ -9,7 +9,6 @@ Fundalyze/
 ├── modules/            # Core packages
 │   ├── analytics/      # Portfolio analysis helpers
 │   ├── data/           # Data retrieval utilities
-│   ├── generate_report/# Report creation logic
 │   ├── management/     # CLI tools and menus
 │   └── utils/          # Small helpers
 ├── scripts/            # Entry points such as `main.py`
@@ -18,7 +17,6 @@ Fundalyze/
 ```
 - `modules/analytics` exposes functions like `portfolio_summary`.
 - `modules/data` and `modules/config_utils` manage data fetching and settings.
-- `modules/generate_report` builds Excel dashboards from downloaded CSVs.
 - `modules/management` contains interactive CLI commands.
 
 ## Setup
