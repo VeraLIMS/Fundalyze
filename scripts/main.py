@@ -91,7 +91,7 @@ def run_portfolio_groups() -> None:
     from modules.management.group_analysis import group_analysis as ga
 
     portfolio = pm.load_portfolio()
-    groups = ga.load_groups(ga.GROUPS_FILE)
+    groups = ga.load_groups()
 
     while True:
         print_header("🔁 Portfolio & Groups")
@@ -136,7 +136,7 @@ def run_portfolio_groups() -> None:
                     placeholder["Ticker"] = ""
                     groups.loc[len(groups)] = placeholder
                     print(f"  ✓ Created new group '{grp_name}'.\n")
-                ga.save_groups(groups, ga.GROUPS_FILE)
+                ga.save_groups(groups)
         elif choice == "7":
             if groups.empty:
                 print("No groups exist. Create one first.\n")
@@ -149,15 +149,15 @@ def run_portfolio_groups() -> None:
                 if sel.isdigit() and 1 <= int(sel) <= len(unique_groups):
                     grp_name = unique_groups[int(sel) - 1]
                     groups = ga.add_tickers_to_group(groups, grp_name)
-                    ga.save_groups(groups, ga.GROUPS_FILE)
+                    ga.save_groups(groups)
                 else:
                     print_invalid_choice()
         elif choice == "8":
             groups = ga.remove_ticker_from_group(groups)
-            ga.save_groups(groups, ga.GROUPS_FILE)
+            ga.save_groups(groups)
         elif choice == "9":
             groups = ga.delete_group(groups)
-            ga.save_groups(groups, ga.GROUPS_FILE)
+            ga.save_groups(groups)
         elif choice == "10":
             break
         else:
