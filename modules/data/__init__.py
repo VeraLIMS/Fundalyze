@@ -29,6 +29,11 @@ from .directus_mapper import (
     add_missing_mappings,
 )
 from .unified_fetcher import fetch_company_data, fetch_and_store
+from .financials import (
+    fetch_statements,
+    store_statements,
+    fetch_and_store_statements,
+)
 
 __all__ = [
     "fetch_basic_stock_data",
@@ -57,4 +62,7 @@ __all__ = [
     "add_missing_mappings",
     "fetch_company_data",
     "fetch_and_store",
+    "fetch_statements",
+    "store_statements",
+    "fetch_and_store_statements",
 ]
