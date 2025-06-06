@@ -71,7 +71,11 @@ def _get_allowed_fields(collection: str) -> Set[str]:
 
 
 def _map_row(
-    row: Dict[str, Any], field_map: Dict[str, Any], allowed: Set[str]
+    row: Dict[str, Any],
+    field_map: Dict[str, Any],
+    allowed: Set[str],
+    *,
+    collection: str | None = None,
 ) -> Dict[str, Any]:
     """Return ``row`` with keys renamed according to ``field_map``.
 
@@ -84,19 +88,36 @@ def _map_row(
         Mapped record ready for Directus insertion.
     """
     mapped: Dict[str, Any] = {}
+    dropped: list[str] = []
     for key, value in row.items():
         entry = field_map.get(key)
         new_key = entry.get("mapped_to") if entry else key
         if not allowed or new_key in allowed:
             mapped[new_key] = value
+        else:
+            dropped.append(key)
+    if dropped and collection:
+        logger.warning(
+            "Dropped keys for %s: %s", collection, ", ".join(dropped)
+        )
+        logger.debug("Current mapping for %s: %s", collection, field_map)
     logger.debug("Mapped record: %s", mapped)
     if row and not mapped:
-        logger.error("Mapping produced empty record. original=%s map=%s", row, field_map)
-        raise ValueError("Mapped record is empty. Check field mapping configuration")
+        logger.error(
+            "Mapping produced empty record. original=%s map=%s", row, field_map
+        )
+        raise ValueError(
+            "Mapped record is empty. Check field mapping configuration"
+        )
     return mapped
 
 
-def prepare_records(collection: str, records: Iterable[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def prepare_records(
+    collection: str,
+    records: Iterable[Dict[str, Any]],
+    *,
+    verbose: bool = False,
+) -> List[Dict[str, Any]]:
     """Rename and filter record fields for Directus insertion.
 
     Args:
@@ -115,13 +136,17 @@ def prepare_records(collection: str, records: Iterable[Dict[str, Any]]) -> List[
 
     prepared: List[Dict[str, Any]] = []
     for row in records:
-        logger.debug("Original record: %s", row)
-        prepared.append(_map_row(row, field_map, allowed))
+        if verbose:
+            logger.info("Original record: %s", row)
+        mapped = _map_row(row, field_map, allowed, collection=collection)
+        if verbose:
+            logger.info("Mapped record: %s", mapped)
+        prepared.append(mapped)
     return prepared
 
 
 def interactive_prepare_records(
-    collection: str, records: Iterable[Dict[str, Any]]
+    collection: str, records: Iterable[Dict[str, Any]], *, verbose: bool = False
 ) -> List[Dict[str, Any]]:
     """Interactive version of :func:`prepare_records`.
 
@@ -144,6 +169,8 @@ def interactive_prepare_records(
     updated = False
     prepared: List[Dict[str, Any]] = []
     for row in records:
+        if verbose:
+            logger.info("Original record: %s", row)
         mapped = {}
         for key, value in row.items():
             entry = field_map.get(key)
@@ -160,6 +187,8 @@ def interactive_prepare_records(
                     updated = True
             if new_key and (not allowed or new_key in allowed):
                 mapped[new_key] = value
+        if verbose:
+            logger.info("Mapped record: %s", mapped)
         prepared.append(mapped)
 
     if updated:
@@ -237,3 +266,18 @@ def ensure_field_mapping(collection: str, df: "pd.DataFrame") -> Dict[str, Any]:
         save_field_map(mapping)
 
     return mapping
+
+
+def add_missing_mappings(collection: str, records: Iterable[Dict[str, Any]]) -> None:
+    """Ensure all keys in ``records`` exist in ``directus_field_map.json``."""
+    mapping = load_field_map()
+    col_entry = mapping.setdefault("collections", {}).setdefault(collection, {"fields": {}})
+    fields_map = col_entry.setdefault("fields", {})
+    updated = False
+    for row in records:
+        for key in row.keys():
+            if key not in fields_map:
+                fields_map[key] = {"type": None, "mapped_to": key}
+                updated = True
+    if updated:
+        save_field_map(mapping)

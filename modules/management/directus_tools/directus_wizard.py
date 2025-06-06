@@ -9,7 +9,14 @@ from modules.interface import (
     print_menu,
 )
 
-from modules.data import directus_client as dc, prepare_records, refresh_field_map
+from modules.data import (
+    directus_client as dc,
+    prepare_records,
+    refresh_field_map,
+    add_missing_mappings,
+    load_field_map,
+)
+from modules.management import portfolio_manager as pm, group_analysis as ga
 
 try:
     from modules.management.settings_manager.wizards.directus_setup import (
@@ -44,6 +51,8 @@ def run_directus_wizard() -> None:
             "Add Field to Collection",
             "Fetch Items from Collection",
             "Insert Item into Collection",
+            "Test Field Mapping",
+            "Test Insert (MSFT)",
             "Refresh Field Map",
             "Return to Main Menu",
         ]
@@ -101,9 +110,27 @@ def run_directus_wizard() -> None:
                         dc.insert_items(col, records)
                         print("Item inserted.\n")
         elif choice == "6":
+            for col, cols in (
+                (pm.C_DIRECTUS_COLLECTION, pm.COLUMNS),
+                (ga.GROUPS_COLLECTION, ga.COLUMNS),
+            ):
+                mapping = load_field_map().get("collections", {}).get(col, {}).get("fields", {})
+                print(f"\nMapping for {col}:")
+                for c in cols:
+                    tgt = mapping.get(c, {}).get("mapped_to")
+                    print(f"  {c} -> {tgt}")
+        elif choice == "7":
+            from modules.management.portfolio_manager.portfolio_manager import fetch_from_unified, C_DIRECTUS_COLLECTION
+
+            record = fetch_from_unified("MSFT")
+            add_missing_mappings(C_DIRECTUS_COLLECTION, [record])
+            prepared = prepare_records(C_DIRECTUS_COLLECTION, [record], verbose=True)[0]
+            dc.insert_items(C_DIRECTUS_COLLECTION, [prepared])
+            print("Insert attempted. Check logs for details.\n")
+        elif choice == "8":
             refresh_field_map()
             print("Field map updated.\n")
-        elif choice == "7":
+        elif choice == "9":
             break
         else:
             print_invalid_choice()

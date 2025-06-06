@@ -26,6 +26,7 @@ from .directus_mapper import (
     interactive_prepare_records,
     refresh_field_map,
     ensure_field_mapping,
+    add_missing_mappings,
 )
 from .unified_fetcher import fetch_company_data, fetch_and_store
 
@@ -53,6 +54,7 @@ __all__ = [
     "interactive_prepare_records",
     "refresh_field_map",
     "ensure_field_mapping",
+    "add_missing_mappings",
     "fetch_company_data",
     "fetch_and_store",
 ]

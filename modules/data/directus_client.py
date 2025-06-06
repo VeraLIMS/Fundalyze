@@ -236,8 +236,16 @@ def insert_items(collection: str, items):
     create_collection_if_missing(collection, fields)
 
     payload = {"data": cleaned}
+    logger.info("Inserting into %s: %s", collection, payload)
     result = directus_request("POST", f"items/{collection}", json=payload)
-    return _extract_data(result)
+    data = _extract_data(result)
+    if not data:
+        logger.warning(
+            "Insertion returned no data for %s | status/content: %s",
+            collection,
+            result,
+        )
+    return data
 
 
 def create_field(collection: str, field: str, field_type: str = "string", **kwargs):

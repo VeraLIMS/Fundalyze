@@ -298,6 +298,7 @@ COMMAND_MAP: dict[str, Callable[[], None]] = {
     "view-portfolio": view_directus_portfolio,
     "view-profiles": view_directus_profiles,
     "map-record": debug_mapped_record,
+    "diag": lambda: subprocess.run(["python", "scripts/mapping_diagnostic.py"]),
     "summary": portfolio_summary_cli,
 }
 
@@ -312,6 +313,7 @@ COMMAND_HELP = {
     "view-portfolio": "View portfolio from Directus",
     "view-profiles": "View company profiles from Directus",
     "map-record": "Fetch and display mapped portfolio record",
+    "diag": "Run mapping diagnostic script",
     "summary": "Display portfolio summary statistics",
 }
 
