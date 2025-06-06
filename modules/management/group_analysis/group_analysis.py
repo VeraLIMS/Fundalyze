@@ -93,15 +93,6 @@ def _load_from_directus() -> pd.DataFrame:
     df = pd.DataFrame(records).rename(columns=FROM_DIRECTUS)
     return _clean_dataframe(df)
 
-
-
-def _save_to_directus(df: pd.DataFrame) -> None:
-    """Persist group data to Directus."""
-    records = prepare_records(GROUPS_COLLECTION, df.to_dict(orient="records"))
-    insert_items(GROUPS_COLLECTION, records)
-    print(f"→ Saved groups to Directus collection '{GROUPS_COLLECTION}'.\n")
-
-
 def load_portfolio() -> pd.DataFrame:
     """Return portfolio data from Directus."""
     from modules.management.portfolio_manager.portfolio_manager import load_portfolio as lp
@@ -111,6 +102,7 @@ def load_portfolio() -> pd.DataFrame:
     except Exception as exc:
         print(f"Error loading portfolio from Directus: {exc}")
         return pd.DataFrame()
+
 
 
 def load_groups() -> pd.DataFrame:
