@@ -18,6 +18,8 @@ Helpers for retrieving and normalizing data as well as communicating with a Dire
 - **`unified_fetcher.py`** – high level wrapper that pulls company data from
   OpenBB first and gracefully falls back to yfinance and FMP. Use
   `fetch_and_store` to push records directly to Directus.
+- **`financials.py`** – fetches financial statements from OpenBB and inserts
+  them into Directus (accessible via `python scripts/main.py fetch-statements`).
 - **`term_mapper.py`** – resolves sector and industry names to a canonical term
   using a JSON map. When an unknown term is encountered the module optionally
   suggests a mapping via OpenAI and then asks the user for confirmation.

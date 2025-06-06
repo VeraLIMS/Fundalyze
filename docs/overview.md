@@ -52,7 +52,7 @@ Lower-level helpers used across the app (see [modules/data/README.md](../modules
 - `directus_client.py` – optional Directus integration for remote storage.
 - `directus_mapper.py` – keeps `directus_field_map.json` in sync and prepares records for upload.
 - `term_mapper.py` – maps common financial terms to canonical names.
-- `compare.py` – compares profile data from different providers.
+- `compare.py` – compares profile data from different providers (see `python scripts/main.py compare-profile`).
 
 
 

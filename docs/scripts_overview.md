@@ -54,9 +54,11 @@ Discovers and runs each `test_*.py` file under `tests/` sequentially. Provides a
 
 ## connectivity_test.py
 Loads configuration from `config/.env` and performs a `GET <DIRECTUS_URL>/server/health` request. The script prints the HTTP status and a snippet of the response. Failure to connect or any non-2xx status results in exit code `1`.
+Also available via `python scripts/main.py connect-test`.
 
 ## sync_directus_fields.py
 Compares collections and fields in your Directus instance against `directus_field_map.json`. New collections/fields are presented for confirmation and deleted entries can be removed. If any API request fails, the script aborts and your existing mapping file remains unchanged.
+This functionality is exposed in the CLI as `python scripts/main.py sync-fields`.
 
 ## mapping_diagnostic.py
 Prints the expected → mapped field names for key collections and can optionally
